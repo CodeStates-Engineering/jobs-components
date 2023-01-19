@@ -54,6 +54,7 @@
     ]
   },
   "devDependencies": {
+    "@codestates-engineering/eslint-config-codestates": "^0.0.3-0883df5",
     "@storybook/addon-actions": "^6.5.15",
     "@storybook/addon-essentials": "^6.5.15",
     "@storybook/addon-interactions": "^6.5.15",
