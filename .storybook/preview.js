@@ -1,7 +1,8 @@
-import '../src/scss/global.scss';
-import '@storybook/addon-console';
-import { Link, useLocation, MemoryRouter } from 'react-router-dom';
-import { replaceDependency } from '../src/plugins';
+import "../src/scss/global.scss";
+import "@fontsource/noto-sans-kr";
+import "@storybook/addon-console";
+import { Link, useLocation, MemoryRouter } from "react-router-dom";
+import { replaceDependency } from "../src/plugins";
 
 replaceDependency({
   Link,
@@ -9,7 +10,7 @@ replaceDependency({
 });
 
 export const parameters = {
-  actions: { argTypesRegex: '^on[A-Z].*' },
+  actions: { argTypesRegex: "^on[A-Z].*" },
   controls: {
     matchers: {
       color: /(background|color)$/i,
@@ -24,10 +25,10 @@ export const decorators = [
       <div
         id="preview-wrap"
         style={{
-          display: 'flex',
-          minHeight: '80vh',
-          justifyContent: 'center',
-          alignItems: 'center',
+          display: "flex",
+          minHeight: "80vh",
+          justifyContent: "center",
+          alignItems: "center",
         }}
       >
         <Story />
