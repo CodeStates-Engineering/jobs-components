@@ -14,12 +14,13 @@
     "/dist/library"
   ],
   "scripts": {
+    "version": "npm version",
     "start": "start-storybook --no-manager-cache -p 6006 -s public",
-    "build:package": "tsc --emitDeclarationOnly && rollup -c",
+    "build:package": "rm -rf dist && mkdir dist && tsc --emitDeclarationOnly && rollup -c",
     "build:storybook": "build-storybook -o dist/storybook",
     "deploy:storybook": "gh-pages -d dist/storybook",
     "deploy:package": "npm publish",
-    "deploy": "yarn build:package && yarn build:storybook && yarn deploy:storybook && yarn deploy:package"
+    "deploy:canary-package": "sh ./scripts/canary-publish.sh"
   },
   "eslintConfig": {
     "extends": [
@@ -50,6 +51,7 @@
     ]
   },
   "devDependencies": {
+    "@fontsource/noto-sans-kr": "^4.5.12",
     "@rollup/plugin-json": "^5.0.1",
     "@rollup/plugin-node-resolve": "^15.0.1",
     "@rollup/plugin-typescript": "^11.0.0",
@@ -104,5 +106,6 @@
   "peerDependencies": {
     "react": "^18.0.0"
   },
-  "packageManager": "yarn@3.3.1"
+  "packageManager": "yarn@3.3.1",
+  "@fontsource/noto-sans-kr": "^4.5.12"
 }

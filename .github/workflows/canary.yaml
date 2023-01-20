@@ -1,0 +1,35 @@
+name: canary-package deployment
+
+on:
+  push:
+    branches:
+      - "feature/**"
+
+env:
+  NODE_VERSION: "18.13"
+  NPM_REGISTRY_URL: "https://npm.pkg.github.com/"
+
+jobs:
+  canary:
+    if: "!contains(github.event.head_commit.message, 'skip canary')"
+
+    runs-on: ubuntu-latest
+    env:
+      CSE_NPM_TOKEN: ${{secrets.CSE_NPM_TOKEN}}
+
+    steps:
+      - name: node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          registry-url: ${{ env.NPM_REGISTRY_URL }}
+
+      - uses: actions/checkout@v3
+        with:
+          token: ${{secrets.CSE_NPM_TOKEN}}
+
+      - name: depenency(zero-install) install
+        run: yarn install
+
+      - name: package(canary) deployment
+        run: yarn run deploy:canary-package

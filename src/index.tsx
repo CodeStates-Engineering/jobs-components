@@ -1,4 +1,4 @@
-import "./scss/global.scss";
+export default "./scss/global.scss";
 
 //* Atom 컴포넌트
 export * from "./components/atoms";

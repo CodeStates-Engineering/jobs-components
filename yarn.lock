@@ -1819,6 +1819,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@codestates-engineering/jobs-components@workspace:."
   dependencies:
+    "@fontsource/noto-sans-kr": ^4.5.12
     "@rollup/plugin-json": ^5.0.1
     "@rollup/plugin-node-resolve": ^15.0.1
     "@rollup/plugin-typescript": ^11.0.0
@@ -2142,6 +2143,13 @@ __metadata:
     minimatch: ^3.1.2
     strip-json-comments: ^3.1.1
   checksum: 2074dca47d7e1c5c6323ff353f690f4b25d3ab53fe7d27337e2592d37a894cf60ca0e85ca66b50ff2db0bc7e630cc1e9c7347d65bb185b61416565584c38999c
+  languageName: node
+  linkType: hard
+
+"@fontsource/noto-sans-kr@npm:^4.5.12":
+  version: 4.5.12
+  resolution: "@fontsource/noto-sans-kr@npm:4.5.12"
+  checksum: 45839892a66c5a5c0d797c286e88ac4dd8833e4d1bb1a8f22b988cdf10bd1369ea96eb2e1ebfbec8fc290ed3b06304147ccbfc092e82fb7b61c4695e03d05aba
   languageName: node
   linkType: hard
 
