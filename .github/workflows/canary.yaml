@@ -31,5 +31,8 @@ jobs:
       - name: depenency(zero-install) install
         run: yarn install
 
+      - name: author registration
+        run: git config --global user.email "engineering@codestates.com" && git config --global user.name "CodeStates Engineering"
+
       - name: package(canary) deployment
         run: yarn run deploy:canary-package
