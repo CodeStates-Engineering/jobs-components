@@ -1,6 +1,6 @@
 {
   "name": "@codestates-engineering/jobs-components",
-  "version": "1.4.30",
+  "version": "0.0.1",
   "types": "dist/library/types/index.d.ts",
   "module": "dist/library/index.js",
   "repository": "https://github.com/CodeStates-Engineering/jobs-components.git",
@@ -18,7 +18,7 @@
     "build:package": "tsc --emitDeclarationOnly && rollup -c",
     "build:storybook": "build-storybook -o dist/storybook",
     "deploy:storybook": "gh-pages -d dist/storybook",
-    "deploy:package": "yarn publish",
+    "deploy:package": "npm publish",
     "deploy": "yarn build:package && yarn build:storybook && yarn deploy:storybook && yarn deploy:package"
   },
   "eslintConfig": {
