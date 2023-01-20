@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "jsx": "react-jsx",
+    "experimentalDecorators": true,
+    "importsNotUsedAsValues": "error",
+    "baseUrl": "./src",
+    "declaration": true,
+    "declarationDir": "dist/library/types"
+  },
+  "include": ["src"],
+  "exclude": ["**/*.stories.tsx"]
+}

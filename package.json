@@ -1,30 +1,111 @@
 {
-  "name": "jobs-components",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
-  },
-  "keywords": [],
-  "author": "",
+  "name": "@codestates-engineering/jobs-components",
+  "version": "0.0.1",
+  "types": "dist/library/types/index.d.ts",
+  "module": "dist/library/index.js",
+  "repository": "https://github.com/CodeStates-Engineering/jobs-components.git",
+  "author": "HyeokjaeLee <leehyeokjae97@gmail.com>",
+  "homepage": "https://CodeStates-Engineering.github.io/jobs-components",
   "license": "ISC",
-  "devDependencies": {
-    "@babel/core": "^7.20.12",
-    "@storybook/addon-actions": "^6.5.15",
-    "@storybook/addon-essentials": "^6.5.15",
-    "@storybook/addon-interactions": "^6.5.15",
-    "@storybook/addon-links": "^6.5.15",
-    "@storybook/builder-webpack4": "^6.5.15",
-    "@storybook/manager-webpack4": "^6.5.15",
-    "@storybook/react": "^6.5.15",
-    "@storybook/testing-library": "^0.0.13",
-    "babel-loader": "^8.3.0"
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
   },
-  "dependencies": {
+  "files": [
+    "/dist/library"
+  ],
+  "scripts": {
+    "version": "npm version",
+    "start": "start-storybook --no-manager-cache -p 6006 -s public",
+    "build:package": "rm -rf dist && mkdir dist && tsc --emitDeclarationOnly && rollup -c",
+    "build:storybook": "build-storybook -o dist/storybook",
+    "deploy:storybook": "gh-pages -d dist/storybook",
+    "deploy:package": "npm publish",
+    "deploy:canary-package": "sh ./scripts/canary-publish.sh"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "**/*.stories.*"
+        ],
+        "rules": {
+          "import/no-anonymous-default-export": "off"
+        }
+      }
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@fontsource/noto-sans-kr": "^4.5.12",
+    "@rollup/plugin-json": "^5.0.1",
+    "@rollup/plugin-node-resolve": "^15.0.1",
+    "@rollup/plugin-typescript": "^11.0.0",
+    "@storybook/addon-actions": "^6.5.12",
+    "@storybook/addon-console": "^1.2.3",
+    "@storybook/addon-essentials": "^6.5.12",
+    "@storybook/addon-interactions": "^6.5.12",
+    "@storybook/addon-links": "^6.5.12",
+    "@storybook/builder-webpack5": "^6.5.12",
+    "@storybook/manager-webpack5": "^6.5.12",
+    "@storybook/node-logger": "^6.5.12",
+    "@storybook/preset-create-react-app": "^4.1.2",
+    "@storybook/react": "^6.5.12",
+    "@storybook/testing-library": "^0.0.13",
+    "@svgr/rollup": "^6.3.1",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.5.2",
+    "@types/lodash-es": "^4.17.6",
+    "@types/node": "^16.11.59",
+    "@types/react": "^18.0.20",
+    "@types/react-dom": "^18.0.6",
+    "autoprefixer": "^10.4.11",
+    "babel-plugin-named-exports-order": "^0.0.2",
+    "date-fns": "^2.29.3",
+    "gh-pages": "^4.0.0",
+    "lodash-es": "^4.17.21",
+    "prop-types": "^15.8.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
-  }
+    "react-day-picker": "^8.2.1",
+    "react-dom": "^18.2.0",
+    "react-feather": "^2.0.10",
+    "react-router-dom": "^6.4.3",
+    "react-scripts": "^5.0.1",
+    "rollup": "^2.79.0",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-copy": "^3.4.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-postcss": "^4.0.2",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-url": "^3.0.1",
+    "sass": "^1.54.9",
+    "tsconfig-paths-webpack-plugin": "^4.0.0",
+    "tslib": "^2.4.1",
+    "typescript": "^4.8.4",
+    "web-vitals": "^2.1.4",
+    "webpack": "^5.74.0"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0"
+  },
+  "packageManager": "yarn@3.3.1",
+  "@fontsource/noto-sans-kr": "^4.5.12"
 }
