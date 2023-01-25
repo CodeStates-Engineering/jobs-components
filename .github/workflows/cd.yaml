@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - 'release'
+    paths:
+      - 'src/**'
+
 
 env:
   NODE_VERSION: "18.13"
