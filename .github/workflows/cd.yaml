@@ -1,0 +1,54 @@
+name: CD
+
+on:
+  push:
+    branches:
+      - 'release'
+
+env:
+  NODE_VERSION: "18.13"
+  NPM_REGISTRY_URL: 'https://npm.pkg.github.com/'
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    env:
+      CSE_NPM_TOKEN: ${{secrets.CSE_NPM_TOKEN}}
+
+    steps:
+      - name: node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          registry-url: ${{ env.NPM_REGISTRY_URL }}
+
+      - uses: actions/checkout@v3
+        with:
+          token: ${{secrets.CSE_NPM_TOKEN}}
+
+      - name: depenency(zero-install) install
+        run: yarn install
+
+      - name: author registration
+        run: git config --global user.email "engineering@codestates.com" && git config --global user.name "CodeStates Engineering"
+
+      - name: git pull
+        run: git pull
+
+      - name: patch versioning
+        if: "!contains(github.event.head_commit.message, 'version-up ')"
+        run: npm version patch
+
+      - name: minor versioning
+        if: "contains(github.event.head_commit.message, 'version-up minor')"
+        run: npm version minor
+
+      - name: major versioning
+        if: "contains(github.event.head_commit.message, 'version-up major')"
+        run: npm version major
+
+      - name: git push
+        run: git push
+
+      - name: package(canary) deployment
+        run: yarn run deploy:package
