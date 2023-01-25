@@ -16,9 +16,6 @@ jobs:
       - name: tag version extraction
         run: echo "version=$(echo ${{github.event.head_commit.message}} | egrep -o '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}')" >> $GITHUB_ENV
 
-      - name: test console2
-        run: echo "${{env.version}}"
-
       - name: release creation
         uses: actions/create-release@v1
         env:
