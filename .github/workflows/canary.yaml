@@ -1,4 +1,4 @@
-name: canary-package deployment
+name: Canary-package deployment
 
 on:
   push:
