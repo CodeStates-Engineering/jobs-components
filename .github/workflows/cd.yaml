@@ -11,7 +11,7 @@ env:
 
 jobs:
   package:
-    if: "!contains(github.event.head_commit.message, 'ver: ')"
+    if: "!contains(github.event.head_commit.message, 'RELEASE-')"
     runs-on: ubuntu-latest
     env:
       CSE_NPM_TOKEN: ${{secrets.CSE_NPM_TOKEN}}
@@ -38,15 +38,15 @@ jobs:
 
       - name: patch versioning
         if: "!contains(github.event.head_commit.message, 'version-up ')"
-        run: "npm version patch -m 'ver: %s'"
+        run: "npm version patch -m 'RELEASE-%s'"
 
       - name: minor versioning
         if: "contains(github.event.head_commit.message, 'version-up minor')"
-        run: "npm version minor -m 'ver: %s'"
+        run: "npm version minor -m 'RELEASE-%s'"
 
       - name: major versioning
         if: "contains(github.event.head_commit.message, 'version-up major')"
-        run: "npm version major -m 'ver: %s'"
+        run: "npm version major -m 'RELEASE-%s'"
 
       - name: git push
         run: git push
