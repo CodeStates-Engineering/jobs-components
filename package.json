@@ -20,7 +20,13 @@
     "build:storybook": "build-storybook -o dist/storybook",
     "deploy:storybook": "gh-pages -d dist/storybook",
     "deploy:package": "npm publish",
-    "deploy:canary-package": "sh ./scripts/canary-publish.sh"
+    "deploy:canary-package": "sh ./scripts/canary-publish.sh",
+    "lint": "eslint './**/*.{js,ts,tsx}'",
+    "lint:fix": "npm run lint -- --fix",
+    "prettier": "prettier '**/*.{json,yaml,md,js,ts,tsx}' --check",
+    "prettier:fix": "prettier '**/*.{json,yaml,md,js,ts,tsx}' --write",
+    "lint:style": "stylelint './**/*.{js,ts,tsx}'",
+    "lint:style:fix": "stylelint './**/*.{js,ts,tsx}' --fix"
   },
   "eslintConfig": {
     "extends": [
@@ -51,6 +57,7 @@
     ]
   },
   "devDependencies": {
+    "@codestates-engineering/eslint-config-codestates": "^1.0.0",
     "@fontsource/noto-sans-kr": "^4.5.12",
     "@rollup/plugin-json": "^5.0.1",
     "@rollup/plugin-node-resolve": "^15.0.1",
@@ -106,6 +113,5 @@
   "peerDependencies": {
     "react": "^18.0.0"
   },
-  "packageManager": "yarn@3.3.1",
-  "@fontsource/noto-sans-kr": "^4.5.12"
+  "packageManager": "yarn@3.3.1"
 }
