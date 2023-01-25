@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - 'release'
-    paths:
-      - 'src/**'
-
 
 env:
   NODE_VERSION: "18.13"
@@ -14,6 +11,7 @@ env:
 
 jobs:
   package:
+    if: "!contains(github.event.head_commit.message, 'ver: ')"
     runs-on: ubuntu-latest
     env:
       CSE_NPM_TOKEN: ${{secrets.CSE_NPM_TOKEN}}
@@ -40,15 +38,15 @@ jobs:
 
       - name: patch versioning
         if: "!contains(github.event.head_commit.message, 'version-up ')"
-        run: npm version patch
+        run: npm version patch -m "ver: %s"
 
       - name: minor versioning
         if: "contains(github.event.head_commit.message, 'version-up minor')"
-        run: npm version minor
+        run: npm version minor -m "ver: %s"
 
       - name: major versioning
         if: "contains(github.event.head_commit.message, 'version-up major')"
-        run: npm version major
+        run: npm version major -m "ver: %s"
 
       - name: git push
         run: git push
