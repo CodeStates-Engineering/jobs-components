@@ -3,7 +3,7 @@ name: Auto tag creation
 on:
   push:
     branches:
-      - "release/**"
+      - 'release'
 
 jobs:
   tag:
