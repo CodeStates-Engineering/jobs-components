@@ -1720,6 +1720,7 @@ __metadata:
     "@storybook/preset-create-react-app": ^4.1.2
     "@storybook/react": ^6.5.12
     "@storybook/testing-library": ^0.0.13
+    "@stylelint/postcss-css-in-js": "*"
     "@svgr/rollup": ^6.3.1
     "@testing-library/jest-dom": ^5.16.5
     "@testing-library/react": ^13.4.0
@@ -1729,11 +1730,20 @@ __metadata:
     "@types/node": ^16.11.59
     "@types/react": ^18.0.20
     "@types/react-dom": ^18.0.6
+    "@typescript-eslint/eslint-plugin": "*"
     autoprefixer: ^10.4.11
     babel-plugin-named-exports-order: ^0.0.2
     date-fns: ^2.29.3
+    eslint: "*"
+    eslint-plugin-import: "*"
+    eslint-plugin-jsx-a11y: "*"
+    eslint-plugin-promise: "*"
+    eslint-plugin-react: "*"
+    eslint-plugin-react-hooks: "*"
     gh-pages: ^4.0.0
     lodash-es: ^4.17.21
+    postcss-syntax: "*"
+    prettier: "*"
     prop-types: ^15.8.1
     react: ^18.2.0
     react-day-picker: ^8.2.1
@@ -1751,6 +1761,7 @@ __metadata:
     rollup-plugin-terser: ^7.0.2
     rollup-plugin-url: ^3.0.1
     sass: ^1.54.9
+    stylelint: "*"
     tsconfig-paths-webpack-plugin: ^4.0.0
     tslib: ^2.4.1
     typescript: ^4.8.4
@@ -1758,6 +1769,29 @@ __metadata:
     webpack: ^5.74.0
   peerDependencies:
     react: ^18.0.0
+  dependenciesMeta:
+    "@stylelint/postcss-css-in-js":
+      optional: true
+    "@typescript-eslint/eslint-plugin":
+      optional: true
+    eslint:
+      optional: true
+    eslint-plugin-import:
+      optional: true
+    eslint-plugin-jsx-a11y:
+      optional: true
+    eslint-plugin-promise:
+      optional: true
+    eslint-plugin-react:
+      optional: true
+    eslint-plugin-react-hooks:
+      optional: true
+    postcss-syntax:
+      optional: true
+    prettier:
+      optional: true
+    stylelint:
+      optional: true
   languageName: unknown
   linkType: soft
 
@@ -4167,7 +4201,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@stylelint/postcss-css-in-js@npm:^0.38.0":
+"@stylelint/postcss-css-in-js@npm:*, @stylelint/postcss-css-in-js@npm:^0.38.0":
   version: 0.38.0
   resolution: "@stylelint/postcss-css-in-js@npm:0.38.0"
   dependencies:
@@ -5206,7 +5240,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/eslint-plugin@npm:^5.47.0, @typescript-eslint/eslint-plugin@npm:^5.5.0":
+"@typescript-eslint/eslint-plugin@npm:*, @typescript-eslint/eslint-plugin@npm:^5.47.0, @typescript-eslint/eslint-plugin@npm:^5.5.0":
   version: 5.49.0
   resolution: "@typescript-eslint/eslint-plugin@npm:5.49.0"
   dependencies:
@@ -9528,7 +9562,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-import@npm:^2.25.3, eslint-plugin-import@npm:^2.26.0":
+"eslint-plugin-import@npm:*, eslint-plugin-import@npm:^2.25.3, eslint-plugin-import@npm:^2.26.0":
   version: 2.27.5
   resolution: "eslint-plugin-import@npm:2.27.5"
   dependencies:
@@ -9570,7 +9604,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-jsx-a11y@npm:^6.5.1, eslint-plugin-jsx-a11y@npm:^6.6.1":
+"eslint-plugin-jsx-a11y@npm:*, eslint-plugin-jsx-a11y@npm:^6.5.1, eslint-plugin-jsx-a11y@npm:^6.6.1":
   version: 6.7.1
   resolution: "eslint-plugin-jsx-a11y@npm:6.7.1"
   dependencies:
@@ -9630,7 +9664,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-promise@npm:^6.1.1":
+"eslint-plugin-promise@npm:*, eslint-plugin-promise@npm:^6.1.1":
   version: 6.1.1
   resolution: "eslint-plugin-promise@npm:6.1.1"
   peerDependencies:
@@ -9639,7 +9673,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-react-hooks@npm:^4.3.0, eslint-plugin-react-hooks@npm:^4.6.0":
+"eslint-plugin-react-hooks@npm:*, eslint-plugin-react-hooks@npm:^4.3.0, eslint-plugin-react-hooks@npm:^4.6.0":
   version: 4.6.0
   resolution: "eslint-plugin-react-hooks@npm:4.6.0"
   peerDependencies:
@@ -9648,7 +9682,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-react@npm:^7.27.1, eslint-plugin-react@npm:^7.31.11":
+"eslint-plugin-react@npm:*, eslint-plugin-react@npm:^7.27.1, eslint-plugin-react@npm:^7.31.11":
   version: 7.32.1
   resolution: "eslint-plugin-react@npm:7.32.1"
   dependencies:
@@ -9771,7 +9805,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:^8.3.0, eslint@npm:^8.30.0":
+"eslint@npm:*, eslint@npm:^8.3.0, eslint@npm:^8.30.0":
   version: 8.32.0
   resolution: "eslint@npm:8.32.0"
   dependencies:
@@ -16604,7 +16638,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-syntax@npm:^0.36.2":
+"postcss-syntax@npm:*, postcss-syntax@npm:^0.36.2":
   version: 0.36.2
   resolution: "postcss-syntax@npm:0.36.2"
   peerDependencies:
@@ -16666,21 +16700,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"prettier@npm:*, prettier@npm:^2.8.1":
+  version: 2.8.3
+  resolution: "prettier@npm:2.8.3"
+  bin:
+    prettier: bin-prettier.js
+  checksum: 92f2ceb522d454370e02082aa74ad27388672f7cee8975028b59517c069fe643bdc73e322675c8faf2ff173d7a626d1a6389f26b474000308e793aa25fff46e5
+  languageName: node
+  linkType: hard
+
 "prettier@npm:>=2.2.1 <=2.3.0":
   version: 2.3.0
   resolution: "prettier@npm:2.3.0"
   bin:
     prettier: bin-prettier.js
   checksum: e8851a45f60f2994775f96e07964646c299b8a8f9c64da4fbd8efafc20db3458bdcedac79aed34e1d5477540b3aa04f6499adc4979cb7937f8ebd058a767d8ff
-  languageName: node
-  linkType: hard
-
-"prettier@npm:^2.8.1":
-  version: 2.8.3
-  resolution: "prettier@npm:2.8.3"
-  bin:
-    prettier: bin-prettier.js
-  checksum: 92f2ceb522d454370e02082aa74ad27388672f7cee8975028b59517c069fe643bdc73e322675c8faf2ff173d7a626d1a6389f26b474000308e793aa25fff46e5
   languageName: node
   linkType: hard
 
@@ -19301,7 +19335,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylelint@npm:^14.16.1":
+"stylelint@npm:*, stylelint@npm:^14.16.1":
   version: 14.16.1
   resolution: "stylelint@npm:14.16.1"
   dependencies:

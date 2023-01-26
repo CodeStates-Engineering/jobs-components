@@ -110,6 +110,19 @@
     "web-vitals": "^2.1.4",
     "webpack": "^5.74.0"
   },
+  "optionalDependencies": {
+    "@stylelint/postcss-css-in-js": "*",
+    "@typescript-eslint/eslint-plugin": "*",
+    "eslint": "*",
+    "eslint-plugin-import": "*",
+    "eslint-plugin-jsx-a11y": "*",
+    "eslint-plugin-promise": "*",
+    "eslint-plugin-react": "*",
+    "eslint-plugin-react-hooks": "*",
+    "postcss-syntax": "*",
+    "prettier": "*",
+    "stylelint": "*"
+  },
   "peerDependencies": {
     "react": "^18.0.0"
   },
