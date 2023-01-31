@@ -26,7 +26,9 @@
     "prettier": "prettier '**/*.{json,yaml,md,js,ts,tsx}' --check",
     "prettier:fix": "prettier '**/*.{json,yaml,md,js,ts,tsx}' --write",
     "lint:style": "stylelint './**/*.{js,ts,tsx}'",
-    "lint:style:fix": "stylelint './**/*.{js,ts,tsx}' --fix"
+    "lint:style:fix": "stylelint './**/*.{js,ts,tsx}' --fix",
+    "lint:all": "yarn lint && yarn prettier && yarn lint:style",
+    "lint:all:fix": "yarn lint:fix && yarn prettier:fix && yarn lint:style:fix"
   },
   "eslintConfig": {
     "extends": [
