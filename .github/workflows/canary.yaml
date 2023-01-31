@@ -3,16 +3,16 @@ name: Canary-package deployment
 on:
   push:
     branches:
-      - "feature/**"
-      - "fix/**"
+      - 'feature/**'
+      - 'fix/**'
 
 env:
-  NODE_VERSION: "18.13"
-  NPM_REGISTRY_URL: "https://npm.pkg.github.com/"
+  NODE_VERSION: '18.13'
+  NPM_REGISTRY_URL: 'https://npm.pkg.github.com/'
 
 jobs:
   canary:
-    if: "!contains(github.event.head_commit.message, 'skip canary')"
+    if: "contains(github.event.head_commit.message, 'deploy canary')"
 
     runs-on: ubuntu-latest
     env:
