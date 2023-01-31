@@ -1,6 +1,7 @@
-import '../src/scss/global.scss';
+import '../src/styles/global.scss';
 import '@fontsource/noto-sans-kr';
 import '@storybook/addon-console';
+
 import { Link, useLocation, MemoryRouter } from 'react-router-dom';
 import { replaceDependency } from '../src/plugins';
 

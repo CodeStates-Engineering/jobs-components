@@ -67,6 +67,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["gh-pages", "npm:4.0.0"],\
             ["lodash-es", "npm:4.17.21"],\
             ["postcss-syntax", "virtual:b3b70c7166662325175c17d9e1eda896c2099627d7905e85dfef7fe659f89a0bc330ed5dd79b7682940fe8d5ab7ce661ba394158976242b9a11fd38c590cdc2b#npm:0.36.2"],\
+            ["pretendard", "npm:1.3.6"],\
             ["prettier", "npm:2.8.3"],\
             ["prop-types", "npm:15.8.1"],\
             ["react", "npm:18.2.0"],\
@@ -4561,6 +4562,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["gh-pages", "npm:4.0.0"],\
             ["lodash-es", "npm:4.17.21"],\
             ["postcss-syntax", "virtual:b3b70c7166662325175c17d9e1eda896c2099627d7905e85dfef7fe659f89a0bc330ed5dd79b7682940fe8d5ab7ce661ba394158976242b9a11fd38c590cdc2b#npm:0.36.2"],\
+            ["pretendard", "npm:1.3.6"],\
             ["prettier", "npm:2.8.3"],\
             ["prop-types", "npm:15.8.1"],\
             ["react", "npm:18.2.0"],\
@@ -24883,6 +24885,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/prelude-ls-npm-1.2.1-3e4d272a55-cd192ec0d0.zip/node_modules/prelude-ls/",\
           "packageDependencies": [\
             ["prelude-ls", "npm:1.2.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["pretendard", [\
+        ["npm:1.3.6", {\
+          "packageLocation": "./.yarn/cache/pretendard-npm-1.3.6-3e46d9676f-5621dc4b62.zip/node_modules/pretendard/",\
+          "packageDependencies": [\
+            ["pretendard", "npm:1.3.6"]\
           ],\
           "linkType": "HARD"\
         }]\
