@@ -26,7 +26,10 @@
     "prettier": "prettier '**/*.{json,yaml,md,js,ts,tsx}' --check",
     "prettier:fix": "prettier '**/*.{json,yaml,md,js,ts,tsx}' --write",
     "lint:style": "stylelint './**/*.{js,ts,tsx}'",
-    "lint:style:fix": "stylelint './**/*.{js,ts,tsx}' --fix"
+    "lint:style:fix": "stylelint './**/*.{js,ts,tsx}' --fix",
+    "lint:all": "yarn lint && yarn prettier && yarn lint:style",
+    "lint:all:fix": "yarn lint:fix && yarn prettier:fix && yarn lint:style:fix",
+    "lint:update": "yarn add -D @codestates-engineering/eslint-config-codestates@latest"
   },
   "eslintConfig": {
     "extends": [
@@ -57,7 +60,7 @@
     ]
   },
   "devDependencies": {
-    "@codestates-engineering/eslint-config-codestates": "^1.0.0",
+    "@codestates-engineering/eslint-config-codestates": "latest",
     "@fontsource/noto-sans-kr": "^4.5.12",
     "@rollup/plugin-json": "^5.0.1",
     "@rollup/plugin-node-resolve": "^15.0.1",
