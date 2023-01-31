@@ -1668,9 +1668,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codestates-engineering/eslint-config-codestates@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "@codestates-engineering/eslint-config-codestates@npm:1.0.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40codestates-engineering%2Feslint-config-codestates%2F1.0.0%2F2945f7cd1eb1ec42562433252ea833b451f842fc"
+"@codestates-engineering/eslint-config-codestates@npm:latest":
+  version: 1.0.1
+  resolution: "@codestates-engineering/eslint-config-codestates@npm:1.0.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40codestates-engineering%2Feslint-config-codestates%2F1.0.1%2F2b91c93c8cc741cb0808a125b5bf51101bb817af"
   dependencies:
     "@babel/eslint-parser": ^7.19.1
     "@stylelint/postcss-css-in-js": ^0.38.0
@@ -1696,7 +1696,19 @@ __metadata:
     stylelint-config-prettier: ^9.0.4
     stylelint-config-standard: ^29.0.0
     stylelint-order: ^6.0.1
-  checksum: 64e29e8f7f71e5b44994976f636fd5a482ddb7b2b41cec8afb1e463303e203814ad7bfcb0c69d5ec284964656a2fe1dc26cc77de514b0031470c0620a5cd053b
+  peerDependencies:
+    "@stylelint/postcss-css-in-js": "*"
+    "@typescript-eslint/eslint-plugin": "*"
+    eslint: "*"
+    eslint-plugin-import: "*"
+    eslint-plugin-jsx-a11y: "*"
+    eslint-plugin-promise: "*"
+    eslint-plugin-react: "*"
+    eslint-plugin-react-hooks: "*"
+    postcss-syntax: "*"
+    prettier: "*"
+    stylelint: "*"
+  checksum: f3301cc5523fb5d265c45e57170f0c4b70d681af5fc7673aa4814989a4ceb3e47fef1f4136059956650447600b325e9f5b9cce7318ab25c4ed149089c8027661
   languageName: node
   linkType: hard
 
@@ -1704,7 +1716,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@codestates-engineering/jobs-components@workspace:."
   dependencies:
-    "@codestates-engineering/eslint-config-codestates": ^1.0.0
+    "@codestates-engineering/eslint-config-codestates": latest
     "@fontsource/noto-sans-kr": ^4.5.12
     "@rollup/plugin-json": ^5.0.1
     "@rollup/plugin-node-resolve": ^15.0.1
