@@ -29,7 +29,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./",\
           "packageDependencies": [\
             ["@codestates-engineering/eslint-config-codestates", "virtual:b3b70c7166662325175c17d9e1eda896c2099627d7905e85dfef7fe659f89a0bc330ed5dd79b7682940fe8d5ab7ce661ba394158976242b9a11fd38c590cdc2b#npm:1.0.2::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40codestates-engineering%2Feslint-config-codestates%2F1.0.2%2Fd51f94051797baa67ba17945a2da8d208fe6b34a"],\
-            ["@fontsource/noto-sans-kr", "npm:4.5.12"],\
             ["@rollup/plugin-json", "virtual:b3b70c7166662325175c17d9e1eda896c2099627d7905e85dfef7fe659f89a0bc330ed5dd79b7682940fe8d5ab7ce661ba394158976242b9a11fd38c590cdc2b#npm:6.0.0"],\
             ["@rollup/plugin-node-resolve", "virtual:b3b70c7166662325175c17d9e1eda896c2099627d7905e85dfef7fe659f89a0bc330ed5dd79b7682940fe8d5ab7ce661ba394158976242b9a11fd38c590cdc2b#npm:15.0.1"],\
             ["@rollup/plugin-typescript", "virtual:b3b70c7166662325175c17d9e1eda896c2099627d7905e85dfef7fe659f89a0bc330ed5dd79b7682940fe8d5ab7ce661ba394158976242b9a11fd38c590cdc2b#npm:11.0.0"],\
@@ -4523,7 +4522,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@codestates-engineering/jobs-components", "workspace:."],\
             ["@codestates-engineering/eslint-config-codestates", "virtual:b3b70c7166662325175c17d9e1eda896c2099627d7905e85dfef7fe659f89a0bc330ed5dd79b7682940fe8d5ab7ce661ba394158976242b9a11fd38c590cdc2b#npm:1.0.2::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40codestates-engineering%2Feslint-config-codestates%2F1.0.2%2Fd51f94051797baa67ba17945a2da8d208fe6b34a"],\
-            ["@fontsource/noto-sans-kr", "npm:4.5.12"],\
             ["@rollup/plugin-json", "virtual:b3b70c7166662325175c17d9e1eda896c2099627d7905e85dfef7fe659f89a0bc330ed5dd79b7682940fe8d5ab7ce661ba394158976242b9a11fd38c590cdc2b#npm:6.0.0"],\
             ["@rollup/plugin-node-resolve", "virtual:b3b70c7166662325175c17d9e1eda896c2099627d7905e85dfef7fe659f89a0bc330ed5dd79b7682940fe8d5ab7ce661ba394158976242b9a11fd38c590cdc2b#npm:15.0.1"],\
             ["@rollup/plugin-typescript", "virtual:b3b70c7166662325175c17d9e1eda896c2099627d7905e85dfef7fe659f89a0bc330ed5dd79b7682940fe8d5ab7ce661ba394158976242b9a11fd38c590cdc2b#npm:11.0.0"],\
@@ -5099,15 +5097,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["js-yaml", "npm:4.1.0"],\
             ["minimatch", "npm:3.1.2"],\
             ["strip-json-comments", "npm:3.1.1"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["@fontsource/noto-sans-kr", [\
-        ["npm:4.5.12", {\
-          "packageLocation": "./.yarn/cache/@fontsource-noto-sans-kr-npm-4.5.12-58cd1a07fc-45839892a6.zip/node_modules/@fontsource/noto-sans-kr/",\
-          "packageDependencies": [\
-            ["@fontsource/noto-sans-kr", "npm:4.5.12"]\
           ],\
           "linkType": "HARD"\
         }]\

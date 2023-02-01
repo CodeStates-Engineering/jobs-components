@@ -1,5 +1,4 @@
 import '../src/global.scss';
-import '@fontsource/noto-sans-kr';
 import '@storybook/addon-console';
 
 import { Link, useLocation, MemoryRouter } from 'react-router-dom';
