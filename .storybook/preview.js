@@ -1,4 +1,4 @@
-import '../src/styles/global.scss';
+import '../src/global.scss';
 import '@fontsource/noto-sans-kr';
 import '@storybook/addon-console';
 
