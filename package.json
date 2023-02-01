@@ -1,6 +1,6 @@
 {
   "name": "@codestates-engineering/jobs-components",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "types": "dist/package/types/index.d.ts",
   "module": "dist/package/index.js",
   "repository": "https://github.com/CodeStates-Engineering/jobs-components.git",
@@ -18,7 +18,7 @@
     "build:package": "rm -rf dist && mkdir dist && rollup -c",
     "build:storybook": "build-storybook -o dist/storybook",
     "deploy:storybook": "gh-pages -d dist/storybook",
-    "deploy:package": "npm publish",
+    "deploy:package": "yarn build:package && npm publish ./dist/package",
     "deploy:canary-package": "sh ./scripts/canary-publish.sh",
     "lint": "eslint './**/*.{js,ts,tsx}'",
     "lint:fix": "npm run lint -- --fix",
