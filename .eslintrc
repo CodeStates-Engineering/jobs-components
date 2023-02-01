@@ -1,4 +1,4 @@
 {
-  "ignorePatterns": ["*.tsx"], //임시 비활성화
+  "ignorePatterns": ["rollup.config.js", "*.tsx"], //임시 비활성화
   "extends": ["@codestates-engineering/eslint-config-codestates/frontend"]
 }

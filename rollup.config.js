@@ -16,10 +16,10 @@ import { nodeResolve } from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
 import svgr from '@svgr/rollup';
 
-import pkg from './package.json';
+import pkg from './package.json' assert { type: 'json' };
 
 const extensions = ['.js', '.jsx', '.ts', '.tsx', '.jsxs'];
-const libraryDir = 'dist/library';
+
 process.env.BABEL_ENV = 'production';
 
 export default {
@@ -45,11 +45,7 @@ export default {
       minimize: true,
     }),
     copy({
-      targets: [
-        { src: 'package.json', dest: libraryDir },
-        { src: 'src/assets', dest: `${libraryDir}/assets` },
-        { src: 'src/styles', dest: `${libraryDir}/styles` },
-      ],
+      targets: [{ src: 'package.json', dest: 'dist/package' }],
     }),
     json(),
     nodeResolve(),

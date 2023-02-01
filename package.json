@@ -1,8 +1,8 @@
 {
   "name": "@codestates-engineering/jobs-components",
   "version": "0.0.5",
-  "types": "dist/library/types/index.d.ts",
-  "module": "dist/library/index.js",
+  "types": "dist/package/types/index.d.ts",
+  "module": "dist/package/index.js",
   "repository": "https://github.com/CodeStates-Engineering/jobs-components.git",
   "author": "HyeokjaeLee <leehyeokjae97@gmail.com>",
   "homepage": "https://CodeStates-Engineering.github.io/jobs-components",
@@ -10,6 +10,7 @@
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
+  "type": "module",
   "scripts": {
     "install:dev": "yarn install && yarn dlx @yarnpkg/sdks vscode",
     "version": "npm version",
