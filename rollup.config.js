@@ -1,37 +1,41 @@
-import commonjs from "rollup-plugin-commonjs";
-import resolve from "rollup-plugin-node-resolve";
-import babel from "rollup-plugin-babel";
-import pkg from "./package.json";
-import svgr from "@svgr/rollup";
-import url from "rollup-plugin-url";
-import peerDepsExternal from "rollup-plugin-peer-deps-external";
-import typescript from "@rollup/plugin-typescript";
-import react from "react";
-import reactDom from "react-dom";
-import autoprefixer from "autoprefixer";
-import postcss from "rollup-plugin-postcss";
-import copy from "rollup-plugin-copy";
-import { terser } from "rollup-plugin-terser";
-import json from "@rollup/plugin-json";
-import { nodeResolve } from "@rollup/plugin-node-resolve";
-const extensions = [".js", ".jsx", ".ts", ".tsx", ".jsxs"];
+import react from 'react';
+import reactDom from 'react-dom';
 
-process.env.BABEL_ENV = "production";
+import autoprefixer from 'autoprefixer';
+import babel from 'rollup-plugin-babel';
+import commonjs from 'rollup-plugin-commonjs';
+import copy from 'rollup-plugin-copy';
+import resolve from 'rollup-plugin-node-resolve';
+import peerDepsExternal from 'rollup-plugin-peer-deps-external';
+import postcss from 'rollup-plugin-postcss';
+import { terser } from 'rollup-plugin-terser';
+import url from 'rollup-plugin-url';
+
+import json from '@rollup/plugin-json';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
+import typescript from '@rollup/plugin-typescript';
+import svgr from '@svgr/rollup';
+
+import pkg from './package.json';
+
+const extensions = ['.js', '.jsx', '.ts', '.tsx', '.jsxs'];
+const libraryDir = 'dist/library';
+process.env.BABEL_ENV = 'production';
 
 export default {
-  input: "./src/index.tsx",
+  input: './src/index.tsx',
   plugins: [
     peerDepsExternal(),
     resolve({ extensions }),
     commonjs({
-      include: "node_modules/**",
+      include: 'node_modules/**',
       namedExports: {
         react: Object.keys(react),
-        "react-dom": Object.keys(reactDom),
-        "react/jsx-runtime": ["jsx", "jsxs"],
+        'react-dom': Object.keys(reactDom),
+        'react/jsx-runtime': ['jsx', 'jsxs'],
       },
     }),
-    babel({ extensions, include: ["src/**/*"], runtimeHelpers: true }),
+    babel({ extensions, include: ['src/**/*'], runtimeHelpers: true }),
     url(),
     svgr(),
     typescript(),
@@ -42,8 +46,9 @@ export default {
     }),
     copy({
       targets: [
-        { src: "src/scss/libs", dest: "dist/library/scss" },
-        { src: "src/scss/libs.scss", dest: "dist/library/scss" },
+        { src: 'package.json', dest: libraryDir },
+        { src: 'src/assets', dest: `${libraryDir}/assets` },
+        { src: 'src/styles', dest: `${libraryDir}/styles` },
       ],
     }),
     json(),
@@ -53,7 +58,7 @@ export default {
   output: [
     {
       file: pkg.module,
-      format: "cjs",
+      format: 'cjs',
     },
   ],
 };

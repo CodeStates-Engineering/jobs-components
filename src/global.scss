@@ -1,5 +1,9 @@
-@import './global/reset';
-@import './global/font';
+@import './styles/reset';
+
+@font-face {
+  font-family: 'Pretendard';
+  src: url('./assets/fonts/Pretendard.ttf');
+}
 
 body {
   font-family: 'Pretendard', system-ui, -apple-system, BlinkMacSystemFont,

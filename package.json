@@ -10,13 +10,11 @@
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
-  "files": [
-    "/dist/library"
-  ],
   "scripts": {
+    "install:dev": "yarn install && yarn dlx @yarnpkg/sdks vscode",
     "version": "npm version",
     "start": "start-storybook --no-manager-cache -p 6006 -s public",
-    "build:package": "rm -rf dist && mkdir dist && tsc --emitDeclarationOnly && rollup -c",
+    "build:package": "rm -rf dist && mkdir dist && rollup -c",
     "build:storybook": "build-storybook -o dist/storybook",
     "deploy:storybook": "gh-pages -d dist/storybook",
     "deploy:package": "npm publish",
@@ -29,7 +27,7 @@
     "lint:style:fix": "stylelint './**/*.{js,ts,tsx}' --fix",
     "lint:all": "yarn lint && yarn prettier && yarn lint:style",
     "lint:all:fix": "yarn lint:fix && yarn prettier:fix && yarn lint:style:fix",
-    "lint:update": "yarn add -D @codestates-engineering/eslint-config-codestates@latest"
+    "lint:update": "yarn add @codestates-engineering/eslint-config-codestates@latest"
   },
   "eslintConfig": {
     "extends": [
@@ -60,7 +58,7 @@
     ]
   },
   "devDependencies": {
-    "@codestates-engineering/eslint-config-codestates": "latest",
+    "@codestates-engineering/eslint-config-codestates": "1.0.0",
     "@fontsource/noto-sans-kr": "^4.5.12",
     "@rollup/plugin-json": "^5.0.1",
     "@rollup/plugin-node-resolve": "^15.0.1",
@@ -129,8 +127,5 @@
   "peerDependencies": {
     "react": "^18.0.0"
   },
-  "packageManager": "yarn@3.3.1",
-  "dependencies": {
-    "pretendard": "lastest"
-  }
+  "packageManager": "yarn@3.3.1"
 }
