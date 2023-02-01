@@ -45,7 +45,11 @@ export default {
       minimize: true,
     }),
     copy({
-      targets: [{ src: 'package.json', dest: 'dist/package' }],
+      targets: [
+        { src: 'package.json', dest: 'dist/package' },
+        { src: './src/assets', dest: 'dist/package' },
+        { src: './src/styles', dest: 'dist/package' },
+      ],
     }),
     json(),
     nodeResolve(),
