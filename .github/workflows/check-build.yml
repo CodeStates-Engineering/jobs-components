@@ -1,0 +1,31 @@
+name: Check build
+
+on:
+  pull_request:
+    branches: ['dev/*', 'release/*', 'main']
+
+jobs:
+  check_code_style:
+    runs-on: ubuntu-latest
+    env:
+      CSE_NPM_TOKEN: ${{secrets.CSE_NPM_TOKEN}}
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{secrets.CSE_NPM_TOKEN}}
+
+      - name: Set node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          registry-url: ${{ env.NPM_REGISTRY_URL }}
+
+      - name: Check eslint
+        run: yarn lint
+
+      - name: Check prettier
+        run: yarn prettier
+
+      - name: Check stylelint
+        run: yarn lint:style
