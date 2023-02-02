@@ -16,17 +16,7 @@ export const parameters = {
 export const decorators = [
   (Story) => (
     <MemoryRouter>
-      <div
-        id="preview-wrap"
-        style={{
-          display: 'flex',
-          minHeight: '80vh',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <Story />
-      </div>
+      <Story />
     </MemoryRouter>
   ),
 ];
