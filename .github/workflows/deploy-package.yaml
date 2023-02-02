@@ -51,6 +51,9 @@ jobs:
       - name: Push release branch
         run: git push
 
+      - name: Clean build
+        run: yarn run clean:build
+
       - name: Build package
         run: yarn run build:package
 
