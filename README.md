@@ -51,13 +51,14 @@ JOBS Client는 다음과 같은 Branch 전략을 사용하고 있습니다.
 - release branch에 변경이 발생하면 github action에 의해 패키지 버전이 변경되며 release tag 생성과 package, storybook 배포가 발생합니다.
 - gh-pages branch는 storybook 배포를 위한 branch로 github action에 의해 관리됩니다.
 
-### 해당 Github action에선 squash merge(commit) message footer에 따라 다음과 같은 트리거를 지원합니다.
+### Github actions
 
-#### feature branch
+해당 프로젝트의 Github actions에선 squash merge(commit) message footer에 따라 다음과 같은 트리거를 지원합니다.
 
-**deploy canary**
+#### deploy canary
 
-- 외부 프로젝트에서 설치가능한 canary package 배포
+- Trigger: feature branch commit message
+- Action: 외부 프로젝트에서 설치가능한 canary package 배포
 
 ```bash
 feat: commit title
@@ -67,13 +68,11 @@ feat: commit title
 deploy canary
 ```
 
-#### feature branch(commit) > release branch
+#### version-up
 
-**version-up**
-
-- release 버전 설정
-
-지원되는 항목: major, minor, patch(default)
+- Trigger: release branch commit message
+- Action: release 버전 설정
+- Options: major, minor, patch(default)
 
 ```bash
 JOBS-XX: PR title
@@ -83,4 +82,27 @@ JOBS-XX: PR title
 version-up minor
 ```
 
-- 아무런 footer message가 없으면 기본적으로 patch 단위로 적용됩니다.
+## 📚 Deployment
+
+- 항상 release branch의 최신 변경 사항을 반영합니다.
+
+### Package
+
+- Link: https://github.com/CodeStates-Engineering/jobs-components/pkgs/npm/jobs-components
+- 해당 패키지를 설치하기 위해선 위에서 설정한 "CSE_NPM_TOKEN"이 필요합니다.
+
+#### yarn
+
+```bash
+ yarn add @codestates-engineering/jobs-components
+```
+
+#### npm
+
+```bash
+ npm install @codestates-engineering/jobs-components
+```
+
+### Storybook
+
+- Link: https://codestates-engineering.github.io/jobs-components
