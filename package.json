@@ -1,8 +1,8 @@
 {
   "name": "@codestates-engineering/jobs-components",
   "version": "0.0.9",
-  "types": "dist/package/types/index.d.ts",
-  "module": "dist/package/index.js",
+  "types": "types/index.d.ts",
+  "module": "index.js",
   "repository": "https://github.com/CodeStates-Engineering/jobs-components.git",
   "author": "HyeokjaeLee <leehyeokjae97@gmail.com>",
   "homepage": "https://CodeStates-Engineering.github.io/jobs-components",
