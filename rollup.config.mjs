@@ -58,7 +58,6 @@ export default {
         ...pkg,
         module: './index.js',
         types: './types/index.d.ts',
-        type: 'module',
         scripts: undefined,
         optionalDependencies: {},
         eslintConfig: {},
