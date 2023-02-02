@@ -1,8 +1,8 @@
 {
   "name": "@codestates-engineering/jobs-components",
   "version": "0.0.9",
-  "types": "types/index.d.ts",
-  "module": "index.js",
+  "types": "dist/package/types/index.d.ts",
+  "module": "dist/package/index.js",
   "repository": "https://github.com/CodeStates-Engineering/jobs-components.git",
   "author": "HyeokjaeLee <leehyeokjae97@gmail.com>",
   "homepage": "https://CodeStates-Engineering.github.io/jobs-components",
@@ -99,6 +99,7 @@
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-copy": "^3.4.0",
+    "rollup-plugin-generate-package-json": "^3.2.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.2",

@@ -10,6 +10,7 @@ import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import postcss from 'rollup-plugin-postcss';
 import { terser } from 'rollup-plugin-terser';
 import url from 'rollup-plugin-url';
+import generatePackageJson from 'rollup-plugin-generate-package-json';
 
 import json from '@rollup/plugin-json';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
@@ -46,12 +47,23 @@ export default {
     }),
     copy({
       targets: [
-        { src: 'package.json', dest: 'dist/package' },
         { src: './src/assets', dest: 'dist/package' },
         { src: './src/styles', dest: 'dist/package' },
       ],
     }),
     json(),
+    generatePackageJson({
+      outputFolder: 'dist/package',
+      baseContents: (pkg) => ({
+        ...pkg,
+        module: './index.js',
+        types: './types/index.d.ts',
+        type: 'module',
+        scripts: undefined,
+        optionalDependencies: {},
+        eslintConfig: {},
+      }),
+    }),
     nodeResolve(),
     terser(),
   ],
