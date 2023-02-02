@@ -35,5 +35,8 @@ jobs:
       - name: Regist author
         run: git config --global user.email "engineering@codestates.com" && git config --global user.name "CodeStates Engineering"
 
+      - name: Build Package
+        run: yarn run build:package
+
       - name: Deploy package(canary)
         run: yarn run deploy:canary-package

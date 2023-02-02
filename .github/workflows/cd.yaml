@@ -51,5 +51,14 @@ jobs:
       - name: Push release branch
         run: git push
 
+      - name: Build Package
+        run: yarn run build:package
+
       - name: Deploy package
         run: yarn run deploy:package
+
+      - name: Build storybook
+        run: yarn run build:storybook
+
+      - name: Deploy storybook
+        run: yarn run deploy:storybook
