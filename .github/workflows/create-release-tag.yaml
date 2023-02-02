@@ -1,4 +1,4 @@
-name: Auto tag creation
+name: Create release tag
 
 on:
   push:
@@ -6,17 +6,17 @@ on:
       - 'release'
 
 jobs:
-  tag:
+  create_release_tag:
     if: "contains(github.event.head_commit.message, 'ver: ')"
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
 
-      - name: tag version extraction
+      - name: Extract version
         run: echo "version=$(echo ${{github.event.head_commit.message}} | egrep -o '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}')" >> $GITHUB_ENV
 
-      - name: release creation
+      - name: Create release tag
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
