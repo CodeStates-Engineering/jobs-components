@@ -2,7 +2,7 @@ name: Check code style
 
 on:
   pull_request:
-    branches: ['dev/*', 'release/*', 'main']
+    branches: ['release']
 
 jobs:
   check_code_style:

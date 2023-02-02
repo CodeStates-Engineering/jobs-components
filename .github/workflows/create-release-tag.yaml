@@ -1,4 +1,4 @@
-name: Auto tag creation
+name: Create release tag
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - 'release'
 
 jobs:
-  tag:
+  create_release_tag:
     if: "contains(github.event.head_commit.message, 'ver: ')"
     runs-on: ubuntu-latest
 

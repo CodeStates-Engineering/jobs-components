@@ -1,4 +1,4 @@
-name: CD
+name: Deploy package
 
 on:
   push:
@@ -10,7 +10,7 @@ env:
   NPM_REGISTRY_URL: 'https://npm.pkg.github.com/'
 
 jobs:
-  CD:
+  deploy_package:
     if: "!contains(github.event.head_commit.message, 'ver: ')"
     runs-on: ubuntu-latest
     env:
@@ -51,7 +51,7 @@ jobs:
       - name: Push release branch
         run: git push
 
-      - name: Build Package
+      - name: Build package
         run: yarn run build:package
 
       - name: Deploy package
