@@ -17,7 +17,7 @@ jobs:
       CSE_NPM_TOKEN: ${{secrets.CSE_NPM_TOKEN}}
 
     steps:
-      - name: node.js ${{ env.NODE_VERSION }}
+      - name: Set node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
@@ -27,29 +27,29 @@ jobs:
         with:
           token: ${{secrets.CSE_NPM_TOKEN}}
 
-      - name: depenency(zero-install) install
+      - name: Install depenency(zero-install)
         run: yarn install
 
-      - name: author registration
+      - name: Regist author
         run: git config --global user.email "engineering@codestates.com" && git config --global user.name "CodeStates Engineering"
 
-      - name: git pull
+      - name: Pull release branch
         run: git pull
 
-      - name: patch versioning
+      - name: Set new patch version
         if: "!contains(github.event.head_commit.message, 'version-up ')"
         run: "npm version patch -m 'ver: %s'"
 
-      - name: minor versioning
+      - name: Set new minor version
         if: "contains(github.event.head_commit.message, 'version-up minor')"
         run: "npm version minor -m 'ver: %s'"
 
-      - name: major versioning
+      - name: Set new major version
         if: "contains(github.event.head_commit.message, 'version-up major')"
         run: "npm version major -m 'ver: %s'"
 
-      - name: git push
+      - name: Push release branch
         run: git push
 
-      - name: package(canary) deployment
+      - name: Deploy package
         run: yarn run deploy:package

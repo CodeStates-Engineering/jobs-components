@@ -19,7 +19,7 @@ jobs:
       CSE_NPM_TOKEN: ${{secrets.CSE_NPM_TOKEN}}
 
     steps:
-      - name: node.js ${{ env.NODE_VERSION }}
+      - name: Set node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
@@ -29,11 +29,11 @@ jobs:
         with:
           token: ${{secrets.CSE_NPM_TOKEN}}
 
-      - name: depenency(zero-install) install
+      - name: Install depenency(zero-install)
         run: yarn install
 
-      - name: author registration
+      - name: Regist author
         run: git config --global user.email "engineering@codestates.com" && git config --global user.name "CodeStates Engineering"
 
-      - name: package(canary) deployment
+      - name: Deploy package(canary)
         run: yarn run deploy:canary-package
