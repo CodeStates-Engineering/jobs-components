@@ -38,8 +38,11 @@ jobs:
       - name: Clean build
         run: yarn run clean:build
 
+      - name: Set new canary version
+        run: yarn run version:canary
+
       - name: Build Package
         run: yarn run build:package
 
       - name: Deploy package(canary)
-        run: yarn run deploy:canary-package
+        run: yarn run deploy:package:canary
