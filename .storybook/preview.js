@@ -1,13 +1,7 @@
 import '../src/global.scss';
 import '@storybook/addon-console';
 
-import { Link, useLocation, MemoryRouter } from 'react-router-dom';
-import { replaceDependency } from '../src/plugins';
-
-replaceDependency({
-  Link,
-  usePathname: () => useLocation().pathname,
-});
+import { MemoryRouter } from 'react-router-dom';
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },

@@ -19,7 +19,7 @@
     "deploy:storybook": "gh-pages -d dist/storybook",
     "deploy:package": "yarn build:package && npm publish ./dist/package",
     "deploy:canary-package": "sh ./scripts/canary-publish.sh",
-    "lint": "eslint './**/*.{js,ts,tsx}'",
+    "lint": "eslint 'src/**/*.{js,ts,tsx}'",
     "lint:fix": "npm run lint -- --fix",
     "prettier": "prettier '**/*.{json,yaml,md,js,ts,tsx}' --check",
     "prettier:fix": "prettier '**/*.{json,yaml,md,js,ts,tsx}' --write",
