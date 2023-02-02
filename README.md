@@ -41,9 +41,9 @@ yarn install:dev
  yarn lint:all:fix
 ```
 
-## 🌳 JOBS Client branch
+## 🌳 JOBS Components branch
 
-JOBS Client는 다음과 같은 Branch 전략을 사용하고 있습니다.
+JOBS Components는 다음과 같은 Branch 전략을 사용하고 있습니다.
 
 - release branch는 버그 픽스나 커밋 하나로 끝나는 단위 작업만 직접 commit 합니다.
 - release branch PR은 code style, build test가 완료된 후에 merge가 가능합니다.
