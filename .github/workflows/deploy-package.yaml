@@ -64,4 +64,7 @@ jobs:
         run: yarn run build:storybook
 
       - name: Deploy storybook
-        run: yarn run deploy:storybook
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.CSE_NPM_TOKEN }}
+          publish_dir: ./dist/storybook
