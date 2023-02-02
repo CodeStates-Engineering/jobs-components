@@ -79,6 +79,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["rollup-plugin-babel", "virtual:b3b70c7166662325175c17d9e1eda896c2099627d7905e85dfef7fe659f89a0bc330ed5dd79b7682940fe8d5ab7ce661ba394158976242b9a11fd38c590cdc2b#npm:4.4.0"],\
             ["rollup-plugin-commonjs", "virtual:b3b70c7166662325175c17d9e1eda896c2099627d7905e85dfef7fe659f89a0bc330ed5dd79b7682940fe8d5ab7ce661ba394158976242b9a11fd38c590cdc2b#npm:10.1.0"],\
             ["rollup-plugin-copy", "npm:3.4.0"],\
+            ["rollup-plugin-generate-package-json", "virtual:b3b70c7166662325175c17d9e1eda896c2099627d7905e85dfef7fe659f89a0bc330ed5dd79b7682940fe8d5ab7ce661ba394158976242b9a11fd38c590cdc2b#npm:3.2.0"],\
             ["rollup-plugin-node-resolve", "virtual:b3b70c7166662325175c17d9e1eda896c2099627d7905e85dfef7fe659f89a0bc330ed5dd79b7682940fe8d5ab7ce661ba394158976242b9a11fd38c590cdc2b#npm:5.2.0"],\
             ["rollup-plugin-peer-deps-external", "virtual:b3b70c7166662325175c17d9e1eda896c2099627d7905e85dfef7fe659f89a0bc330ed5dd79b7682940fe8d5ab7ce661ba394158976242b9a11fd38c590cdc2b#npm:2.2.4"],\
             ["rollup-plugin-postcss", "virtual:b3b70c7166662325175c17d9e1eda896c2099627d7905e85dfef7fe659f89a0bc330ed5dd79b7682940fe8d5ab7ce661ba394158976242b9a11fd38c590cdc2b#npm:4.0.2"],\
@@ -4573,6 +4574,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["rollup-plugin-babel", "virtual:b3b70c7166662325175c17d9e1eda896c2099627d7905e85dfef7fe659f89a0bc330ed5dd79b7682940fe8d5ab7ce661ba394158976242b9a11fd38c590cdc2b#npm:4.4.0"],\
             ["rollup-plugin-commonjs", "virtual:b3b70c7166662325175c17d9e1eda896c2099627d7905e85dfef7fe659f89a0bc330ed5dd79b7682940fe8d5ab7ce661ba394158976242b9a11fd38c590cdc2b#npm:10.1.0"],\
             ["rollup-plugin-copy", "npm:3.4.0"],\
+            ["rollup-plugin-generate-package-json", "virtual:b3b70c7166662325175c17d9e1eda896c2099627d7905e85dfef7fe659f89a0bc330ed5dd79b7682940fe8d5ab7ce661ba394158976242b9a11fd38c590cdc2b#npm:3.2.0"],\
             ["rollup-plugin-node-resolve", "virtual:b3b70c7166662325175c17d9e1eda896c2099627d7905e85dfef7fe659f89a0bc330ed5dd79b7682940fe8d5ab7ce661ba394158976242b9a11fd38c590cdc2b#npm:5.2.0"],\
             ["rollup-plugin-peer-deps-external", "virtual:b3b70c7166662325175c17d9e1eda896c2099627d7905e85dfef7fe659f89a0bc330ed5dd79b7682940fe8d5ab7ce661ba394158976242b9a11fd38c590cdc2b#npm:2.2.4"],\
             ["rollup-plugin-postcss", "virtual:b3b70c7166662325175c17d9e1eda896c2099627d7905e85dfef7fe659f89a0bc330ed5dd79b7682940fe8d5ab7ce661ba394158976242b9a11fd38c590cdc2b#npm:4.0.2"],\
@@ -14499,6 +14501,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["detab", "npm:2.0.4"],\
             ["repeat-string", "npm:1.6.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["detect-indent", [\
+        ["npm:5.0.0", {\
+          "packageLocation": "./.yarn/cache/detect-indent-npm-5.0.0-123fa3fd0b-61763211da.zip/node_modules/detect-indent/",\
+          "packageDependencies": [\
+            ["detect-indent", "npm:5.0.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -26724,6 +26735,30 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["rollup-plugin-generate-package-json", [\
+        ["npm:3.2.0", {\
+          "packageLocation": "./.yarn/cache/rollup-plugin-generate-package-json-npm-3.2.0-2e133895b1-61b440377a.zip/node_modules/rollup-plugin-generate-package-json/",\
+          "packageDependencies": [\
+            ["rollup-plugin-generate-package-json", "npm:3.2.0"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:b3b70c7166662325175c17d9e1eda896c2099627d7905e85dfef7fe659f89a0bc330ed5dd79b7682940fe8d5ab7ce661ba394158976242b9a11fd38c590cdc2b#npm:3.2.0", {\
+          "packageLocation": "./.yarn/__virtual__/rollup-plugin-generate-package-json-virtual-33596fab52/0/cache/rollup-plugin-generate-package-json-npm-3.2.0-2e133895b1-61b440377a.zip/node_modules/rollup-plugin-generate-package-json/",\
+          "packageDependencies": [\
+            ["rollup-plugin-generate-package-json", "virtual:b3b70c7166662325175c17d9e1eda896c2099627d7905e85dfef7fe659f89a0bc330ed5dd79b7682940fe8d5ab7ce661ba394158976242b9a11fd38c590cdc2b#npm:3.2.0"],\
+            ["@types/rollup", null],\
+            ["read-pkg", "npm:5.2.0"],\
+            ["rollup", "npm:3.12.0"],\
+            ["write-pkg", "npm:4.0.0"]\
+          ],\
+          "packagePeers": [\
+            "@types/rollup",\
+            "rollup"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["rollup-plugin-node-resolve", [\
         ["npm:5.2.0", {\
           "packageLocation": "./.yarn/cache/rollup-plugin-node-resolve-npm-5.2.0-6af239ea59-29687721d2.zip/node_modules/rollup-plugin-node-resolve/",\
@@ -27527,6 +27562,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["agent-base", "npm:6.0.2"],\
             ["debug", "virtual:1eb3a4b7acf39cc06579ce173dfc189db60be09511a857cde17cd58b8e2d244d4d50cb2c180dd19733a7495da9bca01fbe9bd6534c33688ce8846c8c32165184#npm:4.3.4"],\
             ["socks", "npm:2.7.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["sort-keys", [\
+        ["npm:2.0.0", {\
+          "packageLocation": "./.yarn/cache/sort-keys-npm-2.0.0-4f517eb415-f0fd827fa9.zip/node_modules/sort-keys/",\
+          "packageDependencies": [\
+            ["sort-keys", "npm:2.0.0"],\
+            ["is-plain-obj", "npm:1.1.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -29271,6 +29316,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "HARD"\
         }],\
+        ["npm:0.4.1", {\
+          "packageLocation": "./.yarn/cache/type-fest-npm-0.4.1-bf35530fbf-25f882d9cc.zip/node_modules/type-fest/",\
+          "packageDependencies": [\
+            ["type-fest", "npm:0.4.1"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
         ["npm:0.6.0", {\
           "packageLocation": "./.yarn/cache/type-fest-npm-0.6.0-76b229965b-b2188e6e4b.zip/node_modules/type-fest/",\
           "packageDependencies": [\
@@ -30854,6 +30906,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["write-file-atomic", [\
+        ["npm:2.4.3", {\
+          "packageLocation": "./.yarn/cache/write-file-atomic-npm-2.4.3-f3fc725df3-2db81f92ae.zip/node_modules/write-file-atomic/",\
+          "packageDependencies": [\
+            ["write-file-atomic", "npm:2.4.3"],\
+            ["graceful-fs", "npm:4.2.10"],\
+            ["imurmurhash", "npm:0.1.4"],\
+            ["signal-exit", "npm:3.0.7"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
         ["npm:3.0.3", {\
           "packageLocation": "./.yarn/cache/write-file-atomic-npm-3.0.3-d948a237da-c55b24617c.zip/node_modules/write-file-atomic/",\
           "packageDependencies": [\
@@ -30871,6 +30933,33 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["write-file-atomic", "npm:4.0.2"],\
             ["imurmurhash", "npm:0.1.4"],\
             ["signal-exit", "npm:3.0.7"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["write-json-file", [\
+        ["npm:3.2.0", {\
+          "packageLocation": "./.yarn/cache/write-json-file-npm-3.2.0-965d80a41e-2b97ce2027.zip/node_modules/write-json-file/",\
+          "packageDependencies": [\
+            ["write-json-file", "npm:3.2.0"],\
+            ["detect-indent", "npm:5.0.0"],\
+            ["graceful-fs", "npm:4.2.10"],\
+            ["make-dir", "npm:2.1.0"],\
+            ["pify", "npm:4.0.1"],\
+            ["sort-keys", "npm:2.0.0"],\
+            ["write-file-atomic", "npm:2.4.3"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["write-pkg", [\
+        ["npm:4.0.0", {\
+          "packageLocation": "./.yarn/cache/write-pkg-npm-4.0.0-731dd7a942-7864d44370.zip/node_modules/write-pkg/",\
+          "packageDependencies": [\
+            ["write-pkg", "npm:4.0.0"],\
+            ["sort-keys", "npm:2.0.0"],\
+            ["type-fest", "npm:0.4.1"],\
+            ["write-json-file", "npm:3.2.0"]\
           ],\
           "linkType": "HARD"\
         }]\
