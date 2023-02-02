@@ -16,7 +16,7 @@
     "importsNotUsedAsValues": "error",
     "baseUrl": "./src",
     "declaration": true,
-    "declarationDir": "dist/library/types"
+    "declarationDir": "./types"
   },
   "include": ["src"],
   "exclude": ["**/*.stories.tsx"]

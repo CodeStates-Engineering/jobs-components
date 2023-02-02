@@ -1,20 +1,7 @@
-<<<<<<< HEAD
-import "../src/scss/global.scss";
-import "@fontsource/noto-sans-kr";
-import "@storybook/addon-console";
-import { Link, useLocation, MemoryRouter } from "react-router-dom";
-import { replaceDependency } from "../src/plugins";
-=======
-import '../src/scss/global.scss';
+import '../src/global.scss';
 import '@storybook/addon-console';
-import { Link, useLocation, MemoryRouter } from 'react-router-dom';
-import { replaceDependency } from '../src/plugins';
->>>>>>> release
 
-replaceDependency({
-  Link,
-  usePathname: () => useLocation().pathname,
-});
+import { MemoryRouter } from 'react-router-dom';
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -32,17 +19,10 @@ export const decorators = [
       <div
         id="preview-wrap"
         style={{
-<<<<<<< HEAD
-          display: "flex",
-          minHeight: "80vh",
-          justifyContent: "center",
-          alignItems: "center",
-=======
           display: 'flex',
           minHeight: '80vh',
           justifyContent: 'center',
           alignItems: 'center',
->>>>>>> release
         }}
       >
         <Story />
