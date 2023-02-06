@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import type { ComponentStory, ComponentMeta } from '@storybook/react';
 
@@ -11,10 +11,16 @@ export default {
   component: Button,
 } as ComponentMeta<typeof Button>;
 
-const ButtonStory: ComponentStory<typeof Button> = (args) => (
-  <Button {...args} />
-);
+const ButtonStory: ComponentStory<typeof Button> = (args) => {
+  const [value, setValue] = useState(true);
+
+  return (
+    <Button {...args} onClick={() => setValue(false)}>
+      {String(value)}
+    </Button>
+  );
+};
 
 export const Default = ButtonStory.bind({});
-const defaultArgs: ButtonProps = { children: 'Button' };
+const defaultArgs: ButtonProps = {};
 Default.args = defaultArgs;

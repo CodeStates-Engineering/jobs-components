@@ -14,7 +14,7 @@
     "install:dev": "yarn install && yarn dlx @yarnpkg/sdks vscode",
     "version": "npm version",
     "version:canary": "sh ./scripts/set-canary-version.sh",
-    "start": "start-storybook --no-manager-cache -p 6006 -s public",
+    "start": "start-storybook --no-manager-cache -p 6006",
     "clean:build": "rm -rf dist",
     "build:package": "rollup -c",
     "build:storybook": "build-storybook -o dist/storybook",
@@ -59,7 +59,7 @@
     ]
   },
   "devDependencies": {
-    "@codestates-engineering/eslint-config-codestates": "1.0.2",
+    "@codestates-engineering/eslint-config-codestates": "1.0.3",
     "@rollup/plugin-json": "^6.0.0",
     "@rollup/plugin-node-resolve": "^15.0.1",
     "@rollup/plugin-typescript": "^11.0.0",
@@ -80,7 +80,7 @@
     "@testing-library/user-event": "^14.4.3",
     "@types/jest": "^29.4.0",
     "@types/lodash-es": "^4.17.6",
-    "@types/node": "^18.11.18",
+    "@types/node": "^18.11.19",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
     "autoprefixer": "^10.4.13",
@@ -95,7 +95,7 @@
     "react-feather": "^2.0.10",
     "react-router-dom": "^6.8.0",
     "react-scripts": "^5.0.1",
-    "rollup": "^3.12.0",
+    "rollup": "^3.14.0",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-copy": "^3.4.0",
@@ -127,7 +127,8 @@
     "stylelint": "*"
   },
   "peerDependencies": {
-    "react": "^18.0.0"
+    "react": "^18.0.0",
+    "react-dom": "^18.2.0"
   },
   "packageManager": "yarn@3.3.1"
 }
