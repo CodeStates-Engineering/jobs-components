@@ -1,0 +1,41 @@
+@import '../../../styles/libs';
+
+.option-container {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  background-color: $BLUE-200;
+  border-radius: 10px;
+  > li {
+    width: 100%;
+    position: relative;
+  }
+  max-height: 400px;
+  overflow-y: auto;
+  overflow-x: visible;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.option-item {
+  min-width: 100%;
+  text-align: start;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+  padding: 0.5em;
+  border-radius: 5px;
+
+  &:hover {
+    background-color: $BLUE-300;
+  }
+
+  &.overflow {
+    &:hover {
+      @include fade-in(0.8s);
+      white-space: pre-wrap;
+    }
+  }
+}

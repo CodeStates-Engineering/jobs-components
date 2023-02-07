@@ -1668,9 +1668,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codestates-engineering/eslint-config-codestates@npm:1.0.3":
-  version: 1.0.3
-  resolution: "@codestates-engineering/eslint-config-codestates@npm:1.0.3::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40codestates-engineering%2Feslint-config-codestates%2F1.0.3%2F0f001d153d096efc4559a9b934637125351a66d2"
+"@codestates-engineering/eslint-config-codestates@npm:1.0.5":
+  version: 1.0.5
+  resolution: "@codestates-engineering/eslint-config-codestates@npm:1.0.5::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40codestates-engineering%2Feslint-config-codestates%2F1.0.5%2F90e75f338855a249f84defdafe42067ad738a4cc"
   dependencies:
     "@babel/eslint-parser": ^7.19.1
     "@stylelint/postcss-css-in-js": ^0.38.0
@@ -1708,7 +1708,7 @@ __metadata:
     postcss-syntax: "*"
     prettier: "*"
     stylelint: "*"
-  checksum: 18a720bc13a3d3d90f4169714016afcb2771f7d7001dd3dd3f42166efe8cfea82f78e748024d1b4b0c2adecf91cbb1d24306b11b3a485d07c6e0480eb2e48057
+  checksum: 2bd9e2fa1eb3d533f640eba8fa512fc2c887c5de4db264d2ecb854665f2663554bb7985ce3207fa6476e217913deec7117a4b88af49cc627f2fa1a901e5799ea
   languageName: node
   linkType: hard
 
@@ -1716,7 +1716,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@codestates-engineering/jobs-components@workspace:."
   dependencies:
-    "@codestates-engineering/eslint-config-codestates": 1.0.3
+    "@codestates-engineering/eslint-config-codestates": 1.0.5
     "@rollup/plugin-json": ^6.0.0
     "@rollup/plugin-node-resolve": ^15.0.1
     "@rollup/plugin-typescript": ^11.0.0
