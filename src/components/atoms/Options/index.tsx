@@ -1,6 +1,7 @@
+import { useMountedEffect } from 'hooks/useMountedEffect';
 import { cleanClassName } from 'utils';
 
-import { createRef, useLayoutEffect, useMemo, useState } from 'react';
+import { createRef, useMemo, useState } from 'react';
 
 import styles from './index.module.scss';
 
@@ -15,13 +16,41 @@ export interface OptionsProps<T> {
   onClick?: T extends Option<infer U>
     ? (value: Option<U>) => void
     : (value: string) => void;
+  perPage?: number;
 }
 
 export const Options = <T extends Option<unknown> | string>({
   opened,
-  options,
-  onClick,
+  options: unknowOptions,
+  onClick: unknownOnClick,
+  perPage = 5,
 }: OptionsProps<T>) => {
+  const [firstShownOptionIndex, setFirstShownOptionIndex] = useState(0);
+  const tempLastShownOptionIndex = firstShownOptionIndex + perPage - 1;
+  const totalOptionCount = unknowOptions?.length ?? 0;
+  const totalLastOptionIndex = totalOptionCount - 1;
+  const lastShownOptionIndex =
+    tempLastShownOptionIndex < totalLastOptionIndex
+      ? tempLastShownOptionIndex
+      : totalLastOptionIndex;
+
+  const onClick = unknownOnClick as (value: unknown) => void;
+
+  const options = useMemo(
+    () =>
+      unknowOptions
+        ?.slice(firstShownOptionIndex, lastShownOptionIndex + 1)
+        .map((option) =>
+          typeof option === 'string'
+            ? { label: option, value: option }
+            : option,
+        ) as Option<unknown>[] | undefined,
+    [unknowOptions, firstShownOptionIndex, lastShownOptionIndex],
+  );
+
+  const optionCount = options?.length ?? 0;
+  const lastOptionIndex = optionCount - 1;
+
   const optionElementRefs = useMemo(
     () => options?.map(() => createRef<HTMLButtonElement>()),
     [options],
@@ -30,14 +59,13 @@ export const Options = <T extends Option<unknown> | string>({
   const [optionOverflowStatuses, setOptionOverflowStatuses] =
     useState<boolean[]>();
 
-  useLayoutEffect(() => {
+  useMountedEffect(() => {
     setOptionOverflowStatuses(
       optionElementRefs?.map((optionElement) => {
         const { current } = optionElement;
 
         if (current) {
           const { offsetWidth, scrollWidth } = current;
-          console.log('height', current?.offsetHeight);
           return offsetWidth < scrollWidth;
         }
 
@@ -46,34 +74,141 @@ export const Options = <T extends Option<unknown> | string>({
     );
   }, [optionElementRefs, setOptionOverflowStatuses]);
 
+  const [selectedOptionIndex, setSelectedOptionIndex] = useState(-1);
+
+  useMountedEffect(() => {
+    if (opened) {
+      const movePrevPage = () =>
+        firstShownOptionIndex > 0 &&
+        setFirstShownOptionIndex((prev) => prev - 1);
+
+      const moveNextPage = () =>
+        lastShownOptionIndex < totalLastOptionIndex &&
+        setFirstShownOptionIndex((prev) => prev + 1);
+
+      const pageMoveListener = ({ key }: KeyboardEvent) => {
+        switch (key) {
+          case 'ArrowUp':
+            return selectedOptionIndex === 0 && movePrevPage();
+          case 'ArrowDown':
+            return selectedOptionIndex === lastOptionIndex && moveNextPage();
+          default:
+            break;
+        }
+      };
+
+      const mouseWheelListener = ({ deltaY }: WheelEvent) => {
+        if (deltaY > 15) {
+          return moveNextPage();
+        }
+        if (deltaY < -15) {
+          return movePrevPage();
+        }
+      };
+
+      document.addEventListener('wheel', mouseWheelListener);
+      document.addEventListener('keydown', pageMoveListener);
+      return () => {
+        document.removeEventListener('wheel', mouseWheelListener);
+        document.removeEventListener('keydown', pageMoveListener);
+      };
+    }
+  }, [
+    lastOptionIndex,
+    opened,
+    selectedOptionIndex,
+    firstShownOptionIndex,
+    lastShownOptionIndex,
+    totalLastOptionIndex,
+  ]);
+
+  const [allowMouseEnter, setAllowMouseEnter] = useState(true);
+
+  useMountedEffect(() => {
+    if (opened) {
+      setSelectedOptionIndex(-1);
+      const selectListener = ({ key }: KeyboardEvent) => {
+        switch (key) {
+          case 'ArrowUp':
+            setAllowMouseEnter(false);
+            return setSelectedOptionIndex((prev) =>
+              prev > 0 ? prev - 1 : prev,
+            );
+          case 'ArrowDown':
+            setAllowMouseEnter(false);
+            return setSelectedOptionIndex((prev) =>
+              prev < lastOptionIndex ? prev + 1 : prev,
+            );
+          default:
+            break;
+        }
+      };
+
+      document.addEventListener('keydown', selectListener);
+      return () => document.removeEventListener('keydown', selectListener);
+    }
+  }, [lastOptionIndex, opened]);
+
+  useMountedEffect(() => {
+    if (opened) {
+      const mouseMoveListener = () => setAllowMouseEnter(true);
+      document.addEventListener('mousemove', mouseMoveListener);
+      return () => document.removeEventListener('mousemove', mouseMoveListener);
+    }
+  }, [opened]);
+
   return opened ? (
-    <ul className={styles['option-container']} style={{ width: 500 }}>
-      {options?.map((option, index) => {
-        const { label, value } =
-          typeof option === 'string'
-            ? { label: option, value: option }
-            : option;
-
-        const isOverflow = optionOverflowStatuses?.[index];
-
-        return (
-          <li key={index}>
-            <button
-              ref={optionElementRefs?.[index]}
-              className={cleanClassName(
-                `${styles['option-item']} ${isOverflow && styles.overflow}`,
-              )}
-              onClick={() => {
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                onClick?.(value as any);
-              }}
-            >
-              {label}
-            </button>
-          </li>
-        );
-      })}
-    </ul>
+    <section className={styles.options} style={{ width: 500 }}>
+      <div
+        className={cleanClassName(
+          `${styles['page-indicator']} ${
+            firstShownOptionIndex === 0 && styles.invisible
+          }`,
+        )}
+      >
+        ▲
+      </div>
+      <ul className={styles['option-container']}>
+        {options?.map(({ label, value }, index) => {
+          const optionElementRef = optionElementRefs?.[index];
+          const isOverflow = optionOverflowStatuses?.[index];
+          const isSelected = selectedOptionIndex === index;
+          return (
+            <li key={index}>
+              <button
+                ref={optionElementRef}
+                className={cleanClassName(
+                  `${styles['option-item']} ${
+                    allowMouseEnter && styles['mouse-on']
+                  } ${isOverflow && styles.overflow} ${
+                    isSelected && styles.selected
+                  }`,
+                )}
+                onClick={() => {
+                  onClick?.(value);
+                }}
+                onMouseEnter={() => {
+                  if (allowMouseEnter) {
+                    setSelectedOptionIndex(index);
+                  }
+                }}
+              >
+                {label}
+              </button>
+            </li>
+          );
+        })}
+      </ul>
+      <div
+        className={cleanClassName(
+          `${styles['page-indicator']} ${
+            lastShownOptionIndex === totalLastOptionIndex && styles.invisible
+          }`,
+        )}
+      >
+        ▼
+      </div>
+    </section>
   ) : (
     <></>
   );

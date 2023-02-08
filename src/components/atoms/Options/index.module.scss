@@ -1,21 +1,27 @@
 @import '../../../styles/libs';
 
+$OPTIONS-BACKGROUND-COLOR: $BLUISH-GRAY-10;
+$OPTIONS-BORDER-RADIUS: 10px;
+
+.options {
+  position: relative;
+  background-color: $OPTIONS-BACKGROUND-COLOR;
+  border-radius: $OPTIONS-BORDER-RADIUS;
+  box-shadow: $NORMAL-BOX-SHADOW;
+  overflow: hidden;
+  padding: 0.3rem 1rem;
+}
+
 .option-container {
   display: flex;
   flex-direction: column;
-  padding: 1rem;
-  background-color: $BLUE-200;
-  border-radius: 10px;
+
   > li {
     width: 100%;
-    position: relative;
   }
-  max-height: 400px;
+
   overflow-y: auto;
   overflow-x: visible;
-  &::-webkit-scrollbar {
-    display: none;
-  }
 }
 
 .option-item {
@@ -25,17 +31,25 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   max-width: 100%;
-  padding: 0.5em;
+  padding: 0.8em;
   border-radius: 5px;
-
-  &:hover {
-    background-color: $BLUE-300;
-  }
-
-  &.overflow {
-    &:hover {
-      @include fade-in(0.8s);
+  transition: background 0.3s;
+  cursor: none;
+  &.selected,
+  &:hover.mouse-on {
+    background-color: $BLUE-100;
+    cursor: pointer;
+    &.overflow {
+      @include slide-in-fwd-center(0.5s);
       white-space: pre-wrap;
     }
+  }
+}
+
+.page-indicator {
+  text-align: center;
+  @include fade-in(0.8s);
+  &.invisible {
+    @include fade-out(0.8s);
   }
 }

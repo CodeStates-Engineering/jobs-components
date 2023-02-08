@@ -15,15 +15,16 @@ const ButtonStory: ComponentStory<typeof Options> = (args) => {
   const [label, setLabel] = useState('');
 
   return (
-    <div style={{ display: 'flex' }}>
-      {label}
-      <Options
-        {...args}
-        onClick={(value) => {
-          setLabel(value.name);
-        }}
-      />
-      <div>test</div>
+    <div>
+      <div>
+        <Options
+          {...args}
+          onClick={(value) => {
+            setLabel(value.name);
+          }}
+        />
+      </div>
+      <p>{label}</p>
     </div>
   );
 };

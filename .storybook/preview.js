@@ -16,15 +16,7 @@ export const parameters = {
 export const decorators = [
   (Story) => (
     <MemoryRouter>
-      <div
-        style={{
-          position: 'relative',
-          width: '100%',
-          height: '100vh',
-        }}
-      >
-        <Story />
-      </div>
+      <Story />
     </MemoryRouter>
   ),
 ];
