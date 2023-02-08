@@ -1,7 +1,6 @@
-import { useMountedEffect } from 'hooks/useMountedEffect';
 import { cleanClassName } from 'utils';
 
-import { createRef, useMemo, useState } from 'react';
+import { createRef, useMemo, useState, useEffect } from 'react';
 
 import styles from './index.module.scss';
 
@@ -17,6 +16,7 @@ export interface OptionsProps<T> {
     ? (value: Option<U>) => void
     : (value: string) => void;
   perPage?: number;
+  width?: React.CSSProperties['width'];
 }
 
 export const Options = <T extends Option<unknown> | string>({
@@ -24,6 +24,7 @@ export const Options = <T extends Option<unknown> | string>({
   options: unknowOptions,
   onClick: unknownOnClick,
   perPage = 5,
+  width,
 }: OptionsProps<T>) => {
   const [firstShownOptionIndex, setFirstShownOptionIndex] = useState(0);
   const tempLastShownOptionIndex = firstShownOptionIndex + perPage - 1;
@@ -59,7 +60,7 @@ export const Options = <T extends Option<unknown> | string>({
   const [optionOverflowStatuses, setOptionOverflowStatuses] =
     useState<boolean[]>();
 
-  useMountedEffect(() => {
+  useEffect(() => {
     setOptionOverflowStatuses(
       optionElementRefs?.map((optionElement) => {
         const { current } = optionElement;
@@ -76,7 +77,7 @@ export const Options = <T extends Option<unknown> | string>({
 
   const [selectedOptionIndex, setSelectedOptionIndex] = useState(-1);
 
-  useMountedEffect(() => {
+  useEffect(() => {
     if (opened) {
       const movePrevPage = () =>
         firstShownOptionIndex > 0 &&
@@ -86,12 +87,17 @@ export const Options = <T extends Option<unknown> | string>({
         lastShownOptionIndex < totalLastOptionIndex &&
         setFirstShownOptionIndex((prev) => prev + 1);
 
-      const pageMoveListener = ({ key }: KeyboardEvent) => {
+      const KeyboardEvent = ({ key }: KeyboardEvent) => {
         switch (key) {
           case 'ArrowUp':
             return selectedOptionIndex === 0 && movePrevPage();
           case 'ArrowDown':
             return selectedOptionIndex === lastOptionIndex && moveNextPage();
+          case 'Enter':
+            return (
+              selectedOptionIndex > -1 &&
+              onClick(options?.[selectedOptionIndex].value)
+            );
           default:
             break;
         }
@@ -107,10 +113,10 @@ export const Options = <T extends Option<unknown> | string>({
       };
 
       document.addEventListener('wheel', mouseWheelListener);
-      document.addEventListener('keydown', pageMoveListener);
+      document.addEventListener('keydown', KeyboardEvent);
       return () => {
         document.removeEventListener('wheel', mouseWheelListener);
-        document.removeEventListener('keydown', pageMoveListener);
+        document.removeEventListener('keydown', KeyboardEvent);
       };
     }
   }, [
@@ -120,11 +126,13 @@ export const Options = <T extends Option<unknown> | string>({
     firstShownOptionIndex,
     lastShownOptionIndex,
     totalLastOptionIndex,
+    onClick,
+    options,
   ]);
 
   const [allowMouseEnter, setAllowMouseEnter] = useState(true);
 
-  useMountedEffect(() => {
+  useEffect(() => {
     if (opened) {
       setSelectedOptionIndex(-1);
       const selectListener = ({ key }: KeyboardEvent) => {
@@ -149,7 +157,7 @@ export const Options = <T extends Option<unknown> | string>({
     }
   }, [lastOptionIndex, opened]);
 
-  useMountedEffect(() => {
+  useEffect(() => {
     if (opened) {
       const mouseMoveListener = () => setAllowMouseEnter(true);
       document.addEventListener('mousemove', mouseMoveListener);
@@ -158,7 +166,7 @@ export const Options = <T extends Option<unknown> | string>({
   }, [opened]);
 
   return opened ? (
-    <section className={styles.options} style={{ width: 500 }}>
+    <section className={styles.options} style={{ width }}>
       <div
         className={cleanClassName(
           `${styles['page-indicator']} ${

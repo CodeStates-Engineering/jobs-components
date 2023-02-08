@@ -1,0 +1,27 @@
+@import '../../../styles/libs';
+
+.focus-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(white, 0.2);
+  z-index: 99;
+  &.blur {
+    backdrop-filter: blur(5px);
+  }
+  @include fade-in(0.5s);
+}
+
+.over-layer {
+  z-index: 100;
+}
+
+.fixed-body {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}

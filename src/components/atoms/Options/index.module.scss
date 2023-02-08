@@ -48,6 +48,7 @@ $OPTIONS-BORDER-RADIUS: 10px;
 
 .page-indicator {
   text-align: center;
+  color: $BLUISH-GRAY-300;
   @include fade-in(0.8s);
   &.invisible {
     @include fade-out(0.8s);
