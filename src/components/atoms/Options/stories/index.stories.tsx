@@ -12,10 +12,10 @@ export default {
 } as ComponentMeta<typeof Options>;
 
 const ButtonStory: ComponentStory<typeof Options> = (args) => {
-  const [label, setLabel] = useState('');
+  const [label, setLabel] = useState('옵션을 선택해주세요.');
 
   return (
-    <div>
+    <div style={{ position: 'relative' }}>
       <div>
         <Options
           {...args}
@@ -51,5 +51,6 @@ export const Default = ButtonStory.bind({});
 const defaultArgs: OptionsProps<DummyOption> = {
   opened: true,
   options: dummyOptions,
+  width: '300px',
 };
 Default.args = defaultArgs;

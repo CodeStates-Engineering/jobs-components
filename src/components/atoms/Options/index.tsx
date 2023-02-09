@@ -17,6 +17,7 @@ export interface OptionsProps<T> {
     : (value: string) => void;
   perPage?: number;
   width?: React.CSSProperties['width'];
+  float?: 'top' | 'bottom';
 }
 
 export const Options = <T extends Option<unknown> | string>({
@@ -24,7 +25,8 @@ export const Options = <T extends Option<unknown> | string>({
   options: unknowOptions,
   onClick: unknownOnClick,
   perPage = 5,
-  width,
+  width = '300px',
+  float = 'bottom',
 }: OptionsProps<T>) => {
   const [firstShownOptionIndex, setFirstShownOptionIndex] = useState(0);
   const tempLastShownOptionIndex = firstShownOptionIndex + perPage - 1;
@@ -165,8 +167,8 @@ export const Options = <T extends Option<unknown> | string>({
     }
   }, [opened]);
 
-  return opened ? (
-    <section className={styles.options} style={{ width }}>
+  return opened && options?.length ? (
+    <section className={`${styles.options} ${styles[float]}`} style={{ width }}>
       <div
         className={cleanClassName(
           `${styles['page-indicator']} ${
@@ -177,7 +179,7 @@ export const Options = <T extends Option<unknown> | string>({
         ▲
       </div>
       <ul className={styles['option-container']}>
-        {options?.map(({ label, value }, index) => {
+        {options.map(({ label, value }, index) => {
           const optionElementRef = optionElementRefs?.[index];
           const isOverflow = optionOverflowStatuses?.[index];
           const isSelected = selectedOptionIndex === index;

@@ -26,7 +26,8 @@ export const FocusLayer = ({
   }, [focused]);
 
   return (
-    <>
+    <div>
+      <div className={styles['over-layer']}>{children}</div>
       {focused ? (
         <div
           onClick={onClick}
@@ -35,7 +36,6 @@ export const FocusLayer = ({
           )}
         />
       ) : null}
-      <div className={styles['over-layer']}>{children}</div>
-    </>
+    </div>
   );
 };

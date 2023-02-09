@@ -1,19 +1,19 @@
-import { useState } from 'react';
+import { useState as createState } from 'react';
 
-import { useMountedLayoutEffect } from './useMountedLayoutEffect';
+import { useMountedLayoutEffect as createMountedLayoutEffect } from './useMountedLayoutEffect';
 
-export function useComponentSelfState<InitialState>(
-  initialState: InitialState,
+export function useComponentSelfState<T>(
+  initialState: T,
   onlyUpdatedByParent?: boolean,
-): [
-  InitialState,
-  React.Dispatch<React.SetStateAction<InitialState>> | undefined,
-] {
-  const [state, setState] = useState(initialState);
+): [T, React.Dispatch<React.SetStateAction<T>> | undefined] {
+  if (onlyUpdatedByParent) {
+    return [initialState, undefined];
+  }
 
-  useMountedLayoutEffect(() => {
-    setState(initialState);
-  }, [initialState, setState]);
+  const state = createState(initialState);
+  createMountedLayoutEffect(() => {
+    state[1](initialState);
+  }, [initialState]);
 
-  return [state, onlyUpdatedByParent ? undefined : setState];
+  return state;
 }
