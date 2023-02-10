@@ -1,0 +1,38 @@
+@import '../../../styles/libs';
+
+.input-container {
+  position: relative;
+}
+
+.input-wrap {
+  width: 100%;
+  border: 1px solid #e7e9eb;
+  padding: 0 12px;
+  background-color: $WHITE;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8em;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.validation-message-wrap {
+  @include fade-in(0.3s);
+  width: 100%;
+  background-color: $WHITE;
+  border: 1px solid #e7e9eb;
+  border-radius: 8px;
+  padding: 5px 1em;
+  box-sizing: border-box;
+  position: absolute;
+  margin-top: 5px;
+  box-shadow: $NORMAL-BOX-SHADOW;
+}
+
+.validation-message {
+  @include shake-horizontal(0.9s, 0.3s);
+  font-size: small;
+  color: $PEACH-500;
+}

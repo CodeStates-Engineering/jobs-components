@@ -1,0 +1,12 @@
+@import '../../../styles/libs';
+
+.input {
+  outline: none;
+  border: none;
+  margin: 10px 0;
+  color: inherit;
+  &::placeholder {
+    color: #bcbcbc;
+  }
+  font-size: 13px;
+}

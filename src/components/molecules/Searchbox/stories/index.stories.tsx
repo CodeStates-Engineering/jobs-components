@@ -30,6 +30,7 @@ for (let i = 0; i < 100; i += 1) {
 export const Default = SearchboxStory.bind({});
 const defaultArgs: SearchboxProps = {
   options: dummyOptions,
+  selfFilter: true,
 };
 
 Default.args = defaultArgs;

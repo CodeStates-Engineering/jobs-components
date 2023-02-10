@@ -4,6 +4,7 @@ $OPTIONS-BACKGROUND-COLOR: $BLUISH-GRAY-10;
 $OPTIONS-BORDER-RADIUS: 10px;
 
 .options {
+  @include fade-in(0.3s);
   position: absolute;
   background-color: $OPTIONS-BACKGROUND-COLOR;
   border-radius: $OPTIONS-BORDER-RADIUS;

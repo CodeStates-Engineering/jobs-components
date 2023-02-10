@@ -7,7 +7,7 @@ import { Textbox } from '..';
 import type { TextboxProps } from '..';
 
 export default {
-  title: 'atoms/Textbox',
+  title: 'molecules/Textbox',
   component: Textbox,
 } as ComponentMeta<typeof Textbox>;
 
@@ -16,5 +16,7 @@ const ButtonStory: ComponentStory<typeof Textbox> = (args) => (
 );
 
 export const Default = ButtonStory.bind({});
-const defaultArgs: TextboxProps = {};
+const defaultArgs: TextboxProps<'text'> = {
+  children: '%',
+};
 Default.args = defaultArgs;

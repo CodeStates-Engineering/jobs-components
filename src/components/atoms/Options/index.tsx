@@ -63,19 +63,21 @@ export const Options = <T extends Option<unknown> | string>({
     useState<boolean[]>();
 
   useEffect(() => {
-    setOptionOverflowStatuses(
-      optionElementRefs?.map((optionElement) => {
-        const { current } = optionElement;
+    if (opened) {
+      setOptionOverflowStatuses(
+        optionElementRefs?.map((optionElement) => {
+          const { current } = optionElement;
 
-        if (current) {
-          const { offsetWidth, scrollWidth } = current;
-          return offsetWidth < scrollWidth;
-        }
+          if (current) {
+            const { offsetWidth, scrollWidth } = current;
+            return offsetWidth < scrollWidth;
+          }
 
-        return false;
-      }),
-    );
-  }, [optionElementRefs, setOptionOverflowStatuses]);
+          return false;
+        }),
+      );
+    }
+  }, [optionElementRefs, setOptionOverflowStatuses, opened]);
 
   const [selectedOptionIndex, setSelectedOptionIndex] = useState(-1);
 

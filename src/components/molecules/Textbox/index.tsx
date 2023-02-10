@@ -1,3 +1,4 @@
+import { InputContainer, Input } from 'components/atoms';
 import { useComponentSelfState } from 'hooks/useComponentSelfState';
 
 import { useMemo } from 'react';
@@ -13,24 +14,22 @@ type ChangeHandlerParams<T extends TextType> =
 export interface TextboxProps<T extends TextType> {
   value?: string | number;
   placeholder?: string;
-  rightIcon?: React.ReactNode;
+  children?: React.ReactNode;
   onlyUpdatedByParent?: boolean;
   onChange?: (value: ChangeHandlerParams<T>) => void;
   onFocus?: React.FocusEventHandler<HTMLInputElement>;
   width?: React.CSSProperties['width'];
-  validation?: (value: ChangeHandlerParams<T>) => string | undefined;
   type?: T;
 }
 
 export const Textbox = <T extends TextType>({
   value: originalValue = '',
-  placeholder = '텍스트를 입력하세요.',
-  rightIcon,
+  placeholder,
+  children,
   onlyUpdatedByParent,
   onChange,
   onFocus,
   width = '300px',
-  // validation,
   type,
 }: TextboxProps<T>) => {
   const [value, setValue] = useComponentSelfState(
@@ -62,9 +61,8 @@ export const Textbox = <T extends TextType>({
   }, [type]) as (value: string) => ChangeHandlerParams<T>;
 
   return (
-    <div className={styles.textbox} style={{ width }}>
-      <input
-        className={styles['textbox-control']}
+    <InputContainer width={width}>
+      <Input
         onFocus={onFocus}
         value={convertValueForView(value)}
         placeholder={placeholder}
@@ -75,7 +73,11 @@ export const Textbox = <T extends TextType>({
         }}
         type={type ?? 'text'}
       />
-      {rightIcon}
-    </div>
+      {typeof children === 'string' ? (
+        <div className={styles.unit}>{children}</div>
+      ) : (
+        children
+      )}
+    </InputContainer>
   );
 };

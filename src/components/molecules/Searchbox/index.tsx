@@ -1,10 +1,12 @@
 /* eslint-disable */
-import { FocusLayer, Textbox, Options } from 'components/atoms';
+
+import { FocusLayer, Options, Input, InputContainer } from 'components/atoms';
 import type { OptionsProps } from 'components/atoms';
-import styles from './index.module.scss';
-import { useCallback, useMemo, useState } from 'react';
+
+import { useMemo, useState } from 'react';
 import { useComponentSelfState } from 'hooks/useComponentSelfState';
 import { Search } from 'react-feather';
+import { regex } from 'utils';
 
 export interface SearchboxProps
   extends Partial<Pick<OptionsProps<string>, 'float' | 'options' | 'width'>> {
@@ -34,7 +36,7 @@ export const Searchbox = ({
       return originalOptions;
     }
     const standardizeString = (value: string) =>
-      value.toLowerCase().replace(/[^a-z0-9가-힣]/gi, '');
+      value.toLowerCase().replace(regex.symbols, '');
 
     const standardizeInputTextArray = inputText
       .split(' ')
@@ -50,19 +52,17 @@ export const Searchbox = ({
 
   return (
     <FocusLayer onClick={() => setOpened(false)} focused={opened}>
-      <div className={styles['searchbox-wrap']} style={{ width }}>
-        <Textbox
-          onFocus={() => setOpened(true)}
-          value={inputText}
-          onChange={(value) => {
+      <InputContainer width={width}>
+        <Input
+          onChange={({ target: { value } }) => {
             setInputText?.(value);
             changeHandler?.(value);
             setOpened(true);
           }}
-          width={width}
-          rightIcon={<Search />}
-          onlyUpdatedByParent
+          onFocus={() => setOpened(true)}
+          value={inputText}
         />
+        <Search />
         <Options
           opened={opened}
           options={options}
@@ -74,7 +74,7 @@ export const Searchbox = ({
           }}
           float={float}
         />
-      </div>
+      </InputContainer>
     </FocusLayer>
   );
 };
