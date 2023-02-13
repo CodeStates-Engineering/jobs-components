@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { AlertOctagon } from 'react-feather';
 
 import type { ComponentStory, ComponentMeta } from '@storybook/react';
 
@@ -14,13 +15,26 @@ export default {
 const ButtonStory: ComponentStory<typeof Button> = (args) => {
   const [value, setValue] = useState(true);
 
+  const buttonArgs = {
+    ...args,
+    children: value ? '취소' : '확인',
+  };
   return (
-    <Button {...args} onClick={() => setValue(false)}>
-      {String(value)}
-    </Button>
+    <>
+      <Button {...buttonArgs} onClick={() => setValue(!value)} />
+      <Button {...buttonArgs} onClick={() => setValue(!value)} delay={5000} />
+      <Button {...buttonArgs} onClick={() => setValue(!value)} disabled />
+      <Button
+        {...buttonArgs}
+        onClick={() => setValue(!value)}
+        icon={AlertOctagon}
+      />
+    </>
   );
 };
 
 export const Default = ButtonStory.bind({});
-const defaultArgs: ButtonProps = {};
+const defaultArgs: ButtonProps = {
+  width: '120px',
+};
 Default.args = defaultArgs;

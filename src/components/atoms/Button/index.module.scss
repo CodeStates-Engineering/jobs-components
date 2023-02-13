@@ -1,3 +1,60 @@
-.button {
-  background-color: pink;
+@import '../../../styles/libs';
+
+$DISABLED_BACKGROUND_COLOR: $GRAY-400;
+
+.button,
+.delayed-button {
+  overflow: hidden;
+  position: relative;
+  padding: 0 12px;
+  border-radius: 8px;
+  box-sizing: border-box;
+  transition: background-color 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8em;
+  &.font-size-bold {
+    font-weight: 700;
+  }
+  &:disabled {
+    cursor: not-allowed;
+    color: white;
+  }
+  &.button:disabled {
+    background-color: $DISABLED_BACKGROUND_COLOR;
+  }
+  &.delayed-button:disabled {
+    background-color: $BLUE-600;
+  }
+}
+
+.background-color-gray-800 {
+  background-color: $GRAY-800;
+  color: white;
+}
+
+.button-content {
+  z-index: 2;
+  position: relative;
+  margin: 14px 0;
+  &.icon {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.delay-bar {
+  width: 100%;
+  height: 100%;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  z-index: 1;
+  background-color: $DISABLED_BACKGROUND_COLOR;
+  &.delaying {
+    transform: translateX(100%);
+  }
 }

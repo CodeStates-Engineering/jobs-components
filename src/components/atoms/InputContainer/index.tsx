@@ -1,3 +1,5 @@
+import { cleanClassName } from 'utils';
+
 import styles from './index.module.scss';
 
 export interface InputContainerProps {
@@ -12,7 +14,13 @@ export const InputContainer = ({
   validationMessage,
 }: InputContainerProps) => (
   <div style={{ width }} className={styles['input-container']}>
-    <div className={styles['input-wrap']}>{children}</div>
+    <div
+      className={cleanClassName(
+        `${styles['input-wrap']} ${validationMessage && styles.invalid}`,
+      )}
+    >
+      {children}
+    </div>
     {validationMessage ? (
       <div className={styles['validation-message-wrap']}>
         <p className={styles['validation-message']}>{validationMessage}</p>

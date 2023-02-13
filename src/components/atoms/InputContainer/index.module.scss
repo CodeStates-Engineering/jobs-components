@@ -16,6 +16,10 @@
   gap: 0.8em;
   position: relative;
   box-sizing: border-box;
+
+  &.invalid {
+    border: 1px solid $PEACH-500;
+  }
 }
 
 .validation-message-wrap {

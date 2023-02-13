@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import type { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { FocusLayer } from '..';
-import { Button } from '../..';
 
 import type { FocusLayerProps } from '..';
 
@@ -12,32 +11,40 @@ export default {
   component: FocusLayer,
 } as ComponentMeta<typeof FocusLayer>;
 
-const FocusLayerStory: ComponentStory<typeof FocusLayer> = (args) => {
-  const [focused, setFocused] = useState(args.focused);
-  return (
-    <div
-      style={{
-        height: '300vh',
-        display: 'flex',
-        alignItems: 'center',
-        flexDirection: 'column',
-        fontSize: '5rem',
-        fontWeight: 'bold',
-      }}
-    >
-      <p>Background</p>
-      <FocusLayer {...args} focused={focused}>
-        <Button onClick={() => setFocused(!focused)}>🚧 Test Button</Button>
+const FocusLayerStory: ComponentStory<typeof FocusLayer> = (args) => (
+  <div
+    style={{
+      height: '300vh',
+      display: 'flex',
+      alignItems: 'center',
+      flexDirection: 'column',
+      fontSize: '2rem',
+      fontWeight: '600',
+    }}
+  >
+    <p>Background header text</p>
+    <FocusLayer {...args}>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          flexDirection: 'column',
+          padding: '20px',
+          backgroundColor: 'gray',
+          borderRadius: '10px',
+          color: 'white',
+        }}
+      >
         {args.children}
-      </FocusLayer>
-      <p>Background</p>
-    </div>
-  );
-};
+      </div>
+    </FocusLayer>
+    <p>Background footer text</p>
+  </div>
+);
 
 export const Default = FocusLayerStory.bind({});
 const defaultArgs: FocusLayerProps = {
-  focused: false,
-  children: 'Children Text',
+  focused: true,
+  children: 'Children text',
 };
 Default.args = defaultArgs;

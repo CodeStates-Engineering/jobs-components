@@ -1,8 +1,10 @@
 @import '../../../styles/libs';
 
 .unit {
-  background-color: $BLUE-10;
-  border-radius: 10px;
-  padding: 2px 5px;
+  background-color: $GRAY-800;
+  border-radius: 3px;
+  font-size: 0.9rem;
+  padding: 0 0.5em;
+  color: $WHITE;
   white-space: nowrap;
 }
