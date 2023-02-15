@@ -1,5 +1,10 @@
-//* Gray
+//* Specific
 $WHITE: #ffffff;
+$WHITISH-GRAY: #fafbfc;
+$BLACK: #000000;
+
+//* Gray
+
 $GRAY-10: #f7f7f7;
 $GRAY-50: #f2f2f2;
 $GRAY-100: #f0f0f0;
@@ -11,7 +16,6 @@ $GRAY-600: #858585;
 $GRAY-700: #5c5c5c;
 $GRAY-800: #333333;
 $GRAY-900: #141414;
-$BLACK: #000000;
 
 //* Bluish Gray
 $BLUISH-GRAY-10: #f5f7f9;
@@ -45,39 +49,37 @@ $PEACH-400: #ff8d85;
 $PEACH-500: #ff5447;
 $PEACH-600: #fd1808;
 
-//* Blue
-$BLUE-10: #f0f4ff;
-$BLUE-50: #ebf0ff;
-$BLUE-100: #e0e9ff;
-$BLUE-200: #ccdaff;
-$BLUE-300: #adc3ff;
-$BLUE-400: #85a5ff;
-$BLUE-500: #4778ff;
-$BLUE-600: #0a4bff;
-$BLUE-700: #0031b8;
-$BLUE-800: #001b66;
-$BLUE-900: #000b29;
+//* Purple
+$PURPLE-10: #f4f2fd;
+$PURPLE-50: #efedfc;
+$PURPLE-100: #e8e5fb;
+$PURPLE-200: #d8d3f8;
+$PURPLE-300: #c0b9f4;
+$PURPLE-400: #a296ee;
+$PURPLE-500: #7361e5;
+$PURPLE-600: #452cdd;
+$PURPLE-700: #2c1a9e;
+$PURPLE-800: #190e58;
 
-//* Gold
-$GOLD-10: #fffbf0;
-$GOLD-50: #fffaeb;
-$GOLD-100: #fff8e0;
-$GOLD-200: #fff3cc;
-$GOLD-300: #ffecad;
-$GOLD-400: #ffe285;
-$GOLD-500: #ffd447;
-$GOLD-600: #ffc60a;
-$GOLD-700: #b88d00;
-$GOLD-800: #664e00;
+//* Blue
+$BLUE-10: #f2f5fd;
+$BLUE-50: #edf2fc;
+$BLUE-100: #e4ebfb;
+$BLUE-200: #d2ddf9;
+$BLUE-300: #b8c9f5;
+$BLUE-400: #94adf0;
+$BLUE-500: #5e85e8;
+$BLUE-600: #295ce0;
+$BLUE-700: #173ea1;
+$BLUE-800: #0d2259;
+$BLUE-900: #050e24;
 
 //* Orange
-$ORANGE-10: #fff7f0;
-$ORANGE-50: #fff5eb;
-$ORANGE-100: #fff0e0;
-$ORANGE-200: #ffe5cc;
-$ORANGE-300: #ffd6ad;
-$ORANGE-400: #ffc285;
-$ORANGE-500: #ffa347;
-$ORANGE-600: #ff850a;
-$ORANGE-700: #b85c00;
-$ORANGE-800: #663300;
+$ORANGE-50: #fff2e9;
+$ORANGE-100: #ffebde;
+$ORANGE-200: #ffe1cc;
+$ORANGE-300: #ffcead;
+$ORANGE-400: #ffb685;
+$ORANGE-500: #ff9247;
+$ORANGE-600: #ff6e0a;
+$ORANGE-700: #ff6e0a;
