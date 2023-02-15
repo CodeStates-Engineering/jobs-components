@@ -11,12 +11,12 @@ type HtmlButtonProps = React.DetailedHTMLProps<
 >;
 
 export interface ButtonProps
-  extends Pick<HtmlButtonProps, 'onClick' | 'children' | 'disabled'> {
+  extends Pick<HtmlButtonProps, 'onClick' | 'children' | 'disabled' | 'type'> {
   delay?: number;
-  type?: HtmlButtonProps['type'];
   width?: React.CSSProperties['width'];
-  theme?: 'gray-800';
+  theme?: 'gray-800' | 'transparent';
   icon?: Icon;
+  shape?: 'round' | 'default';
 }
 
 export const Button = ({
@@ -27,6 +27,7 @@ export const Button = ({
   theme = 'gray-800',
   onClick,
   disabled,
+  shape = 'default',
   icon: Icon,
 }: ButtonProps) => {
   const [delayState, setDelayState] = useState<'before' | 'delaying' | 'after'>(
@@ -50,7 +51,7 @@ export const Button = ({
       className={cleanClassName(
         `${isDelayButton ? styles['delayed-button'] : styles.button} ${
           styles['font-size-bold']
-        } ${styles[`background-color-${theme}`]}`,
+        } ${styles[`theme-${theme}`]} ${styles[`shape-${shape}`]}`,
       )}
       style={{ width }}
       onClick={onClick}
