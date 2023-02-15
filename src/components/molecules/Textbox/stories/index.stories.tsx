@@ -19,6 +19,9 @@ const ButtonStory: ComponentStory<typeof Textbox> = ({ children, ...args }) => (
       <AlertOctagon />
     </Textbox>
     <Textbox {...args} />
+    <Textbox {...args} disabled="readonly" value={100}>
+      명
+    </Textbox>
   </>
 );
 

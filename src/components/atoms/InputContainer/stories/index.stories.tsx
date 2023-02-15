@@ -23,13 +23,15 @@ const ButtonStory: ComponentStory<typeof InputContainer> = (originalArgs) => {
   };
   return (
     <>
-      <InputContainer {...args} />
       <InputContainer {...args} validationMessage="필수 입력값 입니다." />
+      <InputContainer {...args} />
     </>
   );
 };
 
 export const Default = ButtonStory.bind({});
-const defaultArgs: InputContainerProps = {};
+const defaultArgs: InputContainerProps = {
+  size: 'medium',
+};
 
 Default.args = defaultArgs;

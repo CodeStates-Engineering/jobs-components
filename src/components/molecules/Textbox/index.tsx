@@ -5,32 +5,36 @@ import { useMemo } from 'react';
 
 import styles from './index.module.scss';
 
+import type { InputProps, InputContainerProps } from 'components/atoms';
+
 type TextType = 'text' | 'number' | 'large-number' | 'password';
 
 type ChangeHandlerParams<T extends TextType> =
   | (T extends 'number' | 'large-number' ? number : string)
   | undefined;
 
-export interface TextboxProps<T extends TextType> {
+export type TextboxProps<T extends TextType> = Omit<
+  InputProps & InputContainerProps,
+  'value' | 'onChange' | 'type'
+> & {
+  type?: T;
   value?: string | number;
-  placeholder?: string;
-  children?: React.ReactNode;
   onlyUpdatedByParent?: boolean;
   onChange?: (value: ChangeHandlerParams<T>) => void;
-  onFocus?: React.FocusEventHandler<HTMLInputElement>;
-  width?: React.CSSProperties['width'];
-  type?: T;
-}
+};
 
 export const Textbox = <T extends TextType>({
   value: originalValue = '',
-  placeholder,
   children,
   onlyUpdatedByParent,
   onChange,
-  onFocus,
   width = '300px',
   type,
+  placeholder,
+  disabled,
+  onFocus,
+  size,
+  validationMessage,
 }: TextboxProps<T>) => {
   const [value, setValue] = useComponentSelfState(
     originalValue,
@@ -61,11 +65,16 @@ export const Textbox = <T extends TextType>({
   }, [type]) as (value: string) => ChangeHandlerParams<T>;
 
   return (
-    <InputContainer width={width}>
+    <InputContainer
+      width={width}
+      validationMessage={validationMessage}
+      size={size}
+    >
       <Input
+        disabled={disabled}
+        placeholder={placeholder}
         onFocus={onFocus}
         value={convertValueForView(value)}
-        placeholder={placeholder}
         onChange={(e) => {
           const value = convertValueForChangeHandler(e.target.value);
           setValue?.(value ?? '');
