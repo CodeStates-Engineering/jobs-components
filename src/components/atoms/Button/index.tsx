@@ -1,7 +1,7 @@
 import { cleanClassName } from 'utils';
 
 import { useLayoutEffect, useState } from 'react';
-import type { Icon } from 'react-feather';
+import type { FunctionComponent } from 'react';
 
 import styles from './index.module.scss';
 
@@ -15,7 +15,7 @@ export interface ButtonProps
   delay?: number;
   width?: React.CSSProperties['width'];
   theme?: 'gray-800' | 'transparent';
-  icon?: Icon;
+  icon?: FunctionComponent;
   shape?: 'round' | 'default';
 }
 

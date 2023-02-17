@@ -1,5 +1,5 @@
 import { InputContainer, Input } from 'components/atoms';
-import { useComponentSelfState, useValidation } from 'hooks';
+import { useComponentSelfState } from 'hooks';
 
 import styles from './index.module.scss';
 
@@ -8,14 +8,12 @@ import type {
   InputContainerProps,
   InputType,
 } from 'components/atoms';
-import type { Validation } from 'hooks';
 
 export type TextboxProps<T extends InputType = 'text'> = Omit<
   InputProps<T> & InputContainerProps,
   'validationMessage'
 > & {
   onlyUpdatedByParent?: boolean;
-  validation?: Validation<TextboxProps<T>['value']>;
 };
 
 export const Textbox = <T extends InputType = 'text'>({
@@ -29,7 +27,6 @@ export const Textbox = <T extends InputType = 'text'>({
   disabled,
   onFocus,
   size,
-  validation,
   id,
 }: TextboxProps<T>) => {
   const [value, setValue] = useComponentSelfState(
@@ -37,23 +34,17 @@ export const Textbox = <T extends InputType = 'text'>({
     onlyUpdatedByParent,
   );
 
-  const { validate, validationMessage } = useValidation(value, validation, id);
-
   return (
-    <InputContainer
-      width={width}
-      validationMessage={validationMessage}
-      size={size}
-    >
+    <InputContainer width={width} size={size}>
       <Input
         disabled={disabled}
         placeholder={placeholder}
         onFocus={onFocus}
         value={value}
+        id={id}
         onChange={(value) => {
           setValue?.(value);
           onChange?.(value);
-          validate?.(value);
         }}
         type={type}
       />

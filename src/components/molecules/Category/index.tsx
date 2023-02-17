@@ -1,5 +1,5 @@
 import { Button } from 'components/atoms';
-import { Link, useLocation } from 'plugin';
+import { Link, useLocation } from 'plugins';
 
 import styles from './index.module.scss';
 
