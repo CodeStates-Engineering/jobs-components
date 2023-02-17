@@ -88,21 +88,21 @@ version-up minor
 
 ### Package
 
-- Link: https://github.com/CodeStates-Engineering/jobs-components/pkgs/npm/jobs-components
+- Link: https://github.com/CodeStates-Engineering/codeship-platform-app-library/pkgs/npm/codeship-platform-app-library
 - 해당 패키지를 설치하기 위해선 위에서 설정한 "CSE_NPM_TOKEN"이 필요합니다.
 
 #### yarn
 
 ```bash
- yarn add @codestates-engineering/jobs-components
+ yarn add @codestates-engineering/codeship-platform-app-library
 ```
 
 #### npm
 
 ```bash
- npm install @codestates-engineering/jobs-components
+ npm install @codestates-engineering/codeship-platform-app-library
 ```
 
 ### Storybook
 
-- Link: https://codestates-engineering.github.io/jobs-components
+- Link: https://codestates-engineering.github.io/codeship-platform-app-library

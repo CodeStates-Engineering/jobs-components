@@ -1,11 +1,11 @@
 {
-  "name": "@codestates-engineering/jobs-components",
+  "name": "@codestates-engineering/codeship-platform-app-library",
   "version": "0.0.10",
   "types": "dist/package/types/index.d.ts",
   "module": "dist/package/index.js",
-  "repository": "https://github.com/CodeStates-Engineering/jobs-components.git",
+  "repository": "https://github.com/CodeStates-Engineering/codeship-platform-app-library.git",
   "author": "HyeokjaeLee <leehyeokjae97@gmail.com>",
-  "homepage": "https://CodeStates-Engineering.github.io/jobs-components",
+  "homepage": "https://CodeStates-Engineering.github.io/codeship-platform-app-library",
   "license": "ISC",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"

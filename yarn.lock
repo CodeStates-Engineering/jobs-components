@@ -1712,9 +1712,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codestates-engineering/jobs-components@workspace:.":
+"@codestates-engineering/codeship-platform-app-library@workspace:.":
   version: 0.0.0-use.local
-  resolution: "@codestates-engineering/jobs-components@workspace:."
+  resolution: "@codestates-engineering/codeship-platform-app-library@workspace:."
   dependencies:
     "@codestates-engineering/eslint-config-codestates": 1.0.5
     "@rollup/plugin-json": ^6.0.0
