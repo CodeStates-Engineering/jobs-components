@@ -22,11 +22,12 @@ const ButtonStory: ComponentStory<typeof Textbox> = ({ children, ...args }) => (
     <Textbox {...args} disabled="readonly" value={100}>
       명
     </Textbox>
+    <Textbox type="large-number" />
   </>
 );
 
 export const Default = ButtonStory.bind({});
-const defaultArgs: TextboxProps<'text'> = {
+const defaultArgs: TextboxProps = {
   children: '원',
 };
 Default.args = defaultArgs;

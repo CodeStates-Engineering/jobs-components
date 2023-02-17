@@ -19,8 +19,8 @@ const ButtonStory: ComponentStory<typeof Options> = (args) => {
       <div>
         <Options
           {...args}
-          onClick={(value) => {
-            setLabel(value.name);
+          onClick={(option) => {
+            setLabel(option.value);
           }}
         />
       </div>
@@ -29,7 +29,7 @@ const ButtonStory: ComponentStory<typeof Options> = (args) => {
   );
 };
 
-type DummyOption = Option<{ name: string; number: number }>;
+type DummyOption = Option<number>;
 
 const dummyOptions: DummyOption[] = [];
 
@@ -40,10 +40,7 @@ for (let i = 0; i < 100; i += 1) {
         ? ' is long text: aurora sunrise eunoia vanilla iris adorable kitten laptop lucid sunrise shine banana adorable moonlight melody haze sunrise vanilla girlish blossom'
         : ''
     }`,
-    value: {
-      name: `Test label ${i}'s name`,
-      number: i,
-    },
+    value: i,
   });
 }
 

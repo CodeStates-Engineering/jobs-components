@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect as createEffect, useState as createState } from 'react';
 
 import { create } from 'zustand';
 
@@ -35,40 +35,48 @@ const validationStore = create<
 
 export const useValidationStore = () => {
   const { resetValidationStore, ...useValidationStore } = validationStore();
-  useEffect(() => resetValidationStore, [resetValidationStore]);
+  createEffect(() => resetValidationStore, [resetValidationStore]);
   return useValidationStore;
 };
 
 export type Validation<T> = (value: T) => string | null;
 
 export const useValidation = <T,>(
-  id: string,
   value: T,
-  validation: Validation<T>,
+  validation?: Validation<T>,
+  id?: string,
 ) => {
-  const [setValidation, deleteValidation] = validationStore((state) => [
-    state.setValidation,
-    state.deleteValidation,
-  ]);
+  if (validation) {
+    const [setValidation, deleteValidation] = validationStore((state) => [
+      state.setValidation,
+      state.deleteValidation,
+    ]);
 
-  const [validationMessage, setValidationMessage] = useState<string | null>(
-    null,
-  );
+    const [validationMessage, setValidationMessage] = createState<
+      string | null
+    >(null);
 
-  useEffect(() => {
-    setValidation(id, () => {
-      const validationMessage = validation(value);
-      setValidationMessage(validationMessage);
-      return validationMessage === null;
-    });
+    createEffect(() => {
+      if (id) {
+        setValidation(id, () => {
+          const validationMessage = validation(value);
+          setValidationMessage(validationMessage);
+          return validationMessage === null;
+        });
 
-    return () => {
-      deleteValidation(id);
+        return () => {
+          deleteValidation(id);
+        };
+      }
+    }, [id, setValidation, validation, value, deleteValidation]);
+
+    return {
+      validate: (value: T) => setValidationMessage(validation(value)),
+      validationMessage,
     };
-  }, [id, setValidation, validation, value, deleteValidation]);
-
+  }
   return {
-    validate: (value: T) => setValidationMessage(validation(value)),
-    validationMessage,
+    validate: undefined,
+    validationMessage: null,
   };
 };

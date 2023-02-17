@@ -4,59 +4,65 @@ import { createRef, useMemo, useState, useEffect } from 'react';
 
 import styles from './index.module.scss';
 
-export interface Option<T> {
+type VaildValue = string | number | null;
+
+export interface Option<T extends VaildValue> {
   label: string;
   value: T;
 }
 
-export interface OptionsProps<T> {
+export type OptionHint = Option<VaildValue> | string;
+
+export interface OptionsProps<T extends OptionHint> {
   opened?: boolean;
   options?: T[];
   onClick?: T extends Option<infer U>
-    ? (value: Option<U>) => void
-    : (value: string) => void;
+    ? (event: Option<U>) => void
+    : (event: Option<string>) => void;
   perPage?: number;
   width?: React.CSSProperties['width'];
   float?: 'top' | 'bottom';
 }
 
-export const Options = <T extends Option<unknown> | string>({
+export const Options = <T extends OptionHint>({
   opened,
-  options: unknowOptions,
-  onClick: unknownOnClick,
+  options,
+  onClick,
   perPage = 5,
   width = '300px',
   float = 'bottom',
 }: OptionsProps<T>) => {
   const [firstShownOptionIndex, setFirstShownOptionIndex] = useState(0);
   const tempLastShownOptionIndex = firstShownOptionIndex + perPage - 1;
-  const totalOptionCount = unknowOptions?.length ?? 0;
+  const totalOptionCount = options?.length ?? 0;
   const totalLastOptionIndex = totalOptionCount - 1;
   const lastShownOptionIndex =
     tempLastShownOptionIndex < totalLastOptionIndex
       ? tempLastShownOptionIndex
       : totalLastOptionIndex;
 
-  const onClick = unknownOnClick as (value: unknown) => void;
+  const handleClick = onClick as
+    | ((event: Option<VaildValue>) => void)
+    | undefined;
 
-  const options = useMemo(
+  const displayedOptions = useMemo(
     () =>
-      unknowOptions
+      options
         ?.slice(firstShownOptionIndex, lastShownOptionIndex + 1)
         .map((option) =>
           typeof option === 'string'
-            ? { label: option, value: option }
-            : option,
-        ) as Option<unknown>[] | undefined,
-    [unknowOptions, firstShownOptionIndex, lastShownOptionIndex],
+            ? ({ label: option, value: option } satisfies Option<string>)
+            : (option satisfies Option<VaildValue>),
+        ),
+    [options, firstShownOptionIndex, lastShownOptionIndex],
   );
 
-  const optionCount = options?.length ?? 0;
+  const optionCount = displayedOptions?.length ?? 0;
   const lastOptionIndex = optionCount - 1;
 
   const optionElementRefs = useMemo(
-    () => options?.map(() => createRef<HTMLButtonElement>()),
-    [options],
+    () => displayedOptions?.map(() => createRef<HTMLButtonElement>()),
+    [displayedOptions],
   );
 
   const [optionOverflowStatuses, setOptionOverflowStatuses] =
@@ -97,11 +103,15 @@ export const Options = <T extends Option<unknown> | string>({
             return selectedOptionIndex === 0 && movePrevPage();
           case 'ArrowDown':
             return selectedOptionIndex === lastOptionIndex && moveNextPage();
-          case 'Enter':
-            return (
-              selectedOptionIndex > -1 &&
-              onClick(options?.[selectedOptionIndex].value)
-            );
+          case 'Enter': {
+            if (selectedOptionIndex > -1) {
+              const selectedOption = displayedOptions?.[selectedOptionIndex];
+              if (selectedOption) {
+                handleClick?.(selectedOption);
+              }
+            }
+            break;
+          }
           default:
             break;
         }
@@ -130,8 +140,8 @@ export const Options = <T extends Option<unknown> | string>({
     firstShownOptionIndex,
     lastShownOptionIndex,
     totalLastOptionIndex,
-    onClick,
-    options,
+    handleClick,
+    displayedOptions,
   ]);
 
   const [allowMouseEnter, setAllowMouseEnter] = useState(true);
@@ -169,7 +179,7 @@ export const Options = <T extends Option<unknown> | string>({
     }
   }, [opened]);
 
-  return opened && options?.length ? (
+  return opened && displayedOptions?.length ? (
     <section className={`${styles.options} ${styles[float]}`} style={{ width }}>
       <div
         className={cleanClassName(
@@ -181,10 +191,11 @@ export const Options = <T extends Option<unknown> | string>({
         ▲
       </div>
       <ul className={styles['option-container']}>
-        {options.map(({ label, value }, index) => {
+        {displayedOptions.map((option, index) => {
           const optionElementRef = optionElementRefs?.[index];
           const isOverflow = optionOverflowStatuses?.[index];
           const isSelected = selectedOptionIndex === index;
+          const label = typeof option === 'string' ? option : option.label;
           return (
             <li key={index}>
               <button
@@ -197,7 +208,7 @@ export const Options = <T extends Option<unknown> | string>({
                   }`,
                 )}
                 onClick={() => {
-                  onClick?.(value);
+                  handleClick?.(option);
                 }}
                 onMouseEnter={() => {
                   if (allowMouseEnter) {

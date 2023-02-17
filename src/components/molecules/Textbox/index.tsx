@@ -1,30 +1,25 @@
 import { InputContainer, Input } from 'components/atoms';
-import { useComponentSelfState } from 'hooks/useComponentSelfState';
-
-import { useMemo } from 'react';
+import { useComponentSelfState, useValidation } from 'hooks';
 
 import styles from './index.module.scss';
 
-import type { InputProps, InputContainerProps } from 'components/atoms';
+import type {
+  InputProps,
+  InputContainerProps,
+  InputType,
+} from 'components/atoms';
+import type { Validation } from 'hooks';
 
-type TextType = 'text' | 'number' | 'large-number' | 'password';
-
-type ChangeHandlerParams<T extends TextType> =
-  | (T extends 'number' | 'large-number' ? number : string)
-  | undefined;
-
-export type TextboxProps<T extends TextType> = Omit<
-  InputProps & InputContainerProps,
-  'value' | 'onChange' | 'type'
+export type TextboxProps<T extends InputType = 'text'> = Omit<
+  InputProps<T> & InputContainerProps,
+  'validationMessage'
 > & {
-  type?: T;
-  value?: string | number;
   onlyUpdatedByParent?: boolean;
-  onChange?: (value: ChangeHandlerParams<T>) => void;
+  validation?: Validation<TextboxProps<T>['value']>;
 };
 
-export const Textbox = <T extends TextType>({
-  value: originalValue = '',
+export const Textbox = <T extends InputType = 'text'>({
+  value: originalValue,
   children,
   onlyUpdatedByParent,
   onChange,
@@ -34,35 +29,15 @@ export const Textbox = <T extends TextType>({
   disabled,
   onFocus,
   size,
-  validationMessage,
+  validation,
+  id,
 }: TextboxProps<T>) => {
   const [value, setValue] = useComponentSelfState(
     originalValue,
     onlyUpdatedByParent,
   );
 
-  const convertValueForView: (value: string | number) => string | number =
-    useMemo(() => {
-      switch (type) {
-        case 'large-number':
-          return (value) =>
-            value === '' ? '' : Number(value).toLocaleString();
-        default:
-          return (value) => value;
-      }
-    }, [type]);
-
-  const convertValueForChangeHandler = useMemo(() => {
-    switch (type) {
-      case 'large-number':
-        return (value) =>
-          value === '' ? undefined : Number(value.replace(/[^0-9]/g, ''));
-      case 'number':
-        return (value) => (value === '' ? undefined : Number(value));
-      default:
-        return (value) => value || undefined;
-    }
-  }, [type]) as (value: string) => ChangeHandlerParams<T>;
+  const { validate, validationMessage } = useValidation(value, validation, id);
 
   return (
     <InputContainer
@@ -74,13 +49,13 @@ export const Textbox = <T extends TextType>({
         disabled={disabled}
         placeholder={placeholder}
         onFocus={onFocus}
-        value={convertValueForView(value)}
-        onChange={(e) => {
-          const value = convertValueForChangeHandler(e.target.value);
-          setValue?.(value ?? '');
+        value={value}
+        onChange={(value) => {
+          setValue?.(value);
           onChange?.(value);
+          validate?.(value);
         }}
-        type={type ?? 'text'}
+        type={type}
       />
       {typeof children === 'string' ? (
         <div className={styles.unit}>{children}</div>

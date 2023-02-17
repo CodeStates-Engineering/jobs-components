@@ -1,5 +1,5 @@
 import { FocusLayer, Options, Input, InputContainer } from 'components/atoms';
-import { useComponentSelfState } from 'hooks/useComponentSelfState';
+import { useComponentSelfState } from 'hooks';
 import { regex } from 'utils';
 
 import { useMemo, useState } from 'react';
@@ -12,13 +12,11 @@ import type {
 } from 'components/atoms';
 
 export type SearchboxProps = Omit<
-  InputProps & InputContainerProps,
-  'onChange' | 'value' | 'type' | 'children' | 'validationMessage'
+  InputProps<'text'> & InputContainerProps,
+  'type' | 'children' | 'validationMessage'
 > &
   Pick<OptionsProps<string>, 'float' | 'options' | 'width'> & {
-    onChange?: (value: string) => void;
     selfFilter?: boolean;
-    value?: string;
     onlyUpdatedByParent?: boolean;
   };
 
@@ -27,7 +25,7 @@ export const Searchbox = ({
   value,
   width,
   options: originalOptions,
-  onChange: changeHandler,
+  onChange,
   selfFilter = true,
   onlyUpdatedByParent,
   disabled,
@@ -64,10 +62,10 @@ export const Searchbox = ({
     <FocusLayer onClick={() => setOpened(false)} focused={opened}>
       <InputContainer width={width} size={size}>
         <Input
-          onChange={({ target: { value } }) => {
+          onChange={(value) => {
             setInputText?.(value);
-            changeHandler?.(value);
             setOpened(true);
+            onChange?.(value);
           }}
           onFocus={(e) => {
             setOpened(true);
@@ -82,10 +80,10 @@ export const Searchbox = ({
           opened={opened}
           options={options}
           width={width}
-          onClick={(value) => {
+          onClick={({ value }) => {
             setInputText?.(value);
-            changeHandler?.(value);
             setOpened(false);
+            onChange?.(value);
           }}
           float={float}
         />
