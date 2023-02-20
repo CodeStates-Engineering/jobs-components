@@ -26,7 +26,6 @@ export interface OptionsProps<T extends OptionHint> {
   options?: T[];
   value?: T extends Option<infer U> ? U : string;
   onSelect?: (value: SelectedValue<T>) => void;
-
   width?: React.CSSProperties['width'];
   float?: 'top' | 'bottom';
 }
@@ -55,21 +54,6 @@ export const Options = <T extends OptionHint>({
 
   const [firstOpen, setFirstOpen] = useState(!opened);
 
-  const [optionOverflowStatuses, setOptionOverflowStatuses] =
-    useState<boolean[]>();
-  useEffect(() => {
-    if (optionData) {
-      setTimeout(() =>
-        setOptionOverflowStatuses(
-          optionData.map(({ ref }) => {
-            const { current } = ref;
-            return current ? current.scrollWidth > current.offsetWidth : false;
-          }),
-        ),
-      );
-    }
-  }, [optionData, firstOpen]);
-
   useLayoutEffect(() => {
     if (opened) {
       setFirstOpen(false);
@@ -78,11 +62,11 @@ export const Options = <T extends OptionHint>({
 
   useEffect(() => {
     if (opened && optionData) {
-      let focusOptionIndex = optionData.findIndex(
-        ({ ref }) => document.activeElement === ref.current,
-      );
-
       const keyboardEvent = (event: KeyboardEvent) => {
+        let focusOptionIndex = optionData.findIndex(
+          ({ ref }) => document.activeElement === ref.current,
+        );
+
         const lastOptionIndex = optionData.length - 1;
 
         switch (event.key) {
@@ -127,15 +111,13 @@ export const Options = <T extends OptionHint>({
       <ul className={styles['option-container']}>
         {optionData.map(({ option, ref }, index) => {
           const isSelected = value === option.value;
-          const isLabelOverflow = optionOverflowStatuses?.[index];
+
           return (
             <li key={index}>
               <button
                 ref={ref}
                 className={cleanClassName(
-                  `${styles['option-item']} ${isSelected && styles.selected} ${
-                    isLabelOverflow && styles.overflow
-                  }`,
+                  `${styles['option-item']} ${isSelected && styles.selected}`,
                 )}
                 onClick={() => onSelect?.(option)}
                 onMouseEnter={() => ref.current?.focus()}

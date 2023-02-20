@@ -47,9 +47,7 @@ $OPTIONS-BORDER-RADIUS: 10px;
   color: $BLUISH-GRAY-700;
   min-width: 100%;
   text-align: start;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: pre-wrap;
   max-width: 100%;
   padding: 0.8em;
   border-radius: 5px;
@@ -60,9 +58,5 @@ $OPTIONS-BORDER-RADIUS: 10px;
   &:focus {
     background-color: $BLUISH-GRAY-10;
     outline: none;
-    &.overflow {
-      @include slide-in-fwd-center(0.5s);
-      white-space: pre-wrap;
-    }
   }
 }
