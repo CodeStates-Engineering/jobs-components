@@ -34,8 +34,10 @@ export const Input = <T extends InputType = 'text'>({
   const convertChangeHandlerParam = useMemo(() => {
     switch (type) {
       case 'number':
-      case 'large-number':
         return (value) => (value ? Number(value) : undefined);
+      case 'large-number':
+        return (value) =>
+          value ? Number(value.replaceAll(',', '')) : undefined;
       default:
         return (value) => value || undefined;
     }
@@ -44,7 +46,7 @@ export const Input = <T extends InputType = 'text'>({
   const convertValue = useMemo(() => {
     switch (type) {
       case 'large-number':
-        return (value) => (value ? value.toLocaleString() : '');
+        return (value) => (value ? value.toLocaleString() : value ?? '');
       default:
         return (value) => value ?? '';
     }
@@ -59,9 +61,9 @@ export const Input = <T extends InputType = 'text'>({
       placeholder={placeholder}
       value={convertValue(value)}
       style={{ width }}
-      onChange={({ target: { value } }) =>
-        onChange?.(convertChangeHandlerParam(value))
-      }
+      onChange={({ target: { value } }) => {
+        onChange?.(convertChangeHandlerParam(value));
+      }}
       className={cleanClassName(
         `${styles.input} ${disabled === 'readonly' && styles.readonly}`,
       )}
