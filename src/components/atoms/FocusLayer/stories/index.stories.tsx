@@ -30,9 +30,9 @@ const FocusLayerStory: ComponentStory<typeof FocusLayer> = (args) => (
           alignItems: 'center',
           flexDirection: 'column',
           padding: '20px',
-          backgroundColor: 'gray',
+          backgroundColor: '#858585',
           borderRadius: '10px',
-          color: 'white',
+          color: '#f7f7f7',
         }}
       >
         {args.children}
