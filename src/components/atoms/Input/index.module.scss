@@ -1,0 +1,24 @@
+@import '../../../styles/libs';
+
+.input {
+  outline: none;
+  border: none;
+  margin: 10px 0;
+  color: inherit;
+  font-weight: 500;
+  background-color: inherit;
+  transition: color 0.3s;
+  &::placeholder {
+    color: $BLUISH-GRAY-300;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    &.readonly {
+      cursor: default;
+      color: $BLUISH-GRAY-700;
+    }
+  }
+
+  font-size: 13px;
+}

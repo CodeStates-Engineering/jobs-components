@@ -1,0 +1,86 @@
+@import '../../../styles/libs';
+
+@mixin size($paddingX, $height) {
+  padding: 0 $paddingX;
+  height: $height;
+}
+
+@mixin border($color, $lineWidth) {
+  box-shadow: inset 0 0 0 $lineWidth $color;
+}
+
+.input-container {
+  position: relative;
+}
+
+.input-wrap {
+  width: 100%;
+  padding: 0 12px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8em;
+  position: relative;
+  box-sizing: border-box;
+  transition: box-shadow 0.3s, background-color 0.3s;
+  color: $BLUISH-GRAY-700;
+  @include border($BLUISH-GRAY-200, 1px);
+
+  //*Size
+  &.size-small {
+    @include size(14px, 32px);
+  }
+
+  &.size-medium {
+    @include size(16px, 40px);
+  }
+
+  &.size-large {
+    @include size(18px, 48px);
+  }
+
+  //* Type
+  &:not(&:has(:disabled)) {
+    background-color: $WHITE;
+    &:hover {
+      @include border($BLUE-300, 2px);
+    }
+
+    &:has(:focus) {
+      @include border($BLUE-500, 2px);
+    }
+  }
+
+  &:has(:disabled) {
+    background-color: $BLUISH-GRAY-10;
+    @include border($BLUISH-GRAY-200, 1px);
+    color: $BLUISH-GRAY-400;
+    &:has(.readonly) {
+      color: $BLUISH-GRAY-700;
+    }
+  }
+
+  &.error {
+    @include border($PEACH-500, 2px);
+  }
+}
+
+.validation-message-wrap {
+  @include fade-in(0.3s);
+  width: 100%;
+  background-color: $WHITE;
+  border: 1px solid #e7e9eb;
+  border-radius: 8px;
+  padding: 5px 1em;
+  box-sizing: border-box;
+  position: absolute;
+  margin-top: 5px;
+  box-shadow: $NORMAL-BOX-SHADOW;
+}
+
+.validation-message {
+  @include shake-horizontal(0.9s, 0.3s);
+  font-size: small;
+  color: $PEACH-500;
+}

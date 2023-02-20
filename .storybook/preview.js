@@ -16,7 +16,9 @@ export const parameters = {
 export const decorators = [
   (Story) => (
     <MemoryRouter>
-      <Story />
+      <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+        <Story />
+      </div>
     </MemoryRouter>
   ),
 ];
