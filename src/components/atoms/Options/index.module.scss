@@ -1,18 +1,21 @@
 @import '../../../styles/libs';
 
-$OPTIONS-BACKGROUND-COLOR: $BLUISH-GRAY-10;
 $OPTIONS-BORDER-RADIUS: 10px;
 
 .options {
-  @include fade-in(0.3s);
+  &.opened {
+    @include fade-in(0.3s);
+  }
+  &.closed {
+    @include fade-out(0.3s);
+  }
+
   position: absolute;
-  background-color: $OPTIONS-BACKGROUND-COLOR;
+  background-color: $WHITE;
   border-radius: $OPTIONS-BORDER-RADIUS;
   box-shadow: $NORMAL-BOX-SHADOW;
-  overflow: hidden;
-  padding: 0.3rem 1rem;
   box-sizing: border-box;
-
+  padding: 8px;
   &.top {
     bottom: 100%;
     margin-bottom: 0.5rem;
@@ -25,18 +28,23 @@ $OPTIONS-BORDER-RADIUS: 10px;
 }
 
 .option-container {
+  max-height: 300px;
+  overflow-y: auto;
   display: flex;
+  scroll-snap-type: y mandatory;
   flex-direction: column;
-
-  > li {
-    width: 100%;
+  &::-webkit-scrollbar {
+    display: none;
   }
 
-  overflow-y: auto;
-  overflow-x: visible;
+  > li {
+    scroll-snap-align: start;
+    width: 100%;
+  }
 }
 
 .option-item {
+  color: $BLUISH-GRAY-700;
   min-width: 100%;
   text-align: start;
   overflow: hidden;
@@ -46,23 +54,15 @@ $OPTIONS-BORDER-RADIUS: 10px;
   padding: 0.8em;
   border-radius: 5px;
   transition: background 0.3s;
-  cursor: none;
-  &.selected,
-  &:hover.mouse-on {
-    background-color: $BLUE-100;
-    cursor: pointer;
+  &.selected {
+    color: $BLUE-500;
+  }
+  &:focus {
+    background-color: $BLUISH-GRAY-10;
+    outline: none;
     &.overflow {
       @include slide-in-fwd-center(0.5s);
       white-space: pre-wrap;
     }
-  }
-}
-
-.page-indicator {
-  text-align: center;
-  color: $BLUISH-GRAY-300;
-  @include fade-in(0.8s);
-  &.invisible {
-    @include fade-out(0.8s);
   }
 }

@@ -28,7 +28,8 @@ export const Input = <T extends InputType = 'text'>({
   disabled = false,
   value,
   onChange,
-  ...inputProps
+  id,
+  onFocus,
 }: InputProps<T>) => {
   const convertChangeHandlerParam = useMemo(() => {
     switch (type) {
@@ -51,7 +52,8 @@ export const Input = <T extends InputType = 'text'>({
 
   return (
     <input
-      {...inputProps}
+      id={id}
+      onFocus={onFocus}
       type={type}
       disabled={!!disabled}
       placeholder={placeholder}

@@ -32,6 +32,7 @@ export const Searchbox = ({
   placeholder,
   onFocus,
   size,
+  id,
 }: SearchboxProps) => {
   const [opened, setOpened] = useState(false);
   const [inputText, setInputText] = useComponentSelfState(
@@ -71,6 +72,7 @@ export const Searchbox = ({
             setOpened(true);
             onFocus?.(e);
           }}
+          id={id}
           value={inputText}
           disabled={disabled}
           placeholder={placeholder}
@@ -80,7 +82,8 @@ export const Searchbox = ({
           opened={opened}
           options={options}
           width={width}
-          onClick={({ value }) => {
+          value={inputText}
+          onSelect={({ value }) => {
             setInputText?.(value);
             setOpened(false);
             onChange?.(value);
