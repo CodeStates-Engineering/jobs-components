@@ -8,6 +8,7 @@
   font-weight: 500;
   background-color: inherit;
   transition: color 0.3s;
+
   &::placeholder {
     color: $BLUISH-GRAY-300;
   }

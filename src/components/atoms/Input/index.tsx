@@ -1,6 +1,7 @@
 import { cleanClassName } from 'utils';
 
-import { useMemo } from 'react';
+import { useMemo, forwardRef } from 'react';
+import type { Ref } from 'react';
 
 import styles from './index.module.scss';
 
@@ -21,52 +22,58 @@ export interface InputProps<T extends InputType = 'text'>
   onChange?: (value: InputProps<T>['value']) => void;
 }
 
-export const Input = <T extends InputType = 'text'>({
-  type = 'text' as T,
-  width = '100%',
-  placeholder = 'Placeholder',
-  disabled = false,
-  value,
-  onChange,
-  id,
-  onFocus,
-}: InputProps<T>) => {
-  const convertChangeHandlerParam = useMemo(() => {
-    switch (type) {
-      case 'number':
-        return (value) => (value ? Number(value) : undefined);
-      case 'large-number':
-        return (value) =>
-          value ? Number(value.replaceAll(',', '')) : undefined;
-      default:
-        return (value) => value || undefined;
-    }
-  }, [type]) as (value: string) => InputProps<T>['value'] | undefined;
+export const Input = forwardRef(
+  <T extends InputType = 'text'>(
+    {
+      type = 'text' as T,
+      width = '100%',
+      placeholder = 'Placeholder',
+      disabled = false,
+      value,
+      onChange,
+      id,
+      onFocus,
+    }: InputProps<T>,
+    ref: Ref<HTMLInputElement>,
+  ) => {
+    const convertChangeHandlerParam = useMemo(() => {
+      switch (type) {
+        case 'number':
+          return (value) => (value ? Number(value) : undefined);
+        case 'large-number':
+          return (value) =>
+            value ? Number(value.replaceAll(',', '')) : undefined;
+        default:
+          return (value) => value || undefined;
+      }
+    }, [type]) as (value: string) => InputProps<T>['value'] | undefined;
 
-  const convertValue = useMemo(() => {
-    switch (type) {
-      case 'large-number':
-        return (value) => (value ? value.toLocaleString() : value ?? '');
-      default:
-        return (value) => value ?? '';
-    }
-  }, [type]) as (value?: InputProps<T>['value']) => string | number;
+    const convertValue = useMemo(() => {
+      switch (type) {
+        case 'large-number':
+          return (value) => (value ? value.toLocaleString() : value ?? '');
+        default:
+          return (value) => value ?? '';
+      }
+    }, [type]) as (value?: InputProps<T>['value']) => string | number;
 
-  return (
-    <input
-      id={id}
-      onFocus={onFocus}
-      type={type}
-      disabled={!!disabled}
-      placeholder={placeholder}
-      value={convertValue(value)}
-      style={{ width }}
-      onChange={({ target: { value } }) => {
-        onChange?.(convertChangeHandlerParam(value));
-      }}
-      className={cleanClassName(
-        `${styles.input} ${disabled === 'readonly' && styles.readonly}`,
-      )}
-    />
-  );
-};
+    return (
+      <input
+        id={id}
+        ref={ref}
+        onFocus={onFocus}
+        type={type}
+        disabled={!!disabled}
+        placeholder={placeholder}
+        value={convertValue(value)}
+        style={{ width }}
+        onChange={({ target: { value } }) => {
+          onChange?.(convertChangeHandlerParam(value));
+        }}
+        className={cleanClassName(
+          `${styles.input} ${disabled === 'readonly' && styles.readonly}`,
+        )}
+      />
+    );
+  },
+);
