@@ -1,7 +1,6 @@
 import { cleanClassName } from 'utils';
 
-import { useMemo, forwardRef } from 'react';
-import type { Ref } from 'react';
+import { useMemo, forwardRef, Ref } from 'react';
 
 import styles from './index.module.scss';
 
@@ -20,12 +19,15 @@ export interface InputProps<T extends InputType = 'text'>
   width?: React.CSSProperties['width'];
   disabled?: boolean | 'readonly';
   onChange?: (value: InputProps<T>['value']) => void;
+  ref?: Ref<HTMLInputElement>;
 }
 
-export const Input = forwardRef(
-  <T extends InputType = 'text'>(
+export const Input: <T extends InputType = 'text'>(
+  props: InputProps<T>,
+) => JSX.Element | null = forwardRef(
+  (
     {
-      type = 'text' as T,
+      type = 'text',
       width = '100%',
       placeholder = 'Placeholder',
       disabled = false,
@@ -33,9 +35,11 @@ export const Input = forwardRef(
       onChange,
       id,
       onFocus,
-    }: InputProps<T>,
-    ref: Ref<HTMLInputElement>,
+    },
+    ref,
   ) => {
+    type Value = typeof value;
+
     const convertChangeHandlerParam = useMemo(() => {
       switch (type) {
         case 'number':
@@ -46,7 +50,7 @@ export const Input = forwardRef(
         default:
           return (value) => value || undefined;
       }
-    }, [type]) as (value: string) => InputProps<T>['value'] | undefined;
+    }, [type]) as (value: string) => Value;
 
     const convertValue = useMemo(() => {
       switch (type) {
@@ -55,7 +59,7 @@ export const Input = forwardRef(
         default:
           return (value) => value ?? '';
       }
-    }, [type]) as (value?: InputProps<T>['value']) => string | number;
+    }, [type]) satisfies (value: Value) => number | string;
 
     return (
       <input
