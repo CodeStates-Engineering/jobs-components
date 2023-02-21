@@ -1,0 +1,16 @@
+.select-wrap {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  &:has(> :disabled) {
+    cursor: not-allowed;
+  }
+  > input {
+    cursor: pointer;
+    caret-color: transparent;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
