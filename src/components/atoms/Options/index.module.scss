@@ -4,10 +4,11 @@ $OPTIONS-BORDER-RADIUS: 10px;
 
 .options {
   &.opened {
-    @include fade-in(0.3s);
+    @include fade-in-top;
   }
-  &.closed {
-    @include fade-out(0.3s);
+  &.closing {
+    @include fade-out-top;
+    z-index: -1;
   }
 
   position: absolute;
@@ -16,6 +17,7 @@ $OPTIONS-BORDER-RADIUS: 10px;
   box-shadow: $NORMAL-BOX-SHADOW;
   box-sizing: border-box;
   padding: 8px;
+
   &.top {
     bottom: 100%;
     margin-bottom: 0.5rem;

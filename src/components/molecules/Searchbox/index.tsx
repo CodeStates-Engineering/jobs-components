@@ -83,7 +83,7 @@ export const Searchbox = ({
           options={options}
           width={width}
           value={inputText}
-          onSelect={({ value }) => {
+          onSelect={(value) => {
             setInputText?.(value);
             setOpened(false);
             onChange?.(value);

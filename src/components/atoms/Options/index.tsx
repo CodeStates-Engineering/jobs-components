@@ -10,22 +10,20 @@ import {
 
 import styles from './index.module.scss';
 
-type VaildValue = string | number | null;
+type ValidValue = string | number | null;
 
-export interface Option<T extends VaildValue> {
+interface ObjectOption<T extends ValidValue> {
   label: string;
   value: T;
 }
 
-export type OptionHint = Option<VaildValue> | string;
-
-type SelectedValue<T> = T extends Option<infer U> ? Option<U> : Option<string>;
+export type OptionHint = ObjectOption<ValidValue> | string;
 
 export interface OptionsProps<T extends OptionHint> {
   opened?: boolean;
   options?: T[];
-  value?: T extends Option<infer U> ? U : string;
-  onSelect?: (value: SelectedValue<T>) => void;
+  value?: T extends ObjectOption<infer U> ? U : string;
+  onSelect?: (option: T) => void;
   width?: React.CSSProperties['width'];
   float?: 'top' | 'bottom';
 }
@@ -41,24 +39,37 @@ export const Options = <T extends OptionHint>({
   const optionData = useMemo(
     () =>
       options?.map((originalOption) => {
-        const option = (
-          typeof originalOption === 'string'
-            ? { label: originalOption, value: originalOption }
-            : originalOption
-        ) as SelectedValue<T>;
         const ref = createRef<HTMLButtonElement>();
-        return { ref, option };
+        return {
+          ref,
+          option: originalOption,
+        };
       }),
     [options],
   );
 
-  const [firstOpen, setFirstOpen] = useState(!opened);
+  const [openState, setOpenState] = useState<boolean | 'closing'>(!!opened);
 
-  useLayoutEffect(() => {
-    if (opened) {
-      setFirstOpen(false);
+  useLayoutEffect(
+    () =>
+      setOpenState((prevOpenState) => {
+        if (opened) {
+          return true;
+        }
+        if (prevOpenState) {
+          return 'closing';
+        }
+        return false;
+      }),
+    [opened],
+  );
+
+  useEffect(() => {
+    if (openState === 'closing') {
+      const timeout = setTimeout(() => setOpenState(false), 250);
+      return () => clearTimeout(timeout);
     }
-  }, [opened]);
+  }, [openState]);
 
   useEffect(() => {
     if (opened && optionData) {
@@ -99,18 +110,21 @@ export const Options = <T extends OptionHint>({
     }
   }, [opened, optionData]);
 
-  return firstOpen || !optionData?.length ? (
-    <></>
-  ) : (
+  return openState && optionData?.length ? (
     <section
       className={`${styles.options} ${styles[float]} ${
-        opened ? styles.opened : styles.closed
+        openState === 'closing' ? styles.closing : styles.opened
       }`}
       style={{ width }}
     >
       <ul className={styles['option-container']}>
         {optionData.map(({ option, ref }, index) => {
-          const isSelected = value === option.value;
+          const optionObject =
+            typeof option === 'object'
+              ? option
+              : { label: option satisfies string, value: option };
+
+          const isSelected = value === optionObject.value;
 
           return (
             <li key={index}>
@@ -122,15 +136,14 @@ export const Options = <T extends OptionHint>({
                 onClick={() => onSelect?.(option)}
                 onMouseEnter={() => ref.current?.focus()}
               >
-                {option.label}
+                {optionObject.label}
               </button>
             </li>
           );
         })}
       </ul>
     </section>
+  ) : (
+    <></>
   );
 };
-/**
- *
- */

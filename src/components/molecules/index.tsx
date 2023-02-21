@@ -1,3 +1,3 @@
-export * from './Searchbox';
+export * from './Selectbox';
 export * from './Textbox';
 export * from './Category';
