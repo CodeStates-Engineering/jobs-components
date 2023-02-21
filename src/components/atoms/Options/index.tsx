@@ -10,22 +10,20 @@ import {
 
 import styles from './index.module.scss';
 
-type VaildValue = string | number | null;
+type ValidValue = string | number | null;
 
-export interface Option<T extends VaildValue> {
+interface ObjectOption<T extends ValidValue> {
   label: string;
   value: T;
 }
 
-export type OptionHint = Option<VaildValue> | string;
-
-type SelectedValue<T> = T extends Option<infer U> ? Option<U> : Option<string>;
+export type OptionHint = ObjectOption<ValidValue> | string;
 
 export interface OptionsProps<T extends OptionHint> {
   opened?: boolean;
   options?: T[];
-  value?: T extends Option<infer U> ? U : string;
-  onSelect?: (value: SelectedValue<T>) => void;
+  value?: T extends ObjectOption<infer U> ? U : string;
+  onSelect?: (option: T) => void;
   width?: React.CSSProperties['width'];
   float?: 'top' | 'bottom';
 }
@@ -41,13 +39,11 @@ export const Options = <T extends OptionHint>({
   const optionData = useMemo(
     () =>
       options?.map((originalOption) => {
-        const option = (
-          typeof originalOption === 'string'
-            ? { label: originalOption, value: originalOption }
-            : originalOption
-        ) as SelectedValue<T>;
         const ref = createRef<HTMLButtonElement>();
-        return { ref, option };
+        return {
+          ref,
+          option: originalOption,
+        };
       }),
     [options],
   );
@@ -123,7 +119,12 @@ export const Options = <T extends OptionHint>({
     >
       <ul className={styles['option-container']}>
         {optionData.map(({ option, ref }, index) => {
-          const isSelected = value === option.value;
+          const optionObject =
+            typeof option === 'object'
+              ? option
+              : { label: option satisfies string, value: option };
+
+          const isSelected = value === optionObject.value;
 
           return (
             <li key={index}>
@@ -135,7 +136,7 @@ export const Options = <T extends OptionHint>({
                 onClick={() => onSelect?.(option)}
                 onMouseEnter={() => ref.current?.focus()}
               >
-                {option.label}
+                {optionObject.label}
               </button>
             </li>
           );

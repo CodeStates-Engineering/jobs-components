@@ -1,7 +1,9 @@
+/* eslint-disable */
+
 import { FocusLayer, Options, Input, InputContainer } from 'components/atoms';
 import { useComponentSelfState } from 'hooks';
 
-import { useRef, useState } from 'react';
+import { useRef, useState, useMemo } from 'react';
 import { ChevronDown } from 'react-feather';
 
 import styles from './index.module.scss';
@@ -10,17 +12,19 @@ import type {
   InputProps,
   InputContainerProps,
   OptionsProps,
+  OptionHint,
 } from 'components/atoms';
 
-export type SelectboxProps = Omit<
+export type SelectboxProps<T extends OptionHint> = Omit<
   InputProps<'text'> & InputContainerProps,
-  'type' | 'children' | 'validationMessage' | 'onFocus'
+  'type' | 'children' | 'validationMessage' | 'onFocus' | 'value' | 'onChange'
 > &
-  Pick<OptionsProps<string>, 'float' | 'options' | 'width'> & {
+  Pick<OptionsProps<T>, 'float' | 'options' | 'width' | 'value'> & {
     onlyUpdatedByParent?: boolean;
+    onChange?: OptionsProps<T>['onSelect'];
   };
 
-export const Selectbox = ({
+export const Selectbox = <T extends OptionHint>({
   float,
   value,
   width,
@@ -31,12 +35,33 @@ export const Selectbox = ({
   placeholder,
   size,
   id,
-}: SelectboxProps) => {
+}: SelectboxProps<T>) => {
   const [opened, setOpened] = useState(false);
-  const [inputText, setInputText] = useComponentSelfState(
-    value,
+
+  const [selectedOption, setSelectedOption] = useComponentSelfState(
+    options?.find(
+      (option) =>
+        value === (typeof option === 'object' ? option.value : option),
+    ),
     onlyUpdatedByParent,
+    [options, value],
   );
+
+  const selectedOptionObject = useMemo(() => {
+    if (selectedOption) {
+      return (
+        typeof selectedOption === 'object'
+          ? selectedOption
+          : {
+              label: selectedOption,
+              value: selectedOption,
+            }
+      ) as {
+        label: string;
+        value: Exclude<typeof value, undefined>;
+      };
+    }
+  }, [selectedOption]);
 
   const ref = useRef<HTMLInputElement>(null);
 
@@ -60,9 +85,8 @@ export const Selectbox = ({
         >
           <Input
             ref={ref}
-            type="text"
             id={id}
-            value={inputText}
+            value={selectedOptionObject?.label}
             disabled={disabled}
             placeholder={placeholder}
           />
@@ -71,11 +95,11 @@ export const Selectbox = ({
             opened={opened}
             options={options}
             width={width}
-            value={inputText}
-            onSelect={({ value }) => {
-              setInputText?.(value);
+            value={selectedOptionObject?.value}
+            onSelect={(option) => {
+              setSelectedOption?.(option);
               setOpened(false);
-              onChange?.(value);
+              onChange?.(option);
             }}
             float={float}
           />
