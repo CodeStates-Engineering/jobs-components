@@ -52,13 +52,28 @@ export const Options = <T extends OptionHint>({
     [options],
   );
 
-  const [firstOpen, setFirstOpen] = useState(!opened);
+  const [openState, setOpenState] = useState<boolean | 'closing'>(!!opened);
 
-  useLayoutEffect(() => {
-    if (opened) {
-      setFirstOpen(false);
+  useLayoutEffect(
+    () =>
+      setOpenState((prevOpenState) => {
+        if (opened) {
+          return true;
+        }
+        if (prevOpenState) {
+          return 'closing';
+        }
+        return false;
+      }),
+    [opened],
+  );
+
+  useEffect(() => {
+    if (openState === 'closing') {
+      const timeout = setTimeout(() => setOpenState(false), 250);
+      return () => clearTimeout(timeout);
     }
-  }, [opened]);
+  }, [openState]);
 
   useEffect(() => {
     if (opened && optionData) {
@@ -99,12 +114,10 @@ export const Options = <T extends OptionHint>({
     }
   }, [opened, optionData]);
 
-  return firstOpen || !optionData?.length ? (
-    <></>
-  ) : (
+  return openState && optionData?.length ? (
     <section
       className={`${styles.options} ${styles[float]} ${
-        opened ? styles.opened : styles.closed
+        openState === 'closing' ? styles.closing : styles.opened
       }`}
       style={{ width }}
     >
@@ -129,8 +142,7 @@ export const Options = <T extends OptionHint>({
         })}
       </ul>
     </section>
+  ) : (
+    <></>
   );
 };
-/**
- *
- */

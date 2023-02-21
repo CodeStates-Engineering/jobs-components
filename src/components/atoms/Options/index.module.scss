@@ -6,7 +6,7 @@ $OPTIONS-BORDER-RADIUS: 10px;
   &.opened {
     @include fade-in(0.3s);
   }
-  &.closed {
+  &.closing {
     @include fade-out(0.3s);
   }
 
