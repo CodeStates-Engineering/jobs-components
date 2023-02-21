@@ -13,4 +13,12 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
+
+  &:hover > .opened-arrow {
+    transform: rotate(-180deg);
+  }
+
+  > .arrow {
+    transition: transform 0.5s;
+  }
 }

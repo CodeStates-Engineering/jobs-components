@@ -14,6 +14,7 @@ import type {
   OptionsProps,
   OptionHint,
 } from 'components/atoms';
+import { cleanClassName } from 'utils';
 
 export type SelectboxProps<T extends OptionHint> = Omit<
   InputProps<'text'> & InputContainerProps,
@@ -90,20 +91,24 @@ export const Selectbox = <T extends OptionHint>({
             disabled={disabled}
             placeholder={placeholder}
           />
-          <ChevronDown />
-          <Options
-            opened={opened}
-            options={options}
-            width={width}
-            value={selectedOptionObject?.value}
-            onSelect={(option) => {
-              setSelectedOption?.(option);
-              setOpened(false);
-              onChange?.(option);
-            }}
-            float={float}
+          <ChevronDown
+            className={cleanClassName(
+              `${styles.arrow} ${opened && styles['opened-arrow']}`,
+            )}
           />
         </div>
+        <Options
+          opened={opened}
+          options={options}
+          width={width}
+          value={selectedOptionObject?.value}
+          onSelect={(option) => {
+            setSelectedOption?.(option);
+            setOpened(false);
+            onChange?.(option);
+          }}
+          float={float}
+        />
       </InputContainer>
     </FocusLayer>
   );
