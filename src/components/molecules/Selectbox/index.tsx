@@ -2,7 +2,7 @@ import { FocusLayer, Options, Input, InputContainer } from 'components/atoms';
 import { useComponentSelfState } from 'hooks';
 import { cleanClassName } from 'utils';
 
-import { useRef, useState, useMemo, useCallback } from 'react';
+import { useRef, useState, useMemo } from 'react';
 import { ChevronDown } from 'react-feather';
 
 import styles from './index.module.scss';
@@ -64,22 +64,13 @@ export const Selectbox = <T extends OptionHint>({
 
   const ref = useRef<HTMLInputElement>(null);
 
-  const handleClick = useCallback(() => {
-    const { current } = ref;
-    if (current) {
-      setOpened((prevOpenState) => {
-        if (prevOpenState) {
-          current.blur();
-          return false;
-        }
-        return true;
-      });
-    }
-  }, [ref]);
-
   return (
     <FocusLayer onClick={() => setOpened(false)} focused={opened}>
-      <InputContainer width={width} size={size} onClick={handleClick}>
+      <InputContainer
+        width={width}
+        size={size}
+        onClick={() => setOpened(!opened)}
+      >
         <Input
           id={id}
           type="button"
@@ -101,9 +92,9 @@ export const Selectbox = <T extends OptionHint>({
           onSelect={(option) => {
             const optionForSelect =
               option === selectedOption ? undefined : option;
-
             setSelectedOption?.(optionForSelect);
             onChange?.(optionForSelect);
+            setOpened(false);
           }}
           float={float}
         />

@@ -7,6 +7,7 @@ import {
   useEffect,
   useLayoutEffect,
   useRef,
+  useCallback,
 } from 'react';
 
 import styles from './index.module.scss';
@@ -39,12 +40,19 @@ export const Options = <T extends OptionHint>({
   width = '300px',
   float = 'bottom',
 }: OptionsProps<T>) => {
+  // value를 array로 받을 수 있어야함
   const optionData = useMemo(
     () =>
       options?.map((originalOption) => {
         const ref = createRef<HTMLButtonElement>();
+        const optionValue =
+          typeof originalOption === 'object'
+            ? originalOption.value
+            : originalOption;
+        const isSelected = value === optionValue;
         return {
           ref,
+          isSelected,
           option: originalOption,
         };
       }),
@@ -55,18 +63,8 @@ export const Options = <T extends OptionHint>({
     !!opened,
   );
 
-  useLayoutEffect(
-    () =>
-      setOpenState((prevOpenState) => {
-        if (prevOpenState !== opened) {
-          return opened ? 'opening' : 'closing';
-        }
-        return prevOpenState;
-      }),
-    [opened],
-  );
-
   const isChangeOpenState = typeof openState === 'string';
+
   useEffect(() => {
     if (isChangeOpenState) {
       const timeout = setTimeout(
@@ -79,58 +77,79 @@ export const Options = <T extends OptionHint>({
 
   const [optionIndexForSelect, setOptionIndexForSelect] = useState(-1);
 
+  const handleSelect = useCallback(
+    (option: T) => {
+      onSelect?.(option);
+      setOptionIndexForSelect(-1);
+    },
+    [onSelect],
+  );
+
   const [mouseHoverLock, setMouseHoverLock] = useState(false);
 
   const optionContainerRef = useRef<HTMLUListElement>(null);
+  const optionContainer = optionContainerRef.current;
+
+  useLayoutEffect(() => {
+    setOpenState((prevOpenState) => {
+      if (prevOpenState !== opened) {
+        return opened ? 'opening' : 'closing';
+      }
+      return prevOpenState;
+    });
+
+    if (optionContainer) {
+      optionContainer.scrollTo({
+        top: 0,
+      });
+    }
+  }, [opened, optionContainer]);
 
   useEffect(() => {
-    const optionContainer = optionContainerRef.current;
     if (openState === true && optionData && optionContainer) {
       const keyboardEvent = (event: KeyboardEvent) => {
-        const lastOptionIndex = optionData.length - 1;
-        setMouseHoverLock(true);
-        setOptionIndexForSelect((prevOptionIndexForSelect) => {
-          let optionIndexForSelect = prevOptionIndexForSelect;
-          switch (event.key) {
-            case 'ArrowDown':
-              event.preventDefault();
-              optionIndexForSelect =
-                prevOptionIndexForSelect < lastOptionIndex
-                  ? prevOptionIndexForSelect + 1
-                  : prevOptionIndexForSelect;
-              break;
+        const { key } = event;
+        switch (key) {
+          case 'Enter':
+            event.preventDefault();
+            return handleSelect(optionData[optionIndexForSelect].option);
 
-            case 'ArrowUp':
-              event.preventDefault();
-              optionIndexForSelect =
-                prevOptionIndexForSelect > 0 ? prevOptionIndexForSelect - 1 : 0;
-              break;
+          case 'ArrowUp':
+          case 'ArrowDown':
+            setMouseHoverLock(true);
+            event.preventDefault();
 
-            case 'Enter':
-              event.preventDefault();
-              if (optionData[optionIndexForSelect]) {
-                onSelect?.(optionData[optionIndexForSelect].option);
-                setOpenState(false);
+            return setOptionIndexForSelect((prevIndex) => {
+              if (key === 'ArrowDown') {
+                prevIndex =
+                  prevIndex < optionData.length - 1 ? prevIndex + 1 : prevIndex;
+              } else {
+                prevIndex = prevIndex > 0 ? prevIndex - 1 : 0;
               }
-              break;
 
-            default:
-              onKeyDown?.(event);
-              break;
-          }
+              optionContainer.scrollTo({
+                top: optionData[prevIndex].ref.current?.offsetTop,
+              });
 
-          optionContainer.scrollTo({
-            top: optionData[optionIndexForSelect].ref.current?.offsetTop,
-          });
+              return prevIndex;
+            });
 
-          return optionIndexForSelect;
-        });
+          default:
+            return onKeyDown?.(event);
+        }
       };
 
       document.addEventListener('keydown', keyboardEvent);
       return () => document.removeEventListener('keydown', keyboardEvent);
     }
-  }, [openState, optionData, onKeyDown, onSelect]);
+  }, [
+    openState,
+    optionData,
+    onKeyDown,
+    optionIndexForSelect,
+    handleSelect,
+    optionContainer,
+  ]);
 
   return openState && optionData?.length ? (
     <section
@@ -139,7 +158,14 @@ export const Options = <T extends OptionHint>({
       }`}
       style={{ width }}
     >
-      <ul className={styles['option-container']} ref={optionContainerRef}>
+      <ul
+        className={cleanClassName(
+          `${styles['option-container']} ${
+            !mouseHoverLock && styles['mouse-hover-enabled']
+          }`,
+        )}
+        ref={optionContainerRef}
+      >
         {optionData.map(({ option, ref }, index) => {
           const optionObject =
             typeof option === 'object'
@@ -154,10 +180,12 @@ export const Options = <T extends OptionHint>({
                 ref={ref}
                 className={cleanClassName(
                   `${styles['option-item']} ${isSelected && styles.selected} ${
-                    optionIndexForSelect === index && styles.hover
+                    mouseHoverLock &&
+                    optionIndexForSelect === index &&
+                    styles.hovered
                   }`,
                 )}
-                onClick={() => onSelect?.(option)}
+                onClick={() => handleSelect(option)}
                 onMouseEnter={() => {
                   if (openState === true && !mouseHoverLock) {
                     setOptionIndexForSelect(index);

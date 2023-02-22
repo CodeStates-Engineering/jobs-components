@@ -69,10 +69,10 @@ export const Searchbox = ({
             setOpened(true);
             onChange?.(value);
           }}
-          onFocus={(e) => {
+          onClick={() => {
             setOpened(true);
-            onFocus?.(e);
           }}
+          onFocus={onFocus}
           id={id}
           value={inputText}
           disabled={disabled}

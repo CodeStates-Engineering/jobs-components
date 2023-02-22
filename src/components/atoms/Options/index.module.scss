@@ -47,6 +47,13 @@ $OPTIONS-BORDER-RADIUS: 10px;
     scroll-snap-align: start;
     width: 100%;
   }
+
+  &.mouse-hover-enabled > li {
+    transition: background-color 0.3s;
+    &:hover {
+      background-color: $BLUISH-GRAY-10;
+    }
+  }
 }
 
 .option-item {
@@ -57,13 +64,12 @@ $OPTIONS-BORDER-RADIUS: 10px;
   max-width: 100%;
   padding: 0.8em;
   border-radius: 5px;
-  transition: background 0.3s;
+
   &.selected {
     color: $BLUE-500;
   }
 
-  &.hover {
+  &.hovered {
     background-color: $BLUISH-GRAY-10;
-    outline: none;
   }
 }
