@@ -15,7 +15,6 @@
 
 .input-wrap {
   width: 100%;
-  padding: 0 12px;
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -50,14 +49,22 @@
     &:has(:focus) {
       @include border($BLUE-500, 2px);
     }
+
+    &:has(input[type='button']) {
+      &,
+      > * {
+        cursor: pointer;
+      }
+    }
   }
 
   &:has(:disabled) {
     background-color: $BLUISH-GRAY-10;
     @include border($BLUISH-GRAY-200, 1px);
     color: $BLUISH-GRAY-400;
-    &:has(.readonly) {
-      color: $BLUISH-GRAY-700;
+    &,
+    > * {
+      cursor: not-allowed;
     }
   }
 

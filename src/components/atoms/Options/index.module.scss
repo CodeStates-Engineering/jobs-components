@@ -3,12 +3,16 @@
 $OPTIONS-BORDER-RADIUS: 10px;
 
 .options {
-  &.opened {
-    @include fade-in-top;
-  }
-  &.closing {
-    @include fade-out-top;
+  &.closing,
+  &.opening {
+    &.opening {
+      @include fade-in-top;
+    }
+    &.closing {
+      @include fade-out-top;
+    }
     z-index: -1;
+    cursor: default;
   }
 
   position: absolute;
@@ -57,7 +61,8 @@ $OPTIONS-BORDER-RADIUS: 10px;
   &.selected {
     color: $BLUE-500;
   }
-  &:focus {
+
+  &.hover {
     background-color: $BLUISH-GRAY-10;
     outline: none;
   }

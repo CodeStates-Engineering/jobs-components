@@ -33,6 +33,7 @@ export const Searchbox = ({
   onFocus,
   size,
   id,
+  onClick,
 }: SearchboxProps) => {
   const [opened, setOpened] = useState(false);
   const [inputText, setInputText] = useComponentSelfState(
@@ -61,7 +62,7 @@ export const Searchbox = ({
 
   return (
     <FocusLayer onClick={() => setOpened(false)} focused={opened}>
-      <InputContainer width={width} size={size}>
+      <InputContainer width={width} size={size} onClick={onClick}>
         <Input
           onChange={(value) => {
             setInputText?.(value);

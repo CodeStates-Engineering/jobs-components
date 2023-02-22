@@ -7,12 +7,6 @@
   &:has(> :disabled) {
     cursor: not-allowed;
   }
-  > input {
-    cursor: pointer;
-    caret-color: transparent;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
 
   &:hover > .opened-arrow {
     transform: rotate(-180deg);

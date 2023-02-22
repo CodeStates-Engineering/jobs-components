@@ -2,7 +2,8 @@ import { cleanClassName } from 'utils';
 
 import styles from './index.module.scss';
 
-export interface InputContainerProps {
+export interface InputContainerProps
+  extends Pick<React.HTMLAttributes<HTMLDivElement>, 'onClick'> {
   width?: React.CSSProperties['width'];
   children?: React.ReactNode;
   validationMessage?: string | null;
@@ -14,6 +15,7 @@ export const InputContainer = ({
   children,
   validationMessage = null,
   size = 'medium',
+  onClick,
 }: InputContainerProps) => (
   <div style={{ width }} className={styles['input-container']}>
     <div
@@ -22,6 +24,7 @@ export const InputContainer = ({
           styles[`size-${size}`]
         }`,
       )}
+      onClick={onClick}
     >
       {children}
     </div>

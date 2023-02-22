@@ -4,16 +4,12 @@ import type { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { Options } from '..';
 
-import type { OptionsProps, Option } from '..';
-
 export default {
   title: 'atoms/Options',
   component: Options,
 } as ComponentMeta<typeof Options>;
 
-type DummyOption = Option<string>;
-
-const dummyOptions: DummyOption[] = [];
+const dummyOptions: { label: string; value: string }[] = [];
 
 for (let i = 0; i < 100; i += 1) {
   dummyOptions.push({
@@ -46,10 +42,8 @@ const ButtonStory: ComponentStory<typeof Options> = (args) => {
   );
 };
 
-export const Default = ButtonStory.bind({});
-const defaultArgs: OptionsProps<DummyOption> = {
+export const Default = ButtonStory.bind({
   opened: true,
   options: dummyOptions,
   width: '300px',
-};
-Default.args = defaultArgs;
+});

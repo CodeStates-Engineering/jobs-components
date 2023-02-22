@@ -6,6 +6,7 @@ import {
   useState,
   useEffect,
   useLayoutEffect,
+  useRef,
 } from 'react';
 
 import styles from './index.module.scss';
@@ -24,6 +25,7 @@ export interface OptionsProps<T extends OptionHint> {
   options?: T[];
   value?: T extends ObjectOption<infer U> ? U : string;
   onSelect?: (option: T) => void;
+  onKeyDown?: (event: KeyboardEvent) => void;
   width?: React.CSSProperties['width'];
   float?: 'top' | 'bottom';
 }
@@ -33,6 +35,7 @@ export const Options = <T extends OptionHint>({
   options,
   value,
   onSelect,
+  onKeyDown,
   width = '300px',
   float = 'bottom',
 }: OptionsProps<T>) => {
@@ -48,76 +51,87 @@ export const Options = <T extends OptionHint>({
     [options],
   );
 
-  const [openState, setOpenState] = useState<boolean | 'closing'>(!!opened);
+  const [openState, setOpenState] = useState<boolean | 'closing' | 'opening'>(
+    !!opened,
+  );
 
   useLayoutEffect(
     () =>
       setOpenState((prevOpenState) => {
-        if (opened) {
-          return true;
+        if (prevOpenState !== opened) {
+          return opened ? 'opening' : 'closing';
         }
-        if (prevOpenState) {
-          return 'closing';
-        }
-        return false;
+        return prevOpenState;
       }),
     [opened],
   );
 
+  const isChangeOpenState = typeof openState === 'string';
   useEffect(() => {
-    if (openState === 'closing') {
-      const timeout = setTimeout(() => setOpenState(false), 250);
+    if (isChangeOpenState) {
+      const timeout = setTimeout(
+        () => setOpenState(openState === 'opening'),
+        250,
+      );
       return () => clearTimeout(timeout);
     }
-  }, [openState]);
+  }, [openState, isChangeOpenState]);
+
+  const [optionIndexForSelect, setOptionIndexForSelect] = useState(-1);
+
+  const [mouseHoverLock, setMouseHoverLock] = useState(false);
+
+  const optionContainerRef = useRef<HTMLUListElement>(null);
 
   useEffect(() => {
-    if (opened && optionData) {
+    const optionContainer = optionContainerRef.current;
+    if (opened && optionData && optionContainer) {
       const keyboardEvent = (event: KeyboardEvent) => {
-        let focusOptionIndex = optionData.findIndex(
-          ({ ref }) => document.activeElement === ref.current,
-        );
-
         const lastOptionIndex = optionData.length - 1;
+        setMouseHoverLock(true);
+        setOptionIndexForSelect((prevOptionIndexForSelect) => {
+          let optionIndexForSelect = prevOptionIndexForSelect;
+          switch (event.key) {
+            case 'ArrowDown':
+              event.preventDefault();
+              optionIndexForSelect =
+                prevOptionIndexForSelect < lastOptionIndex
+                  ? prevOptionIndexForSelect + 1
+                  : prevOptionIndexForSelect;
+              break;
 
-        switch (event.key) {
-          case 'ArrowDown':
-            event.preventDefault();
-            if (focusOptionIndex < 0) {
-              focusOptionIndex = 0;
-            } else if (focusOptionIndex < lastOptionIndex) {
-              focusOptionIndex += 1;
-            }
-            break;
+            case 'ArrowUp':
+              event.preventDefault();
+              optionIndexForSelect =
+                prevOptionIndexForSelect > 0 ? prevOptionIndexForSelect - 1 : 0;
+              break;
 
-          case 'ArrowUp':
-            event.preventDefault();
-            if (focusOptionIndex > 0) {
-              focusOptionIndex -= 1;
-            } else {
-              focusOptionIndex = 0;
-            }
-            break;
+            default:
+              onKeyDown?.(event);
+              break;
+          }
 
-          default:
-            break;
-        }
-        optionData[focusOptionIndex]?.ref.current?.focus();
+          optionContainer.scrollTo({
+            top: optionData[optionIndexForSelect].ref.current?.offsetTop,
+          });
+
+          return optionIndexForSelect;
+        });
       };
 
       document.addEventListener('keydown', keyboardEvent);
       return () => document.removeEventListener('keydown', keyboardEvent);
     }
-  }, [opened, optionData]);
+  }, [opened, optionData, onKeyDown, optionIndexForSelect]);
 
   return openState && optionData?.length ? (
     <section
       className={`${styles.options} ${styles[float]} ${
-        openState === 'closing' ? styles.closing : styles.opened
+        isChangeOpenState && styles[openState]
       }`}
       style={{ width }}
     >
-      <ul className={styles['option-container']}>
+      <ul className={styles['option-container']} ref={optionContainerRef}>
         {optionData.map(({ option, ref }, index) => {
           const optionObject =
             typeof option === 'object'
@@ -131,10 +145,17 @@ export const Options = <T extends OptionHint>({
               <button
                 ref={ref}
                 className={cleanClassName(
-                  `${styles['option-item']} ${isSelected && styles.selected}`,
+                  `${styles['option-item']} ${isSelected && styles.selected} ${
+                    optionIndexForSelect === index && styles.hover
+                  }`,
                 )}
                 onClick={() => onSelect?.(option)}
-                onMouseEnter={() => ref.current?.focus()}
+                onMouseEnter={() => {
+                  if (openState === true && !mouseHoverLock) {
+                    setOptionIndexForSelect(index);
+                  }
+                }}
+                onMouseMove={() => setMouseHoverLock(false)}
               >
                 {optionObject.label}
               </button>

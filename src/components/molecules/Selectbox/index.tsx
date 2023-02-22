@@ -1,9 +1,8 @@
-/* eslint-disable */
-
 import { FocusLayer, Options, Input, InputContainer } from 'components/atoms';
 import { useComponentSelfState } from 'hooks';
+import { cleanClassName } from 'utils';
 
-import { useRef, useState, useMemo } from 'react';
+import { useRef, useState, useMemo, useCallback } from 'react';
 import { ChevronDown } from 'react-feather';
 
 import styles from './index.module.scss';
@@ -14,15 +13,14 @@ import type {
   OptionsProps,
   OptionHint,
 } from 'components/atoms';
-import { cleanClassName } from 'utils';
 
 export type SelectboxProps<T extends OptionHint> = Omit<
-  InputProps<'text'> & InputContainerProps,
+  InputProps<'button'> & InputContainerProps,
   'type' | 'children' | 'validationMessage' | 'onFocus' | 'value' | 'onChange'
 > &
   Pick<OptionsProps<T>, 'float' | 'options' | 'width' | 'value'> & {
     onlyUpdatedByParent?: boolean;
-    onChange?: OptionsProps<T>['onSelect'];
+    onChange?: ((option?: T) => void) | undefined;
   };
 
 export const Selectbox = <T extends OptionHint>({
@@ -66,46 +64,46 @@ export const Selectbox = <T extends OptionHint>({
 
   const ref = useRef<HTMLInputElement>(null);
 
+  const handleClick = useCallback(() => {
+    const { current } = ref;
+    if (current) {
+      setOpened((prevOpenState) => {
+        if (prevOpenState) {
+          current.blur();
+          return false;
+        }
+        return true;
+      });
+    }
+  }, [ref]);
+
   return (
     <FocusLayer onClick={() => setOpened(false)} focused={opened}>
-      <InputContainer width={width} size={size}>
-        <div
-          className={styles['select-wrap']}
-          onClick={() => {
-            if (disabled) {
-              return;
-            }
-            const { current } = ref;
-            setOpened(!opened);
-            if (opened) {
-              current?.blur();
-            } else {
-              current?.focus();
-            }
-          }}
-        >
-          <Input
-            ref={ref}
-            id={id}
-            value={selectedOptionObject?.label}
-            disabled={disabled}
-            placeholder={placeholder}
-          />
-          <ChevronDown
-            className={cleanClassName(
-              `${styles.arrow} ${opened && styles['opened-arrow']}`,
-            )}
-          />
-        </div>
+      <InputContainer width={width} size={size} onClick={handleClick}>
+        <Input
+          id={id}
+          type="button"
+          ref={ref}
+          value={selectedOptionObject?.label}
+          disabled={disabled}
+          placeholder={placeholder}
+        />
+        <ChevronDown
+          className={cleanClassName(
+            `${styles.arrow} ${opened && styles['opened-arrow']}`,
+          )}
+        />
         <Options
           opened={opened}
           options={options}
           width={width}
           value={selectedOptionObject?.value}
           onSelect={(option) => {
-            setSelectedOption?.(option);
-            setOpened(false);
-            onChange?.(option);
+            const optionForSelect =
+              option === selectedOption ? undefined : option;
+
+            setSelectedOption?.(optionForSelect);
+            onChange?.(optionForSelect);
           }}
           float={float}
         />
