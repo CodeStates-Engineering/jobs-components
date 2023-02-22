@@ -2,14 +2,19 @@ import React, { useState } from 'react';
 
 import type { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { Options } from '..';
+import { Options, OptionsProps } from '..';
 
 export default {
   title: 'atoms/Options',
   component: Options,
 } as ComponentMeta<typeof Options>;
 
-const dummyOptions: { label: string; value: string }[] = [];
+interface DummyOption {
+  label: string;
+  value: string;
+}
+
+const dummyOptions: DummyOption[] = [];
 
 for (let i = 0; i < 100; i += 1) {
   dummyOptions.push({
@@ -24,7 +29,6 @@ for (let i = 0; i < 100; i += 1) {
 
 const ButtonStory: ComponentStory<typeof Options> = (args) => {
   const [label, setLabel] = useState('옵션을 선택해주세요.');
-
   return (
     <div style={{ position: 'relative' }}>
       <div>
@@ -42,8 +46,8 @@ const ButtonStory: ComponentStory<typeof Options> = (args) => {
   );
 };
 
-export const Default = ButtonStory.bind({
+export const Default = ButtonStory.bind({});
+Default.args = {
   opened: true,
   options: dummyOptions,
-  width: '300px',
-});
+} satisfies OptionsProps<DummyOption>;

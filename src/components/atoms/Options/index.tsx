@@ -85,7 +85,7 @@ export const Options = <T extends OptionHint>({
 
   useEffect(() => {
     const optionContainer = optionContainerRef.current;
-    if (opened && optionData && optionContainer) {
+    if (openState === true && optionData && optionContainer) {
       const keyboardEvent = (event: KeyboardEvent) => {
         const lastOptionIndex = optionData.length - 1;
         setMouseHoverLock(true);
@@ -106,6 +106,14 @@ export const Options = <T extends OptionHint>({
                 prevOptionIndexForSelect > 0 ? prevOptionIndexForSelect - 1 : 0;
               break;
 
+            case 'Enter':
+              event.preventDefault();
+              if (optionData[optionIndexForSelect]) {
+                onSelect?.(optionData[optionIndexForSelect].option);
+                setOpenState(false);
+              }
+              break;
+
             default:
               onKeyDown?.(event);
               break;
@@ -122,7 +130,7 @@ export const Options = <T extends OptionHint>({
       document.addEventListener('keydown', keyboardEvent);
       return () => document.removeEventListener('keydown', keyboardEvent);
     }
-  }, [opened, optionData, onKeyDown, optionIndexForSelect]);
+  }, [openState, optionData, onKeyDown, onSelect]);
 
   return openState && optionData?.length ? (
     <section
