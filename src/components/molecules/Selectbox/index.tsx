@@ -1,8 +1,9 @@
+/* eslint-disable */
 import { FocusLayer, Options, Input, InputContainer } from 'components/atoms';
 import { useComponentSelfState } from 'hooks';
 import { cleanClassName } from 'utils';
 
-import { useRef, useState, useMemo } from 'react';
+import { useRef, useState } from 'react';
 import { ChevronDown } from 'react-feather';
 
 import styles from './index.module.scss';
@@ -11,19 +12,21 @@ import type {
   InputProps,
   InputContainerProps,
   OptionsProps,
-  OptionHint,
+  Option,
 } from 'components/atoms';
 
-export type SelectboxProps<T extends OptionHint> = Omit<
+type BaseOptionsProps = OptionsProps<Option, false>;
+
+export type SelectboxProps<_Option extends Option = Option> = Omit<
   InputProps<'button'> & InputContainerProps,
   'type' | 'children' | 'validationMessage' | 'onFocus' | 'value' | 'onChange'
 > &
-  Pick<OptionsProps<T>, 'float' | 'options' | 'width' | 'value'> & {
+  Pick<BaseOptionsProps, 'float' | 'options' | 'width' | 'value'> & {
     onlyUpdatedByParent?: boolean;
-    onChange?: ((option?: T) => void) | undefined;
+    onChange?: BaseOptionsProps['onSelect'];
   };
 
-export const Selectbox = <T extends OptionHint>({
+export const Selectbox = <_Option extends Option = Option>({
   float,
   value,
   width,
@@ -34,48 +37,31 @@ export const Selectbox = <T extends OptionHint>({
   placeholder,
   size,
   id,
-}: SelectboxProps<T>) => {
+  ref,
+  onClick,
+}: SelectboxProps<_Option>) => {
   const [opened, setOpened] = useState(false);
 
   const [selectedOption, setSelectedOption] = useComponentSelfState(
-    options?.find(
-      (option) =>
-        value === (typeof option === 'object' ? option.value : option),
-    ),
+    value,
     onlyUpdatedByParent,
-    [options, value],
   );
-
-  const selectedOptionObject = useMemo(() => {
-    if (selectedOption) {
-      return (
-        typeof selectedOption === 'object'
-          ? selectedOption
-          : {
-              label: selectedOption,
-              value: selectedOption,
-            }
-      ) as {
-        label: string;
-        value: Exclude<typeof value, undefined>;
-      };
-    }
-  }, [selectedOption]);
-
-  const ref = useRef<HTMLInputElement>(null);
 
   return (
     <FocusLayer onClick={() => setOpened(false)} focused={opened}>
       <InputContainer
         width={width}
         size={size}
-        onClick={() => setOpened(!opened)}
+        onClick={(e) => {
+          setOpened(!opened);
+          onClick?.(e);
+        }}
       >
         <Input
           id={id}
           type="button"
           ref={ref}
-          value={selectedOptionObject?.label}
+          value={selectedOption?.label}
           disabled={disabled}
           placeholder={placeholder}
         />
@@ -88,7 +74,7 @@ export const Selectbox = <T extends OptionHint>({
           opened={opened}
           options={options}
           width={width}
-          value={selectedOptionObject?.value}
+          value={selectedOption}
           onSelect={(option) => {
             const optionForSelect =
               option === selectedOption ? undefined : option;

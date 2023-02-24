@@ -99,7 +99,7 @@ export const Options = <
 
   const isChangeOpenState = typeof openState === 'string';
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (isChangeOpenState) {
       const nextOpenState = openState === 'opening';
       if (nextOpenState) {
@@ -112,7 +112,6 @@ export const Options = <
         if (firstSelectedOptionRef) {
           firstSelectedOptionRef.current?.scrollIntoView({
             block: 'start',
-            behavior: 'smooth',
           });
         }
       }
