@@ -39,6 +39,7 @@ $OPTIONS-BORDER-RADIUS: 10px;
   display: flex;
   scroll-snap-type: y mandatory;
   flex-direction: column;
+  gap: 4px;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -48,10 +49,11 @@ $OPTIONS-BORDER-RADIUS: 10px;
     width: 100%;
   }
 
-  &.mouse-hover-enabled > li {
-    transition: background-color 0.3s;
+  &.mouse-hover-enabled > li > .option-item {
+    transition: background-color 0.3s, color 0.3s;
     &:hover {
       background-color: $BLUISH-GRAY-10;
+      color: $BLUISH-GRAY-700;
     }
   }
 }
@@ -64,12 +66,21 @@ $OPTIONS-BORDER-RADIUS: 10px;
   max-width: 100%;
   padding: 0.8em;
   border-radius: 5px;
-
+  display: flex;
+  justify-content: space-between;
+  outline: none;
+  gap: 4px;
   &.selected {
-    color: $BLUE-500;
+    background-color: $BLUE-10;
+    color: $BLUE-600;
   }
 
   &.hovered {
     background-color: $BLUISH-GRAY-10;
   }
+}
+
+.check-icon-wrap {
+  width: 24px;
+  height: 24px;
 }

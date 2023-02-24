@@ -6,89 +6,87 @@ import {
   useState,
   useEffect,
   useLayoutEffect,
-  useRef,
-  useCallback,
 } from 'react';
+import { Check } from 'react-feather';
 
 import styles from './index.module.scss';
 
-type ValidValue = string | number | null;
+type ValidOptionValue = string | number | undefined;
 
-interface ObjectOption<T extends ValidValue> {
+export interface Option<
+  _OptionValue extends ValidOptionValue = ValidOptionValue,
+> {
   label: string;
-  value: T;
+  value: _OptionValue;
 }
 
-export type OptionHint = ObjectOption<ValidValue> | string;
+type OptionsValue<_Option, _Multiple> = _Multiple extends true
+  ? _Option[]
+  : _Option;
 
-export interface OptionsProps<T extends OptionHint> {
+export interface OptionsProps<
+  _Option extends Option = Option,
+  _Multiple extends boolean = false,
+> {
   opened?: boolean;
-  options?: T[];
-  value?: T extends ObjectOption<infer U> ? U : string;
-  onSelect?: (option: T) => void;
+  options?: _Option[];
+  multiple?: _Multiple;
+  value?: OptionsValue<_Option, _Multiple>;
+  onSelect?: (option?: OptionsValue<_Option, _Multiple>) => void;
   onKeyDown?: (event: KeyboardEvent) => void;
   width?: React.CSSProperties['width'];
   float?: 'top' | 'bottom';
 }
 
-export const Options = <T extends OptionHint>({
+export const Options = <
+  _Option extends Option = Option,
+  _Multiple extends boolean = false,
+>({
   opened,
   options,
+  multiple,
   value,
   onSelect,
   onKeyDown,
   width = '300px',
   float = 'bottom',
-}: OptionsProps<T>) => {
-  // value를 array로 받을 수 있어야함
-  const optionData = useMemo(
-    () =>
-      options?.map((originalOption) => {
-        const ref = createRef<HTMLButtonElement>();
-        const optionValue =
-          typeof originalOption === 'object'
-            ? originalOption.value
-            : originalOption;
-        const isSelected = value === optionValue;
-        return {
-          ref,
-          isSelected,
-          option: originalOption,
-        };
-      }),
+}: OptionsProps<_Option, _Multiple>) => {
+  const refList = useMemo(
+    () => options?.map(() => createRef<HTMLButtonElement>()),
     [options],
   );
+
+  const optionData = useMemo(
+    () =>
+      refList &&
+      options?.map((option, index) => {
+        let isAlreadySelected = false;
+
+        if (value) {
+          isAlreadySelected =
+            value instanceof Array
+              ? value.some(
+                  (selectedOption) =>
+                    option.value === selectedOption.value &&
+                    option.label === selectedOption.label,
+                )
+              : value.value === option.value && value.label === option.label;
+        }
+
+        return {
+          option,
+          ref: refList[index],
+          isAlreadySelected,
+        };
+      }),
+    [options, refList, value],
+  );
+
+  const [optionIndexForSelect, setOptionIndexForSelect] = useState(-1);
 
   const [openState, setOpenState] = useState<boolean | 'closing' | 'opening'>(
     !!opened,
   );
-
-  const isChangeOpenState = typeof openState === 'string';
-
-  useEffect(() => {
-    if (isChangeOpenState) {
-      const timeout = setTimeout(
-        () => setOpenState(openState === 'opening'),
-        250,
-      );
-      return () => clearTimeout(timeout);
-    }
-  }, [openState, isChangeOpenState]);
-
-  const [optionIndexForSelect, setOptionIndexForSelect] = useState(-1);
-
-  const handleSelect = useCallback(
-    (option: T) => {
-      onSelect?.(option);
-      setOptionIndexForSelect(-1);
-    },
-    [onSelect],
-  );
-
-  const [mouseHoverLock, setMouseHoverLock] = useState(false);
-
-  const optionContainerRef = useRef<HTMLUListElement>(null);
-  const optionContainer = optionContainerRef.current;
 
   useLayoutEffect(() => {
     setOpenState((prevOpenState) => {
@@ -97,22 +95,92 @@ export const Options = <T extends OptionHint>({
       }
       return prevOpenState;
     });
+  }, [opened]);
 
-    if (optionContainer) {
-      optionContainer.scrollTo({
-        top: 0,
-      });
-    }
-  }, [opened, optionContainer]);
+  const isChangeOpenState = typeof openState === 'string';
 
   useEffect(() => {
-    if (openState === true && optionData && optionContainer) {
+    if (isChangeOpenState) {
+      const nextOpenState = openState === 'opening';
+      if (nextOpenState) {
+        setOptionIndexForSelect(-1);
+
+        const firstSelectedOptionRef = optionData?.find(
+          ({ isAlreadySelected }) => isAlreadySelected,
+        )?.ref;
+
+        if (firstSelectedOptionRef) {
+          firstSelectedOptionRef.current?.scrollIntoView({
+            block: 'start',
+            behavior: 'smooth',
+          });
+        }
+      }
+      const timeout = setTimeout(() => setOpenState(nextOpenState), 250);
+      return () => clearTimeout(timeout);
+    }
+  }, [openState, isChangeOpenState, optionData]);
+
+  const optionDataForSelect = optionData?.[optionIndexForSelect];
+
+  const handleSelect = useMemo(
+    () =>
+      onSelect &&
+      ((multiple
+        ? (value, optionForSelect, isAlreadySelected) => {
+            const selectedOptions = value as _Option[] | undefined;
+            const handleSelect = onSelect as (option?: _Option[]) => void;
+
+            if (!selectedOptions) {
+              return handleSelect([optionForSelect]);
+            }
+
+            return handleSelect(
+              isAlreadySelected
+                ? selectedOptions.filter(
+                    ({ label, value }) =>
+                      label !== optionForSelect.label ||
+                      value !== optionForSelect.value,
+                  )
+                : [...selectedOptions, optionForSelect],
+            );
+          }
+        : (value, optionForSelect, isAlreadySelected) => {
+            const selectedOption = value as _Option | undefined;
+            const handleSelect = onSelect as (option?: _Option) => void;
+
+            if (!selectedOption) {
+              return handleSelect(optionForSelect);
+            }
+
+            return handleSelect(
+              isAlreadySelected ? undefined : optionForSelect,
+            );
+          }) satisfies (
+        _value: typeof value,
+        _optionForSelect: _Option,
+        _isAlreadySelected: boolean,
+      ) => void),
+    [multiple, onSelect],
+  );
+
+  const [mouseHoverLock, setMouseHoverLock] = useState(false);
+
+  useEffect(() => {
+    if (openState === true && optionData) {
       const keyboardEvent = (event: KeyboardEvent) => {
         const { key } = event;
         switch (key) {
           case 'Enter':
             event.preventDefault();
-            return handleSelect(optionData[optionIndexForSelect].option);
+            return (
+              optionDataForSelect &&
+              handleSelect?.(
+                value,
+                optionDataForSelect.option,
+                optionDataForSelect.isAlreadySelected,
+              )
+            );
 
           case 'ArrowUp':
           case 'ArrowDown':
@@ -127,8 +195,8 @@ export const Options = <T extends OptionHint>({
                 prevIndex = prevIndex > 0 ? prevIndex - 1 : 0;
               }
 
-              optionContainer.scrollTo({
-                top: optionData[prevIndex].ref.current?.offsetTop,
+              optionData[prevIndex].ref.current?.scrollIntoView({
+                block: 'start',
               });
 
               return prevIndex;
@@ -143,12 +211,12 @@ export const Options = <T extends OptionHint>({
       return () => document.removeEventListener('keydown', keyboardEvent);
     }
   }, [
+    handleSelect,
+    onKeyDown,
     openState,
     optionData,
-    onKeyDown,
-    optionIndexForSelect,
-    handleSelect,
-    optionContainer,
+    optionDataForSelect,
+    value,
   ]);
 
   return openState && optionData?.length ? (
@@ -164,40 +232,35 @@ export const Options = <T extends OptionHint>({
             !mouseHoverLock && styles['mouse-hover-enabled']
           }`,
         )}
-        ref={optionContainerRef}
       >
-        {optionData.map(({ option, ref }, index) => {
-          const optionObject =
-            typeof option === 'object'
-              ? option
-              : { label: option satisfies string, value: option };
-
-          const isSelected = value === optionObject.value;
-
-          return (
-            <li key={index}>
-              <button
-                ref={ref}
-                className={cleanClassName(
-                  `${styles['option-item']} ${isSelected && styles.selected} ${
-                    mouseHoverLock &&
-                    optionIndexForSelect === index &&
-                    styles.hovered
-                  }`,
-                )}
-                onClick={() => handleSelect(option)}
-                onMouseEnter={() => {
-                  if (openState === true && !mouseHoverLock) {
-                    setOptionIndexForSelect(index);
-                  }
-                }}
-                onMouseMove={() => setMouseHoverLock(false)}
-              >
-                {optionObject.label}
-              </button>
-            </li>
-          );
-        })}
+        {optionData.map(({ option, ref, isAlreadySelected }, index) => (
+          <li key={index}>
+            <button
+              ref={ref}
+              className={cleanClassName(
+                `${styles['option-item']} ${
+                  mouseHoverLock &&
+                  optionIndexForSelect === index &&
+                  styles.hovered
+                } ${isAlreadySelected && styles.selected}`,
+              )}
+              onClick={() => handleSelect?.(value, option, isAlreadySelected)}
+              onMouseEnter={() =>
+                openState === true &&
+                !mouseHoverLock &&
+                setOptionIndexForSelect(index)
+              }
+              onMouseMove={() => setMouseHoverLock(false)}
+            >
+              <div>{option.label}</div>
+              {multiple ? (
+                <div className={styles['check-icon-wrap']}>
+                  {isAlreadySelected ? <Check /> : null}
+                </div>
+              ) : null}
+            </button>
+          </li>
+        ))}
       </ul>
     </section>
   ) : (

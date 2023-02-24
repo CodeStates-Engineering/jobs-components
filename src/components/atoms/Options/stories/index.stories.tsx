@@ -27,26 +27,26 @@ for (let i = 0; i < 100; i += 1) {
   });
 }
 
-const ButtonStory: ComponentStory<typeof Options> = (args) => {
-  const [label, setLabel] = useState('옵션을 선택해주세요.');
+const OptionsStory: ComponentStory<typeof Options> = (args) => {
+  const [option, setOption] = useState<DummyOption | DummyOption[]>();
   return (
-    <div style={{ position: 'relative' }}>
-      <div>
+    <div>
+      <div style={{ position: 'relative' }}>
+        {JSON.stringify(option)}
         <Options
           {...args}
-          value={label}
+          value={option}
           options={dummyOptions}
           onSelect={(option) => {
-            setLabel(option.value);
+            setOption(option);
           }}
         />
       </div>
-      <p>{label}</p>
     </div>
   );
 };
 
-export const Default = ButtonStory.bind({});
+export const Default = OptionsStory.bind({});
 Default.args = {
   opened: true,
   options: dummyOptions,
