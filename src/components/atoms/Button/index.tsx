@@ -1,6 +1,6 @@
 import { cleanClassName } from 'utils';
 
-import { useLayoutEffect, useState } from 'react';
+import { useLayoutEffect, useMemo, useState } from 'react';
 import type { FunctionComponent } from 'react';
 
 import styles from './index.module.scss';
@@ -40,6 +40,13 @@ export const Button = ({
     'after',
   );
 
+  const childrenType = useMemo(() => {
+    if (Icon && children) {
+      return 'both';
+    }
+    return Icon ? 'icon' : 'text';
+  }, [Icon, children]);
+
   useLayoutEffect(() => {
     if (!disabled && delay) {
       setDelayState('before');
@@ -61,7 +68,7 @@ export const Button = ({
           styles[`shape-${shape}`]
         } ${styles[`size-${size}`]} ${
           styles[`icon-direction-${iconDirection}`]
-        }`,
+        } ${styles[`children-type-${childrenType}`]}`,
       )}
       style={{ minWidth }}
       onClick={onClick}
@@ -73,8 +80,7 @@ export const Button = ({
           style={{ transition: `transform ${delay / 1000}s linear` }}
         />
       ) : null}
-
-      <div className={styles['button-content']}>{children}</div>
+      {children && <div className={styles['button-content']}>{children}</div>}
       {Icon ? (
         <div className={`${styles['button-content']} ${styles.icon}`}>
           <Icon />

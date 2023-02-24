@@ -38,12 +38,18 @@ const ButtonStory: ComponentStory<typeof Button> = (args) => {
         <Button {...ghostTypeProps} delay={5000} />
         <Button {...ghostTypeProps} disabled />
         <Button {...ghostTypeProps} icon={AlertOctagon} />
+        <Button {...ghostTypeProps} icon={AlertOctagon}>
+          {null}
+        </Button>
       </div>
       <div style={{ display: 'flex', gap: 10, flexDirection: 'column' }}>
         <Button {...containedTypeProps} />
         <Button {...containedTypeProps} delay={5000} />
         <Button {...containedTypeProps} disabled />
         <Button {...containedTypeProps} icon={AlertOctagon} />
+        <Button {...containedTypeProps} icon={AlertOctagon}>
+          {null}
+        </Button>
       </div>
       <div
         style={{
@@ -57,6 +63,9 @@ const ButtonStory: ComponentStory<typeof Button> = (args) => {
         <Button {...buttonArgs} delay={5000} />
         <Button {...buttonArgs} disabled />
         <Button {...buttonArgs} icon={AlertOctagon} />
+        <Button {...buttonArgs} icon={AlertOctagon}>
+          {null}
+        </Button>
       </div>
     </>
   );
@@ -65,6 +74,5 @@ const ButtonStory: ComponentStory<typeof Button> = (args) => {
 export const Default = ButtonStory.bind({});
 const defaultArgs: ButtonProps = {
   themeType: 'contained',
-  minWidth: '92px',
 };
 Default.args = defaultArgs;

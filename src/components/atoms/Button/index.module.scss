@@ -1,7 +1,5 @@
 @import '../../../styles/libs';
 
-$DISABLED_BACKGROUND_COLOR: $GRAY-400;
-
 @mixin theme(
   $text,
   $disabled-text,
@@ -121,19 +119,35 @@ $DISABLED_BACKGROUND_COLOR: $GRAY-400;
   }
 
   //* Size
-  &.size-small {
+  &.children-type-text {
     padding: 0 16px;
+  }
+  &.children-type-icon {
+    padding: 0;
+  }
+  &.children-type-both {
+    padding: 0 10px;
+  }
+
+  &.size-small {
     height: 32px;
+    &.children-type-icon {
+      width: 32px;
+    }
   }
 
   &.size-medium {
-    padding: 0 16px;
     height: 40px;
+    &.children-type-icon {
+      width: 40px;
+    }
   }
 
   &.size-large {
-    padding: 0 16px;
     height: 48px;
+    &.children-type-icon {
+      width: 48px;
+    }
   }
 
   //* Font Size
