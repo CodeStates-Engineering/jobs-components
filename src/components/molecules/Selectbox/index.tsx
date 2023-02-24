@@ -1,9 +1,8 @@
-/* eslint-disable */
 import { FocusLayer, Options, Input, InputContainer } from 'components/atoms';
 import { useComponentSelfState } from 'hooks';
 import { cleanClassName } from 'utils';
 
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { ChevronDown } from 'react-feather';
 
 import styles from './index.module.scss';
@@ -15,15 +14,13 @@ import type {
   Option,
 } from 'components/atoms';
 
-type BaseOptionsProps = OptionsProps<Option, false>;
-
 export type SelectboxProps<_Option extends Option = Option> = Omit<
   InputProps<'button'> & InputContainerProps,
   'type' | 'children' | 'validationMessage' | 'onFocus' | 'value' | 'onChange'
 > &
-  Pick<BaseOptionsProps, 'float' | 'options' | 'width' | 'value'> & {
+  Pick<OptionsProps<_Option>, 'float' | 'options' | 'width' | 'value'> & {
     onlyUpdatedByParent?: boolean;
-    onChange?: BaseOptionsProps['onSelect'];
+    onChange?: OptionsProps<_Option>['onSelect'];
   };
 
 export const Selectbox = <_Option extends Option = Option>({
