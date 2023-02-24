@@ -1,10 +1,16 @@
 import { cleanClassName } from 'utils';
 
-import { useMemo, forwardRef, Ref } from 'react';
+import type { Ref } from 'react';
+import { useMemo, forwardRef } from 'react';
 
 import styles from './index.module.scss';
 
-export type InputType = 'text' | 'number' | 'large-number' | 'password';
+export type InputType =
+  | 'text'
+  | 'number'
+  | 'large-number'
+  | 'password'
+  | 'button';
 
 export interface InputProps<T extends InputType = 'text'>
   extends Pick<
@@ -12,7 +18,7 @@ export interface InputProps<T extends InputType = 'text'>
       React.InputHTMLAttributes<HTMLInputElement>,
       HTMLInputElement
     >,
-    'placeholder' | 'onFocus' | 'id'
+    'placeholder' | 'onFocus' | 'id' | 'onClick'
   > {
   type?: T;
   value?: T extends 'number' | 'large-number' ? number : string;
@@ -33,6 +39,7 @@ export const Input: <T extends InputType = 'text'>(
       disabled = false,
       value,
       onChange,
+      onClick,
       id,
       onFocus,
     },
@@ -56,10 +63,12 @@ export const Input: <T extends InputType = 'text'>(
       switch (type) {
         case 'large-number':
           return (value) => (value ? value.toLocaleString() : value ?? '');
+        case 'button':
+          return (value) => value || placeholder;
         default:
           return (value) => value ?? '';
       }
-    }, [type]) satisfies (value: Value) => number | string;
+    }, [type, placeholder]) satisfies (value: Value) => number | string;
 
     return (
       <input
@@ -67,16 +76,19 @@ export const Input: <T extends InputType = 'text'>(
         ref={ref}
         onFocus={onFocus}
         type={type}
-        disabled={!!disabled}
         placeholder={placeholder}
+        onClick={onClick}
         value={convertValue(value)}
         style={{ width }}
-        onChange={({ target: { value } }) => {
-          onChange?.(convertChangeHandlerParam(value));
-        }}
         className={cleanClassName(
-          `${styles.input} ${disabled === 'readonly' && styles.readonly}`,
+          `${styles.input} ${disabled === 'readonly' && styles.readonly} ${
+            type === 'button' && styles.button
+          } ${value || styles.empty}`,
         )}
+        disabled={!!disabled}
+        onChange={({ target: { value } }) =>
+          onChange?.(convertChangeHandlerParam(value))
+        }
       />
     );
   },

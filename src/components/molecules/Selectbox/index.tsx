@@ -1,9 +1,8 @@
-/* eslint-disable */
-
 import { FocusLayer, Options, Input, InputContainer } from 'components/atoms';
 import { useComponentSelfState } from 'hooks';
+import { cleanClassName } from 'utils';
 
-import { useRef, useState, useMemo } from 'react';
+import { useState } from 'react';
 import { ChevronDown } from 'react-feather';
 
 import styles from './index.module.scss';
@@ -12,20 +11,19 @@ import type {
   InputProps,
   InputContainerProps,
   OptionsProps,
-  OptionHint,
+  Option,
 } from 'components/atoms';
-import { cleanClassName } from 'utils';
 
-export type SelectboxProps<T extends OptionHint> = Omit<
-  InputProps<'text'> & InputContainerProps,
+export type SelectboxProps<_Option extends Option = Option> = Omit<
+  InputProps<'button'> & InputContainerProps,
   'type' | 'children' | 'validationMessage' | 'onFocus' | 'value' | 'onChange'
 > &
-  Pick<OptionsProps<T>, 'float' | 'options' | 'width' | 'value'> & {
+  Pick<OptionsProps<_Option>, 'float' | 'options' | 'width' | 'value'> & {
     onlyUpdatedByParent?: boolean;
-    onChange?: OptionsProps<T>['onSelect'];
+    onChange?: OptionsProps<_Option>['onSelect'];
   };
 
-export const Selectbox = <T extends OptionHint>({
+export const Selectbox = <_Option extends Option = Option>({
   float,
   value,
   width,
@@ -36,76 +34,50 @@ export const Selectbox = <T extends OptionHint>({
   placeholder,
   size,
   id,
-}: SelectboxProps<T>) => {
+  ref,
+  onClick,
+}: SelectboxProps<_Option>) => {
   const [opened, setOpened] = useState(false);
 
   const [selectedOption, setSelectedOption] = useComponentSelfState(
-    options?.find(
-      (option) =>
-        value === (typeof option === 'object' ? option.value : option),
-    ),
+    value,
     onlyUpdatedByParent,
-    [options, value],
   );
-
-  const selectedOptionObject = useMemo(() => {
-    if (selectedOption) {
-      return (
-        typeof selectedOption === 'object'
-          ? selectedOption
-          : {
-              label: selectedOption,
-              value: selectedOption,
-            }
-      ) as {
-        label: string;
-        value: Exclude<typeof value, undefined>;
-      };
-    }
-  }, [selectedOption]);
-
-  const ref = useRef<HTMLInputElement>(null);
 
   return (
     <FocusLayer onClick={() => setOpened(false)} focused={opened}>
-      <InputContainer width={width} size={size}>
-        <div
-          className={styles['select-wrap']}
-          onClick={() => {
-            if (disabled) {
-              return;
-            }
-            const { current } = ref;
-            setOpened(!opened);
-            if (opened) {
-              current?.blur();
-            } else {
-              current?.focus();
-            }
-          }}
-        >
-          <Input
-            ref={ref}
-            id={id}
-            value={selectedOptionObject?.label}
-            disabled={disabled}
-            placeholder={placeholder}
-          />
-          <ChevronDown
-            className={cleanClassName(
-              `${styles.arrow} ${opened && styles['opened-arrow']}`,
-            )}
-          />
-        </div>
+      <InputContainer
+        width={width}
+        size={size}
+        onClick={(e) => {
+          setOpened(!opened);
+          onClick?.(e);
+        }}
+      >
+        <Input
+          id={id}
+          type="button"
+          ref={ref}
+          value={selectedOption?.label}
+          disabled={disabled}
+          placeholder={placeholder}
+        />
+        <ChevronDown
+          className={cleanClassName(
+            `${styles.arrow} ${opened && styles['opened-arrow']}`,
+          )}
+        />
         <Options
           opened={opened}
           options={options}
           width={width}
-          value={selectedOptionObject?.value}
+          value={selectedOption}
           onSelect={(option) => {
-            setSelectedOption?.(option);
+            const optionForSelect =
+              option === selectedOption ? undefined : option;
+            setSelectedOption?.(optionForSelect);
+            onChange?.(optionForSelect);
             setOpened(false);
-            onChange?.(option);
           }}
           float={float}
         />

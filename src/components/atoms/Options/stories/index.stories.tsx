@@ -4,14 +4,17 @@ import type { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { Options } from '..';
 
-import type { OptionsProps, Option } from '..';
+import type { OptionsProps } from '..';
 
 export default {
   title: 'atoms/Options',
   component: Options,
 } as ComponentMeta<typeof Options>;
 
-type DummyOption = Option<string>;
+interface DummyOption {
+  label: string;
+  value: string;
+}
 
 const dummyOptions: DummyOption[] = [];
 
@@ -26,30 +29,27 @@ for (let i = 0; i < 100; i += 1) {
   });
 }
 
-const ButtonStory: ComponentStory<typeof Options> = (args) => {
-  const [label, setLabel] = useState('옵션을 선택해주세요.');
-
+const OptionsStory: ComponentStory<typeof Options> = (args) => {
+  const [option, setOption] = useState<DummyOption | DummyOption[]>();
   return (
-    <div style={{ position: 'relative' }}>
-      <div>
+    <div>
+      <div style={{ position: 'relative' }}>
+        {JSON.stringify(option)}
         <Options
           {...args}
-          value={label}
+          value={option}
           options={dummyOptions}
           onSelect={(option) => {
-            setLabel(option.value);
+            setOption(option);
           }}
         />
       </div>
-      <p>{label}</p>
     </div>
   );
 };
 
-export const Default = ButtonStory.bind({});
-const defaultArgs: OptionsProps<DummyOption> = {
+export const Default = OptionsStory.bind({});
+Default.args = {
   opened: true,
   options: dummyOptions,
-  width: '300px',
-};
-Default.args = defaultArgs;
+} satisfies OptionsProps<DummyOption>;

@@ -9,22 +9,26 @@ import type {
   InputProps,
   InputContainerProps,
   OptionsProps,
+  Option,
 } from 'components/atoms';
+
+type BaseOptionsProps = OptionsProps<Option<string>, false>;
 
 export type SearchboxProps = Omit<
   InputProps<'text'> & InputContainerProps,
   'type' | 'children' | 'validationMessage'
 > &
-  Pick<OptionsProps<string>, 'float' | 'options' | 'width'> & {
+  Pick<BaseOptionsProps, 'float'> & {
     selfFilter?: boolean;
     onlyUpdatedByParent?: boolean;
+    options?: string[];
   };
 
 export const Searchbox = ({
   float,
   value,
   width,
-  options: originalOptions,
+  options: stringOptions,
   onChange,
   selfFilter = true,
   onlyUpdatedByParent,
@@ -33,6 +37,8 @@ export const Searchbox = ({
   onFocus,
   size,
   id,
+  onClick,
+  ref,
 }: SearchboxProps) => {
   const [opened, setOpened] = useState(false);
   const [inputText, setInputText] = useComponentSelfState(
@@ -41,9 +47,15 @@ export const Searchbox = ({
   );
 
   const options = useMemo(() => {
-    if (!selfFilter || !originalOptions || !inputText) {
-      return originalOptions;
+    const options = stringOptions?.map((value) => ({
+      label: value,
+      value,
+    }));
+
+    if (!selfFilter || !options || !inputText) {
+      return options;
     }
+
     const standardizeString = (value: string) =>
       value.toLowerCase().replace(regex.symbols, '');
 
@@ -51,27 +63,28 @@ export const Searchbox = ({
       .split(' ')
       .map((value) => standardizeString(value));
 
-    return originalOptions.filter((option) => {
-      const standardizeOption = standardizeString(option);
+    return options.filter(({ value }) => {
+      const standardizeOption = standardizeString(value);
       return standardizeInputTextArray.every((inputText) =>
         standardizeOption.includes(inputText),
       );
     });
-  }, [selfFilter, inputText, originalOptions]);
+  }, [selfFilter, inputText, stringOptions]);
 
   return (
     <FocusLayer onClick={() => setOpened(false)} focused={opened}>
-      <InputContainer width={width} size={size}>
+      <InputContainer width={width} size={size} onClick={onClick}>
         <Input
+          ref={ref}
           onChange={(value) => {
             setInputText?.(value);
             setOpened(true);
             onChange?.(value);
           }}
-          onFocus={(e) => {
+          onClick={() => {
             setOpened(true);
-            onFocus?.(e);
           }}
+          onFocus={onFocus}
           id={id}
           value={inputText}
           disabled={disabled}
@@ -82,11 +95,18 @@ export const Searchbox = ({
           opened={opened}
           options={options}
           width={width}
-          value={inputText}
-          onSelect={(value) => {
-            setInputText?.(value);
+          value={
+            inputText
+              ? {
+                  label: inputText,
+                  value: inputText,
+                }
+              : undefined
+          }
+          onSelect={(option) => {
+            setInputText?.(option?.label);
             setOpened(false);
-            onChange?.(value);
+            onChange?.(option?.label);
           }}
           float={float}
         />
