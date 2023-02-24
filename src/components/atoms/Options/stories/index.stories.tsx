@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 
 import type { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { Options, OptionsProps } from '..';
+import { Options } from '..';
+
+import type { OptionsProps } from '..';
 
 export default {
   title: 'atoms/Options',

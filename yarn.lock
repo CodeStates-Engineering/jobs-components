@@ -1679,7 +1679,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@codestates-engineering/codeship-platform-app-library@workspace:."
   dependencies:
-    "@codestates-engineering/eslint-config-codestates": 1.0.5
+    "@codestates-engineering/eslint-config-codestates": 1.0.6
     "@rollup/plugin-json": ^6.0.0
     "@rollup/plugin-node-resolve": ^15.0.1
     "@rollup/plugin-typescript": ^11.0.0
@@ -1775,9 +1775,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@codestates-engineering/eslint-config-codestates@npm:1.0.5":
-  version: 1.0.5
-  resolution: "@codestates-engineering/eslint-config-codestates@npm:1.0.5::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40codestates-engineering%2Feslint-config-codestates%2F1.0.5%2F90e75f338855a249f84defdafe42067ad738a4cc"
+"@codestates-engineering/eslint-config-codestates@npm:1.0.6":
+  version: 1.0.6
+  resolution: "@codestates-engineering/eslint-config-codestates@npm:1.0.6::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40codestates-engineering%2Feslint-config-codestates%2F1.0.6%2Fd86b300d1ca2449d231917ea7c7e2b08b777f4ac"
   dependencies:
     "@babel/eslint-parser": ^7.19.1
     "@stylelint/postcss-css-in-js": ^0.38.0
@@ -1815,7 +1815,7 @@ __metadata:
     postcss-syntax: "*"
     prettier: "*"
     stylelint: "*"
-  checksum: 2bd9e2fa1eb3d533f640eba8fa512fc2c887c5de4db264d2ecb854665f2663554bb7985ce3207fa6476e217913deec7117a4b88af49cc627f2fa1a901e5799ea
+  checksum: 0d069a4a81822dcf780b46bf4cba145aa0981f3ae6ae00bfa5a66637b90e89a1377ac1e69aa7d5299a6d4ff2315364f36efc3fd26a5d0e4ad27422406e8365e7
   languageName: node
   linkType: hard
 

@@ -1,6 +1,7 @@
 import { cleanClassName } from 'utils';
 
-import { useMemo, forwardRef, Ref } from 'react';
+import type { Ref } from 'react';
+import { useMemo, forwardRef } from 'react';
 
 import styles from './index.module.scss';
 
