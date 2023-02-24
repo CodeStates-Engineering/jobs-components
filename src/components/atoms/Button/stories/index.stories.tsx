@@ -36,5 +36,6 @@ const ButtonStory: ComponentStory<typeof Button> = (args) => {
 export const Default = ButtonStory.bind({});
 const defaultArgs: ButtonProps = {
   width: '120px',
+  themeType: 'contained',
 };
 Default.args = defaultArgs;

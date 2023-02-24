@@ -2,6 +2,82 @@
 
 $DISABLED_BACKGROUND_COLOR: $GRAY-400;
 
+@mixin theme(
+  $text,
+  $disabled-text,
+  $bg,
+  $disabled-bg,
+  $hover-bg,
+  $active-bg,
+  $focus-bg,
+  $focus-border
+) {
+  &.contained {
+    background-color: $bg;
+    color: $text;
+
+    &:disabled {
+      background-color: $disabled-bg;
+      color: $disabled-text;
+    }
+
+    &:not(:disabled) {
+      &:hover {
+        background-color: $hover-bg;
+      }
+
+      &:active {
+        background-color: $active-bg;
+      }
+
+      &:focus {
+        background-color: $focus-bg;
+      }
+    }
+  }
+
+  &.ghost {
+    background-color: transparent;
+    color: $bg;
+
+    &:disabled {
+      color: $disabled-bg;
+    }
+
+    &:not(:disabled) {
+      &:hover {
+        background-color: $BLUISH-GRAY-10;
+      }
+
+      &:active {
+        background-color: $BLUISH-GRAY-100;
+      }
+    }
+  }
+
+  &:focus {
+    @include border($focus-border, 2px);
+  }
+
+  &.delayed-button {
+    &:disabled {
+      background-color: $bg;
+    }
+    > .delay-bar {
+      background-color: $disabled-bg;
+    }
+
+    &.ghost {
+      border-radius: 0;
+      background-color: transparent;
+      > .delay-bar {
+        bottom: -90%;
+        background-color: $bg;
+      }
+    }
+  }
+}
+
 .button,
 .delayed-button {
   overflow: hidden;
@@ -16,16 +92,35 @@ $DISABLED_BACKGROUND_COLOR: $GRAY-400;
 
   &:disabled {
     cursor: not-allowed;
-    color: white;
-  }
-  &.button:disabled {
-    background-color: $DISABLED_BACKGROUND_COLOR;
-  }
-  &.delayed-button:disabled {
-    background-color: $BLUE-600;
   }
 
   //* Theme
+  &.theme-blue-600 {
+    @include theme(
+      $WHITE,
+      $BLUE-10,
+      $BLUE-600,
+      $BLUE-300,
+      $BLUE-500,
+      $BLUE-700,
+      $BLUE-600,
+      $BLUE-500
+    );
+  }
+
+  &.theme-bluish-gray-800 {
+    @include theme(
+      $WHITE,
+      $BLUISH-GRAY-10,
+      $BLUISH-GRAY-800,
+      $BLUISH-GRAY-300,
+      $BLUISH-GRAY-700,
+      $BLUISH-GRAY-900,
+      $BLUISH-GRAY-800,
+      $BLUE-500
+    );
+  }
+
   &.theme-gray-800 {
     background-color: $GRAY-800;
     color: white;
@@ -77,7 +172,6 @@ $DISABLED_BACKGROUND_COLOR: $GRAY-400;
   left: 0;
   position: absolute;
   z-index: 1;
-  background-color: $DISABLED_BACKGROUND_COLOR;
   &.delaying {
     transform: translateX(100%);
   }

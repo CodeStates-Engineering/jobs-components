@@ -14,7 +14,8 @@ export interface ButtonProps
   extends Pick<HtmlButtonProps, 'onClick' | 'children' | 'disabled' | 'type'> {
   delay?: number;
   width?: React.CSSProperties['width'];
-  theme?: 'gray-800' | 'transparent';
+  theme?: 'blue-600' | 'bluish-gray-800';
+  themeType?: 'contained' | 'ghost';
   icon?: FunctionComponent;
   shape?: 'round' | 'default';
 }
@@ -24,7 +25,8 @@ export const Button = ({
   type = 'button',
   children,
   width = '150px',
-  theme = 'gray-800',
+  theme = 'blue-600',
+  themeType = 'contained',
   onClick,
   disabled,
   shape = 'default',
@@ -51,7 +53,9 @@ export const Button = ({
       className={cleanClassName(
         `${isDelayButton ? styles['delayed-button'] : styles.button} ${
           styles['font-size-bold']
-        } ${styles[`theme-${theme}`]} ${styles[`shape-${shape}`]}`,
+        } ${styles[`theme-${theme}`]} ${styles[themeType]} ${
+          styles[`shape-${shape}`]
+        }`,
       )}
       style={{ width }}
       onClick={onClick}
