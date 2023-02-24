@@ -1,9 +1,9 @@
-![header](https://capsule-render.vercel.app/api?type=rect&color=0:EEFF00,100:a82da8&fontColor=FFFFFF&height=100&section=header&text=JOBS%20Components&fontSize=40&fontAlign=50&fontAlignY=50)
+![header](https://capsule-render.vercel.app/api?type=rect&color=0:EEFF00,100:a82da8&fontColor=FFFFFF&height=100&section=header&text=Codeship%20platform%20app%20library&fontSize=40&fontAlign=50&fontAlignY=50)
 
 ![Node.js](https://img.shields.io/badge/Node%2018.13-339933?style=flat-square&logo=Node.js&logoColor=white) ![Yarn](https://img.shields.io/badge/Yarn%20Berry-2C8EBB?style=flat-square&logo=yarn&logoColor=white) ![React](https://img.shields.io/badge/React%2018-61DAFB?style=flat-square&logo=react&logoColor=black) ![Typescript](https://img.shields.io/badge/Typescript-3178c6?style=flat-square&logo=typescript&logoColor=white) ![SCSS](https://img.shields.io/badge/Sass-CC6699?style=flat-square&logo=sass&logoColor=white) ![CSS_Modules](https://img.shields.io/badge/CSS%20Modules-000000?style=flat-square&logo=CSS%20Modules&logoColor=white)
 ![RollupJS](https://img.shields.io/badge/Rollup.js-EC4A3F?style=flat-square&logo=rollup.js&logoColor=white)
 
-**Codestates 채용 플랫폼 Codeship(가칭)의 웹 클라이언트입니다.**
+**Codestates 채용 플랫폼 Codeship의 웹 클라이언트입니다.**
 
 ## 📚 Package Install
 
