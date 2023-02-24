@@ -82,13 +82,13 @@ $DISABLED_BACKGROUND_COLOR: $GRAY-400;
 .delayed-button {
   overflow: hidden;
   position: relative;
-  padding: 0 12px;
   box-sizing: border-box;
   transition: background-color 0.3s, color 0.3s;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.8em;
+  width: fit-content;
+  gap: 8px;
 
   &:disabled {
     cursor: not-allowed;
@@ -107,7 +107,6 @@ $DISABLED_BACKGROUND_COLOR: $GRAY-400;
       $BLUE-500
     );
   }
-
   &.theme-bluish-gray-800 {
     @include theme(
       $WHITE,
@@ -121,21 +120,20 @@ $DISABLED_BACKGROUND_COLOR: $GRAY-400;
     );
   }
 
-  &.theme-gray-800 {
-    background-color: $GRAY-800;
-    color: white;
+  //* Size
+  &.size-small {
+    padding: 0 16px;
+    height: 32px;
   }
 
-  &.theme-transparent {
-    background-color: transparent;
-    color: $GRAY-800;
-    &:disabled {
-      background-color: transparent;
-      color: $GRAY-400;
-    }
-    > .delay-bar {
-      background-color: $GRAY-200;
-    }
+  &.size-medium {
+    padding: 0 16px;
+    height: 40px;
+  }
+
+  &.size-large {
+    padding: 0 16px;
+    height: 48px;
   }
 
   //* Font Size
@@ -150,6 +148,14 @@ $DISABLED_BACKGROUND_COLOR: $GRAY-400;
 
   &.shape-round {
     border-radius: 50em;
+  }
+
+  //* Icon direction
+  &.icon-direction-left {
+    flex-direction: row-reverse;
+  }
+  &.icon-direction-right {
+    flex-direction: row;
   }
 }
 

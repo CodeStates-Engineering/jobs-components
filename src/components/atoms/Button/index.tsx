@@ -13,10 +13,12 @@ type HtmlButtonProps = React.DetailedHTMLProps<
 export interface ButtonProps
   extends Pick<HtmlButtonProps, 'onClick' | 'children' | 'disabled' | 'type'> {
   delay?: number;
-  width?: React.CSSProperties['width'];
+  minWidth?: React.CSSProperties['minWidth'];
+  size?: 'small' | 'medium' | 'large';
   theme?: 'blue-600' | 'bluish-gray-800';
   themeType?: 'contained' | 'ghost';
   icon?: FunctionComponent;
+  iconDirection?: 'left' | 'right';
   shape?: 'round' | 'default';
 }
 
@@ -24,12 +26,14 @@ export const Button = ({
   delay,
   type = 'button',
   children,
-  width = '150px',
+  minWidth,
+  size = 'medium',
   theme = 'blue-600',
   themeType = 'contained',
   onClick,
   disabled,
   shape = 'default',
+  iconDirection = 'left',
   icon: Icon,
 }: ButtonProps) => {
   const [delayState, setDelayState] = useState<'before' | 'delaying' | 'after'>(
@@ -55,9 +59,11 @@ export const Button = ({
           styles['font-size-bold']
         } ${styles[`theme-${theme}`]} ${styles[themeType]} ${
           styles[`shape-${shape}`]
+        } ${styles[`size-${size}`]} ${
+          styles[`icon-direction-${iconDirection}`]
         }`,
       )}
-      style={{ width }}
+      style={{ minWidth }}
       onClick={onClick}
       disabled={disabled || isDelayButton}
     >
@@ -67,12 +73,13 @@ export const Button = ({
           style={{ transition: `transform ${delay / 1000}s linear` }}
         />
       ) : null}
+
+      <div className={styles['button-content']}>{children}</div>
       {Icon ? (
         <div className={`${styles['button-content']} ${styles.icon}`}>
           <Icon />
         </div>
       ) : null}
-      <div className={styles['button-content']}>{children}</div>
     </button>
   );
 };

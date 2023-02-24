@@ -22,7 +22,6 @@ export const Category = ({ items }: CategoryProps) => {
             <Button
               shape="round"
               theme={to === pathname ? 'blue-600' : 'bluish-gray-800'}
-              width="fit-content"
             >
               {label}
             </Button>
