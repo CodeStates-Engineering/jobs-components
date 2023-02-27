@@ -1748,6 +1748,8 @@ __metadata:
     prop-types: "*"
     react: ^18.0.0
   dependenciesMeta:
+    "@codestates-engineering/eslint-config-codestates":
+      optional: true
     "@stylelint/postcss-css-in-js":
       optional: true
     "@typescript-eslint/eslint-plugin":
