@@ -27,9 +27,6 @@ jobs:
         with:
           token: ${{secrets.CSE_NPM_TOKEN}}
 
-      - name: Install depenency(zero-install)
-        run: yarn install
-
       - name: Regist author
         run: git config --global user.email "engineering@codestates.com" && git config --global user.name "CodeStates Engineering"
 

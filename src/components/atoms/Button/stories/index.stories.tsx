@@ -18,7 +18,9 @@ const ButtonStory: ComponentStory<typeof Button> = (args) => {
   const buttonArgs = {
     ...args,
     children: value ? '취소' : '확인',
-    onclick: () => setValue(!value),
+    onClick: () => {
+      setValue(!value);
+    },
   };
 
   const ghostTypeProps = {
