@@ -88,7 +88,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["rollup-plugin-url", "virtual:5b1ad385247f8d1e6ad87a5d16065c8d2ccd675173f9fb1bd244cc5af159ea9e98448435c0ab8f6a3e6c6bf6e64a01c57f537df38ca93bc588bd9a0273d62277#npm:3.0.1"],\
             ["sass", "npm:1.58.3"],\
             ["stylelint", "npm:15.2.0"],\
-            ["tsconfig-paths-webpack-plugin", "npm:4.0.0"],\
             ["tslib", "npm:2.5.0"],\
             ["typescript", "patch:typescript@npm%3A4.9.5#~builtin<compat/typescript>::version=4.9.5&hash=23ec76"],\
             ["web-vitals", "npm:3.1.1"],\
@@ -4519,7 +4518,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["rollup-plugin-url", "virtual:5b1ad385247f8d1e6ad87a5d16065c8d2ccd675173f9fb1bd244cc5af159ea9e98448435c0ab8f6a3e6c6bf6e64a01c57f537df38ca93bc588bd9a0273d62277#npm:3.0.1"],\
             ["sass", "npm:1.58.3"],\
             ["stylelint", "npm:15.2.0"],\
-            ["tsconfig-paths-webpack-plugin", "npm:4.0.0"],\
             ["tslib", "npm:2.5.0"],\
             ["typescript", "patch:typescript@npm%3A4.9.5#~builtin<compat/typescript>::version=4.9.5&hash=23ec76"],\
             ["web-vitals", "npm:3.1.1"],\
@@ -29159,28 +29157,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["json5", "npm:1.0.2"],\
             ["minimist", "npm:1.2.8"],\
             ["strip-bom", "npm:3.0.0"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
-        ["npm:4.1.2", {\
-          "packageLocation": "./.yarn/cache/tsconfig-paths-npm-4.1.2-7a84ac2b29-3d9151ecea.zip/node_modules/tsconfig-paths/",\
-          "packageDependencies": [\
-            ["tsconfig-paths", "npm:4.1.2"],\
-            ["json5", "npm:2.2.3"],\
-            ["minimist", "npm:1.2.8"],\
-            ["strip-bom", "npm:3.0.0"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["tsconfig-paths-webpack-plugin", [\
-        ["npm:4.0.0", {\
-          "packageLocation": "./.yarn/cache/tsconfig-paths-webpack-plugin-npm-4.0.0-399b80e99e-7ff7d63c11.zip/node_modules/tsconfig-paths-webpack-plugin/",\
-          "packageDependencies": [\
-            ["tsconfig-paths-webpack-plugin", "npm:4.0.0"],\
-            ["chalk", "npm:4.1.2"],\
-            ["enhanced-resolve", "npm:5.12.0"],\
-            ["tsconfig-paths", "npm:4.1.2"]\
           ],\
           "linkType": "HARD"\
         }]\

@@ -14,9 +14,8 @@
     "jsx": "react-jsx",
     "experimentalDecorators": true,
     "importsNotUsedAsValues": "error",
-    "baseUrl": "./src",
     "declaration": true,
-    "declarationDir": "./types"
+    "baseUrl": "./src"
   },
   "include": ["src"],
   "exclude": ["**/*.stories.tsx"]
