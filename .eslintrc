@@ -1,3 +1,4 @@
 {
+  "ignorePatterns": ["**/*.config.*js"],
   "extends": ["@codestates-engineering/eslint-config-codestates/frontend"]
 }
