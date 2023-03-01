@@ -15,6 +15,7 @@
     "experimentalDecorators": true,
     "importsNotUsedAsValues": "error",
     "declaration": true,
+    "declarationDir": "./types",
     "baseUrl": "./src"
   },
   "include": ["src"],
