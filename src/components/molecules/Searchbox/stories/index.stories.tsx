@@ -4,6 +4,8 @@ import type { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { Searchbox } from '..';
 
+import type { SearchboxProps } from '..';
+
 export default {
   title: 'molecules/Searchbox',
   component: Searchbox,
@@ -30,4 +32,5 @@ export const Default = SearchboxStory.bind({});
 Default.args = {
   options: dummyOptions,
   selfFilter: true,
-};
+  label: 'Searchbox',
+} satisfies SearchboxProps;

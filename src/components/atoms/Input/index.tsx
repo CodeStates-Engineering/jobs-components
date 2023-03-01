@@ -26,6 +26,7 @@ export interface InputProps<T extends InputType = 'text'>
   disabled?: boolean | 'readonly';
   onChange?: (value: InputProps<T>['value']) => void;
   ref?: Ref<HTMLInputElement>;
+  name?: string;
 }
 
 export const Input: <T extends InputType = 'text'>(
@@ -42,6 +43,7 @@ export const Input: <T extends InputType = 'text'>(
       onClick,
       id,
       onFocus,
+      name,
     },
     ref,
   ) => {
@@ -73,6 +75,7 @@ export const Input: <T extends InputType = 'text'>(
     return (
       <input
         id={id}
+        name={name}
         ref={ref}
         onFocus={onFocus}
         type={type}

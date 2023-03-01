@@ -1,4 +1,10 @@
-import { FocusLayer, Options, Input, InputContainer } from 'components/atoms';
+import {
+  FocusLayer,
+  Options,
+  Input,
+  InputContainer,
+  Label,
+} from 'components/atoms';
 import { useComponentSelfState } from 'hooks';
 import { regex } from 'utils';
 
@@ -16,12 +22,13 @@ type BaseOptionsProps = OptionsProps<Option<string>, false>;
 
 export type SearchboxProps = Omit<
   InputProps<'text'> & InputContainerProps,
-  'type' | 'children' | 'validationMessage'
+  'type' | 'children' | 'validationMessage' | 'name'
 > &
-  Pick<BaseOptionsProps, 'float'> & {
+  Partial<Pick<BaseOptionsProps, 'float'>> & {
     selfFilter?: boolean;
     onlyUpdatedByParent?: boolean;
     options?: string[];
+    label?: string;
   };
 
 export const Searchbox = ({
@@ -39,6 +46,7 @@ export const Searchbox = ({
   id,
   onClick,
   ref,
+  label,
 }: SearchboxProps) => {
   const [opened, setOpened] = useState(false);
   const [inputText, setInputText] = useComponentSelfState(
@@ -73,8 +81,10 @@ export const Searchbox = ({
 
   return (
     <FocusLayer onClick={() => setOpened(false)} focused={opened}>
+      {label ? <Label htmlFor={label}>{label}</Label> : null}
       <InputContainer width={width} size={size} onClick={onClick}>
         <Input
+          name={label}
           ref={ref}
           onChange={(value) => {
             setInputText?.(value);
