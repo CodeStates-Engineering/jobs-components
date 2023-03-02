@@ -1,15 +1,15 @@
-import { Link as CompatibleLink } from 'plugins';
+import { Compatibility } from 'plugins';
 
 import styles from './index.module.scss';
 
-import type { LinkProps as CompatibleLinkProps } from 'plugins';
+import type { CompatibleLinkProps } from 'plugins';
 
 export type LinkProps = Omit<CompatibleLinkProps, 'className'> & {
   color?: 'puple-550' | 'puple-600';
 };
 
 export const Link = ({ color = 'puple-550', ...restProps }: LinkProps) => (
-  <CompatibleLink
+  <Compatibility.Link
     {...restProps}
     className={`${styles.link} ${styles[`color-${color}`]}`}
   />

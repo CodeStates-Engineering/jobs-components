@@ -6,31 +6,31 @@ import type {
   Location as ReactLocation,
 } from 'react-router-dom';
 
-export type LinkProps = (NextLinkProps | ReactLinkProps) & {
+export type CompatibleLinkProps = (NextLinkProps | ReactLinkProps) & {
   to: ReactLinkProps['to'];
   children: ReactLinkProps['children'];
   className?: ReactLinkProps['className'];
 };
 
-export type Location = ReactLocation | NextRouter;
+export type CompatibleLocation = ReactLocation | NextRouter;
 
 type NextLinkComponent = (props: NextLinkProps) => JSX.Element;
 
 export class Compatibility {
-  public static Link = ({ to, ...restProps }: LinkProps) => (
+  public static Link = ({ to, ...restProps }: CompatibleLinkProps) => (
     <ReactLink {...restProps} to={to} />
   );
 
-  private static injectLink = (NextLink: NextLinkComponent) => {
-    this.Link = function Link({ to, ...restProps }) {
-      return <NextLink {...restProps} href={to} />;
-    };
-  };
-
-  public static useLocation: () => Location = useLocation;
+  public static useLocation: () => CompatibleLocation = useLocation;
 
   private static injectUseLocation = (useRouter: () => NextRouter) => {
     this.useLocation = useRouter;
+  };
+
+  private static injectLink = (NextLink: NextLinkComponent) => {
+    this.Link = function CompatibleLink({ to, ...restProps }) {
+      return <NextLink {...restProps} href={to} />;
+    };
   };
 
   public static injectDependencies = ({
