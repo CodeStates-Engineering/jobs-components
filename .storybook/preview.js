@@ -2,6 +2,14 @@ import '../src/global.scss';
 import '@storybook/addon-console';
 
 import { MemoryRouter } from 'react-router-dom';
+import { Compatibility } from '../src/plugins';
+import { useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
+Compatibility.injectDependencies('react', {
+  location: useLocation,
+  link: Link,
+});
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
