@@ -7,13 +7,15 @@ export interface InputContainerProps
   width?: React.CSSProperties['width'];
   children?: React.ReactNode;
   validationMessage?: string | null;
+  validationSpace?: boolean;
   size?: 'small' | 'medium' | 'large';
 }
 
 export const InputContainer = ({
   width = '300px',
   children,
-  validationMessage = null,
+  validationMessage,
+  validationSpace,
   size = 'medium',
   onClick,
 }: InputContainerProps) => (
@@ -29,9 +31,9 @@ export const InputContainer = ({
       {children}
     </div>
     {validationMessage ? (
-      <div className={styles['validation-message-wrap']}>
-        <p className={styles['validation-message']}>{validationMessage}</p>
-      </div>
-    ) : null}
+      <p className={styles['validation-message']}>{validationMessage}</p>
+    ) : (
+      validationSpace && <div className={styles['validation-space']} />
+    )}
   </div>
 );
