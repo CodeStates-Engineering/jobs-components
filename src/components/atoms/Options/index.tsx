@@ -134,7 +134,11 @@ export const Options = <T extends OptionHint>({
                   `${styles['option-item']} ${isSelected && styles.selected}`,
                 )}
                 onClick={() => onSelect?.(option)}
-                onMouseEnter={() => ref.current?.focus()}
+                onMouseEnter={() => {
+                  if (!openState) {
+                    ref.current?.focus();
+                  }
+                }}
               >
                 {optionObject.label}
               </button>
