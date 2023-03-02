@@ -18,6 +18,7 @@ export type TextboxProps<_InputType extends InputType = 'text'> = Omit<
   label?: string;
   unit?: React.ReactNode;
   validation?: Validation<TextboxProps<_InputType>['value']>;
+  validationSpace?: boolean;
 };
 
 export const Textbox = <T extends InputType = 'text'>({
@@ -36,6 +37,7 @@ export const Textbox = <T extends InputType = 'text'>({
   ref,
   label,
   validation,
+  validationSpace,
 }: TextboxProps<T>) => {
   const [value, setValue] = useComponentSelfState(
     originalValue,
@@ -54,6 +56,7 @@ export const Textbox = <T extends InputType = 'text'>({
         width="100%"
         size={size}
         validationMessage={validationMessage}
+        validationSpace={validationSpace}
       >
         <Input
           onClick={onClick}

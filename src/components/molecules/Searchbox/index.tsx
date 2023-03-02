@@ -31,6 +31,7 @@ export type SearchboxProps = Omit<
     options?: string[];
     label?: string;
     validation?: Validation<SearchboxProps['value']>;
+    validationSpace?: boolean;
   };
 
 export const Searchbox = ({
@@ -50,6 +51,7 @@ export const Searchbox = ({
   ref,
   label,
   validation,
+  validationSpace,
 }: SearchboxProps) => {
   const [opened, setOpened] = useState(false);
   const [inputText, setInputText] = useComponentSelfState(
@@ -101,6 +103,7 @@ export const Searchbox = ({
         size={size}
         onClick={onClick}
         validationMessage={validationMessage}
+        validationSpace={validationSpace}
       >
         <Input
           name={label}

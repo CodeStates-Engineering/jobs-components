@@ -38,6 +38,7 @@ export type SelectboxProps<_Option extends Option = Option> = Omit<
     onChange?: OptionsProps<_Option>['onSelect'];
     label?: string;
     validation?: Validation<SelectboxProps<_Option>['value']>;
+    validationSpace?: boolean;
   };
 
 export const Selectbox = <_Option extends Option = Option>({
@@ -55,6 +56,7 @@ export const Selectbox = <_Option extends Option = Option>({
   onClick,
   label,
   validation,
+  validationSpace,
 }: SelectboxProps<_Option>) => {
   const [opened, setOpened] = useState(false);
 
@@ -79,6 +81,7 @@ export const Selectbox = <_Option extends Option = Option>({
           onClick?.(e);
         }}
         validationMessage={validationMessage}
+        validationSpace={validationSpace}
       >
         <Input
           id={id}
