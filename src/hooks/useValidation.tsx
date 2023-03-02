@@ -7,7 +7,9 @@ import {
 
 import { ValidationContext } from './useValidationStore';
 
-type Validation<_Value> = ((value: _Value) => string | undefined) | undefined;
+export type Validation<_Value> =
+  | ((value: _Value) => string | undefined)
+  | undefined;
 
 export const useValidation = <_Value,>(
   value: _Value,

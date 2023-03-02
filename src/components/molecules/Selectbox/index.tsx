@@ -5,7 +5,7 @@ import {
   InputContainer,
   Label,
 } from 'components/atoms';
-import { useComponentSelfState } from 'hooks';
+import { useComponentSelfState, useValidation } from 'hooks';
 import { cleanClassName } from 'utils';
 
 import { useState } from 'react';
@@ -19,6 +19,7 @@ import type {
   OptionsProps,
   Option,
 } from 'components/atoms';
+import type { Validation } from 'hooks';
 
 export type SelectboxProps<_Option extends Option = Option> = Omit<
   InputProps<'button'> & InputContainerProps,
@@ -36,6 +37,7 @@ export type SelectboxProps<_Option extends Option = Option> = Omit<
     onlyUpdatedByParent?: boolean;
     onChange?: OptionsProps<_Option>['onSelect'];
     label?: string;
+    validation?: Validation<SelectboxProps<_Option>['value']>;
   };
 
 export const Selectbox = <_Option extends Option = Option>({
@@ -52,12 +54,18 @@ export const Selectbox = <_Option extends Option = Option>({
   ref,
   onClick,
   label,
+  validation,
 }: SelectboxProps<_Option>) => {
   const [opened, setOpened] = useState(false);
 
   const [selectedOption, setSelectedOption] = useComponentSelfState(
     value,
     onlyUpdatedByParent,
+  );
+
+  const { validationMessage, checkValidation } = useValidation(
+    value,
+    validation,
   );
 
   return (
@@ -70,6 +78,7 @@ export const Selectbox = <_Option extends Option = Option>({
           setOpened(!opened);
           onClick?.(e);
         }}
+        validationMessage={validationMessage}
       >
         <Input
           id={id}
@@ -94,6 +103,7 @@ export const Selectbox = <_Option extends Option = Option>({
             const optionForSelect =
               option === selectedOption ? undefined : option;
             setSelectedOption?.(optionForSelect);
+            checkValidation?.(optionForSelect);
             onChange?.(optionForSelect);
             setOpened(false);
           }}

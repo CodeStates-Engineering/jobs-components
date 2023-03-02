@@ -1,5 +1,5 @@
 import { InputContainer, Input, Label } from 'components/atoms';
-import { useComponentSelfState } from 'hooks';
+import { useComponentSelfState, useValidation } from 'hooks';
 
 import styles from './index.module.scss';
 
@@ -8,14 +8,16 @@ import type {
   InputContainerProps,
   InputType,
 } from 'components/atoms';
+import type { Validation } from 'hooks';
 
-export type TextboxProps<T extends InputType = 'text'> = Omit<
-  InputProps<T> & InputContainerProps,
+export type TextboxProps<_InputType extends InputType = 'text'> = Omit<
+  InputProps<_InputType> & InputContainerProps,
   'validationMessage' | 'name' | 'children'
 > & {
   onlyUpdatedByParent?: boolean;
   label?: string;
   unit?: React.ReactNode;
+  validation?: Validation<TextboxProps<_InputType>['value']>;
 };
 
 export const Textbox = <T extends InputType = 'text'>({
@@ -33,16 +35,26 @@ export const Textbox = <T extends InputType = 'text'>({
   onClick,
   ref,
   label,
+  validation,
 }: TextboxProps<T>) => {
   const [value, setValue] = useComponentSelfState(
     originalValue,
     onlyUpdatedByParent,
   );
 
+  const { validationMessage, checkValidation } = useValidation(
+    value,
+    validation,
+  );
+
   return (
     <div style={{ width }}>
       {label ? <Label htmlFor={label}>{label}</Label> : null}
-      <InputContainer width="100%" size={size}>
+      <InputContainer
+        width="100%"
+        size={size}
+        validationMessage={validationMessage}
+      >
         <Input
           onClick={onClick}
           ref={ref}
@@ -54,6 +66,7 @@ export const Textbox = <T extends InputType = 'text'>({
           id={id}
           onChange={(value) => {
             setValue?.(value);
+            checkValidation?.(value);
             onChange?.(value);
           }}
           type={type}

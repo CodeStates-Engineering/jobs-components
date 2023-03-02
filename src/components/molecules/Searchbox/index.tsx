@@ -5,7 +5,7 @@ import {
   InputContainer,
   Label,
 } from 'components/atoms';
-import { useComponentSelfState } from 'hooks';
+import { useComponentSelfState, useValidation } from 'hooks';
 import { regex } from 'utils';
 
 import { useMemo, useState } from 'react';
@@ -17,6 +17,7 @@ import type {
   OptionsProps,
   Option,
 } from 'components/atoms';
+import type { Validation } from 'hooks';
 
 type BaseOptionsProps = OptionsProps<Option<string>, false>;
 
@@ -29,6 +30,7 @@ export type SearchboxProps = Omit<
     onlyUpdatedByParent?: boolean;
     options?: string[];
     label?: string;
+    validation?: Validation<SearchboxProps['value']>;
   };
 
 export const Searchbox = ({
@@ -47,6 +49,7 @@ export const Searchbox = ({
   onClick,
   ref,
   label,
+  validation,
 }: SearchboxProps) => {
   const [opened, setOpened] = useState(false);
   const [inputText, setInputText] = useComponentSelfState(
@@ -79,17 +82,32 @@ export const Searchbox = ({
     });
   }, [selfFilter, inputText, stringOptions]);
 
+  const { validationMessage, checkValidation } = useValidation(
+    inputText,
+    validation,
+  );
+
+  const handleChange = (value?: string) => {
+    setInputText?.(value);
+    onChange?.(value);
+    checkValidation?.(value);
+  };
+
   return (
     <FocusLayer onClick={() => setOpened(false)} focused={opened}>
       {label ? <Label htmlFor={label}>{label}</Label> : null}
-      <InputContainer width={width} size={size} onClick={onClick}>
+      <InputContainer
+        width={width}
+        size={size}
+        onClick={onClick}
+        validationMessage={validationMessage}
+      >
         <Input
           name={label}
           ref={ref}
           onChange={(value) => {
-            setInputText?.(value);
             setOpened(true);
-            onChange?.(value);
+            handleChange(value);
           }}
           onClick={() => {
             setOpened(true);
@@ -114,9 +132,8 @@ export const Searchbox = ({
               : undefined
           }
           onSelect={(option) => {
-            setInputText?.(option?.label);
             setOpened(false);
-            onChange?.(option?.label);
+            handleChange(option?.value);
           }}
           float={float}
         />
