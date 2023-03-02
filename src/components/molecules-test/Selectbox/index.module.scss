@@ -1,0 +1,23 @@
+.select-box-wrap {
+    display: flex;
+    cursor: pointer;
+
+    &:has( :disabled){
+        cursor: not-allowed;
+    }
+    
+    input {
+        cursor: pointer;
+        caret-color: transparent;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    &:hover .rotate {
+        transform: rotate(-180deg);
+    }
+
+    .icon {
+        transition: transform .3s ease-in-out;
+    }
+}
