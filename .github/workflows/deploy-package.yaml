@@ -48,6 +48,9 @@ jobs:
       - name: Push release branch
         run: git push
 
+      - name: Install Packages (for Storybook)
+        run: yarn
+
       - name: Clean build
         run: yarn run clean:build
 
