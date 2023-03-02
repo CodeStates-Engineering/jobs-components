@@ -1,0 +1,28 @@
+@import '../../../styles/libs';
+
+.textarea {
+  width: 100%;
+  resize: none;
+  border: none;
+  outline: none;
+  font-size: $NORMAL;
+  background-color: transparent;
+  box-sizing: border-box;
+  padding: 18px;
+  font-size: inherit;
+
+  &.resize {
+    resize: vertical;
+  }
+
+  &::placeholder {
+    color: $BLUISH-GRAY-300;
+  }
+
+  &:disabled {
+    resize: none;
+    &.readonly {
+      color: $BLUISH-GRAY-700;
+    }
+  }
+}

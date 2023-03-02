@@ -8,7 +8,7 @@ export interface InputContainerProps
   children?: React.ReactNode;
   validationMessage?: string | null;
   validationSpace?: boolean;
-  size?: 'small' | 'medium' | 'large';
+  size?: 'none' | 'small' | 'medium' | 'large';
 }
 
 export const InputContainer = ({

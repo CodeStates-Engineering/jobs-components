@@ -20,9 +20,16 @@
   box-sizing: border-box;
   transition: box-shadow 0.3s, background-color 0.3s;
   color: $BLUISH-GRAY-700;
+  font-size: $NORMAL;
+  z-index: 1;
+
   @include border($BLUISH-GRAY-200, 1px);
 
   //*Size
+  &.size-none {
+    @include size(0, fit-content);
+  }
+
   &.size-small {
     @include size(14px, 32px);
   }
@@ -44,6 +51,10 @@
 
     &:has(:focus) {
       @include border($BLUE-500, 2px);
+
+      &.error {
+        @include border($PEACH-500, 2px);
+      }
     }
 
     &:has(input[type='button']) {
@@ -73,6 +84,8 @@
   @include shake-horizontal(0.9s);
   font-size: $SMALL;
   color: $PEACH-500;
+  z-index: 0;
+  padding-left: $SMALL3X;
 }
 
 .validation-space {
