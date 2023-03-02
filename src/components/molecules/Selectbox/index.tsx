@@ -1,4 +1,10 @@
-import { FocusLayer, Options, Input, InputContainer } from 'components/atoms';
+import {
+  FocusLayer,
+  Options,
+  Input,
+  InputContainer,
+  Label,
+} from 'components/atoms';
 import { useComponentSelfState } from 'hooks';
 import { cleanClassName } from 'utils';
 
@@ -16,11 +22,20 @@ import type {
 
 export type SelectboxProps<_Option extends Option = Option> = Omit<
   InputProps<'button'> & InputContainerProps,
-  'type' | 'children' | 'validationMessage' | 'onFocus' | 'value' | 'onChange'
+  | 'type'
+  | 'children'
+  | 'validationMessage'
+  | 'onFocus'
+  | 'value'
+  | 'onChange'
+  | 'name'
 > &
-  Pick<OptionsProps<_Option>, 'float' | 'options' | 'width' | 'value'> & {
+  Partial<
+    Pick<OptionsProps<_Option>, 'float' | 'options' | 'width' | 'value'>
+  > & {
     onlyUpdatedByParent?: boolean;
     onChange?: OptionsProps<_Option>['onSelect'];
+    label?: string;
   };
 
 export const Selectbox = <_Option extends Option = Option>({
@@ -36,6 +51,7 @@ export const Selectbox = <_Option extends Option = Option>({
   id,
   ref,
   onClick,
+  label,
 }: SelectboxProps<_Option>) => {
   const [opened, setOpened] = useState(false);
 
@@ -46,6 +62,7 @@ export const Selectbox = <_Option extends Option = Option>({
 
   return (
     <FocusLayer onClick={() => setOpened(false)} focused={opened}>
+      {label ? <Label htmlFor={label}>{label}</Label> : null}
       <InputContainer
         width={width}
         size={size}
@@ -56,6 +73,7 @@ export const Selectbox = <_Option extends Option = Option>({
       >
         <Input
           id={id}
+          name={label}
           type="button"
           ref={ref}
           value={selectedOption?.label}

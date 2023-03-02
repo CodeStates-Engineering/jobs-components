@@ -12,22 +12,19 @@ export default {
   component: Textbox,
 } as ComponentMeta<typeof Textbox>;
 
-const ButtonStory: ComponentStory<typeof Textbox> = ({ children, ...args }) => (
+const TextboxStory: ComponentStory<typeof Textbox> = ({ ...args }) => (
   <>
-    <Textbox {...args}>{children}</Textbox>
-    <Textbox {...args}>
-      <AlertOctagon />
-    </Textbox>
-    <Textbox {...args} />
-    <Textbox {...args} disabled="readonly" value={100}>
+    <Textbox {...args} label="readonly textbox" disabled="readonly" value={100}>
       명
     </Textbox>
-    <Textbox type="large-number" />
+    <Textbox {...args} label="large number textbox" type="large-number" />
+    <Textbox {...args} />
+    <Textbox {...args} unit={<AlertOctagon />} />
   </>
 );
 
-export const Default = ButtonStory.bind({});
-const defaultArgs: TextboxProps = {
-  children: '원',
-};
-Default.args = defaultArgs;
+export const Default = TextboxStory.bind({});
+
+Default.args = {
+  label: 'textbox',
+} satisfies TextboxProps;

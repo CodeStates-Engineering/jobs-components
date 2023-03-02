@@ -1,4 +1,4 @@
-import { InputContainer, Input } from 'components/atoms';
+import { InputContainer, Input, Label } from 'components/atoms';
 import { useComponentSelfState } from 'hooks';
 
 import styles from './index.module.scss';
@@ -11,14 +11,16 @@ import type {
 
 export type TextboxProps<T extends InputType = 'text'> = Omit<
   InputProps<T> & InputContainerProps,
-  'validationMessage'
+  'validationMessage' | 'name' | 'children'
 > & {
   onlyUpdatedByParent?: boolean;
+  label?: string;
+  unit?: React.ReactNode;
 };
 
 export const Textbox = <T extends InputType = 'text'>({
   value: originalValue,
-  children,
+  unit,
   onlyUpdatedByParent,
   onChange,
   width = '300px',
@@ -28,6 +30,9 @@ export const Textbox = <T extends InputType = 'text'>({
   onFocus,
   size,
   id,
+  onClick,
+  ref,
+  label,
 }: TextboxProps<T>) => {
   const [value, setValue] = useComponentSelfState(
     originalValue,
@@ -35,24 +40,30 @@ export const Textbox = <T extends InputType = 'text'>({
   );
 
   return (
-    <InputContainer width={width} size={size}>
-      <Input
-        disabled={disabled}
-        placeholder={placeholder}
-        onFocus={onFocus}
-        value={value}
-        id={id}
-        onChange={(value) => {
-          setValue?.(value);
-          onChange?.(value);
-        }}
-        type={type}
-      />
-      {typeof children === 'string' ? (
-        <div className={styles.unit}>{children}</div>
-      ) : (
-        children
-      )}
-    </InputContainer>
+    <div style={{ width }}>
+      {label ? <Label htmlFor={label}>{label}</Label> : null}
+      <InputContainer width="100%" size={size}>
+        <Input
+          onClick={onClick}
+          ref={ref}
+          name={label}
+          disabled={disabled}
+          placeholder={placeholder}
+          onFocus={onFocus}
+          value={value}
+          id={id}
+          onChange={(value) => {
+            setValue?.(value);
+            onChange?.(value);
+          }}
+          type={type}
+        />
+        {typeof unit === 'string' ? (
+          <div className={styles.unit}>{unit}</div>
+        ) : (
+          unit
+        )}
+      </InputContainer>
+    </div>
   );
 };

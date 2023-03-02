@@ -30,4 +30,5 @@ export const Default = SelectboxStory.bind({});
 
 Default.args = {
   options: dummyOptions,
+  label: 'Selectbox',
 };
