@@ -28,9 +28,15 @@ for (let i = 0; i < 100; i += 1) {
 }
 
 export const Default = SearchboxStory.bind({});
-
-Default.args = {
+const searchboxProps: SearchboxProps = {
   options: dummyOptions,
   selfFilter: true,
   label: 'Searchbox',
-} satisfies SearchboxProps;
+  validation: (value?: string) => {
+    if (!value) {
+      return 'Value is required';
+    }
+    return undefined;
+  },
+};
+Default.args = searchboxProps;

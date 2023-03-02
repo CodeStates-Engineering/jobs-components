@@ -7,7 +7,7 @@ import { Checkbox } from '..';
 import type { CheckboxProps } from '..';
 
 export default {
-  title: 'atoms/Checkbox',
+  title: 'molecules/Checkbox',
   component: Checkbox,
 } as ComponentMeta<typeof Checkbox>;
 
@@ -16,4 +16,7 @@ const ButtonStory: ComponentStory<typeof Checkbox> = (args) => (
 );
 
 export const Default = ButtonStory.bind({});
-Default.args = {} satisfies CheckboxProps;
+const checkboxProps: CheckboxProps = {
+  label: 'Checkbox',
+};
+Default.args = checkboxProps;

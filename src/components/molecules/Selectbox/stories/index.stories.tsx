@@ -4,6 +4,8 @@ import type { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { Selectbox } from '..';
 
+import type { SelectboxProps } from '..';
+
 export default {
   title: 'molecules/Selectbox',
   component: Selectbox,
@@ -12,6 +14,11 @@ export default {
 const SelectboxStory: ComponentStory<typeof Selectbox> = (args) => (
   <Selectbox {...args} />
 );
+
+interface DummyOption {
+  label: string;
+  value: string;
+}
 
 const dummyOptions: { label: string; value: string }[] = [];
 
@@ -27,8 +34,17 @@ for (let i = 0; i < 100; i += 1) {
 }
 
 export const Default = SelectboxStory.bind({});
-
-Default.args = {
+const selectboxProps: SelectboxProps = {
   options: dummyOptions,
   label: 'Selectbox',
+  validation: (option: DummyOption) => {
+    if (!option) {
+      return 'Value is required';
+    }
+    if (option.value === '0번 옵션이 선택') {
+      return '0번 옵션은 선택할 수 없습니다.';
+    }
+  },
 };
+
+Default.args = selectboxProps;

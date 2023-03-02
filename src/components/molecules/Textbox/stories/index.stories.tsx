@@ -27,4 +27,9 @@ export const Default = TextboxStory.bind({});
 
 Default.args = {
   label: 'textbox',
+  validation: (value?: string) => {
+    if (!value) {
+      return 'Value is required';
+    }
+  },
 } satisfies TextboxProps;
