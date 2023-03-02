@@ -1,44 +1,59 @@
 import type { LinkProps as NextLinkProps } from 'next/link';
-import type { NextRouter } from 'next/router';
-import { Link as ReactLink, useLocation } from 'react-router-dom';
+import type NextLink from 'next/link';
+import type { useRouter as useNextRouter } from 'next/router';
 import type {
+  Link as ReactLink,
   LinkProps as ReactLinkProps,
-  Location as ReactLocation,
+  useLocation as useReactLocation,
 } from 'react-router-dom';
 
-type LinkProps = (NextLinkProps | ReactLinkProps) & {
-  to: string;
+export type CompatibleLinkProps = (NextLinkProps | ReactLinkProps) & {
+  to: ReactLinkProps['to'];
+  children: ReactLinkProps['children'];
+  className?: ReactLinkProps['className'];
 };
 
-type Location = ReactLocation | NextRouter;
-
-type NextLinkComponent = (props: NextLinkProps) => JSX.Element;
+type NextLinkComponent = typeof NextLink;
+type ReactLinkComponent = typeof ReactLink;
+type UseNextRouter = typeof useNextRouter;
+type UseReactLocation = typeof useReactLocation;
+type Libraries = 'next' | 'react';
+interface Dependencies<_Type extends Libraries> {
+  location: _Type extends 'next' ? UseNextRouter : UseReactLocation;
+  link: _Type extends 'next' ? NextLinkComponent : ReactLinkComponent;
+}
 
 export class Compatibility {
-  public static Link = ({ to, ...restProps }: LinkProps) => (
-    <ReactLink {...restProps} to={to} />
-  );
+  public static Link: (props: CompatibleLinkProps) => JSX.Element;
 
-  private static injectLink = (NextLink: NextLinkComponent) => {
-    this.Link = function Link({ to, ...restProps }) {
-      return <NextLink {...restProps} href={to} />;
-    };
-  };
+  public static useLocation: UseNextRouter | UseReactLocation;
 
-  public static useLocation: () => Location = useLocation;
+  public static injectDependencies = <_Type extends Libraries>(
+    type: _Type,
+    { location, link }: Dependencies<_Type>,
+  ) => {
+    switch (type) {
+      case 'next': {
+        const NextLink = link as NextLinkComponent;
+        const useRouter = location as UseNextRouter;
+        this.Link = function Link({ to, ...restProps }: CompatibleLinkProps) {
+          return <NextLink {...restProps} href={to} />;
+        };
+        this.useLocation = useRouter;
+        break;
+      }
+      case 'react': {
+        const ReactLink = link as ReactLinkComponent;
+        const useLocation = location as UseReactLocation;
+        this.Link = function Link(props: CompatibleLinkProps) {
+          return <ReactLink {...props} />;
+        };
+        this.useLocation = useLocation;
+        break;
+      }
 
-  private static injectUseLocation = (useRouter: () => NextRouter) => {
-    this.useLocation = useRouter;
-  };
-
-  public static injectDependencies = ({
-    Link,
-    useRouter,
-  }: {
-    Link: NextLinkComponent;
-    useRouter: () => NextRouter;
-  }) => {
-    this.injectLink(Link);
-    this.injectUseLocation(useRouter);
+      default:
+        break;
+    }
   };
 }

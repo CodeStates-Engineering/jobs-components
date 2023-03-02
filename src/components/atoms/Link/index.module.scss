@@ -1,0 +1,14 @@
+@import '../../../styles/libs';
+
+.link {
+  font-size: inherit;
+  &:hover {
+    text-decoration: underline;
+  }
+  &.color-puple-550 {
+    color: $PURPLE-550;
+  }
+  &.color-puple-600 {
+    color: $PURPLE-600;
+  }
+}

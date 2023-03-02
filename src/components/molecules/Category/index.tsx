@@ -1,5 +1,5 @@
 import { Button } from 'components/atoms';
-import { Link, useLocation } from 'plugins';
+import { Compatibility } from 'plugins';
 
 import styles from './index.module.scss';
 
@@ -13,19 +13,19 @@ export interface CategoryProps {
 }
 
 export const Category = ({ items }: CategoryProps) => {
-  const { pathname } = useLocation();
+  const { pathname } = Compatibility.useLocation();
   return (
     <ul className={styles.category}>
       {items?.map(({ label, to }, index) => (
         <li key={index}>
-          <Link to={to}>
+          <Compatibility.Link to={to}>
             <Button
               shape="round"
               theme={to === pathname ? 'blue-600' : 'bluish-gray-800'}
             >
               {label}
             </Button>
-          </Link>
+          </Compatibility.Link>
         </li>
       ))}
     </ul>
