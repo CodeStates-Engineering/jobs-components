@@ -5,7 +5,6 @@
   height: $height;
 }
 
-
 .input-container {
   position: relative;
 }
@@ -70,21 +69,17 @@
   }
 }
 
-.validation-message-wrap {
-  @include fade-in(0.3s);
-  width: 100%;
-  background-color: $WHITE;
-  border: 1px solid #e7e9eb;
-  border-radius: 8px;
-  padding: 5px 1em;
-  box-sizing: border-box;
-  position: absolute;
-  margin-top: 5px;
-  box-shadow: $NORMAL-BOX-SHADOW;
+.validation-message {
+  @include shake-horizontal(0.9s);
+  font-size: $SMALL;
+  color: $PEACH-500;
 }
 
-.validation-message {
-  @include shake-horizontal(0.9s, 0.3s);
-  font-size: small;
-  color: $PEACH-500;
+.validation-space {
+  height: 21px;
+}
+
+.validation-message,
+.validation-space {
+  margin-top: 6px;
 }

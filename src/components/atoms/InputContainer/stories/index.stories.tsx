@@ -23,8 +23,14 @@ const ButtonStory: ComponentStory<typeof InputContainer> = (originalArgs) => {
   };
   return (
     <>
-      <InputContainer {...args} validationMessage="필수 입력값 입니다." />
-      <InputContainer {...args} />
+      <div>
+        <InputContainer {...args} validationMessage="필수 입력값 입니다." />
+        next line
+      </div>
+      <div>
+        <InputContainer {...args} />
+        next line
+      </div>
     </>
   );
 };
