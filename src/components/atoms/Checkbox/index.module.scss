@@ -1,0 +1,78 @@
+@import '../../../styles/libs';
+
+.checkbox-container {
+  position: relative;
+  background-color: $WHITE;
+  border-radius: 4px;
+  border-color: $BLUISH-GRAY-300;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-style: solid;
+  transition: border-color 0.2s, background-color 0.2s;
+
+  //* size
+  &.size-small {
+    border-width: 1px;
+    width: 16px;
+    height: 16px;
+  }
+
+  &.size-medium {
+    border-width: 2px;
+    width: 24px;
+    height: 24px;
+  }
+
+  &:not(:has(:disabled, :checked)) {
+    &:hover {
+      background-color: $PURPLE-100;
+      border-color: $PURPLE-550;
+    }
+
+    &.invalid {
+      border-color: $PEACH-600;
+    }
+  }
+
+  &:has(:checked) {
+    background-color: $PURPLE-600;
+    border-color: $PURPLE-600;
+  }
+
+  &:has(:disabled) {
+    background-color: $WHITE;
+    border-color: $BLUISH-GRAY-200;
+    &:has(:checked) {
+      background-color: $BLUISH-GRAY-10;
+    }
+    > .checked {
+      color: $BLUISH-GRAY-200;
+    }
+  }
+}
+
+.checked {
+  color: $WHITE;
+}
+
+.unchecked {
+  visibility: hidden;
+}
+
+.checkbox {
+  position: absolute;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+.check-icon-wrap {
+  margin: auto;
+}
