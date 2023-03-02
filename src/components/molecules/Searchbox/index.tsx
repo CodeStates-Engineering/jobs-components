@@ -87,6 +87,7 @@ export const Searchbox = ({
   const { validationMessage, checkValidation } = useValidation(
     inputText,
     validation,
+    label || id,
   );
 
   const handleChange = (value?: string) => {

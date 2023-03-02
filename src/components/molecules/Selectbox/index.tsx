@@ -68,6 +68,7 @@ export const Selectbox = <_Option extends Option = Option>({
   const { validationMessage, checkValidation } = useValidation(
     value,
     validation,
+    label || id,
   );
 
   return (

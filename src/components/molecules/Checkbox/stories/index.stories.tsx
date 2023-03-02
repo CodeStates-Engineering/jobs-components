@@ -18,5 +18,7 @@ const ButtonStory: ComponentStory<typeof Checkbox> = (args) => (
 export const Default = ButtonStory.bind({});
 const checkboxProps: CheckboxProps = {
   label: 'Checkbox',
+  description: '[필수] Checkbox description',
+  essential: true,
 };
 Default.args = checkboxProps;

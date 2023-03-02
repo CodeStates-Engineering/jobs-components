@@ -76,3 +76,15 @@
 .check-icon-wrap {
   margin: auto;
 }
+
+.checkbox-container-wrap {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.description {
+  color: $BLUISH-GRAY-700;
+  font-weight: 500;
+  font-size: $NORMAL;
+}

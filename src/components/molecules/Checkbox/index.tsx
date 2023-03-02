@@ -1,7 +1,8 @@
 import { Label } from 'components/atoms';
-import { useComponentSelfState } from 'hooks';
+import { useComponentSelfState, useValidation } from 'hooks';
 import { cleanClassName } from 'utils';
 
+import { useMemo } from 'react';
 import { Check } from 'react-feather';
 
 import styles from './index.module.scss';
@@ -17,12 +18,12 @@ export interface CheckboxProps {
   essential?: boolean;
   label?: string;
   width?: React.CSSProperties['width'];
+  description?: React.ReactNode;
 }
 
 export const Checkbox = ({
-  value = true,
+  value = false,
   onChange,
-  name,
   disabled,
   onlyUpdatedByParent,
   id,
@@ -30,6 +31,7 @@ export const Checkbox = ({
   essential,
   label,
   width,
+  description,
 }: CheckboxProps) => {
   const [checked, setChecked] = useComponentSelfState(
     value,
@@ -47,6 +49,22 @@ export const Checkbox = ({
     },
   }[size];
 
+  const essentialValidation = useMemo(
+    () =>
+      essential
+        ? (checked: boolean) => (checked ? undefined : 'invalid')
+        : undefined,
+    [essential],
+  );
+
+  const { validationMessage, checkValidation } = useValidation(
+    checked,
+    essentialValidation,
+    label || id,
+  );
+
+  const isValid = !validationMessage;
+
   return (
     <div
       style={{
@@ -54,29 +72,33 @@ export const Checkbox = ({
       }}
     >
       {label ? <Label htmlFor={label}>{label}</Label> : null}
-      <div
-        className={cleanClassName(
-          `${styles['checkbox-container']} ${styles[`size-${size}`]} ${
-            essential && !checked && styles.invalid
-          }`,
-        )}
-      >
-        <Check
-          {...checkIconSize}
-          className={`${checked ? styles.checked : styles.unchecked}`}
-        />
-        <input
-          id={id}
-          type="checkbox"
-          className={styles.checkbox}
-          name={name}
-          checked={checked}
-          disabled={disabled}
-          onChange={({ target: { checked } }) => {
-            setChecked?.(checked);
-            onChange?.(checked);
-          }}
-        />
+      <div className={styles['checkbox-container-wrap']}>
+        <div
+          className={cleanClassName(
+            `${styles['checkbox-container']} ${styles[`size-${size}`]} ${
+              isValid || styles.invalid
+            }`,
+          )}
+        >
+          <Check
+            {...checkIconSize}
+            className={`${checked ? styles.checked : styles.unchecked}`}
+          />
+          <input
+            id={id}
+            type="checkbox"
+            className={styles.checkbox}
+            name={label}
+            checked={checked}
+            disabled={disabled}
+            onChange={({ target: { checked } }) => {
+              setChecked?.(checked);
+              checkValidation?.(checked);
+              onChange?.(checked);
+            }}
+          />
+        </div>
+        {description && <p className={styles.description}>{description}</p>}
       </div>
     </div>
   );
