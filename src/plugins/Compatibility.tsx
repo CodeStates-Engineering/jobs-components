@@ -6,11 +6,13 @@ import type {
   Location as ReactLocation,
 } from 'react-router-dom';
 
-type LinkProps = (NextLinkProps | ReactLinkProps) & {
-  to: string;
+export type LinkProps = (NextLinkProps | ReactLinkProps) & {
+  to: ReactLinkProps['to'];
+  children: ReactLinkProps['children'];
+  className?: ReactLinkProps['className'];
 };
 
-type Location = ReactLocation | NextRouter;
+export type Location = ReactLocation | NextRouter;
 
 type NextLinkComponent = (props: NextLinkProps) => JSX.Element;
 
