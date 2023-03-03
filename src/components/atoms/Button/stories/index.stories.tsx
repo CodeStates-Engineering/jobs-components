@@ -76,5 +76,6 @@ const ButtonStory: ComponentStory<typeof Button> = (args) => {
 export const Default = ButtonStory.bind({});
 const defaultArgs: ButtonProps = {
   themeType: 'contained',
+  focusOutline: true,
 };
 Default.args = defaultArgs;

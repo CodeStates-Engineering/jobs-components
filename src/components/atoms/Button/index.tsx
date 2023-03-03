@@ -20,6 +20,7 @@ export interface ButtonProps
   icon?: FunctionComponent;
   iconDirection?: 'left' | 'right';
   shape?: 'round' | 'default';
+  focusOutline?: boolean;
 }
 
 export const Button = ({
@@ -35,6 +36,7 @@ export const Button = ({
   shape = 'default',
   iconDirection = 'left',
   icon: Icon,
+  focusOutline = true,
 }: ButtonProps) => {
   const [delayState, setDelayState] = useState<'before' | 'delaying' | 'after'>(
     'after',
@@ -65,8 +67,8 @@ export const Button = ({
         `${isDelayButton ? styles['delayed-button'] : styles.button} ${
           styles['font-size-bold']
         } ${styles[`theme-${theme}`]} ${styles[themeType]} ${
-          styles[`shape-${shape}`]
-        } ${styles[`size-${size}`]} ${
+          focusOutline && styles['focus-outline']
+        } ${styles[`shape-${shape}`]} ${styles[`size-${size}`]} ${
           styles[`icon-direction-${iconDirection}`]
         } ${styles[`children-type-${childrenType}`]}`,
       )}

@@ -53,8 +53,10 @@
     }
   }
 
-  &:focus {
-    @include border($focus-border, 2px);
+  &.focus-outline {
+    &:focus {
+      @include border($focus-border, 2px);
+    }
   }
 
   &.delayed-button {
