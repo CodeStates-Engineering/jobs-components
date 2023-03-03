@@ -5,6 +5,8 @@
 }
 
 @mixin font-size {
+  font-size: inherit;
+
   &.font-size-large4x {
     font-size: $LARGE4X;
   }
@@ -35,6 +37,8 @@
 }
 
 @mixin font-weight {
+  font-weight: inherit;
+
   &.font-weight-700 {
     font-weight: 700;
   }

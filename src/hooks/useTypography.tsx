@@ -13,11 +13,16 @@ export type FontSize =
 
 export type FontWeight = 700 | 500 | 400;
 
-export const useTypography = (fontSize: FontSize, FontWeight: FontWeight) =>
+export interface Typography {
+  fontSize?: FontSize;
+  fontWeight?: FontWeight;
+}
+
+export const useTypography = (fontSize?: FontSize, FontWeight?: FontWeight) =>
   useMemo(
     () => ({
-      fontSize: `font-size-${fontSize}`,
-      fontWeight: `font-weight-${FontWeight}`,
+      fontSizeClassName: fontSize ? `font-size-${fontSize}` : '',
+      fontWeightClassName: FontWeight ? `font-weight-${FontWeight}` : '',
     }),
     [fontSize, FontWeight],
   );
