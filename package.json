@@ -1,6 +1,6 @@
 {
   "name": "@codestates-engineering/codeship-platform-app-library",
-  "version": "0.0.32",
+  "version": "0.0.33",
   "types": "dist/package/types/index.d.ts",
   "module": "dist/package/index.js",
   "repository": "https://github.com/CodeStates-Engineering/codeship-platform-app-library.git",
