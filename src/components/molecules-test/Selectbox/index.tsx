@@ -28,17 +28,22 @@ interface ObjectOption<T extends ValidValue> {
 
 type SelectboxProps<T extends OptionHint> = Omit<
   OptionsProps<T> & InputProps<'text'> & InputContainerProps & FocusLayerProps,
-  'type' | 'children' | 'validationMessage' | 'onFocus' | 'value' | 'onChange'
+  | 'type'
+  | 'children'
+  | 'validationMessage'
+  | 'onFocus'
+  | 'value'
+  | 'onChange'
+  | 'type'
 > &
   Pick<OptionsProps<T>, 'float' | 'options' | 'width' | 'value'> & {
-    dependencies?: React.DependencyList;
+    // dependencies?: React.DependencyList;
     onChange?: OptionsProps<T>['onSelect'];
   };
 
+/** Selectbox는 리스트 아이템들을 통해 옵션을 선택할 수 있습니다. */
 export const Selectbox = <T extends OptionHint>({
   float,
-
-  // 🙋‍♂️ value의 역할은?
   value,
   width = '300px',
   options,
@@ -50,7 +55,8 @@ export const Selectbox = <T extends OptionHint>({
 }: SelectboxProps<T>) => {
   const [active, setActive] = useState<boolean>(false);
 
-  // 외부에서 deps를 전달해, 이에 따라 selected 옵션을 업데이트할 수 있는 커스텀 훅이 필요하다.
+  // TODO: 외부에서 deps를 전달해, 이에 따라 selected 옵션을 업데이트할 수 있는 커스텀 훅이 필요하다.
+  // 🙋‍♂️ selected의 값들을 unique하게 구별할 수 있는 id 필드가 필요하지 않을까?
   const [selected, setSelected] = useState<ObjectOption<ValidValue>>({
     label: 'null',
     value: null,
@@ -76,7 +82,6 @@ export const Selectbox = <T extends OptionHint>({
     return selected.label === 'null' ? undefined : selected.label;
   }
 
-  // 🙋‍♂️ 타입 단언이 옳은 방법인가?
   function getOptionValueFor(selected: ObjectOption<ValidValue>) {
     return selected.value as typeof value;
   }

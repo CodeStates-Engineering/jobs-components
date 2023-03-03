@@ -26,13 +26,13 @@ type SearchboxProps = Omit<
   Omit<InputProps, 'value' | 'ref'> &
   OptionsProps<ObjectOption<ValidValue>>;
 
+/** Searchbox는 검색 결과를 통해 아이템을 선택할 수 있습니다. */
 export const Searchbox = ({
   width,
   size,
   disabled,
   options,
   placeholder = '입력해주세요',
-  type,
   float,
   onChange,
   onFocus,
@@ -77,7 +77,6 @@ export const Searchbox = ({
       <FocusLayer onClick={() => setActive(false)} focused={active}>
         <InputContainer width={width} size={size}>
           <Input
-            type={type}
             value={keyword}
             onChange={handleInputChange}
             onFocus={onFocus}
