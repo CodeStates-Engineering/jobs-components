@@ -1,12 +1,7 @@
+import { Compatibility } from 'plugins';
 import { cleanClassName } from 'utils';
 
-import {
-  createRef,
-  useMemo,
-  useState,
-  useEffect,
-  useLayoutEffect,
-} from 'react';
+import { createRef, useMemo, useState, useEffect } from 'react';
 import { Check } from 'react-feather';
 
 import styles from './index.module.scss';
@@ -88,7 +83,7 @@ export const Options = <
     opened,
   );
 
-  useLayoutEffect(() => {
+  Compatibility.useLayoutEffect(() => {
     setOpenState((prevOpenState) => {
       if (prevOpenState !== opened) {
         return opened ? 'opening' : 'closing';
@@ -99,7 +94,7 @@ export const Options = <
 
   const isChangeOpenState = typeof openState === 'string';
 
-  useLayoutEffect(() => {
+  Compatibility.useLayoutEffect(() => {
     if (isChangeOpenState) {
       const nextOpenState = openState === 'opening';
       if (nextOpenState) {

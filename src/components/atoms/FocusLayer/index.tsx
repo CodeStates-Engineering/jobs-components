@@ -1,6 +1,5 @@
+import { Compatibility } from 'plugins';
 import { cleanClassName } from 'utils';
-
-import { useLayoutEffect } from 'react';
 
 import styles from './index.module.scss';
 
@@ -17,7 +16,7 @@ export const FocusLayer = ({
   focused,
   blur = true,
 }: FocusLayerProps) => {
-  useLayoutEffect(() => {
+  Compatibility.useLayoutEffect(() => {
     const { classList } = document.body;
     if (focused) {
       classList.add(styles['fixed-body']);

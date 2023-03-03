@@ -1,7 +1,8 @@
 import { useTypography } from 'hooks';
+import { Compatibility } from 'plugins';
 import { cleanClassName } from 'utils';
 
-import { useLayoutEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
 
 import styles from './index.module.scss';
@@ -59,7 +60,7 @@ export const Button = ({
     return icon ? 'icon' : 'text';
   }, [icon, children]);
 
-  useLayoutEffect(() => {
+  Compatibility.useLayoutEffect(() => {
     if (!disabled && delay) {
       setDelayState('before');
       setTimeout(() => setDelayState('delaying'));

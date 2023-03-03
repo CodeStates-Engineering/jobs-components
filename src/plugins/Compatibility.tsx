@@ -1,6 +1,7 @@
 import type { LinkProps as NextLinkProps } from 'next/link';
 import type NextLink from 'next/link';
 import type { useRouter as useNextRouter } from 'next/router';
+import { useLayoutEffect, useEffect } from 'react';
 import type {
   Link as ReactLink,
   LinkProps as ReactLinkProps,
@@ -28,6 +29,8 @@ export class Compatibility {
 
   public static useLocation: UseNextRouter | UseReactLocation;
 
+  public static useLayoutEffect = useLayoutEffect;
+
   public static injectDependencies = <_Type extends Libraries>(
     type: _Type,
     { location, link }: Dependencies<_Type>,
@@ -40,6 +43,7 @@ export class Compatibility {
           return <NextLink {...restProps} href={to} />;
         };
         this.useLocation = useRouter;
+        this.useLayoutEffect = useEffect;
         break;
       }
       case 'react': {

@@ -1,13 +1,14 @@
+import { Compatibility } from 'plugins';
+
 import type React from 'react';
-import { useLayoutEffect, useRef } from 'react';
+import { useRef } from 'react';
 
 export function useMountedLayoutEffect(
   effect: React.EffectCallback,
   deps?: React.DependencyList | undefined,
 ) {
   const isMounted = useRef(false);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useLayoutEffect(
+  Compatibility.useLayoutEffect(
     isMounted.current
       ? effect
       : () => {

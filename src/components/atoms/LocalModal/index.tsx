@@ -1,6 +1,7 @@
+import { Compatibility } from 'plugins';
 import { cleanClassName } from 'utils';
 
-import { useLayoutEffect, useState } from 'react';
+import { useState } from 'react';
 
 import styles from './index.module.scss';
 
@@ -11,7 +12,7 @@ export interface LocalModalProps {
 
 export const LocalModal = ({ opened = false, children }: LocalModalProps) => {
   const [openState, setOpenState] = useState<boolean | 'closing'>(opened);
-  useLayoutEffect(() => {
+  Compatibility.useLayoutEffect(() => {
     if (!opened) {
       setOpenState((prevOpenState) => {
         if (prevOpenState) {
@@ -22,7 +23,7 @@ export const LocalModal = ({ opened = false, children }: LocalModalProps) => {
     }
   }, [opened]);
 
-  useLayoutEffect(() => {
+  Compatibility.useLayoutEffect(() => {
     if (openState === 'closing') {
       const timeout = setTimeout(() => {
         setOpenState(false);
