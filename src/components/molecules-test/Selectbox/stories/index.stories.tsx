@@ -8,23 +8,35 @@ import { OptionHint } from '../../../atoms/Options';
 export default {
   title: 'molecules-test/Selectbox',
   component: Selectbox,
+  argTypes: {
+    disabled: {
+      options: [true, false],
+      control: { type: 'boolean' },
+    },
+    focused: {
+      options: [true, false],
+      control: { type: 'boolean' },
+    },
+    size: {
+      options: ['small', 'middle', 'large'],
+      control: { type: 'inline-radio' },
+    },
+    width: {
+      control: { type: 'text' },
+    },
+    parameters: {
+      actions: {
+        argTypesRegex: '^on.*',
+      },
+    },
+  },
 } as ComponentMeta<typeof Selectbox>;
 
-const SelectboxStory: ComponentStory<typeof Selectbox> = (args) => (
-  <Selectbox {...args} />
-);
-
-const dummyOptions: OptionHint[] = [
-  { label: '1', value: '1' },
-  { label: '2', value: '2' },
-  { label: '3', value: '3' },
-];
+const data: OptionHint[] = [];
 for (let i = 0; i < 20; i += 1) {
-  dummyOptions.push({ label: `${i}`, value: `${i}` });
+  data.push({ label: `${i}`, value: `${i}` });
 }
 
-export const Default = SelectboxStory.bind({});
-
-Default.args = {
-  options: dummyOptions,
-};
+export const Default: ComponentStory<typeof Selectbox> = (args) => (
+  <Selectbox {...args} options={data} />
+);
