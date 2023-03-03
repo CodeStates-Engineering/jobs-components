@@ -2,5 +2,24 @@
 
 .category {
   display: flex;
-  gap: 20px;
+  gap: 8px;
+  height: 100%;
+  > li {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+}
+
+.cateogry-link-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.selected-line-wrap {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
 }
