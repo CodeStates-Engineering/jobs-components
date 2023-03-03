@@ -42,7 +42,7 @@ export const Options = <
   _Option extends Option = Option,
   _Multiple extends boolean = false,
 >({
-  opened,
+  opened = false,
   options,
   multiple,
   value,
@@ -85,7 +85,7 @@ export const Options = <
   const [optionIndexForSelect, setOptionIndexForSelect] = useState(-1);
 
   const [openState, setOpenState] = useState<boolean | 'closing' | 'opening'>(
-    !!opened,
+    opened,
   );
 
   useLayoutEffect(() => {

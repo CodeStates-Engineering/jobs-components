@@ -3,6 +3,8 @@ import { Compatibility } from 'plugins';
 
 import styles from './index.module.scss';
 
+import type { ButtonProps } from 'components/atoms';
+
 interface CategoryItem {
   label: string;
   to: string;
@@ -10,9 +12,11 @@ interface CategoryItem {
 
 export interface CategoryProps {
   items?: CategoryItem[];
+  color?: ButtonProps['theme'];
+  selectedColor?: ButtonProps['theme'];
 }
 
-export const Category = ({ items }: CategoryProps) => {
+export const Category = ({ items, color, selectedColor }: CategoryProps) => {
   const { pathname } = Compatibility.useLocation();
   return (
     <ul className={styles.category}>
@@ -20,8 +24,8 @@ export const Category = ({ items }: CategoryProps) => {
         <li key={index}>
           <Compatibility.Link to={to}>
             <Button
-              shape="round"
-              theme={to === pathname ? 'blue-600' : 'bluish-gray-800'}
+              themeType="ghost"
+              theme={to === pathname ? color : selectedColor}
             >
               {label}
             </Button>

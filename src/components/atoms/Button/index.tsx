@@ -1,27 +1,34 @@
+import { useTypography } from 'hooks';
 import { cleanClassName } from 'utils';
 
 import { useLayoutEffect, useMemo, useState } from 'react';
-import type { FunctionComponent } from 'react';
+import type { ReactNode } from 'react';
 
 import styles from './index.module.scss';
+
+import type { Typography } from 'hooks';
 
 type HtmlButtonProps = React.DetailedHTMLProps<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
   HTMLButtonElement
 >;
 
-export interface ButtonProps
-  extends Pick<HtmlButtonProps, 'onClick' | 'children' | 'disabled' | 'type'> {
-  delay?: number;
-  minWidth?: React.CSSProperties['minWidth'];
-  size?: 'small' | 'medium' | 'large';
-  theme?: 'blue-600' | 'bluish-gray-800';
-  themeType?: 'contained' | 'ghost';
-  icon?: FunctionComponent;
-  iconDirection?: 'left' | 'right';
-  shape?: 'round' | 'default';
-  focusOutline?: boolean;
-}
+export type ButtonProps = Pick<
+  HtmlButtonProps,
+  'onClick' | 'children' | 'disabled' | 'type'
+> &
+  Typography & {
+    delay?: number;
+    minWidth?: React.CSSProperties['minWidth'];
+    size?: 'small' | 'medium' | 'large';
+    theme?: 'blue-600' | 'bluish-gray-800';
+    themeType?: 'contained' | 'ghost';
+    icon?: ReactNode;
+    iconDirection?: 'left' | 'right';
+    shape?: 'round' | 'default';
+    padding?: boolean;
+    focusOutline?: boolean;
+  };
 
 export const Button = ({
   delay,
@@ -35,7 +42,10 @@ export const Button = ({
   disabled,
   shape = 'default',
   iconDirection = 'left',
-  icon: Icon,
+  icon,
+  padding = true,
+  fontSize = 'normal',
+  fontWeight = 700,
   focusOutline = true,
 }: ButtonProps) => {
   const [delayState, setDelayState] = useState<'before' | 'delaying' | 'after'>(
@@ -43,11 +53,11 @@ export const Button = ({
   );
 
   const childrenType = useMemo(() => {
-    if (Icon && children) {
+    if (icon && children) {
       return 'both';
     }
-    return Icon ? 'icon' : 'text';
-  }, [Icon, children]);
+    return icon ? 'icon' : 'text';
+  }, [icon, children]);
 
   useLayoutEffect(() => {
     if (!disabled && delay) {
@@ -60,17 +70,25 @@ export const Button = ({
   const isDelaying = delayState === 'delaying';
   const isDelayButton = delayState === 'before' || isDelaying;
 
+  const { fontSizeClassName, fontWeightClassName } = useTypography(
+    fontSize,
+    fontWeight,
+  );
+
   return (
     <button
       type={type}
       className={cleanClassName(
         `${isDelayButton ? styles['delayed-button'] : styles.button} ${
-          styles['font-size-bold']
-        } ${styles[`theme-${theme}`]} ${styles[themeType]} ${
+          styles[fontSizeClassName]
+        } ${styles[fontWeightClassName]} ${styles[`theme-${theme}`]} ${
+          styles[themeType] ${
           focusOutline && styles['focus-outline']
         } ${styles[`shape-${shape}`]} ${styles[`size-${size}`]} ${
           styles[`icon-direction-${iconDirection}`]
-        } ${styles[`children-type-${childrenType}`]}`,
+        } ${styles[`children-type-${childrenType}`]} ${
+          padding && styles.padding
+        }`,
       )}
       style={{ minWidth }}
       onClick={onClick}
@@ -83,9 +101,9 @@ export const Button = ({
         />
       ) : null}
       {children && <div className={styles['button-content']}>{children}</div>}
-      {Icon ? (
+      {icon ? (
         <div className={`${styles['button-content']} ${styles.icon}`}>
-          <Icon />
+          {icon}
         </div>
       ) : null}
     </button>

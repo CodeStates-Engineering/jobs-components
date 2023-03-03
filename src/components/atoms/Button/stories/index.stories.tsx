@@ -39,8 +39,8 @@ const ButtonStory: ComponentStory<typeof Button> = (args) => {
         <Button {...ghostTypeProps} />
         <Button {...ghostTypeProps} delay={5000} />
         <Button {...ghostTypeProps} disabled />
-        <Button {...ghostTypeProps} icon={AlertOctagon} />
-        <Button {...ghostTypeProps} icon={AlertOctagon}>
+        <Button {...ghostTypeProps} icon={<AlertOctagon />} />
+        <Button {...ghostTypeProps} icon={<AlertOctagon />}>
           {null}
         </Button>
       </div>
@@ -48,8 +48,8 @@ const ButtonStory: ComponentStory<typeof Button> = (args) => {
         <Button {...containedTypeProps} />
         <Button {...containedTypeProps} delay={5000} />
         <Button {...containedTypeProps} disabled />
-        <Button {...containedTypeProps} icon={AlertOctagon} />
-        <Button {...containedTypeProps} icon={AlertOctagon}>
+        <Button {...containedTypeProps} icon={<AlertOctagon />} />
+        <Button {...containedTypeProps} icon={<AlertOctagon />}>
           {null}
         </Button>
       </div>
@@ -64,8 +64,16 @@ const ButtonStory: ComponentStory<typeof Button> = (args) => {
         <Button {...buttonArgs} />
         <Button {...buttonArgs} delay={5000} />
         <Button {...buttonArgs} disabled />
-        <Button {...buttonArgs} icon={AlertOctagon} />
-        <Button {...buttonArgs} icon={AlertOctagon}>
+        <Button {...buttonArgs} icon={<AlertOctagon />} />
+        <Button
+          {...buttonArgs}
+          icon={
+            <AlertOctagon
+              width={args.padding ? '24px' : '40px'}
+              height={args.padding ? '24px' : '40px'}
+            />
+          }
+        >
           {null}
         </Button>
       </div>
@@ -76,6 +84,7 @@ const ButtonStory: ComponentStory<typeof Button> = (args) => {
 export const Default = ButtonStory.bind({});
 const defaultArgs: ButtonProps = {
   themeType: 'contained',
+  padding: true,
   focusOutline: true,
 };
 Default.args = defaultArgs;

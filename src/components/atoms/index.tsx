@@ -5,3 +5,5 @@ export * from './Options';
 export * from './FocusLayer';
 export * from './Label';
 export * from './Link';
+export * from './Hr';
+export * from './LocalModal';

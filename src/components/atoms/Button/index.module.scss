@@ -94,6 +94,9 @@
     cursor: not-allowed;
   }
 
+  @include font-size;
+  @include font-weight;
+
   //* Theme
   &.theme-blue-600 {
     @include theme(
@@ -121,14 +124,18 @@
   }
 
   //* Size
-  &.children-type-text {
-    padding: 0 16px;
-  }
-  &.children-type-icon {
-    padding: 0;
-  }
-  &.children-type-both {
-    padding: 0 10px;
+  &.padding {
+    &.children-type-text {
+      padding: 0 16px;
+    }
+
+    &.children-type-icon {
+      padding: 0;
+    }
+
+    &.children-type-both {
+      padding: 0 10px;
+    }
   }
 
   &.size-small {
@@ -150,11 +157,6 @@
     &.children-type-icon {
       width: 48px;
     }
-  }
-
-  //* Font Size
-  &.font-size-bold {
-    font-weight: 700;
   }
 
   //* Shape
