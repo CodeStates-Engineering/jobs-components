@@ -7,15 +7,17 @@ import styles from './index.module.scss';
 
 import type { ButtonProps, HrProps } from 'components/atoms';
 
-interface CategoryItem {
+interface TabMenuItem {
   label: string;
   to: string;
 }
 
-export interface CategoryProps {
-  items?: CategoryItem[];
+export interface TabMenuProps {
+  items?: TabMenuItem[];
   color?: ButtonProps['theme'];
   bottomLineWeight?: HrProps['weight'];
+  fontWeight?: ButtonProps['fontWeight'];
+  fontSize?: ButtonProps['fontSize'];
   selectedColor?: ButtonProps['theme'];
   selectedLineWeight?: HrProps['weight'];
   selectedLineColor?: HrProps['color'];
@@ -23,30 +25,34 @@ export interface CategoryProps {
   height?: CSSProperties['height'];
 }
 
-export const Category = ({
+export const TabMenu = ({
   items,
-  color,
-  selectedColor,
-  bottomLineWeight,
+  color = 'bluish-gray-300',
+  selectedColor = 'bluish-gray-800',
+  bottomLineWeight = 'medium',
   selectedLineWeight = 'medium',
   selectedLineColor = 'purple-550',
   width = '100%',
   height = '100%',
-}: CategoryProps) => {
+  fontWeight = 700,
+  fontSize = 'large',
+}: TabMenuProps) => {
   selectedColor = selectedColor ?? color;
   const { pathname } = Compatibility.useLocation();
   return (
     <nav style={{ width, height }}>
-      <ul className={styles.category}>
+      <ul className={styles['tab-menu']}>
         {items?.map(({ label, to }, index) => {
           const isSelected = to === pathname;
           return (
             <li key={index}>
-              <div className={styles['cateogry-link-wrap']}>
+              <div className={styles['tab-menu-link-wrap']}>
                 <Compatibility.Link to={to}>
                   <Button
+                    fontSize={fontSize}
+                    fontWeight={fontWeight}
                     themeType="ghost"
-                    theme={isSelected ? color : selectedColor}
+                    theme={isSelected ? selectedColor : color}
                     focusOutline={false}
                   >
                     {label}

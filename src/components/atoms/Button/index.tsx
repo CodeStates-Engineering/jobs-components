@@ -22,7 +22,7 @@ export type ButtonProps = Pick<
     delay?: number;
     minWidth?: React.CSSProperties['minWidth'];
     size?: 'small' | 'medium' | 'large';
-    theme?: 'blue-600' | 'bluish-gray-800';
+    theme?: 'purple-600' | 'bluish-gray-800' | 'bluish-gray-300';
     themeType?: 'contained' | 'ghost';
     icon?: ReactNode;
     iconDirection?: 'left' | 'right';
@@ -37,7 +37,7 @@ export const Button = ({
   children,
   minWidth,
   size = 'medium',
-  theme = 'blue-600',
+  theme = 'purple-600',
   themeType = 'contained',
   onClick,
   disabled,

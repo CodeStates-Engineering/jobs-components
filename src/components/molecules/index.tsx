@@ -1,4 +1,4 @@
 export * from './Selectbox';
 export * from './Textbox';
-export * from './Category';
+export * from './TabMenu';
 export * from './Checkbox';

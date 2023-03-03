@@ -2,22 +2,22 @@ import React from 'react';
 
 import type { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { Category } from '..';
+import { TabMenu } from '..';
 
-import type { CategoryProps } from '..';
+import type { TabMenuProps } from '..';
 
 export default {
-  title: 'molecules/Category',
-  component: Category,
-} as ComponentMeta<typeof Category>;
+  title: 'molecules/TabMenu',
+  component: TabMenu,
+} as ComponentMeta<typeof TabMenu>;
 
-const CategoryStory: ComponentStory<typeof Category> = (args) => (
-  <Category {...args} />
+const TabMenuStory: ComponentStory<typeof TabMenu> = (args) => (
+  <TabMenu {...args} />
 );
 
-export const Default = CategoryStory.bind({});
+export const Default = TabMenuStory.bind({});
 
-const defaultArgs: CategoryProps = {
+const defaultArgs: TabMenuProps = {
   items: [
     {
       label: '전체',
@@ -48,10 +48,14 @@ const defaultArgs: CategoryProps = {
       to: '/devops',
     },
   ],
-  color: 'bluish-gray-800',
-  bottomLineWeight: 'thin',
+  color: 'bluish-gray-300',
+  selectedColor: 'bluish-gray-800',
+  bottomLineWeight: 'medium',
+  selectedLineWeight: 'medium',
   width: '100%',
   height: '80px',
+  fontWeight: 700,
+  fontSize: 'large',
 };
 
 Default.args = defaultArgs;
