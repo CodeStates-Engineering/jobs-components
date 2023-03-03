@@ -1,3 +1,4 @@
+import { useTypography } from 'hooks';
 import { cleanClassName } from 'utils';
 
 import { useLayoutEffect, useMemo, useState } from 'react';
@@ -5,23 +6,28 @@ import type { ReactNode } from 'react';
 
 import styles from './index.module.scss';
 
+import type { Typography } from 'hooks';
+
 type HtmlButtonProps = React.DetailedHTMLProps<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
   HTMLButtonElement
 >;
 
-export interface ButtonProps
-  extends Pick<HtmlButtonProps, 'onClick' | 'children' | 'disabled' | 'type'> {
-  delay?: number;
-  minWidth?: React.CSSProperties['minWidth'];
-  size?: 'small' | 'medium' | 'large';
-  theme?: 'blue-600' | 'bluish-gray-800';
-  themeType?: 'contained' | 'ghost';
-  icon?: ReactNode;
-  iconDirection?: 'left' | 'right';
-  shape?: 'round' | 'default';
-  padding?: boolean;
-}
+export type ButtonProps = Pick<
+  HtmlButtonProps,
+  'onClick' | 'children' | 'disabled' | 'type'
+> &
+  Typography & {
+    delay?: number;
+    minWidth?: React.CSSProperties['minWidth'];
+    size?: 'small' | 'medium' | 'large';
+    theme?: 'blue-600' | 'bluish-gray-800';
+    themeType?: 'contained' | 'ghost';
+    icon?: ReactNode;
+    iconDirection?: 'left' | 'right';
+    shape?: 'round' | 'default';
+    padding?: boolean;
+  };
 
 export const Button = ({
   delay,
@@ -37,6 +43,8 @@ export const Button = ({
   iconDirection = 'left',
   icon,
   padding = true,
+  fontSize = 'normal',
+  fontWeight = 700,
 }: ButtonProps) => {
   const [delayState, setDelayState] = useState<'before' | 'delaying' | 'after'>(
     'after',
@@ -60,15 +68,20 @@ export const Button = ({
   const isDelaying = delayState === 'delaying';
   const isDelayButton = delayState === 'before' || isDelaying;
 
+  const { fontSizeClassName, fontWeightClassName } = useTypography(
+    fontSize,
+    fontWeight,
+  );
+
   return (
     <button
       type={type}
       className={cleanClassName(
         `${isDelayButton ? styles['delayed-button'] : styles.button} ${
-          styles['font-size-bold']
-        } ${styles[`theme-${theme}`]} ${styles[themeType]} ${
-          styles[`shape-${shape}`]
-        } ${styles[`size-${size}`]} ${
+          styles[fontSizeClassName]
+        } ${styles[fontWeightClassName]} ${styles[`theme-${theme}`]} ${
+          styles[themeType]
+        } ${styles[`shape-${shape}`]} ${styles[`size-${size}`]} ${
           styles[`icon-direction-${iconDirection}`]
         } ${styles[`children-type-${childrenType}`]} ${
           padding && styles.padding

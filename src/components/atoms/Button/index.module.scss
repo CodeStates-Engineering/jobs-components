@@ -92,6 +92,9 @@
     cursor: not-allowed;
   }
 
+  @include font-size;
+  @include font-weight;
+
   //* Theme
   &.theme-blue-600 {
     @include theme(
@@ -152,11 +155,6 @@
     &.children-type-icon {
       width: 48px;
     }
-  }
-
-  //* Font Size
-  &.font-size-bold {
-    font-weight: 700;
   }
 
   //* Shape
