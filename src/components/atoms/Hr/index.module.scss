@@ -1,13 +1,5 @@
 @import '../../../styles/libs';
 
-@mixin color($color) {
-  border-color: $color;
-}
-
-@mixin weight($weight) {
-  border-width: $weight;
-}
-
 .hr {
   border-style: solid;
 
@@ -19,8 +11,8 @@
   padding: 0;
 
   //* Color
-  &.color-bluish-gray-200 {
-    border-color: $BLUISH-GRAY-200;
+  &.color-bluish-gray-100 {
+    border-color: $BLUISH-GRAY-100;
   }
   &.color-purple-550 {
     border-color: $PURPLE-550;

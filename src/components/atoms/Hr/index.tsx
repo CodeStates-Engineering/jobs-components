@@ -6,7 +6,7 @@ import styles from './index.module.scss';
 
 export interface HrProps {
   type?: 'vertical' | 'horizontal';
-  color?: 'purple-550' | 'bluish-gray-200';
+  color?: 'purple-550' | 'bluish-gray-100';
   weight?: 'thin' | 'medium' | 'thick';
   size?: React.CSSProperties['width'] | React.CSSProperties['height'];
   margin?: React.CSSProperties['margin'];
@@ -14,7 +14,7 @@ export interface HrProps {
 
 export const Hr = ({
   type = 'horizontal',
-  color = 'bluish-gray-200',
+  color = 'bluish-gray-100',
   weight = 'thin',
   size = '100%',
   margin,
