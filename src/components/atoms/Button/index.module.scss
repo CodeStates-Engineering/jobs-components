@@ -119,14 +119,18 @@
   }
 
   //* Size
-  &.children-type-text {
-    padding: 0 16px;
-  }
-  &.children-type-icon {
-    padding: 0;
-  }
-  &.children-type-both {
-    padding: 0 10px;
+  &.padding {
+    &.children-type-text {
+      padding: 0 16px;
+    }
+
+    &.children-type-icon {
+      padding: 0;
+    }
+
+    &.children-type-both {
+      padding: 0 10px;
+    }
   }
 
   &.size-small {

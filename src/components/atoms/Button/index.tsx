@@ -1,7 +1,7 @@
 import { cleanClassName } from 'utils';
 
 import { useLayoutEffect, useMemo, useState } from 'react';
-import type { FunctionComponent } from 'react';
+import type { ReactNode } from 'react';
 
 import styles from './index.module.scss';
 
@@ -17,9 +17,10 @@ export interface ButtonProps
   size?: 'small' | 'medium' | 'large';
   theme?: 'blue-600' | 'bluish-gray-800';
   themeType?: 'contained' | 'ghost';
-  icon?: FunctionComponent;
+  icon?: ReactNode;
   iconDirection?: 'left' | 'right';
   shape?: 'round' | 'default';
+  padding?: boolean;
 }
 
 export const Button = ({
@@ -34,18 +35,19 @@ export const Button = ({
   disabled,
   shape = 'default',
   iconDirection = 'left',
-  icon: Icon,
+  icon,
+  padding = true,
 }: ButtonProps) => {
   const [delayState, setDelayState] = useState<'before' | 'delaying' | 'after'>(
     'after',
   );
 
   const childrenType = useMemo(() => {
-    if (Icon && children) {
+    if (icon && children) {
       return 'both';
     }
-    return Icon ? 'icon' : 'text';
-  }, [Icon, children]);
+    return icon ? 'icon' : 'text';
+  }, [icon, children]);
 
   useLayoutEffect(() => {
     if (!disabled && delay) {
@@ -68,7 +70,9 @@ export const Button = ({
           styles[`shape-${shape}`]
         } ${styles[`size-${size}`]} ${
           styles[`icon-direction-${iconDirection}`]
-        } ${styles[`children-type-${childrenType}`]}`,
+        } ${styles[`children-type-${childrenType}`]} ${
+          padding && styles.padding
+        }`,
       )}
       style={{ minWidth }}
       onClick={onClick}
@@ -81,9 +85,9 @@ export const Button = ({
         />
       ) : null}
       {children && <div className={styles['button-content']}>{children}</div>}
-      {Icon ? (
+      {icon ? (
         <div className={`${styles['button-content']} ${styles.icon}`}>
-          <Icon />
+          {icon}
         </div>
       ) : null}
     </button>
