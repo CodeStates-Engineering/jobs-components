@@ -9,7 +9,7 @@ export interface LocalModalProps {
   children?: React.ReactNode;
 }
 
-export const LocalModal = ({ opened = true, children }: LocalModalProps) => {
+export const LocalModal = ({ opened = false, children }: LocalModalProps) => {
   const [openState, setOpenState] = useState<boolean | 'closing'>(opened);
   useLayoutEffect(() => {
     if (!opened) {
