@@ -16,6 +16,7 @@ const CategoryStory: ComponentStory<typeof Category> = (args) => (
 );
 
 export const Default = CategoryStory.bind({});
+
 const defaultArgs: CategoryProps = {
   items: [
     {
@@ -47,5 +48,10 @@ const defaultArgs: CategoryProps = {
       to: '/devops',
     },
   ],
+  color: 'bluish-gray-800',
+  bottomLineWeight: 'thin',
+  width: '100%',
+  height: '80px',
 };
+
 Default.args = defaultArgs;
