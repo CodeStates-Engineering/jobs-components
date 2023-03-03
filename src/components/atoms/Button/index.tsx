@@ -27,6 +27,7 @@ export type ButtonProps = Pick<
     iconDirection?: 'left' | 'right';
     shape?: 'round' | 'default';
     padding?: boolean;
+    focusOutline?: boolean;
   };
 
 export const Button = ({
@@ -45,6 +46,7 @@ export const Button = ({
   padding = true,
   fontSize = 'normal',
   fontWeight = 700,
+  focusOutline = true,
 }: ButtonProps) => {
   const [delayState, setDelayState] = useState<'before' | 'delaying' | 'after'>(
     'after',
@@ -80,7 +82,8 @@ export const Button = ({
         `${isDelayButton ? styles['delayed-button'] : styles.button} ${
           styles[fontSizeClassName]
         } ${styles[fontWeightClassName]} ${styles[`theme-${theme}`]} ${
-          styles[themeType]
+          styles[themeType] ${
+          focusOutline && styles['focus-outline']
         } ${styles[`shape-${shape}`]} ${styles[`size-${size}`]} ${
           styles[`icon-direction-${iconDirection}`]
         } ${styles[`children-type-${childrenType}`]} ${

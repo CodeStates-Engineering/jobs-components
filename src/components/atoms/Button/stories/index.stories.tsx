@@ -85,5 +85,6 @@ export const Default = ButtonStory.bind({});
 const defaultArgs: ButtonProps = {
   themeType: 'contained',
   padding: true,
+  focusOutline: true,
 };
 Default.args = defaultArgs;
