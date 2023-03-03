@@ -82,9 +82,10 @@ export const Button = ({
         `${isDelayButton ? styles['delayed-button'] : styles.button} ${
           styles[fontSizeClassName]
         } ${styles[fontWeightClassName]} ${styles[`theme-${theme}`]} ${
-          styles[themeType] ${
-          focusOutline && styles['focus-outline']
-        } ${styles[`shape-${shape}`]} ${styles[`size-${size}`]} ${
+          styles[themeType]
+        } ${focusOutline && styles['focus-outline']} ${
+          styles[`shape-${shape}`]
+        } ${styles[`size-${size}`]} ${
           styles[`icon-direction-${iconDirection}`]
         } ${styles[`children-type-${childrenType}`]} ${
           padding && styles.padding
