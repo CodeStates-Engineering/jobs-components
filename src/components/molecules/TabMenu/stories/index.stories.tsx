@@ -41,7 +41,7 @@ const defaultArgs: TabMenuProps = {
     },
     {
       label: '프로덕트매니저',
-      to: '/product-manager?category=product-manager&category=product-designer2',
+      to: '/product-manager?category=product-manager&category2=product-designer2',
     },
     {
       label: '데브옵스',
