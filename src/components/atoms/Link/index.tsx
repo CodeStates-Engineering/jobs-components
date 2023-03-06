@@ -13,8 +13,8 @@ export type LinkProps = Omit<CompatibleLinkProps, 'className'> & {
 export const Link = ({
   color = 'puple-550',
   hoverType = 'underline',
-  fontSize = 'normal',
-  fontWeight = 400,
+  fontSize,
+  fontWeight,
   ...restProps
 }: LinkProps) => {
   const { fontSizeClassName, fontWeightClassName } = useTypography(
