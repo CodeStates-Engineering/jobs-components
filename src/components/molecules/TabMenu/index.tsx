@@ -7,6 +7,8 @@ import styles from './index.module.scss';
 
 import type { ButtonProps, HrProps } from 'components/atoms';
 
+const { useLocation: getLocation } = Compatibility;
+
 interface TabMenuItem {
   label: string;
   to: string;
@@ -23,6 +25,7 @@ export interface TabMenuProps {
   selectedLineColor?: HrProps['color'];
   width?: CSSProperties['width'];
   height?: CSSProperties['height'];
+  compatibilityPathname?: boolean;
 }
 
 export const TabMenu = ({
@@ -36,9 +39,10 @@ export const TabMenu = ({
   height = '100%',
   fontWeight = 700,
   fontSize = 'large',
+  compatibilityPathname = false,
 }: TabMenuProps) => {
   selectedColor = selectedColor ?? color;
-  const { pathname } = Compatibility.useLocation();
+  const { pathname } = compatibilityPathname ? window.location : getLocation();
   return (
     <nav style={{ width, height }}>
       <ul className={styles['tab-menu']}>
