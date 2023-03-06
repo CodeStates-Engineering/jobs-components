@@ -1,25 +1,18 @@
-import {
-  FocusLayer,
-  Options,
-  Input,
-  InputContainer,
-  Label,
-} from 'components/atoms';
-import { useComponentSelfState, useValidation } from 'hooks';
-import { cleanClassName } from 'utils';
-
 import { useState } from 'react';
 import { ChevronDown } from 'react-feather';
 
 import styles from './index.module.scss';
+import { useComponentSelfState, useValidation } from '../../../hooks';
+import { cleanClassName } from '../../../utils';
+import { FocusLayer, Options, Input, InputContainer, Label } from '../../atoms';
 
+import type { Validation } from '../../../hooks';
 import type {
   InputProps,
   InputContainerProps,
   OptionsProps,
   Option,
-} from 'components/atoms';
-import type { Validation } from 'hooks';
+} from '../../atoms';
 
 export type SelectboxProps<_Option extends Option = Option> = Omit<
   InputProps<'button'> & InputContainerProps,

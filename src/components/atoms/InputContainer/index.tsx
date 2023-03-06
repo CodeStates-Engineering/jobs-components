@@ -1,6 +1,5 @@
-import { cleanClassName } from 'utils';
-
 import styles from './index.module.scss';
+import { cleanClassName } from '../../../utils';
 
 export interface InputContainerProps
   extends Pick<React.HTMLAttributes<HTMLDivElement>, 'onClick'> {

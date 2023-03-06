@@ -1,13 +1,12 @@
-import { useTypography } from 'hooks';
-import { Compatibility } from 'plugins';
-import { cleanClassName } from 'utils';
-
 import { useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
 
 import styles from './index.module.scss';
+import { useTypography } from '../../../hooks';
+import { Compatibility } from '../../../plugins';
+import { cleanClassName } from '../../../utils';
 
-import type { Typography } from 'hooks';
+import type { Typography } from '../../../hooks';
 
 type HtmlButtonProps = React.DetailedHTMLProps<
   React.ButtonHTMLAttributes<HTMLButtonElement>,

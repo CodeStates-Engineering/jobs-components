@@ -1,14 +1,9 @@
-import { InputContainer, Input, Label } from 'components/atoms';
-import { useComponentSelfState, useValidation } from 'hooks';
-
 import styles from './index.module.scss';
+import { useComponentSelfState, useValidation } from '../../../hooks';
+import { InputContainer, Input, Label } from '../../atoms';
 
-import type {
-  InputProps,
-  InputContainerProps,
-  InputType,
-} from 'components/atoms';
-import type { Validation } from 'hooks';
+import type { Validation } from '../../../hooks';
+import type { InputProps, InputContainerProps, InputType } from '../../atoms';
 
 export type TextboxProps<_InputType extends InputType = 'text'> = Omit<
   InputProps<_InputType> & InputContainerProps,

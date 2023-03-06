@@ -1,7 +1,6 @@
-import { Compatibility } from 'plugins';
-import { cleanClassName } from 'utils';
-
 import styles from './index.module.scss';
+import { Compatibility } from '../../../plugins';
+import { cleanClassName } from '../../../utils';
 
 export interface FocusLayerProps {
   children?: React.ReactNode;

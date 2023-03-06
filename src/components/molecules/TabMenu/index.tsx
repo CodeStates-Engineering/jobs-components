@@ -1,11 +1,10 @@
-import { Button, Hr } from 'components/atoms';
-import { Compatibility } from 'plugins';
-
 import type { CSSProperties } from 'react';
 
 import styles from './index.module.scss';
+import { Compatibility } from '../../../plugins';
+import { Button, Hr } from '../../atoms';
 
-import type { ButtonProps, HrProps } from 'components/atoms';
+import type { ButtonProps, HrProps } from '../../atoms';
 
 interface TabMenuItem {
   label: string;
@@ -38,12 +37,22 @@ export const TabMenu = ({
   fontSize = 'large',
 }: TabMenuProps) => {
   selectedColor = selectedColor ?? color;
-  const { pathname } = Compatibility.useLocation();
+  const { pathname, query } = Compatibility.useLocation();
+
   return (
     <nav style={{ width, height }}>
       <ul className={styles['tab-menu']}>
         {items?.map(({ label, to }, index) => {
-          const isSelected = to === pathname;
+          const [itemPathname, itemQueryString] = to.split('?');
+          let isMatched = itemPathname === pathname;
+          if (itemQueryString) {
+            itemQueryString.split('&').forEach((itemQueryStringSet) => {
+              const [queryKey, queryValue] = itemQueryStringSet.split('=');
+              if (query[queryKey] !== queryValue) {
+                isMatched = false;
+              }
+            });
+          }
           return (
             <li key={index}>
               <div className={styles['tab-menu-link-wrap']}>
@@ -52,14 +61,14 @@ export const TabMenu = ({
                     fontSize={fontSize}
                     fontWeight={fontWeight}
                     themeType="ghost"
-                    theme={isSelected ? selectedColor : color}
+                    theme={isMatched ? selectedColor : color}
                     focusOutline={false}
                   >
                     {label}
                   </Button>
                 </Compatibility.Link>
               </div>
-              {isSelected && (
+              {isMatched && (
                 <div className={styles['selected-line-wrap']}>
                   <Hr weight={selectedLineWeight} color={selectedLineColor} />
                 </div>

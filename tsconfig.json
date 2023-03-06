@@ -15,8 +15,7 @@
     "experimentalDecorators": true,
     "importsNotUsedAsValues": "error",
     "declaration": true,
-    "declarationDir": "./types",
-    "baseUrl": "./src"
+    "declarationDir": "./types"
   },
   "include": ["src"],
   "exclude": ["**/*.stories.tsx"]

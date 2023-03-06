@@ -1,10 +1,9 @@
-import { Compatibility } from 'plugins';
-import { cleanClassName } from 'utils';
-
 import { createRef, useMemo, useState, useEffect } from 'react';
 import { Check } from 'react-feather';
 
 import styles from './index.module.scss';
+import { Compatibility } from '../../../plugins';
+import { cleanClassName } from '../../../utils';
 
 type ValidOptionValue = string | number | undefined;
 
