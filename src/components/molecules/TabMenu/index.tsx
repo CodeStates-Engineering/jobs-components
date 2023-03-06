@@ -39,11 +39,8 @@ export const TabMenu = ({
 }: TabMenuProps) => {
   selectedColor = selectedColor ?? color;
   const { pathname } = Compatibility.useLocation();
-  return <></>;
-};
-
-/**
- *  <nav style={{ width, height }}>
+  return (
+    <nav style={{ width, height }}>
       <ul className={styles['tab-menu']}>
         {items?.map(({ label, to }, index) => {
           const isSelected = to === pathname;
@@ -73,4 +70,5 @@ export const TabMenu = ({
       </ul>
       {bottomLineWeight ? <Hr weight={bottomLineWeight} /> : null}
     </nav>
- */
+  );
+};
