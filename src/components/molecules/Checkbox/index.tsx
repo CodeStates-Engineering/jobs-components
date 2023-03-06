@@ -1,11 +1,10 @@
 import { useMemo } from 'react';
 import { Check } from 'react-feather';
 
-import { Label } from '@components/atoms';
-import { useComponentSelfState, useValidation } from '@hooks';
-import { cleanClassName } from '@utils';
-
 import styles from './index.module.scss';
+import { useComponentSelfState, useValidation } from '../../../hooks';
+import { cleanClassName } from '../../../utils';
+import { Label } from '../../atoms';
 
 export interface CheckboxProps {
   value?: boolean;

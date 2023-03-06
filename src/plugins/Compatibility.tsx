@@ -8,8 +8,9 @@ import type {
   useLocation as useReactLocation,
 } from 'react-router-dom';
 
-import { generateQueryStringToObject } from '@utils';
-import type { QueryStringObject } from '@utils';
+import { generateQueryStringToObject } from '../utils';
+
+import type { QueryStringObject } from '../utils';
 
 export type CompatibleLinkProps = (NextLinkProps | ReactLinkProps) & {
   to: ReactLinkProps['to'];

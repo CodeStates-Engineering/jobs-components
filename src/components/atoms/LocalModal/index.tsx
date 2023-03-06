@@ -1,9 +1,8 @@
 import { useState } from 'react';
 
-import { Compatibility } from '@plugins';
-import { cleanClassName } from '@utils';
-
 import styles from './index.module.scss';
+import { Compatibility } from '../../../plugins';
+import { cleanClassName } from '../../../utils';
 
 export interface LocalModalProps {
   opened?: boolean;

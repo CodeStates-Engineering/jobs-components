@@ -1,10 +1,10 @@
 import type { CSSProperties } from 'react';
 
-import { Button, Hr } from '@components/atoms';
-import type { ButtonProps, HrProps } from '@components/atoms';
-import { Compatibility } from '@plugins';
-
 import styles from './index.module.scss';
+import { Compatibility } from '../../../plugins';
+import { Button, Hr } from '../../atoms';
+
+import type { ButtonProps, HrProps } from '../../atoms';
 
 interface TabMenuItem {
   label: string;

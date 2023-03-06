@@ -1,8 +1,7 @@
 import { useMemo } from 'react';
 
-import { cleanClassName } from '@utils';
-
 import styles from './index.module.scss';
+import { cleanClassName } from '../../../utils';
 
 export interface HrProps {
   type?: 'vertical' | 'horizontal';

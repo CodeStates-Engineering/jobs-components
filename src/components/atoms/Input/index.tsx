@@ -1,9 +1,8 @@
 import type { Ref } from 'react';
 import { useMemo, forwardRef } from 'react';
 
-import { cleanClassName } from '@utils';
-
 import styles from './index.module.scss';
+import { cleanClassName } from '../../../utils';
 
 export type InputType =
   | 'text'
