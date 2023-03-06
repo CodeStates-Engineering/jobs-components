@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import type { CSSProperties } from 'react';
 
 import styles from './index.module.scss';
@@ -23,16 +23,19 @@ export const LocalModal = ({
   bottom,
 }: LocalModalProps) => {
   const [openState, setOpenState] = useState<boolean | 'closing'>(opened);
-  Compatibility.useLayoutEffect(() => {
-    if (!opened) {
+  useEffect(
+    () =>
       setOpenState((prevOpenState) => {
+        if (opened) {
+          return true;
+        }
         if (prevOpenState) {
           return 'closing';
         }
         return prevOpenState;
-      });
-    }
-  }, [opened]);
+      }),
+    [opened],
+  );
 
   Compatibility.useLayoutEffect(() => {
     if (openState === 'closing') {

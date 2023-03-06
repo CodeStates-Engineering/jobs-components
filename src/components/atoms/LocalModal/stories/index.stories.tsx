@@ -36,5 +36,6 @@ const defaultArgs: LocalModalProps = {
       LocalModal
     </section>
   ),
+  opened: true,
 };
 Default.args = defaultArgs;

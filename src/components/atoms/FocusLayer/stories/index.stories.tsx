@@ -45,6 +45,7 @@ const FocusLayerStory: ComponentStory<typeof FocusLayer> = (args) => (
 export const Default = FocusLayerStory.bind({});
 const defaultArgs: FocusLayerProps = {
   focused: true,
+  blur: true,
   children: 'Children text',
 };
 Default.args = defaultArgs;

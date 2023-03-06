@@ -13,7 +13,7 @@ export const FocusLayer = ({
   children,
   onClick,
   focused,
-  blur = true,
+  blur,
 }: FocusLayerProps) => {
   Compatibility.useLayoutEffect(() => {
     const { classList } = document.body;
