@@ -1,6 +1,6 @@
-import { cleanClassName } from 'utils';
-
 import { useMemo } from 'react';
+
+import { cleanClassName } from '@utils';
 
 import styles from './index.module.scss';
 

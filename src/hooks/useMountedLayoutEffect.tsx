@@ -1,7 +1,7 @@
-import { Compatibility } from 'plugins';
-
 import type React from 'react';
 import { useRef } from 'react';
+
+import { Compatibility } from '@plugins';
 
 export function useMountedLayoutEffect(
   effect: React.EffectCallback,

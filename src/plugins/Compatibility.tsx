@@ -8,6 +8,9 @@ import type {
   useLocation as useReactLocation,
 } from 'react-router-dom';
 
+import { generateQueryStringToObject } from '@utils';
+import type { QueryStringObject } from '@utils';
+
 export type CompatibleLinkProps = (NextLinkProps | ReactLinkProps) & {
   to: ReactLinkProps['to'];
   children: ReactLinkProps['children'];
@@ -24,10 +27,17 @@ interface Dependencies<_Type extends Libraries> {
   link: _Type extends 'next' ? NextLinkComponent : ReactLinkComponent;
 }
 
+type CompatibleLocationReturnType = (
+  | ReturnType<UseNextRouter>
+  | ReturnType<UseReactLocation>
+) & {
+  query: QueryStringObject;
+};
+
 export class Compatibility {
   public static Link: (props: CompatibleLinkProps) => JSX.Element;
 
-  public static useLocation: UseNextRouter | UseReactLocation;
+  public static useLocation: () => CompatibleLocationReturnType;
 
   public static useLayoutEffect = useLayoutEffect;
 
@@ -48,11 +58,17 @@ export class Compatibility {
       }
       case 'react': {
         const ReactLink = link as ReactLinkComponent;
-        const useLocation = location as UseReactLocation;
+        const getLocation = location as UseReactLocation;
         this.Link = function Link(props: CompatibleLinkProps) {
           return <ReactLink {...props} />;
         };
-        this.useLocation = useLocation;
+        this.useLocation = () => {
+          const location = getLocation();
+          return {
+            ...location,
+            query: generateQueryStringToObject(location.search),
+          };
+        };
         break;
       }
 

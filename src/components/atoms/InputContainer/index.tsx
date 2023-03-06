@@ -1,4 +1,4 @@
-import { cleanClassName } from 'utils';
+import { cleanClassName } from '@utils';
 
 import styles from './index.module.scss';
 

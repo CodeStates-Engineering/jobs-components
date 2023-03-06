@@ -37,11 +37,11 @@ const defaultArgs: TabMenuProps = {
     },
     {
       label: '블록체인',
-      to: '/blockchain',
+      to: '/?type=blockchain',
     },
     {
       label: '프로덕트매니저',
-      to: '/product-manager',
+      to: '/product-manager?category=product-manager&category=product-designer2',
     },
     {
       label: '데브옵스',

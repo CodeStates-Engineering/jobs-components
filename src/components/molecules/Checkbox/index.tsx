@@ -1,9 +1,9 @@
-import { Label } from 'components/atoms';
-import { useComponentSelfState, useValidation } from 'hooks';
-import { cleanClassName } from 'utils';
-
 import { useMemo } from 'react';
 import { Check } from 'react-feather';
+
+import { Label } from '@components/atoms';
+import { useComponentSelfState, useValidation } from '@hooks';
+import { cleanClassName } from '@utils';
 
 import styles from './index.module.scss';
 

@@ -1,7 +1,7 @@
-import { Compatibility } from 'plugins';
-import { cleanClassName } from 'utils';
-
 import { useState } from 'react';
+
+import { Compatibility } from '@plugins';
+import { cleanClassName } from '@utils';
 
 import styles from './index.module.scss';
 

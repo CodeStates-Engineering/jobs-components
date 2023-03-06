@@ -1,8 +1,8 @@
-import { Compatibility } from 'plugins';
-import { cleanClassName } from 'utils';
-
 import { createRef, useMemo, useState, useEffect } from 'react';
 import { Check } from 'react-feather';
+
+import { Compatibility } from '@plugins';
+import { cleanClassName } from '@utils';
 
 import styles from './index.module.scss';
 

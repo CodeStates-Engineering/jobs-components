@@ -1,11 +1,10 @@
-import { Button, Hr } from 'components/atoms';
-import { Compatibility } from 'plugins';
-
 import type { CSSProperties } from 'react';
 
-import styles from './index.module.scss';
+import { Button, Hr } from '@components/atoms';
+import type { ButtonProps, HrProps } from '@components/atoms';
+import { Compatibility } from '@plugins';
 
-import type { ButtonProps, HrProps } from 'components/atoms';
+import styles from './index.module.scss';
 
 interface TabMenuItem {
   label: string;
@@ -39,6 +38,8 @@ export const TabMenu = ({
 }: TabMenuProps) => {
   selectedColor = selectedColor ?? color;
   const { pathname } = Compatibility.useLocation();
+
+  console.log(Compatibility.useLocation());
   return (
     <nav style={{ width, height }}>
       <ul className={styles['tab-menu']}>

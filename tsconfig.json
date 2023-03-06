@@ -1,4 +1,5 @@
 {
+  "extends": "./tsconfig.alias.json",
   "compilerOptions": {
     "target": "es6",
     "lib": ["dom", "dom.iterable", "esnext"],
@@ -15,8 +16,7 @@
     "experimentalDecorators": true,
     "importsNotUsedAsValues": "error",
     "declaration": true,
-    "declarationDir": "./types",
-    "baseUrl": "./src"
+    "declarationDir": "./types"
   },
   "include": ["src"],
   "exclude": ["**/*.stories.tsx"]

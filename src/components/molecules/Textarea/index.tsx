@@ -1,13 +1,12 @@
-import { InputContainer, Label } from 'components/atoms';
-import { useComponentSelfState, useValidation } from 'hooks';
-import { cleanClassName } from 'utils';
-
 import type { DetailedHTMLProps, TextareaHTMLAttributes } from 'react';
 
-import styles from './index.module.scss';
+import { InputContainer, Label } from '@components/atoms';
+import type { InputContainerProps } from '@components/atoms';
+import { useComponentSelfState, useValidation } from '@hooks';
+import type { Validation } from '@hooks';
+import { cleanClassName } from '@utils';
 
-import type { InputContainerProps } from 'components/atoms';
-import type { Validation } from 'hooks';
+import styles from './index.module.scss';
 
 export type TextareaProps = Partial<
   Pick<InputContainerProps, 'width'> &

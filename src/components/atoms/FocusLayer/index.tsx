@@ -1,5 +1,5 @@
-import { Compatibility } from 'plugins';
-import { cleanClassName } from 'utils';
+import { Compatibility } from '@plugins';
+import { cleanClassName } from '@utils';
 
 import styles from './index.module.scss';
 
