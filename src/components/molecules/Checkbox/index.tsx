@@ -97,7 +97,7 @@ export const Checkbox = ({
             }}
           />
         </div>
-        {description && <p className={styles.description}>{description}</p>}
+        {description && <div className={styles.description}>{description}</div>}
       </div>
     </div>
   );
