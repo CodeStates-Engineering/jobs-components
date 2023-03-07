@@ -1,0 +1,27 @@
+@import '../../../styles/libs';
+
+.toast {
+  background-color: $WHITE;
+  box-shadow: 0px 0px 24px rgba(0, 0, 0, 0.1);
+  padding: 14.5px 24px;
+  border-radius: 15px;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: $MEDIUM;
+  font-weight: 500;
+  color: $BLUISH-GRAY-700;
+
+  &.closing {
+    @include fade-out;
+  }
+
+  &.float-direction-top {
+    @include fade-in-top;
+  }
+
+  &.float-direction-bottom {
+    @include fade-in-bottom;
+  }
+}

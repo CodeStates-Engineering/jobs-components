@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState } from 'react';
 import type { CSSProperties } from 'react';
 
 import styles from './index.module.scss';
-import { Compatibility } from '../../../plugins';
 import { cleanClassName } from '../../../utils';
 
 export interface LocalModalProps {
@@ -37,7 +36,7 @@ export const LocalModal = ({
     [opened],
   );
 
-  Compatibility.useLayoutEffect(() => {
+  useEffect(() => {
     if (openState === 'closing') {
       const timeout = setTimeout(() => {
         setOpenState(false);
