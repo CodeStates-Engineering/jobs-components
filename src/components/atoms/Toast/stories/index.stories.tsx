@@ -19,14 +19,16 @@ const ToastStory: ComponentStory<typeof Toast> = (args) => (
       padding: '20px',
     }}
   >
+    <p>s</p>
     <Toast {...args} />
+    <p>s</p>
   </div>
 );
 
 export const Default = ToastStory.bind({});
 const defaultArgs: ToastProps = {
   children: 'Toast test text',
-  display: true,
+
   type: 'success',
 };
 Default.args = defaultArgs;

@@ -7,3 +7,4 @@ export * from './Label';
 export * from './Link';
 export * from './Hr';
 export * from './LocalModal';
+export * from './Toast';
