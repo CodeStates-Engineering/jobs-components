@@ -28,10 +28,11 @@ const ToastContainerStory: ComponentStory<typeof ToastContainer> = (args) => {
       </Button>
       <ToastContainer
         {...args}
-        type={toastIndex % 2 === 0 ? 'success' : 'fail'}
-      >
-        {toastIndex ? `Toast test text ${toastIndex}` : null}
-      </ToastContainer>
+        toastOption={{
+          message: toastIndex ? `Toast test text ${toastIndex}` : null,
+          type: toastIndex % 2 === 0 ? 'success' : 'fail',
+        }}
+      />
     </div>
   );
 };

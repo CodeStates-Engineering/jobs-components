@@ -6,41 +6,50 @@ import { Toast, ANIMATION_DURATION } from '../../atoms';
 
 import type { ToastProps } from '../../atoms';
 
-export interface ToastOption extends Pick<ToastProps, 'children' | 'type'> {
+interface ToastOption extends Pick<ToastProps, 'type'> {
+  message: ToastProps['children'];
+}
+
+interface ToastInfo extends ToastOption {
   deleted: boolean;
 }
 
-export type ToastContainerProps = Omit<ToastProps, 'maintained'>;
+export interface ToastContainerProps
+  extends Omit<
+    ToastProps,
+    'maintained' | 'leftSpace' | 'children' | 'onToastDelete' | 'type'
+  > {
+  toastOption?: ToastOption;
+}
 
 export const ToastContainer = ({
-  children,
-  type,
+  toastOption,
   floatDirection = 'from-top',
   holdTime = 2000,
 }: ToastContainerProps) => {
-  const [toastPropsList, setToastPropsList] = useState<ToastOption[]>([]);
+  const [toastInfoList, setToastInfoList] = useState<ToastInfo[]>([]);
 
   const [leftSpace, setLeftSpace] = useState(false);
 
   useEffect(() => {
-    if (!leftSpace && toastPropsList.length > 0) {
+    if (!leftSpace && toastInfoList.length > 0) {
       const toastPropsListCleanTimer = setTimeout(
-        () => setToastPropsList([]),
+        () => setToastInfoList([]),
         holdTime + ANIMATION_DURATION,
       );
 
       return () => clearTimeout(toastPropsListCleanTimer);
     }
-  }, [leftSpace, holdTime, toastPropsList]);
+  }, [leftSpace, holdTime, toastInfoList]);
 
   useEffect(() => {
-    if (children) {
-      setToastPropsList((prevToastPropsList) => [
+    if (toastOption?.message) {
+      setToastInfoList((prevToastPropsList) => [
         ...prevToastPropsList.filter((toastProps) => !toastProps.deleted),
-        { children, type, deleted: false },
+        { ...toastOption, deleted: false },
       ]);
     }
-  }, [children, type]);
+  }, [toastOption]);
 
   return (
     <div
@@ -56,17 +65,19 @@ export const ToastContainer = ({
           setLeftSpace(false);
         }}
       >
-        {toastPropsList.map((toastProps, index) => (
+        {toastInfoList.map((toastInfo, index) => (
           <Toast
-            {...toastProps}
             key={index}
             leftSpace={leftSpace}
             floatDirection={floatDirection}
             holdTime={holdTime}
+            type={toastInfo.type}
             onToastDelete={() => {
-              toastProps.deleted = true;
+              toastInfo.deleted = true;
             }}
-          />
+          >
+            {toastInfo.message}
+          </Toast>
         ))}
       </div>
     </div>
