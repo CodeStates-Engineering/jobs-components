@@ -25,6 +25,7 @@ export type TextareaProps = Partial<
   height?: React.CSSProperties['height'];
   validation?: Validation<TextareaProps['value']>;
   label?: string;
+  validationSpace?: boolean;
 };
 
 export const Textarea = ({
@@ -39,6 +40,7 @@ export const Textarea = ({
   validation,
   id,
   label,
+  validationSpace,
 }: TextareaProps) => {
   const [textareaValue, setTextareaValue] = useComponentSelfState(
     originalValue,
@@ -58,6 +60,7 @@ export const Textarea = ({
         width="100%"
         size="none"
         validationMessage={validationMessage}
+        validationSpace={validationSpace}
       >
         <textarea
           id={id}
