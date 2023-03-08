@@ -1,0 +1,19 @@
+@import '../../../styles/libs';
+
+.toast-container {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 40px 0;
+  height: 0;
+  &.float-direction-from-top {
+    top: 0;
+    flex-direction: column;
+  }
+
+  &.float-direction-from-bottom {
+    bottom: 0;
+    flex-direction: column-reverse;
+  }
+}
