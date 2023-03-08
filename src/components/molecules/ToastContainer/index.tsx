@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 
 import styles from './index.module.scss';
+import { useMountedEffect } from '../../../hooks';
 import { cleanClassName } from '../../../utils';
 import { Toast, ANIMATION_DURATION } from '../../atoms';
 
@@ -20,7 +21,8 @@ export const ToastContainer = ({
 }: ToastContainerProps) => {
   const [toastPropsList, setToastPropsList] = useState<ToastOption[]>([]);
 
-  const [leftSpace, setLeftSpace] = useState(false);
+  const [leftSpace, setLeftSpace] = useState(true);
+
   useEffect(() => {
     if (!leftSpace) {
       const toastPropsListCleanTimer = setTimeout(
@@ -32,11 +34,13 @@ export const ToastContainer = ({
     }
   }, [leftSpace, holdTime]);
 
-  useEffect(() => {
-    setToastPropsList((prevToastPropsList) => [
-      ...prevToastPropsList.filter((toastProps) => !toastProps.deleted),
-      { children, type, deleted: false },
-    ]);
+  useMountedEffect(() => {
+    if (children) {
+      setToastPropsList((prevToastPropsList) => [
+        ...prevToastPropsList.filter((toastProps) => !toastProps.deleted),
+        { children, type, deleted: false },
+      ]);
+    }
   }, [children, type]);
 
   return (
@@ -55,8 +59,8 @@ export const ToastContainer = ({
       >
         {toastPropsList.map((toastProps, index) => (
           <Toast
-            key={index}
             {...toastProps}
+            key={index}
             leftSpace={leftSpace}
             floatDirection={floatDirection}
             holdTime={holdTime}

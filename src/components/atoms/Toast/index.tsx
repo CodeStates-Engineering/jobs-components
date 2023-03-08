@@ -19,7 +19,7 @@ export const ANIMATION_DURATION = 1000;
 export const Toast = ({
   type = 'success',
   children,
-  leftSpace,
+  leftSpace = false,
   floatDirection = 'from-top',
   onToastDelete,
   holdTime = 2000,

@@ -13,7 +13,7 @@ export default {
 } as ComponentMeta<typeof ToastContainer>;
 
 const ToastContainerStory: ComponentStory<typeof ToastContainer> = (args) => {
-  const [toastIndex, setToastIndex] = useState(1);
+  const [toastIndex, setToastIndex] = useState(0);
 
   return (
     <div
@@ -29,7 +29,9 @@ const ToastContainerStory: ComponentStory<typeof ToastContainer> = (args) => {
       <ToastContainer
         {...args}
         type={toastIndex % 2 === 0 ? 'success' : 'fail'}
-      >{`Toast test text ${toastIndex}`}</ToastContainer>
+      >
+        {toastIndex ? `Toast test text ${toastIndex}` : null}
+      </ToastContainer>
     </div>
   );
 };
