@@ -1,5 +1,4 @@
-/* eslint-disable */
-import { MouseEventHandler, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import styles from './index.module.scss';
 import CircleCheck from '../../../assets/svgs/circle-check.svg';
@@ -9,76 +8,59 @@ import { cleanClassName } from '../../../utils';
 export interface ToastProps {
   type?: 'success' | 'fail';
   children?: React.ReactNode;
-  maintained?: boolean | 'only-space';
+  leftSpace?: boolean;
   floatDirection?: 'from-top' | 'from-bottom';
-  onMouseEnter?: MouseEventHandler<HTMLDivElement>;
-  onMouseLeave?: MouseEventHandler<HTMLDivElement>;
+  onToastDelete?: () => void;
   holdTime?: number;
 }
+
+export const ANIMATION_DURATION = 1000;
 
 export const Toast = ({
   type = 'success',
   children,
-  maintained = false,
+  leftSpace,
   floatDirection = 'from-top',
-  onMouseEnter,
-  onMouseLeave,
-  holdTime = 5000,
+  onToastDelete,
+  holdTime = 2000,
 }: ToastProps) => {
-  const [display, setDisplay] = useState<'closing' | boolean>(true);
-  const isClosing = display === 'closing';
-  const [maintainedState, setMaintainedState] = useState(maintained);
+  const [display, setDisplay] = useState<boolean | 'holding'>(true);
+  const [deleted, setDeleted] = useState(false);
 
   useEffect(() => {
-    if (display) {
-      switch (maintainedState) {
-        case false: {
-          const holdTimer = setTimeout(() => {
-            console.log('holdTimer');
-            setDisplay('closing');
-          }, holdTime);
-          const animationTimer = setTimeout(() => {
-            console.log('animationTimer');
-            setDisplay(false);
-          }, holdTime + 1000);
-
-          return () => {
-            clearTimeout(holdTimer);
-            clearTimeout(animationTimer);
-          };
-        }
-        case 'only-space': {
-          const holdTimer = setTimeout(() => {
-            console.log('only-space-holdTimer');
-            setDisplay('closing');
-          }, holdTime);
-          return () => clearTimeout(holdTimer);
-        }
-
-        default:
-          return;
-      }
+    if (display === true) {
+      const holdTimer = setTimeout(() => setDisplay(false), holdTime);
+      return () => clearTimeout(holdTimer);
     }
-  }, [display, maintainedState]);
+  }, [display, holdTime]);
 
-  console.log(display);
+  useEffect(() => {
+    if (!display && !leftSpace) {
+      const deleteTimer = setTimeout(() => {
+        setDeleted(true);
+        onToastDelete?.();
+      }, ANIMATION_DURATION);
+      return () => clearTimeout(deleteTimer);
+    }
+  }, [display, onToastDelete, leftSpace]);
 
-  return display ? (
+  return deleted ? (
+    <></>
+  ) : (
     <div
-      onMouseEnter={(e) => {
-        setDisplay(true);
-        setMaintainedState(true);
-        onMouseEnter?.(e);
+      onMouseEnter={() => {
+        if (display) {
+          setDisplay('holding');
+        }
       }}
-      onMouseLeave={(e) => {
-        setMaintainedState(maintained);
-        onMouseLeave?.(e);
+      onMouseLeave={() => {
+        if (display) {
+          setDisplay(true);
+        }
       }}
       className={cleanClassName(
-        `${styles.toast} ${!maintainedState && styles['remove-space']} ${
-          styles[`float-direction-${floatDirection}`]
-        } ${isClosing && styles.closing} ${
-          !maintainedState && styles['remove-space']
+        `${styles.toast} ${!leftSpace && styles['remove-space']} ${
+          display ? styles[`float-direction-${floatDirection}`] : styles.closing
         }`,
       )}
     >
@@ -93,7 +75,5 @@ export const Toast = ({
       />
       <div className={styles['toast-contents-wrap']}>{children}</div>
     </div>
-  ) : (
-    <></>
   );
 };

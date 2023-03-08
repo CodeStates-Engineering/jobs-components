@@ -1,125 +1,71 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 
 import styles from './index.module.scss';
 import { cleanClassName } from '../../../utils';
-import { Toast } from '../../atoms';
+import { Toast, ANIMATION_DURATION } from '../../atoms';
 
 import type { ToastProps } from '../../atoms';
 
-export interface ToastOption {
-  type?: ToastProps['type'];
-  content: ToastProps['children'];
+export interface ToastOption extends Pick<ToastProps, 'children' | 'type'> {
+  deleted: boolean;
 }
 
-export interface ToastContainerProps
-  extends Partial<Pick<ToastProps, 'floatDirection'>> {
-  holdTime?: number;
-  toastOption?: ToastOption;
-}
-
-interface ToastInfo extends ToastOption {
-  timer: NodeJS.Timeout;
-  visible: boolean;
-  hidden: boolean;
-}
+export type ToastContainerProps = Omit<ToastProps, 'maintained'>;
 
 export const ToastContainer = ({
-  toastOption,
+  children,
+  type,
+  floatDirection = 'from-top',
   holdTime = 2000,
-  floatDirection = 'from-bottom',
 }: ToastContainerProps) => {
-  const ANIMATION_DURATION = 1000;
-  const [toastInfoList, setToastInfoList] = useState<ToastInfo[]>([]);
-  const toastInfoCount = toastInfoList.length;
+  const [toastPropsList, setToastPropsList] = useState<ToastOption[]>([]);
 
-  const createToastTimer = useCallback(
-    (toastIndex: number) =>
-      setTimeout(() => {
-        setToastInfoList((prevVisibleToasts) => {
-          const toastInfo = prevVisibleToasts[toastIndex];
-          if (toastInfo) {
-            toastInfo.visible = false;
-          }
-          return [...prevVisibleToasts];
-        });
+  const [leftSpace, setLeftSpace] = useState(false);
+  useEffect(() => {
+    if (!leftSpace) {
+      const toastPropsListCleanTimer = setTimeout(
+        () => setToastPropsList([]),
+        holdTime + ANIMATION_DURATION,
+      );
 
-        setTimeout(() => {
-          setToastInfoList((prevVisibleToasts) => {
-            const toastInfo = prevVisibleToasts[toastIndex];
-            if (toastInfo) {
-              toastInfo.hidden = true;
-            }
-            return [...prevVisibleToasts];
-          });
-        }, ANIMATION_DURATION);
-      }, holdTime),
-    [holdTime],
-  );
+      return () => clearTimeout(toastPropsListCleanTimer);
+    }
+  }, [leftSpace, holdTime]);
 
   useEffect(() => {
-    if (toastOption) {
-      setToastInfoList((prevVisibleToasts) => [
-        ...prevVisibleToasts,
-        {
-          ...toastOption,
-          visible: true,
-          hidden: false,
-          timer: createToastTimer(prevVisibleToasts.length),
-        },
-      ]);
-    }
-  }, [toastOption, holdTime, createToastTimer]);
-
-  useEffect(() => {
-    if (toastInfoCount) {
-      if (!toastInfoList.filter(({ hidden }) => !hidden).length) {
-        const infoClearTimer = setTimeout(
-          () => setToastInfoList([]),
-          ANIMATION_DURATION,
-        );
-        return () => clearTimeout(infoClearTimer);
-      }
-    }
-  }, [toastInfoList, toastInfoCount]);
+    setToastPropsList((prevToastPropsList) => [
+      ...prevToastPropsList.filter((toastProps) => !toastProps.deleted),
+      { children, type, deleted: false },
+    ]);
+  }, [children, type]);
 
   return (
-    <ul
+    <div
       className={cleanClassName(
         `${styles['toast-container']} ${
           styles[`float-direction-${floatDirection}`]
         }`,
       )}
     >
-      {toastInfoList.map(({ timer, content, ...toastProps }, index) => (
-        <li key={index}>
+      <div
+        onMouseEnter={() => setLeftSpace(true)}
+        onMouseLeave={() => {
+          setLeftSpace(false);
+        }}
+      >
+        {toastPropsList.map((toastProps, index) => (
           <Toast
+            key={index}
             {...toastProps}
-            onMouseEnter={() => clearTimeout(timer)}
-            onMouseLeave={() => {
-              if (toastInfoCount) {
-                setToastInfoList((prevVisibleToasts) => {
-                  const focusedToast = prevVisibleToasts[index];
-                  const newToastInfoList = prevVisibleToasts.filter(
-                    ({ hidden }) => !hidden,
-                  );
-                  const focusedToastIndex =
-                    newToastInfoList.indexOf(focusedToast);
-                  const focusedToastInfo = newToastInfoList[focusedToastIndex];
-
-                  if (focusedToastInfo) {
-                    focusedToastInfo.timer =
-                      createToastTimer(focusedToastIndex);
-                  }
-
-                  return newToastInfoList;
-                });
-              }
+            leftSpace={leftSpace}
+            floatDirection={floatDirection}
+            holdTime={holdTime}
+            onToastDelete={() => {
+              toastProps.deleted = true;
             }}
-          >
-            {content}
-          </Toast>
-        </li>
-      ))}
-    </ul>
+          />
+        ))}
+      </div>
+    </div>
   );
 };

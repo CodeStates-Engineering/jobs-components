@@ -5,7 +5,7 @@ import type { ComponentStory, ComponentMeta } from '@storybook/react';
 import { ToastContainer } from '..';
 import { Button } from '../../../atoms';
 
-import type { ToastContainerProps, ToastOption } from '..';
+import type { ToastContainerProps } from '..';
 
 export default {
   title: 'molecules/ToastContainer',
@@ -14,10 +14,7 @@ export default {
 
 const ToastContainerStory: ComponentStory<typeof ToastContainer> = (args) => {
   const [toastIndex, setToastIndex] = useState(1);
-  const toastOption: ToastOption = {
-    type: toastIndex % 2 === 0 ? 'success' : 'fail',
-    content: `Toast test text ${toastIndex}`,
-  };
+
   return (
     <div
       style={{
@@ -29,7 +26,10 @@ const ToastContainerStory: ComponentStory<typeof ToastContainer> = (args) => {
       <Button onClick={() => setToastIndex((prev) => prev + 1)}>
         Toast Up
       </Button>
-      <ToastContainer {...args} toastOption={toastOption} />
+      <ToastContainer
+        {...args}
+        type={toastIndex % 2 === 0 ? 'success' : 'fail'}
+      >{`Toast test text ${toastIndex}`}</ToastContainer>
     </div>
   );
 };
