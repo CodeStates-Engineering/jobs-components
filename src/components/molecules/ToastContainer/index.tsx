@@ -2,16 +2,12 @@ import { useState, useEffect } from 'react';
 
 import styles from './index.module.scss';
 import { cleanClassName } from '../../../utils';
-import { Toast, ANIMATION_DURATION } from '../../atoms';
+import { Toast, CLOSE_TOAST_ANIMATION_DURATION } from '../../atoms';
 
 import type { ToastProps } from '../../atoms';
 
 export interface ToastOption extends Pick<ToastProps, 'type'> {
   message?: ToastProps['children'];
-}
-
-interface ToastInfo extends ToastOption {
-  deleted: boolean;
 }
 
 export interface ToastContainerProps
@@ -25,27 +21,27 @@ export interface ToastContainerProps
 export const ToastContainer = ({
   toastOption,
   floatDirection = 'from-top',
-  holdTime = 2000,
+  holdTime = 3000,
 }: ToastContainerProps) => {
-  const [toastInfoList, setToastInfoList] = useState<ToastInfo[]>([]);
+  const [toastInfoList, setToastInfoList] = useState<ToastOption[]>([]);
 
-  const [leftSpace, setLeftSpace] = useState(false);
+  const [isSpaceHolding, setIsSpaceHolding] = useState(false);
 
   useEffect(() => {
-    if (!leftSpace && toastInfoList.length > 0) {
+    if (!isSpaceHolding && toastInfoList.length > 0) {
       const toastPropsListCleanTimer = setTimeout(
         () => setToastInfoList([]),
-        holdTime + ANIMATION_DURATION,
+        holdTime + CLOSE_TOAST_ANIMATION_DURATION,
       );
 
       return () => clearTimeout(toastPropsListCleanTimer);
     }
-  }, [leftSpace, holdTime, toastInfoList]);
+  }, [isSpaceHolding, holdTime, toastInfoList]);
 
   useEffect(() => {
     if (toastOption?.message) {
       setToastInfoList((prevToastPropsList) => [
-        ...prevToastPropsList.filter((toastProps) => !toastProps.deleted),
+        ...prevToastPropsList,
         { ...toastOption, deleted: false },
       ]);
     }
@@ -60,21 +56,18 @@ export const ToastContainer = ({
       )}
     >
       <div
-        onMouseEnter={() => setLeftSpace(true)}
+        onMouseEnter={() => setIsSpaceHolding(true)}
         onMouseLeave={() => {
-          setLeftSpace(false);
+          setIsSpaceHolding(false);
         }}
       >
         {toastInfoList.map((toastInfo, index) => (
           <Toast
             key={index}
-            leftSpace={leftSpace}
+            isSpaceHolding={isSpaceHolding}
             floatDirection={floatDirection}
             holdTime={holdTime}
             type={toastInfo.type}
-            onToastDelete={() => {
-              toastInfo.deleted = true;
-            }}
           >
             {toastInfo.message}
           </Toast>

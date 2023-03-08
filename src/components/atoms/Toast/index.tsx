@@ -8,72 +8,106 @@ import { cleanClassName } from '../../../utils';
 export interface ToastProps {
   type?: 'success' | 'fail';
   children?: React.ReactNode;
-  leftSpace?: boolean;
+  isSpaceHolding?: boolean;
   floatDirection?: 'from-top' | 'from-bottom';
-  onToastDelete?: () => void;
   holdTime?: number;
 }
 
-export const ANIMATION_DURATION = 1000;
+type ToastState =
+  | 'opening'
+  | 'opened'
+  | 'holding'
+  | 'closing'
+  | 'closed'
+  | 'deleted';
+
+export const CLOSE_TOAST_ANIMATION_DURATION = 500;
 
 export const Toast = ({
   type = 'success',
   children,
-  leftSpace = false,
+  isSpaceHolding = false,
   floatDirection = 'from-top',
-  onToastDelete,
-  holdTime = 2000,
+  holdTime = 3000,
 }: ToastProps) => {
-  const [display, setDisplay] = useState<boolean | 'holding'>(true);
-  const [deleted, setDeleted] = useState(false);
+  const [toastState, setToastState] = useState<ToastState>('opening');
 
   useEffect(() => {
-    if (display === true) {
-      const holdTimer = setTimeout(() => setDisplay(false), holdTime);
-      return () => clearTimeout(holdTimer);
+    switch (toastState) {
+      case 'opening':
+        setTimeout(() => setToastState('opened'));
+        break;
+
+      case 'opened': {
+        const holdTimer = setTimeout(() => setToastState('closing'), holdTime);
+        return () => clearTimeout(holdTimer);
+      }
+
+      case 'closing': {
+        const closeTimer = setTimeout(
+          () => setToastState('closed'),
+          CLOSE_TOAST_ANIMATION_DURATION,
+        );
+        return () => clearTimeout(closeTimer);
+      }
+      default:
     }
-  }, [display, holdTime]);
+  }, [toastState, holdTime]);
 
   useEffect(() => {
-    if (!display && !leftSpace) {
-      const deleteTimer = setTimeout(() => {
-        setDeleted(true);
-        onToastDelete?.();
-      }, ANIMATION_DURATION);
-      return () => clearTimeout(deleteTimer);
+    if (toastState === 'closed' && !isSpaceHolding) {
+      setToastState('deleted');
     }
-  }, [display, onToastDelete, leftSpace]);
+  }, [isSpaceHolding, toastState]);
 
-  return deleted ? (
+  const isToastHoldable = ['opened', 'holding', 'closing'].includes(toastState);
+
+  const hasSpace =
+    ['opened', 'holding'].includes(toastState) ||
+    (['closing', 'closed'].includes(toastState) && isSpaceHolding);
+
+  return toastState === 'deleted' ? (
     <></>
   ) : (
     <div
-      onMouseEnter={() => {
-        if (display) {
-          setDisplay('holding');
-        }
-      }}
-      onMouseLeave={() => {
-        if (display) {
-          setDisplay(true);
-        }
-      }}
       className={cleanClassName(
-        `${styles.toast} ${!leftSpace && styles['remove-space']} ${
-          display ? styles[`float-direction-${floatDirection}`] : styles.closing
-        }`,
+        `${styles['toast-wrap']} ${hasSpace && styles['has-space']}`,
       )}
     >
-      <img
-        src={
-          {
-            success: CircleCheck,
-            fail: CircleExclamation,
-          }[type]
-        }
-        alt="mark"
-      />
-      <div className={styles['toast-contents-wrap']}>{children}</div>
+      <div
+        onMouseEnter={() => {
+          if (isToastHoldable) {
+            setToastState('holding');
+          }
+        }}
+        onMouseLeave={() => {
+          if (isToastHoldable) {
+            setToastState('opened');
+          }
+        }}
+        className={cleanClassName(
+          `${styles.toast} ${styles[`float-direction-${floatDirection}`]} ${
+            {
+              opening: styles.invisible,
+              opened: styles.opened,
+              holding: styles.opened,
+              closing: styles.closing,
+              closed: styles.invisible,
+            }[toastState]
+          }`,
+        )}
+      >
+        <img
+          src={
+            {
+              success: CircleCheck,
+              fail: CircleExclamation,
+            }[type]
+          }
+          alt="mark"
+        />
+        <div className={styles['toast-contents-wrap']}>{children}</div>
+      </div>
     </div>
   );
 };
