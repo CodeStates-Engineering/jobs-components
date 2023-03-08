@@ -1,4 +1,5 @@
 import type { CSSProperties } from 'react';
+import { useMemo } from 'react';
 
 import styles from './index.module.scss';
 import { Compatibility } from '../../../plugins';
@@ -37,22 +38,23 @@ export const TabMenu = ({
   fontSize = 'large',
 }: TabMenuProps) => {
   selectedColor = selectedColor ?? color;
-  const { pathname, query } = Compatibility.useLocation();
-
+  const { pathname, search } = Compatibility.useLocation();
+  const queryStrings = useMemo(
+    () => (search ? search.replace('?', '')?.split('&') : []),
+    [search],
+  );
   return (
     <nav style={{ width, height }}>
       <ul className={styles['tab-menu']}>
         {items?.map(({ label, to }, index) => {
-          const [itemPathname, itemQueryString] = to.split('?');
-          let isMatched = itemPathname === pathname;
-          if (itemQueryString) {
-            itemQueryString.split('&').forEach((itemQueryStringSet) => {
-              const [queryKey, queryValue] = itemQueryStringSet.split('=');
-              if (query[queryKey] !== queryValue) {
-                isMatched = false;
-              }
-            });
-          }
+          const [itemPathname, itemSearch] = to.split('?');
+          const itemQueryStrings = itemSearch ? itemSearch.split('&') : [];
+          const isMatched =
+            pathname === itemPathname &&
+            itemQueryStrings.every((itemQueryString) =>
+              queryStrings.includes(itemQueryString),
+            );
+
           return (
             <li key={index}>
               <div className={styles['tab-menu-link-wrap']}>
