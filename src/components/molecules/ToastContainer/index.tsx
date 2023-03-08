@@ -6,7 +6,7 @@ import { Toast, ANIMATION_DURATION } from '../../atoms';
 
 import type { ToastProps } from '../../atoms';
 
-interface ToastOption extends Pick<ToastProps, 'type'> {
+export interface ToastOption extends Pick<ToastProps, 'type'> {
   message: ToastProps['children'];
 }
 
