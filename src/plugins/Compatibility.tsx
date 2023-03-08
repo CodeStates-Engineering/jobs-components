@@ -49,11 +49,17 @@ export class Compatibility {
     switch (type) {
       case 'next': {
         const NextLink = link as NextLinkComponent;
-        const useRouter = location as UseNextRouter;
+        const getRouter = location as UseNextRouter;
         this.Link = function Link({ to, ...restProps }: CompatibleLinkProps) {
           return <NextLink {...restProps} href={to} />;
         };
-        this.useLocation = useRouter;
+        this.useLocation = () => {
+          const router = getRouter();
+          return {
+            ...router,
+            pathname: router.asPath,
+          };
+        };
         this.useLayoutEffect = useEffect;
         break;
       }
