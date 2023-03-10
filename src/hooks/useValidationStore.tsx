@@ -29,3 +29,5 @@ export const useValidationStore = () =>
       },
     };
   }, []);
+
+export type UseValidationStoreResult = ReturnType<typeof useValidationStore>;
