@@ -31,6 +31,7 @@ for (let i = 0; i < 100; i += 1) {
 export const Default = SelectboxStory.bind({});
 const selectboxProps: SelectboxProps = {
   placeholder: 'Selectbox',
+  width: '300px',
   options: dummyOptions,
   label: 'Selectbox',
   validation: (option) => {

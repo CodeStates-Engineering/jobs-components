@@ -19,6 +19,7 @@ export const Default = ButtonStory.bind({});
 const defaultArgs: TextareaProps = {
   label: 'Textarea',
   placeholder: 'Textarea',
+  width: '300px',
   validation: (value) => {
     if (!value) {
       return 'This field is required';

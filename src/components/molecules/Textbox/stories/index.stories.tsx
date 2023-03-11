@@ -36,6 +36,7 @@ export const Default = TextboxStory.bind({});
 
 Default.args = {
   placeholder: 'Textbox',
+  width: '300px',
   label: 'textbox',
   validation: (value?: string) => {
     if (!value) {

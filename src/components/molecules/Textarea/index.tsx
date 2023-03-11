@@ -29,7 +29,7 @@ export type TextareaProps = Partial<
 };
 
 export const Textarea = ({
-  width = '500px',
+  width = '100%',
   height = '300px',
   placeholder = '',
   value: originalValue,

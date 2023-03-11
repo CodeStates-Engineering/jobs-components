@@ -21,7 +21,7 @@ export const Textbox = <T extends InputType = 'text'>({
   unit,
   onlyUpdatedByParent,
   onChange,
-  width = '300px',
+  width,
   type,
   placeholder,
   disabled,
