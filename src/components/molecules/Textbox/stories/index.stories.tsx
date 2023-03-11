@@ -14,11 +14,20 @@ export default {
 
 const TextboxStory: ComponentStory<typeof Textbox> = ({ ...args }) => (
   <>
-    <Textbox {...args} label="readonly textbox" disabled="readonly" value={100}>
-      명
-    </Textbox>
-    <Textbox {...args} label="large number textbox" type="large-number" />
-    <Textbox {...args} />
+    <Textbox
+      {...args}
+      label="readonly textbox"
+      disabled="readonly"
+      value={100}
+      unit="명"
+    />
+    <Textbox
+      {...args}
+      label="large number textbox"
+      type="large-number"
+      value={undefined}
+    />
+    <Textbox {...args} type="number" value={undefined} />
     <Textbox {...args} unit={<AlertOctagon />} />
   </>
 );
@@ -26,6 +35,7 @@ const TextboxStory: ComponentStory<typeof Textbox> = ({ ...args }) => (
 export const Default = TextboxStory.bind({});
 
 Default.args = {
+  placeholder: 'Textbox',
   label: 'textbox',
   validation: (value?: string) => {
     if (!value) {

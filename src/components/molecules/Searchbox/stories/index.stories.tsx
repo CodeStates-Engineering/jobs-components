@@ -29,6 +29,7 @@ for (let i = 0; i < 100; i += 1) {
 
 export const Default = SearchboxStory.bind({});
 const searchboxProps: SearchboxProps = {
+  placeholder: 'Searchbox',
   options: dummyOptions,
   selfFilter: true,
   label: 'Searchbox',

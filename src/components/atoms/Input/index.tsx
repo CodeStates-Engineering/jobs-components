@@ -35,7 +35,7 @@ export const Input: <T extends InputType = 'text'>(
     {
       type = 'text',
       width = '100%',
-      placeholder = 'Placeholder',
+      placeholder = '',
       disabled = false,
       value,
       onChange,
