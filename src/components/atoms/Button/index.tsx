@@ -34,7 +34,7 @@ export const Button = ({
   delay,
   type = 'button',
   children,
-  minWidth = '100%',
+  minWidth,
   size = 'large',
   theme = 'purple-600',
   themeType = 'contained',
@@ -58,6 +58,13 @@ export const Button = ({
     }
     return icon ? 'icon' : 'text';
   }, [icon, children]);
+
+  const style = useMemo(
+    () => ({
+      minWidth: minWidth ?? childrenType === 'icon' ? 'unset' : '100%',
+    }),
+    [minWidth, childrenType],
+  );
 
   Compatibility.useLayoutEffect(() => {
     if (!disabled && delay) {
@@ -91,7 +98,7 @@ export const Button = ({
           padding && styles.padding
         }`,
       )}
-      style={{ minWidth }}
+      style={style}
       onClick={onClick}
       disabled={disabled || isDelayButton}
     >
