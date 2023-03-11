@@ -18,7 +18,9 @@ const ButtonStory: ComponentStory<typeof Textarea> = (args) => (
 export const Default = ButtonStory.bind({});
 const defaultArgs: TextareaProps = {
   label: 'Textarea',
-  validation: (value: string) => {
+  placeholder: 'Textarea',
+  width: '300px',
+  validation: (value) => {
     if (!value) {
       return 'This field is required';
     }

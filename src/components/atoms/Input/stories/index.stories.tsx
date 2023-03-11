@@ -14,4 +14,6 @@ export default {
 const ButtonStory: ComponentStory<typeof Input> = (args) => <Input {...args} />;
 
 export const Default = ButtonStory.bind({});
-Default.args = {} satisfies InputProps<'text'>;
+Default.args = {
+  placeholder: 'Input',
+} satisfies InputProps<'text'>;

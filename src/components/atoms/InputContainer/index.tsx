@@ -11,11 +11,11 @@ export interface InputContainerProps
 }
 
 export const InputContainer = ({
-  width = '300px',
+  width = '100%',
   children,
   validationMessage,
   validationSpace,
-  size = 'medium',
+  size = 'large',
   onClick,
 }: InputContainerProps) => (
   <div style={{ width }} className={styles['input-container']}>
