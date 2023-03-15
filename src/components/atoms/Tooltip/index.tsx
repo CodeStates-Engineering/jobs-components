@@ -35,26 +35,30 @@ export const Tooltip = ({
 
   return (
     <div
-      className={styles['tooltip-container']}
+      className={cleanClassName(
+        `${styles['tooltip-container']} ${styles[`float-${float}`]}`,
+      )}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
       <div className={styles['tooltip-opener']}>{children}</div>
       {displayed && (
         <div
-          onMouseEnter={() => {
-            if (displayed === 'closing') {
-              setHovered(false);
-            }
-          }}
-          className={cleanClassName(
-            `${styles['tooltip-message-container']} ${
-              styles[`float-${float}`]
-            } ${displayed === 'closing' && styles.closing}`,
-          )}
+          className={`${styles['tooltip-message-float-base']} ${
+            displayed === 'closing' && styles.closing
+          }`}
         >
           <div className={styles.triangle} />
-          <div className={styles['tooltip-message-wrap']}>{message}</div>
+          <div
+            onMouseEnter={() => {
+              if (displayed === 'closing') {
+                setHovered(false);
+              }
+            }}
+            className={styles['tooltip-message-container']}
+          >
+            {message}
+          </div>
         </div>
       )}
     </div>
