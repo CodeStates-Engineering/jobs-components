@@ -12,6 +12,9 @@
 .link {
   @include font-size;
   @include font-weight;
+
+  display: inline;
+
   &.hover-type-underline {
     &:hover {
       text-decoration: underline;

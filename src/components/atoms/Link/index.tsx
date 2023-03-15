@@ -1,3 +1,5 @@
+import type { MouseEventHandler, TouchEventHandler } from 'react';
+
 import styles from './index.module.scss';
 import { useTypography } from '../../../hooks';
 import { Compatibility } from '../../../plugins';
@@ -6,9 +8,15 @@ import { cleanClassName } from '../../../utils';
 import type { Typography } from '../../../hooks';
 import type { CompatibleLinkProps } from '../../../plugins';
 
+type LinkTypeElement = HTMLAnchorElement | HTMLButtonElement | HTMLSpanElement;
+
 export type LinkProps = Omit<CompatibleLinkProps, 'className'> & {
   color?: 'puple-550' | 'puple-600' | 'bluish-gray-800';
   hoverType?: 'underline' | 'color-change';
+  type: 'button' | 'link' | 'span';
+  onMouseEnter?: MouseEventHandler<LinkTypeElement>;
+  onClick?: MouseEventHandler<LinkTypeElement>;
+  onTouchStart?: TouchEventHandler<LinkTypeElement>;
 } & Typography;
 
 export const Link = ({
@@ -16,20 +24,30 @@ export const Link = ({
   hoverType = 'underline',
   fontSize,
   fontWeight,
+  to = '#',
+  replace,
+  type = 'link',
   ...restProps
 }: LinkProps) => {
   const { fontSizeClassName, fontWeightClassName } = useTypography(
     fontSize,
     fontWeight,
   );
-  return (
-    <Compatibility.Link
-      {...restProps}
-      className={cleanClassName(
-        `${styles.link} ${styles[`color-${color}`]} ${
-          styles[`hover-type-${hoverType}`]
-        } ${styles[fontSizeClassName]} ${styles[fontWeightClassName]}`,
-      )}
-    />
+
+  const className = cleanClassName(
+    `${styles.link} ${styles[`color-${color}`]} ${
+      styles[`hover-type-${hoverType}`]
+    } ${styles[fontSizeClassName]} ${styles[fontWeightClassName]}`,
   );
+
+  const commonProps = {
+    ...restProps,
+    className,
+  };
+
+  return {
+    button: <button {...commonProps} />,
+    link: <Compatibility.Link {...commonProps} to={to} replace={replace} />,
+    span: <span {...commonProps} />,
+  }[type];
 };
