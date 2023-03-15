@@ -15,11 +15,14 @@ interface TabMenuItem {
 export interface TabMenuProps {
   items?: TabMenuItem[];
   color?: ButtonProps['theme'];
-  bottomLineWeight?: HrProps['weight'];
+  itemSize?: ButtonProps['size'];
+  themeType?: ButtonProps['themeType'];
+  itemShape?: ButtonProps['shape'];
+  bottomLineWeight?: HrProps['weight'] | 'none';
   fontWeight?: ButtonProps['fontWeight'];
   fontSize?: ButtonProps['fontSize'];
   selectedColor?: ButtonProps['theme'];
-  selectedLineWeight?: HrProps['weight'];
+  selectedLineWeight?: HrProps['weight'] | 'none';
   selectedLineColor?: HrProps['color'];
   width?: CSSProperties['width'];
   height?: CSSProperties['height'];
@@ -28,6 +31,9 @@ export interface TabMenuProps {
 export const TabMenu = ({
   items,
   color = 'bluish-gray-300',
+  itemSize = 'large',
+  itemShape,
+  themeType = 'ghost',
   selectedColor = 'bluish-gray-800',
   bottomLineWeight = 'medium',
   selectedLineWeight = 'medium',
@@ -62,9 +68,12 @@ export const TabMenu = ({
                   <Button
                     fontSize={fontSize}
                     fontWeight={fontWeight}
-                    themeType="ghost"
+                    themeType={isMatched ? themeType : 'ghost'}
+                    size={itemSize}
                     theme={isMatched ? selectedColor : color}
                     focusOutline={false}
+                    shape={itemShape}
+                    minWidth="unset"
                   >
                     {label}
                   </Button>
@@ -72,14 +81,16 @@ export const TabMenu = ({
               </div>
               {isMatched && (
                 <div className={styles['selected-line-wrap']}>
-                  <Hr weight={selectedLineWeight} color={selectedLineColor} />
+                  {selectedLineWeight === 'none' ? null : (
+                    <Hr weight={selectedLineWeight} color={selectedLineColor} />
+                  )}
                 </div>
               )}
             </li>
           );
         })}
       </ul>
-      {bottomLineWeight ? <Hr weight={bottomLineWeight} /> : null}
+      {bottomLineWeight === 'none' ? null : <Hr weight={bottomLineWeight} />}
     </nav>
   );
 };
