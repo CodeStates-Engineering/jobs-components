@@ -30,5 +30,6 @@ const defaultArgs: TooltipProps = {
   message:
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nProin luctus pharetra massa, sed fermentum sapien rutrum nec. Ut at ipsum.',
   children: <h1>Test Tooltip</h1>,
+  float: 'bottom',
 };
 Default.args = defaultArgs;
