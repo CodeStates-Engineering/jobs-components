@@ -16,8 +16,8 @@ export type LinkProps = Omit<CompatibleLinkProps, 'className'> & {
   type?: 'button' | 'link' | 'span';
   onMouseEnter?: MouseEventHandler<LinkTypeElement>;
   onClick?: MouseEventHandler<LinkTypeElement>;
-  onTouchStart?: TouchEventHandler<LinkTypeElement>;
   className?: string;
+  onTouchStart?: TouchEventHandler<LinkTypeElement>;
 } & Typography;
 
 export const Link = ({
