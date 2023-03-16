@@ -13,7 +13,7 @@ type LinkTypeElement = HTMLAnchorElement | HTMLButtonElement | HTMLSpanElement;
 export type LinkProps = Omit<CompatibleLinkProps, 'className'> & {
   color?: 'puple-550' | 'puple-600' | 'bluish-gray-700' | 'bluish-gray-800';
   hoverType?: 'underline' | 'color-change';
-  type: 'button' | 'link' | 'span';
+  type?: 'button' | 'link' | 'span';
   onMouseEnter?: MouseEventHandler<LinkTypeElement>;
   onClick?: MouseEventHandler<LinkTypeElement>;
   onTouchStart?: TouchEventHandler<LinkTypeElement>;
