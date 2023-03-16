@@ -21,11 +21,11 @@ export interface InputProps<T extends InputType = 'text'>
   > {
   type?: T;
   value?: T extends 'number' | 'large-number' ? number : string;
-  width?: React.CSSProperties['width'];
   disabled?: boolean | 'readonly';
   onChange?: (value: InputProps<T>['value']) => void;
   ref?: Ref<HTMLInputElement>;
   name?: string;
+  className?: string;
 }
 
 export const Input: <T extends InputType = 'text'>(
@@ -34,7 +34,6 @@ export const Input: <T extends InputType = 'text'>(
   (
     {
       type = 'text',
-      width = '100%',
       placeholder = '',
       disabled = false,
       value,
@@ -43,6 +42,7 @@ export const Input: <T extends InputType = 'text'>(
       id,
       onFocus,
       name,
+      className,
     },
     ref,
   ) => {
@@ -81,11 +81,10 @@ export const Input: <T extends InputType = 'text'>(
         placeholder={placeholder}
         onClick={onClick}
         value={convertValue(value)}
-        style={{ width }}
         className={cleanClassName(
           `${styles.input} ${disabled === 'readonly' && styles.readonly} ${
             type === 'button' && styles.button
-          } ${value || styles.empty}`,
+          } ${value || styles.empty} ${styles['default-width']} ${className}`,
         )}
         disabled={!!disabled}
         onChange={({ target: { value } }) =>

@@ -36,8 +36,6 @@ const ButtonStory: ComponentStory<typeof InputContainer> = (originalArgs) => {
 };
 
 export const Default = ButtonStory.bind({});
-const defaultArgs: InputContainerProps = {
-  width: '300px',
-};
+const defaultArgs: InputContainerProps = {};
 
 Default.args = defaultArgs;

@@ -19,7 +19,6 @@ export type ButtonProps = Pick<
 > &
   Typography & {
     delay?: number;
-    minWidth?: React.CSSProperties['minWidth'];
     size?: 'small' | 'medium' | 'large';
     theme?: 'purple-600' | 'bluish-gray-800' | 'bluish-gray-300';
     themeType?: 'contained' | 'ghost';
@@ -28,13 +27,13 @@ export type ButtonProps = Pick<
     shape?: 'round' | 'default';
     padding?: boolean;
     focusOutline?: boolean;
+    className?: string;
   };
 
 export const Button = ({
   delay,
   type = 'button',
   children,
-  minWidth,
   size = 'large',
   theme = 'purple-600',
   themeType = 'contained',
@@ -47,6 +46,7 @@ export const Button = ({
   fontSize = 'normal',
   fontWeight = 700,
   focusOutline = true,
+  className,
 }: ButtonProps) => {
   const [delayState, setDelayState] = useState<'before' | 'delaying' | 'after'>(
     'after',
@@ -58,13 +58,6 @@ export const Button = ({
     }
     return icon ? 'icon' : 'text';
   }, [icon, children]);
-
-  const style = useMemo(
-    () => ({
-      minWidth: minWidth ?? childrenType === 'icon' ? 'unset' : '100%',
-    }),
-    [minWidth, childrenType],
-  );
 
   Compatibility.useLayoutEffect(() => {
     if (!disabled && delay) {
@@ -96,9 +89,10 @@ export const Button = ({
           styles[`icon-direction-${iconDirection}`]
         } ${styles[`children-type-${childrenType}`]} ${
           padding && styles.padding
-        }`,
+        } ${
+          childrenType !== 'icon' && styles['default-button-min-width']
+        } ${className}`,
       )}
-      style={style}
       onClick={onClick}
       disabled={disabled || isDelayButton}
     >

@@ -12,7 +12,13 @@ export default {
 } as ComponentMeta<typeof Searchbox>;
 
 const SearchboxStory: ComponentStory<typeof Searchbox> = (args) => (
-  <Searchbox {...args} />
+  <div
+    style={{
+      width: '300px',
+    }}
+  >
+    <Searchbox {...args} />
+  </div>
 );
 
 const dummyOptions: string[] = [];
@@ -30,7 +36,6 @@ for (let i = 0; i < 100; i += 1) {
 export const Default = SearchboxStory.bind({});
 const searchboxProps: SearchboxProps = {
   placeholder: 'Searchbox',
-  width: '300px',
   options: dummyOptions,
   selfFilter: true,
   label: 'Searchbox',
