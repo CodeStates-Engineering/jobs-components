@@ -12,7 +12,7 @@
     height: fit-content;
   }
 
-  > .tooltip-message-float-base {
+  > .tooltip-message-container {
     position: relative;
     z-index: 10;
     height: 0;
@@ -33,7 +33,7 @@
       z-index: 1;
     }
 
-    > .tooltip-message-container {
+    > .tooltip-message-wrap {
       position: absolute;
       color: $WHITE;
       width: fit-content;
@@ -50,7 +50,7 @@
 
   &.float-bottom {
     flex-direction: column;
-    > .tooltip-message-float-base {
+    > .tooltip-message-container {
       flex-direction: column;
       > .triangle {
         top: 0px;
@@ -58,7 +58,7 @@
         border-bottom-width: 5px;
       }
 
-      > .tooltip-message-container {
+      > .tooltip-message-wrap {
         top: 0;
       }
     }
@@ -66,7 +66,7 @@
 
   &.float-top {
     flex-direction: column-reverse;
-    > .tooltip-message-float-base {
+    > .tooltip-message-container {
       flex-direction: column-reverse;
       > .triangle {
         bottom: 0px;

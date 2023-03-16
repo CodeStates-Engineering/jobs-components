@@ -44,7 +44,7 @@ export const Tooltip = ({
       <div className={styles['tooltip-opener']}>{children}</div>
       {displayed && (
         <div
-          className={`${styles['tooltip-message-float-base']} ${
+          className={`${styles['tooltip-message-container']} ${
             displayed === 'closing' && styles.closing
           }`}
         >
@@ -55,7 +55,7 @@ export const Tooltip = ({
                 setHovered(false);
               }
             }}
-            className={styles['tooltip-message-container']}
+            className={styles['tooltip-message-wrap']}
           >
             {message}
           </div>
