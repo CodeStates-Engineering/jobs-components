@@ -21,7 +21,6 @@ export const Textbox = <T extends InputType = 'text'>({
   unit,
   onlyUpdatedByParent,
   onChange,
-  width,
   type,
   placeholder,
   disabled,
@@ -33,6 +32,7 @@ export const Textbox = <T extends InputType = 'text'>({
   label,
   validation,
   validationSpace,
+  className,
 }: TextboxProps<T>) => {
   const [value, setValue] = useComponentSelfState(
     originalValue,
@@ -46,10 +46,9 @@ export const Textbox = <T extends InputType = 'text'>({
   );
 
   return (
-    <div style={{ width }}>
+    <div className={className}>
       {label ? <Label htmlFor={label}>{label}</Label> : null}
       <InputContainer
-        width="100%"
         size={size}
         validationMessage={validationMessage}
         validationSpace={validationSpace}

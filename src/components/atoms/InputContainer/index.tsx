@@ -18,15 +18,11 @@ export const InputContainer = ({
   onClick,
   className,
 }: InputContainerProps) => (
-  <div
-    className={cleanClassName(
-      `${styles['input-container']} ${styles['default-width']} ${className}`,
-    )}
-  >
+  <div className={cleanClassName(`${styles['input-container']} ${className}`)}>
     <div
       className={cleanClassName(
         `${styles['input-wrap']} ${validationMessage && styles.error} ${
-          styles[`size-${size}`]
+          size !== 'none' && styles[`size-${size}`]
         }`,
       )}
       onClick={onClick}

@@ -26,7 +26,7 @@ export const FocusLayer = ({
   }, [focused]);
 
   return (
-    <div className={cleanClassName(className)}>
+    <div className={className}>
       <div className={styles['over-layer']}>{children}</div>
       {focused ? (
         <div

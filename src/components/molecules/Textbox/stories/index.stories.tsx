@@ -13,31 +13,37 @@ export default {
 } as ComponentMeta<typeof Textbox>;
 
 const TextboxStory: ComponentStory<typeof Textbox> = ({ ...args }) => (
-  <>
+  <div
+    style={{
+      width: '300px',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '10px',
+    }}
+  >
     <Textbox
       {...args}
-      label="readonly textbox"
-      disabled="readonly"
+      label="Readonly"
+      disabled="read-only"
       value={100}
       unit="명"
     />
     <Textbox
       {...args}
-      label="large number textbox"
+      label="Large number"
       type="large-number"
       value={undefined}
     />
-    <Textbox {...args} type="number" value={undefined} />
+    <Textbox {...args} type="number" label="Number" value={undefined} />
     <Textbox {...args} unit={<AlertOctagon />} />
-  </>
+  </div>
 );
 
 export const Default = TextboxStory.bind({});
 
 Default.args = {
   placeholder: 'Textbox',
-  width: '300px',
-  label: 'textbox',
+  label: 'Textbox',
   validation: (value?: string) => {
     if (!value) {
       return 'Value is required';

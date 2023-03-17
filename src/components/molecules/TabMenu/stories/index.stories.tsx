@@ -55,8 +55,6 @@ const defaultArgs: TabMenuProps = {
   selectedColor: 'bluish-gray-800',
   bottomLineWeight: 'medium',
   selectedLineWeight: 'medium',
-  width: '100%',
-  height: '60px',
   fontWeight: 500,
   fontSize: 'medium',
 };

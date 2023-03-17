@@ -21,4 +21,5 @@ const checkboxProps: CheckboxProps = {
   description: '[필수] Checkbox description',
   essential: true,
 };
+
 Default.args = checkboxProps;

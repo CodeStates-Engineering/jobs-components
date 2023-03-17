@@ -1,4 +1,5 @@
 import type { DetailedHTMLProps, TextareaHTMLAttributes } from 'react';
+import { useRef } from 'react';
 
 import styles from './index.module.scss';
 import { useComponentSelfState, useValidation } from '../../../hooks';
@@ -9,7 +10,7 @@ import type { Validation } from '../../../hooks';
 import type { InputContainerProps } from '../../atoms';
 
 export type TextareaProps = Partial<
-  Pick<InputContainerProps, 'width'> &
+  InputContainerProps &
     Pick<
       DetailedHTMLProps<
         TextareaHTMLAttributes<HTMLTextAreaElement>,
@@ -22,15 +23,14 @@ export type TextareaProps = Partial<
   onlyUpdatedByParent?: boolean;
   onChange?: (value?: string) => void;
   value?: string;
-  height?: React.CSSProperties['height'];
   validation?: Validation<TextareaProps['value']>;
   label?: string;
   validationSpace?: boolean;
+  className?: string;
+  height?: React.CSSProperties['height'];
 };
 
 export const Textarea = ({
-  width = '100%',
-  height = '300px',
   placeholder = '',
   value: originalValue,
   resize = true,
@@ -41,6 +41,8 @@ export const Textarea = ({
   id,
   label,
   validationSpace,
+  className,
+  height,
 }: TextareaProps) => {
   const [textareaValue, setTextareaValue] = useComponentSelfState(
     originalValue,
@@ -53,11 +55,12 @@ export const Textarea = ({
     label,
   );
 
+  const ref = useRef<HTMLTextAreaElement>(null);
+
   return (
-    <div style={{ width }}>
+    <div className={className}>
       {label ? <Label htmlFor={label}>{label}</Label> : null}
       <InputContainer
-        width="100%"
         size="none"
         validationMessage={validationMessage}
         validationSpace={validationSpace}
@@ -67,17 +70,18 @@ export const Textarea = ({
           name={label}
           value={textareaValue}
           placeholder={placeholder}
+          ref={ref}
+          style={{ height }}
           onChange={({ target: { value } }) => {
             setTextareaValue?.(value);
             onChange?.(value);
             checkValidation?.(value);
           }}
           disabled={disabled}
-          style={{
-            height,
-          }}
           className={cleanClassName(
-            `${styles.textarea} ${resize && styles.resize}`,
+            `${styles.textarea} ${resize && styles.resize} ${
+              styles['full-size']
+            }`,
           )}
         />
       </InputContainer>

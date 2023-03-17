@@ -1,7 +1,6 @@
 @import '../../../styles/libs';
 
 .textarea {
-  width: 100%;
   resize: none;
   border: none;
   outline: none;
@@ -10,7 +9,6 @@
   box-sizing: border-box;
   padding: 18px;
   font-size: inherit;
-
   &.resize {
     resize: vertical;
   }

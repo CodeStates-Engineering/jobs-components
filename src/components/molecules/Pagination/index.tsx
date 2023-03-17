@@ -13,6 +13,7 @@ export interface PaginationProps {
   totalItems?: number;
   currentPage?: number;
   displayedCount?: number;
+  className?: string;
 }
 
 export const Pagination = ({
@@ -21,6 +22,7 @@ export const Pagination = ({
   totalItems,
   currentPage,
   displayedCount = 10,
+  className,
 }: PaginationProps) => {
   const isReady = !!(itemsPerPage && totalItems && currentPage);
   const paginationList = useMemo(() => {
@@ -69,7 +71,7 @@ export const Pagination = ({
   };
 
   return (
-    <ul className={styles.pagination}>
+    <ul className={cleanClassName(`${styles.pagination} ${className}`)}>
       <li>
         <Button
           {...commonButtonProps}

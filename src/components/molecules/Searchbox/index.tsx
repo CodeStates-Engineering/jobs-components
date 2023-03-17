@@ -3,7 +3,7 @@ import { Search } from 'react-feather';
 
 import styles from './index.module.scss';
 import { useComponentSelfState, useValidation } from '../../../hooks';
-import { cleanClassName, regex } from '../../../utils';
+import { regex } from '../../../utils';
 import { FocusLayer, Options, Input, InputContainer, Label } from '../../atoms';
 
 import type { Validation } from '../../../hooks';
@@ -100,7 +100,7 @@ export const Searchbox = ({
         onClick={onClick}
         validationMessage={validationMessage}
         validationSpace={validationSpace}
-        className={cleanClassName(`${styles['default-width']} ${className}`)}
+        className={className}
       >
         <Input
           name={label}

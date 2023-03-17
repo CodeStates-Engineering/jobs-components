@@ -16,7 +16,7 @@
   }
 
   &:disabled {
-    &.readonly {
+    &.read-only {
       color: $BLUISH-GRAY-700;
     }
   }

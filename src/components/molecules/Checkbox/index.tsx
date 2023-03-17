@@ -16,8 +16,8 @@ export interface CheckboxProps {
   size?: 'small' | 'medium';
   essential?: boolean;
   label?: string;
-  width?: React.CSSProperties['width'];
   description?: React.ReactNode;
+  className?: string;
 }
 
 export const Checkbox = ({
@@ -29,8 +29,8 @@ export const Checkbox = ({
   size = 'medium',
   essential,
   label,
-  width,
   description,
+  className,
 }: CheckboxProps) => {
   const [checked, setChecked] = useComponentSelfState(
     value,
@@ -65,11 +65,7 @@ export const Checkbox = ({
   const isValid = !validationMessage;
 
   return (
-    <div
-      style={{
-        width,
-      }}
-    >
+    <div className={cleanClassName(className)}>
       {label ? <Label htmlFor={label}>{label}</Label> : null}
       <div className={styles['checkbox-container-wrap']}>
         <div

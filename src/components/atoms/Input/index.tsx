@@ -21,7 +21,7 @@ export interface InputProps<T extends InputType = 'text'>
   > {
   type?: T;
   value?: T extends 'number' | 'large-number' ? number : string;
-  disabled?: boolean | 'readonly';
+  disabled?: boolean | 'read-only';
   onChange?: (value: InputProps<T>['value']) => void;
   ref?: Ref<HTMLInputElement>;
   name?: string;
@@ -63,7 +63,18 @@ export const Input: <T extends InputType = 'text'>(
     const convertValue = useMemo(() => {
       switch (type) {
         case 'large-number':
-          return (value) => (value ? value.toLocaleString() : value ?? '');
+          return (value) => {
+            if (value === 0 || value) {
+              const largeNumberString = value.toLocaleString();
+              if (largeNumberString) {
+                return largeNumberString;
+              }
+
+              return 0;
+            }
+
+            return '';
+          };
         case 'button':
           return (value) => value || placeholder;
         default:
@@ -82,7 +93,7 @@ export const Input: <T extends InputType = 'text'>(
         onClick={onClick}
         value={convertValue(value)}
         className={cleanClassName(
-          `${styles.input} ${disabled === 'readonly' && styles.readonly} ${
+          `${styles.input} ${disabled === 'read-only' && styles['read-only']} ${
             type === 'button' && styles.button
           } ${value || styles.empty} ${styles['default-width']} ${className}`,
         )}
