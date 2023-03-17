@@ -10,13 +10,16 @@ import type { Validation } from '../../../hooks';
 import type { InputContainerProps } from '../../atoms';
 
 export type TextareaProps = Partial<
-  InputContainerProps &
+  Omit<
+    InputContainerProps,
+    'size' | 'onClick' | 'children' | 'validationMessage'
+  > &
     Pick<
       DetailedHTMLProps<
         TextareaHTMLAttributes<HTMLTextAreaElement>,
         HTMLTextAreaElement
       >,
-      'placeholder' | 'disabled' | 'id'
+      'placeholder' | 'id'
     >
 > & {
   resize?: boolean;
@@ -27,6 +30,7 @@ export type TextareaProps = Partial<
   label?: string;
   validationSpace?: boolean;
   className?: string;
+  disabled?: boolean | 'read-only';
   height?: React.CSSProperties['height'];
 };
 
@@ -77,11 +81,11 @@ export const Textarea = ({
             onChange?.(value);
             checkValidation?.(value);
           }}
-          disabled={disabled}
+          disabled={!!disabled}
           className={cleanClassName(
             `${styles.textarea} ${resize && styles.resize} ${
-              styles['full-size']
-            }`,
+              disabled === 'read-only' && [styles['read-only']]
+            } ${styles['full-size']}`,
           )}
         />
       </InputContainer>

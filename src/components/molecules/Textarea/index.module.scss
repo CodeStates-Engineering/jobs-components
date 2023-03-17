@@ -1,6 +1,7 @@
 @import '../../../styles/libs';
 
 .textarea {
+  width: 100%;
   resize: none;
   border: none;
   outline: none;
@@ -19,7 +20,7 @@
 
   &:disabled {
     resize: none;
-    &.readonly {
+    &.read-only {
       color: $BLUISH-GRAY-700;
     }
   }
