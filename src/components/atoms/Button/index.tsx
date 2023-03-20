@@ -89,8 +89,6 @@ export const Button = ({
           styles[`icon-direction-${iconDirection}`]
         } ${styles[`children-type-${childrenType}`]} ${
           padding && styles.padding
-        } ${
-          childrenType !== 'icon' && styles['default-button-min-width']
         } ${className}`,
       )}
       onClick={onClick}
