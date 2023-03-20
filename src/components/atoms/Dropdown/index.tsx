@@ -1,26 +1,19 @@
-import { useEffect, useMemo, useState } from 'react';
-import type { CSSProperties } from 'react';
+import { useEffect, useState } from 'react';
 
 import styles from './index.module.scss';
 import { cleanClassName } from '../../../utils';
 
-export interface LocalModalProps {
+export interface DropdownProps {
   opened?: boolean;
   children?: React.ReactNode;
-  top?: CSSProperties['top'];
-  left?: CSSProperties['left'];
-  right?: CSSProperties['right'];
-  bottom?: CSSProperties['bottom'];
+  className?: string;
 }
 
-export const LocalModal = ({
+export const Dropdown = ({
   opened = false,
   children,
-  top,
-  left,
-  right,
-  bottom,
-}: LocalModalProps) => {
+  className,
+}: DropdownProps) => {
   const [openState, setOpenState] = useState<boolean | 'closing'>(opened);
   useEffect(
     () =>
@@ -45,16 +38,12 @@ export const LocalModal = ({
     }
   }, [openState]);
 
-  const floatStyle = useMemo(
-    () => ({ top, left, right, bottom }),
-    [top, left, right, bottom],
-  );
-
   return openState ? (
     <div
-      style={floatStyle}
       className={cleanClassName(
-        `${styles['local-modal']} ${openState === 'closing' && styles.closing}`,
+        `${styles.dropdown} ${
+          openState === 'closing' && styles.closing
+        } ${className}`,
       )}
     >
       {children}

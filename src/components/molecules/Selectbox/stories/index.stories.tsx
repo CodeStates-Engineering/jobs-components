@@ -12,7 +12,13 @@ export default {
 } as ComponentMeta<typeof Selectbox>;
 
 const SelectboxStory: ComponentStory<typeof Selectbox> = (args) => (
-  <Selectbox {...args} />
+  <div
+    style={{
+      width: '300px',
+    }}
+  >
+    <Selectbox {...args} />
+  </div>
 );
 
 const dummyOptions: { label: string; value: string }[] = [];
@@ -31,7 +37,6 @@ for (let i = 0; i < 100; i += 1) {
 export const Default = SelectboxStory.bind({});
 const selectboxProps: SelectboxProps = {
   placeholder: 'Selectbox',
-  width: '300px',
   options: dummyOptions,
   label: 'Selectbox',
   validation: (option) => {

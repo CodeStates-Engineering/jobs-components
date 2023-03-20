@@ -3,26 +3,26 @@ import { cleanClassName } from '../../../utils';
 
 export interface InputContainerProps
   extends Pick<React.HTMLAttributes<HTMLDivElement>, 'onClick'> {
-  width?: React.CSSProperties['width'];
   children?: React.ReactNode;
   validationMessage?: string | null;
   validationSpace?: boolean;
   size?: 'none' | 'small' | 'medium' | 'large';
+  className?: string;
 }
 
 export const InputContainer = ({
-  width = '100%',
   children,
   validationMessage,
   validationSpace,
   size = 'large',
   onClick,
+  className,
 }: InputContainerProps) => (
-  <div style={{ width }} className={styles['input-container']}>
+  <div className={cleanClassName(`${styles['input-container']} ${className}`)}>
     <div
       className={cleanClassName(
         `${styles['input-wrap']} ${validationMessage && styles.error} ${
-          styles[`size-${size}`]
+          size !== 'none' && styles[`size-${size}`]
         }`,
       )}
       onClick={onClick}

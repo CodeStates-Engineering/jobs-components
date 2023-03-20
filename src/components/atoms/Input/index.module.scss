@@ -16,7 +16,7 @@
   }
 
   &:disabled {
-    &.readonly {
+    &.read-only {
       color: $BLUISH-GRAY-700;
     }
   }
@@ -29,4 +29,8 @@
   &.empty {
     color: $BLUISH-GRAY-300;
   }
+}
+
+.default-width {
+  width: 100%;
 }

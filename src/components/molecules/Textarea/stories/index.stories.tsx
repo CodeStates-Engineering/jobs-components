@@ -12,14 +12,19 @@ export default {
 } as ComponentMeta<typeof Textarea>;
 
 const ButtonStory: ComponentStory<typeof Textarea> = (args) => (
-  <Textarea {...args} />
+  <div
+    style={{
+      width: '300px',
+    }}
+  >
+    <Textarea {...args} />
+  </div>
 );
 
 export const Default = ButtonStory.bind({});
 const defaultArgs: TextareaProps = {
   label: 'Textarea',
   placeholder: 'Textarea',
-  width: '300px',
   validation: (value) => {
     if (!value) {
       return 'This field is required';

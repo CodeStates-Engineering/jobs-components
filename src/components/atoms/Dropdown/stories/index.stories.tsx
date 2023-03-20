@@ -2,16 +2,16 @@ import React from 'react';
 
 import type { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { LocalModal } from '..';
+import { Dropdown } from '..';
 
-import type { LocalModalProps } from '..';
+import type { DropdownProps } from '..';
 
 export default {
-  title: 'atoms/LocalModal',
-  component: LocalModal,
-} as ComponentMeta<typeof LocalModal>;
+  title: 'atoms/Dropdown',
+  component: Dropdown,
+} as ComponentMeta<typeof Dropdown>;
 
-const LocalModalStory: ComponentStory<typeof LocalModal> = (args) => (
+const DropdownStory: ComponentStory<typeof Dropdown> = (args) => (
   <div
     style={{
       height: '50vh',
@@ -19,12 +19,12 @@ const LocalModalStory: ComponentStory<typeof LocalModal> = (args) => (
       padding: '20px',
     }}
   >
-    <LocalModal {...args} />
+    <Dropdown {...args} />
   </div>
 );
 
-export const Default = LocalModalStory.bind({});
-const defaultArgs: LocalModalProps = {
+export const Default = DropdownStory.bind({});
+const defaultArgs: DropdownProps = {
   children: (
     <section
       style={{
@@ -33,7 +33,7 @@ const defaultArgs: LocalModalProps = {
         padding: '20px',
       }}
     >
-      LocalModal
+      Dropdown Text
     </section>
   ),
   opened: true,

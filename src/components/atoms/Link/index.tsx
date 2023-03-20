@@ -16,6 +16,7 @@ export type LinkProps = Omit<CompatibleLinkProps, 'className'> & {
   type?: 'button' | 'link' | 'span';
   onMouseEnter?: MouseEventHandler<LinkTypeElement>;
   onClick?: MouseEventHandler<LinkTypeElement>;
+  className?: string;
   onTouchStart?: TouchEventHandler<LinkTypeElement>;
 } & Typography;
 
@@ -27,6 +28,7 @@ export const Link = ({
   to = '#',
   replace,
   type = 'link',
+  className,
   ...restProps
 }: LinkProps) => {
   const { fontSizeClassName, fontWeightClassName } = useTypography(
@@ -34,15 +36,15 @@ export const Link = ({
     fontWeight,
   );
 
-  const className = cleanClassName(
-    `${styles.link} ${styles[`color-${color}`]} ${
-      styles[`hover-type-${hoverType}`]
-    } ${styles[fontSizeClassName]} ${styles[fontWeightClassName]}`,
-  );
-
   const commonProps = {
     ...restProps,
-    className,
+    className: cleanClassName(
+      `${styles.link} ${styles[`color-${color}`]} ${
+        styles[`hover-type-${hoverType}`]
+      } ${styles[fontSizeClassName]} ${
+        styles[fontWeightClassName]
+      } ${className}`,
+    ),
   };
 
   return {

@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Search } from 'react-feather';
 
+import styles from './index.module.scss';
 import { useComponentSelfState, useValidation } from '../../../hooks';
 import { regex } from '../../../utils';
 import { FocusLayer, Options, Input, InputContainer, Label } from '../../atoms';
@@ -26,12 +27,12 @@ export type SearchboxProps = Omit<
     label?: string;
     validation?: Validation<SearchboxProps['value']>;
     validationSpace?: boolean;
+    className?: string;
   };
 
 export const Searchbox = ({
   float,
   value,
-  width,
   options: stringOptions,
   onChange,
   selfFilter = true,
@@ -46,6 +47,7 @@ export const Searchbox = ({
   label,
   validation,
   validationSpace,
+  className,
 }: SearchboxProps) => {
   const [opened, setOpened] = useState(false);
   const [inputText, setInputText] = useComponentSelfState(
@@ -94,11 +96,11 @@ export const Searchbox = ({
     <FocusLayer onClick={() => setOpened(false)} focused={opened}>
       {label ? <Label htmlFor={label}>{label}</Label> : null}
       <InputContainer
-        width={width}
         size={size}
         onClick={onClick}
         validationMessage={validationMessage}
         validationSpace={validationSpace}
+        className={className}
       >
         <Input
           name={label}
@@ -120,7 +122,7 @@ export const Searchbox = ({
         <Options
           opened={opened}
           options={options}
-          width={width}
+          className={styles['default-width']}
           value={
             inputText
               ? {

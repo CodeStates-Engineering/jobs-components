@@ -11,6 +11,7 @@ export interface ToastProps {
   isSpaceHolding?: boolean;
   floatDirection?: 'from-top' | 'from-bottom';
   holdTime?: number;
+  className?: string;
 }
 
 type ToastState =
@@ -29,6 +30,7 @@ export const Toast = ({
   isSpaceHolding = false,
   floatDirection = 'from-top',
   holdTime = 3000,
+  className,
 }: ToastProps) => {
   const [toastState, setToastState] = useState<ToastState>('opening');
 
@@ -71,7 +73,9 @@ export const Toast = ({
   ) : (
     <div
       className={cleanClassName(
-        `${styles['toast-wrap']} ${hasSpace && styles['has-space']}`,
+        `${styles['toast-wrap']} ${
+          hasSpace && styles['has-space']
+        } ${className}`,
       )}
     >
       <div

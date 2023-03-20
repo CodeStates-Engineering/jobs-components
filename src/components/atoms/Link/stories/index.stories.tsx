@@ -14,6 +14,8 @@ export default {
 const LinkStory: ComponentStory<typeof Link> = (args) => <Link {...args} />;
 
 export const Default = LinkStory.bind({});
-Default.args = {
+const defaultArgs: LinkProps = {
   children: 'Link',
-} satisfies LinkProps;
+  to: '#',
+};
+Default.args = defaultArgs;

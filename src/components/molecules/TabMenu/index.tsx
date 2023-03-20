@@ -1,4 +1,3 @@
-import type { CSSProperties } from 'react';
 import { useMemo } from 'react';
 
 import styles from './index.module.scss';
@@ -24,8 +23,7 @@ export interface TabMenuProps {
   selectedColor?: ButtonProps['theme'];
   selectedLineWeight?: HrProps['weight'] | 'none';
   selectedLineColor?: HrProps['color'];
-  width?: CSSProperties['width'];
-  height?: CSSProperties['height'];
+  className?: string;
 }
 
 export const TabMenu = ({
@@ -38,10 +36,9 @@ export const TabMenu = ({
   bottomLineWeight = 'medium',
   selectedLineWeight = 'medium',
   selectedLineColor = 'purple-550',
-  width = '100%',
-  height = '100%',
   fontWeight = 700,
   fontSize = 'large',
+  className,
 }: TabMenuProps) => {
   selectedColor = selectedColor ?? color;
   const { pathname, search } = Compatibility.useLocation();
@@ -50,7 +47,7 @@ export const TabMenu = ({
     [search],
   );
   return (
-    <nav style={{ width, height }}>
+    <nav className={className}>
       <ul className={styles['tab-menu']}>
         {items?.map(({ label, to }, index) => {
           const [itemPathname, itemSearch] = to.split('?');
@@ -73,7 +70,6 @@ export const TabMenu = ({
                     theme={isMatched ? selectedColor : color}
                     focusOutline={false}
                     shape={itemShape}
-                    minWidth="unset"
                   >
                     {label}
                   </Button>

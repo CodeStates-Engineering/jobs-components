@@ -13,6 +13,7 @@ export interface PaginationProps {
   totalItems?: number;
   currentPage?: number;
   displayedCount?: number;
+  className?: string;
 }
 
 export const Pagination = ({
@@ -21,6 +22,7 @@ export const Pagination = ({
   totalItems,
   currentPage,
   displayedCount = 10,
+  className,
 }: PaginationProps) => {
   const isReady = !!(itemsPerPage && totalItems && currentPage);
   const paginationList = useMemo(() => {
@@ -50,10 +52,10 @@ export const Pagination = ({
     return [];
   }, [displayedCount, itemsPerPage, totalItems, isReady]);
 
-  const [currentPaginationIndex, setCurrentPaginationIndex] = useState(0);
+  const [paginationIndex, setPaginationIndex] = useState(0);
   useEffect(() => {
-    if (!currentPaginationIndex && isReady) {
-      setCurrentPaginationIndex(
+    if (!paginationIndex && isReady) {
+      setPaginationIndex(
         paginationList.findIndex((part) => part.includes(currentPage)),
       );
     }
@@ -69,25 +71,25 @@ export const Pagination = ({
   };
 
   return (
-    <ul className={styles.pagination}>
+    <ul className={cleanClassName(`${styles.pagination} ${className}`)}>
       <li>
         <Button
           {...commonButtonProps}
           icon={<ChevronLeft />}
           onClick={() => {
             if (isReady) {
-              const prevPaginationIndex = currentPaginationIndex - 1;
-              setCurrentPaginationIndex(prevPaginationIndex);
+              const prevPaginationIndex = paginationIndex - 1;
+              setPaginationIndex(prevPaginationIndex);
               const [prevPage] = paginationList[prevPaginationIndex].filter(
                 (page) => currentPage > page,
               );
               onChange?.(prevPage);
             }
           }}
-          disabled={currentPaginationIndex === 0}
+          disabled={paginationIndex === 0}
         />
       </li>
-      {paginationList[currentPaginationIndex].map((page) => {
+      {paginationList[paginationIndex].map((page) => {
         const isCurrentPage = page === currentPage;
         const buttonProps: ButtonProps = isCurrentPage
           ? {
@@ -112,15 +114,15 @@ export const Pagination = ({
           icon={<ChevronRight />}
           onClick={() => {
             if (isReady) {
-              const nextPaginationIndex = currentPaginationIndex + 1;
-              setCurrentPaginationIndex(nextPaginationIndex);
+              const nextPaginationIndex = paginationIndex + 1;
+              setPaginationIndex(nextPaginationIndex);
               const [nextPage] = paginationList[nextPaginationIndex].filter(
                 (page) => currentPage < page,
               );
               onChange?.(nextPage);
             }
           }}
-          disabled={currentPaginationIndex === paginationList.length - 1}
+          disabled={paginationIndex === paginationList.length - 1}
         />
       </li>
     </ul>

@@ -5,3 +5,4 @@ export * from './Checkbox';
 export * from './Searchbox';
 export * from './Textarea';
 export * from './ToastContainer';
+export * from './Pagination';

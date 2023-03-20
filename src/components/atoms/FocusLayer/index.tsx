@@ -7,6 +7,7 @@ export interface FocusLayerProps {
   onClick?: React.MouseEventHandler<HTMLDivElement>;
   focused?: boolean;
   blur?: boolean;
+  className?: string;
 }
 
 export const FocusLayer = ({
@@ -14,6 +15,7 @@ export const FocusLayer = ({
   onClick,
   focused,
   blur,
+  className,
 }: FocusLayerProps) => {
   Compatibility.useLayoutEffect(() => {
     const { classList } = document.body;
@@ -24,7 +26,7 @@ export const FocusLayer = ({
   }, [focused]);
 
   return (
-    <div>
+    <div className={className}>
       <div className={styles['over-layer']}>{children}</div>
       {focused ? (
         <div

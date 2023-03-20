@@ -24,22 +24,20 @@ export type SelectboxProps<_Option extends Option = Option> = Omit<
   | 'onChange'
   | 'name'
 > &
-  Partial<
-    Pick<OptionsProps<_Option>, 'float' | 'options' | 'width' | 'value'>
-  > & {
+  Partial<Pick<OptionsProps<_Option>, 'options' | 'value' | 'float'>> & {
     onlyUpdatedByParent?: boolean;
     onChange?: OptionsProps<_Option>['onSelect'];
     label?: string;
     validation?: Validation<SelectboxProps<_Option>['value']>;
     validationSpace?: boolean;
+    className?: string;
   };
 
 export const Selectbox = <_Option extends Option = Option>({
-  float,
   value,
-  width,
   options,
   onChange,
+  float,
   onlyUpdatedByParent,
   disabled,
   placeholder,
@@ -50,6 +48,7 @@ export const Selectbox = <_Option extends Option = Option>({
   label,
   validation,
   validationSpace,
+  className,
 }: SelectboxProps<_Option>) => {
   const [opened, setOpened] = useState(false);
 
@@ -68,7 +67,6 @@ export const Selectbox = <_Option extends Option = Option>({
     <FocusLayer onClick={() => setOpened(false)} focused={opened}>
       {label ? <Label htmlFor={label}>{label}</Label> : null}
       <InputContainer
-        width={width}
         size={size}
         onClick={(e) => {
           setOpened(!opened);
@@ -76,6 +74,7 @@ export const Selectbox = <_Option extends Option = Option>({
         }}
         validationMessage={validationMessage}
         validationSpace={validationSpace}
+        className={className}
       >
         <Input
           id={id}
@@ -85,6 +84,7 @@ export const Selectbox = <_Option extends Option = Option>({
           value={selectedOption?.label}
           disabled={disabled}
           placeholder={placeholder}
+          className={styles['select-box-default-width']}
         />
         <ChevronDown
           className={cleanClassName(
@@ -94,8 +94,9 @@ export const Selectbox = <_Option extends Option = Option>({
         <Options
           opened={opened}
           options={options}
-          width={width}
           value={selectedOption}
+          float={float}
+          className={styles['select-box-default-width']}
           onSelect={(option) => {
             const optionForSelect =
               option === selectedOption ? undefined : option;
@@ -104,7 +105,6 @@ export const Selectbox = <_Option extends Option = Option>({
             onChange?.(optionForSelect);
             setOpened(false);
           }}
-          float={float}
         />
       </InputContainer>
     </FocusLayer>

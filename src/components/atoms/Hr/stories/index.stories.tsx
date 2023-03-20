@@ -24,7 +24,5 @@ const HrStory: ComponentStory<typeof Hr> = (args) => (
 );
 
 export const Default = HrStory.bind({});
-const defaultArgs: HrProps = {
-  type: 'horizontal',
-};
+const defaultArgs: HrProps = {};
 Default.args = defaultArgs;

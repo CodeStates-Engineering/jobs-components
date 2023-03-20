@@ -6,5 +6,5 @@ export * from './FocusLayer';
 export * from './Label';
 export * from './Link';
 export * from './Hr';
-export * from './LocalModal';
+export * from './Dropdown';
 export * from './Toast';

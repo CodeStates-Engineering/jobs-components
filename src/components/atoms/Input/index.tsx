@@ -21,11 +21,11 @@ export interface InputProps<T extends InputType = 'text'>
   > {
   type?: T;
   value?: T extends 'number' | 'large-number' ? number : string;
-  width?: React.CSSProperties['width'];
-  disabled?: boolean | 'readonly';
+  disabled?: boolean | 'read-only';
   onChange?: (value: InputProps<T>['value']) => void;
   ref?: Ref<HTMLInputElement>;
   name?: string;
+  className?: string;
 }
 
 export const Input: <T extends InputType = 'text'>(
@@ -34,7 +34,6 @@ export const Input: <T extends InputType = 'text'>(
   (
     {
       type = 'text',
-      width = '100%',
       placeholder = '',
       disabled = false,
       value,
@@ -43,6 +42,7 @@ export const Input: <T extends InputType = 'text'>(
       id,
       onFocus,
       name,
+      className,
     },
     ref,
   ) => {
@@ -63,7 +63,18 @@ export const Input: <T extends InputType = 'text'>(
     const convertValue = useMemo(() => {
       switch (type) {
         case 'large-number':
-          return (value) => (value ? value.toLocaleString() : value ?? '');
+          return (value) => {
+            if (value === 0 || value) {
+              const largeNumberString = value.toLocaleString();
+              if (largeNumberString) {
+                return largeNumberString;
+              }
+
+              return 0;
+            }
+
+            return '';
+          };
         case 'button':
           return (value) => value || placeholder;
         default:
@@ -81,11 +92,10 @@ export const Input: <T extends InputType = 'text'>(
         placeholder={placeholder}
         onClick={onClick}
         value={convertValue(value)}
-        style={{ width }}
         className={cleanClassName(
-          `${styles.input} ${disabled === 'readonly' && styles.readonly} ${
+          `${styles.input} ${disabled === 'read-only' && styles['read-only']} ${
             type === 'button' && styles.button
-          } ${value || styles.empty}`,
+          } ${value || styles.empty} ${styles['default-width']} ${className}`,
         )}
         disabled={!!disabled}
         onChange={({ target: { value } }) =>

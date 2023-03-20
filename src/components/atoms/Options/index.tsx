@@ -28,8 +28,8 @@ export interface OptionsProps<
   value?: OptionsValue<_Option, _Multiple>;
   onSelect?: (option?: OptionsValue<_Option, _Multiple>) => void;
   onKeyDown?: (event: KeyboardEvent) => void;
-  width?: React.CSSProperties['width'];
   float?: 'top' | 'bottom';
+  className?: string;
 }
 
 export const Options = <
@@ -42,8 +42,8 @@ export const Options = <
   value,
   onSelect,
   onKeyDown,
-  width = '300px',
   float = 'bottom',
+  className,
 }: OptionsProps<_Option, _Multiple>) => {
   const refList = useMemo(
     () => options?.map(() => createRef<HTMLButtonElement>()),
@@ -214,10 +214,11 @@ export const Options = <
 
   return openState && optionData?.length ? (
     <section
-      className={`${styles.options} ${styles[float]} ${
-        isChangeOpenState && styles[openState]
-      }`}
-      style={{ width }}
+      className={cleanClassName(
+        `${styles.options} ${styles[float]} ${
+          isChangeOpenState && styles[openState]
+        } ${styles['default-width']} ${className}`,
+      )}
     >
       <ul
         className={cleanClassName(
