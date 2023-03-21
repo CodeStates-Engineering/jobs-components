@@ -41,7 +41,9 @@ export const TabMenu = ({
   className,
 }: TabMenuProps) => {
   selectedColor = selectedColor ?? color;
-  const { pathname, search } = Compatibility.useLocation();
+  const test = Compatibility.useLocation();
+  const { pathname, search } = test;
+  console.log(test);
   const queryStrings = useMemo(
     () => (search ? search.replace('?', '')?.split('&') : []),
     [search],
@@ -51,7 +53,7 @@ export const TabMenu = ({
       <ul className={styles['tab-menu']}>
         {items?.map(({ label, to }, index) => {
           const [itemPathname, itemSearch] = to.split('?');
-          const itemQueryStrings = itemSearch ? itemSearch.split('&') : [];
+          const itemQueryStrings = itemSearch ? itemSearch?.split('&') : [];
           const isMatched =
             pathname === itemPathname &&
             itemQueryStrings.every((itemQueryString) =>
