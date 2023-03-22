@@ -51,12 +51,12 @@ export class Compatibility {
         };
         this.useLocation = () => {
           const router = getRouter();
-          const { asPath } = router;
+          const { asPath, query } = router;
           const [pathname, search] = asPath.split('?');
           return {
             ...router,
             pathname,
-            search: search ? `?${search}` : '',
+            search: search && Object.keys(query).length ? `?${search}` : '',
           };
         };
         this.useLayoutEffect = useEffect;
