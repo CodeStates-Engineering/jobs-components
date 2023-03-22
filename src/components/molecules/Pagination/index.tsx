@@ -1,11 +1,11 @@
-/* eslint-disable */
 import { useEffect, useMemo, useState } from 'react';
+import { ChevronLeft, ChevronRight } from 'react-feather';
 
 import styles from './index.module.scss';
 import { cleanClassName } from '../../../utils';
-import { Button, Link } from '../../atoms';
+import { Button } from '../../atoms';
+
 import type { ButtonProps } from '../../atoms';
-import { ChevronLeft, ChevronRight } from 'react-feather';
 
 export interface PaginationProps {
   onChange?: (page: number) => void;
@@ -59,7 +59,7 @@ export const Pagination = ({
         paginationList.findIndex((part) => part.includes(currentPage)),
       );
     }
-  }, [currentPage, isReady, paginationList]);
+  }, [currentPage, isReady, paginationList, paginationIndex]);
 
   const commonButtonProps: ButtonProps = {
     size: 'small',
