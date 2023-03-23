@@ -28,21 +28,27 @@ export const Pagination = ({
   const paginationList = useMemo(() => {
     if (isReady) {
       const totalPages = Math.ceil(totalItems / itemsPerPage);
+      const displayedPaginationCount =
+        displayedCount > totalPages ? totalPages : displayedCount;
+
       const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
       const paginationList = Array.from(
-        { length: Math.ceil(totalPages / displayedCount) },
+        { length: Math.ceil(totalPages / displayedPaginationCount) },
         (_, index) => index,
       ).map((index) =>
-        pages.slice(index * displayedCount, (index + 1) * displayedCount),
+        pages.slice(
+          index * displayedPaginationCount,
+          (index + 1) * displayedPaginationCount,
+        ),
       );
 
       const lastPaginationPartIndex = paginationList.length - 1;
       const lastPaginationPart = paginationList[lastPaginationPartIndex];
-      if (lastPaginationPart.length < displayedCount) {
+      if (lastPaginationPart.length < displayedPaginationCount) {
         const lastPage = lastPaginationPart[lastPaginationPart.length - 1];
-        const lastPaginationPartStart = lastPage - displayedCount + 1;
+        const lastPaginationPartStart = lastPage - displayedPaginationCount + 1;
         paginationList[lastPaginationPartIndex] = Array.from(
-          { length: displayedCount },
+          { length: displayedPaginationCount },
           (_, index) => lastPaginationPartStart + index,
         );
       }
