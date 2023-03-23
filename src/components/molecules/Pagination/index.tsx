@@ -18,10 +18,10 @@ export interface PaginationProps {
 
 export const Pagination = ({
   onChange,
-  itemsPerPage,
-  totalItems,
-  currentPage,
-  displayedCount = 10,
+  itemsPerPage = 1,
+  totalItems = 1,
+  currentPage = 1,
+  displayedCount = 1,
   className,
 }: PaginationProps) => {
   const isReady = !!(itemsPerPage && totalItems && currentPage);
@@ -41,6 +41,8 @@ export const Pagination = ({
           (index + 1) * displayedPaginationCount,
         ),
       );
+
+      console.log(paginationList);
 
       const lastPaginationPartIndex = paginationList.length - 1;
       const lastPaginationPart = paginationList[lastPaginationPartIndex];
