@@ -42,8 +42,6 @@ export const Pagination = ({
         ),
       );
 
-      console.log(paginationList);
-
       const lastPaginationPartIndex = paginationList.length - 1;
       const lastPaginationPart = paginationList[lastPaginationPartIndex];
       if (lastPaginationPart.length < displayedPaginationCount) {
