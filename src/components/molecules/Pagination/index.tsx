@@ -95,7 +95,7 @@ export const Pagination = ({
           disabled={paginationIndex === 0}
         />
       </li>
-      {paginationList[paginationIndex].map((page) => {
+      {paginationList[paginationIndex]?.map((page) => {
         const isCurrentPage = page === currentPage;
         const buttonProps: ButtonProps = isCurrentPage
           ? {
