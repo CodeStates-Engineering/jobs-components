@@ -76,7 +76,7 @@ export const Pagination = ({
     fontWeight: 500,
   };
 
-  return (
+  return paginationList.length ? (
     <ul className={cleanClassName(`${styles.pagination} ${className}`)}>
       <li>
         <Button
@@ -95,7 +95,7 @@ export const Pagination = ({
           disabled={paginationIndex === 0}
         />
       </li>
-      {paginationList[paginationIndex]?.map((page) => {
+      {paginationList[paginationIndex].map((page) => {
         const isCurrentPage = page === currentPage;
         const buttonProps: ButtonProps = isCurrentPage
           ? {
@@ -132,5 +132,7 @@ export const Pagination = ({
         />
       </li>
     </ul>
+  ) : (
+    <></>
   );
 };
