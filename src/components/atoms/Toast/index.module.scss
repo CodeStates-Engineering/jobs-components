@@ -3,13 +3,13 @@
 .toast {
   background-color: $WHITE;
   box-shadow: 0px 0px 24px rgba(0, 0, 0, 0.1);
-  padding: 14.5px 24px;
-  border-radius: 15px;
+  padding: 10px 16px;
+  border-radius: 8px;
   width: fit-content;
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: $MEDIUM;
+  font-size: $SMALL;
   font-weight: 500;
   color: $BLUISH-GRAY-700;
   box-sizing: border-box;
@@ -59,4 +59,9 @@
     max-height: 140px;
     margin: 10px 0;
   }
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
 }

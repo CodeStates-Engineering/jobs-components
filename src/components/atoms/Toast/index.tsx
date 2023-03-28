@@ -108,6 +108,7 @@ export const Toast = ({
               fail: CircleExclamation,
             }[type]
           }
+          className={styles.icon}
           alt="mark"
         />
         <div className={styles['toast-contents-wrap']}>{children}</div>
