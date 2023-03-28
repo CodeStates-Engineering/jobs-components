@@ -8,6 +8,7 @@ export interface FocusLayerProps {
   focused?: boolean;
   blur?: boolean;
   className?: string;
+  bodyScroll?: boolean;
 }
 
 export const FocusLayer = ({
@@ -16,13 +17,16 @@ export const FocusLayer = ({
   focused,
   blur,
   className,
+  bodyScroll = false,
 }: FocusLayerProps) => {
   Compatibility.useLayoutEffect(() => {
-    const { classList } = document.body;
-    if (focused) {
-      classList.add(styles['fixed-body']);
+    if (!bodyScroll) {
+      const { classList } = document.body;
+      if (focused) {
+        classList.add(styles['fixed-body']);
+      }
+      return () => classList.remove(styles['fixed-body']);
     }
-    return () => classList.remove(styles['fixed-body']);
   }, [focused]);
 
   return (
