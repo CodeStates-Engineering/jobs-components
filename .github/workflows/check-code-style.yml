@@ -20,12 +20,15 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
           registry-url: ${{ env.NPM_REGISTRY_URL }}
+      
+      - name: Install depenency
+        run: pnpm install
 
       - name: Check eslint
-        run: yarn lint
+        run: pnpm lint
 
       - name: Check prettier
-        run: yarn prettier
+        run: pnpm prettier
 
       - name: Check stylelint
-        run: yarn lint:style
+        run: pnpm lint:style

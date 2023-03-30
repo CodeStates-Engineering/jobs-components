@@ -1,4 +1,4 @@
-name: Check build
+name: PR Test
 
 on:
   pull_request:
@@ -21,14 +21,14 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           registry-url: ${{ env.NPM_REGISTRY_URL }}
 
+      - name: Install depenency
+        run: pnpm install
+
       - name: Clean build
-        run: yarn run clean:build
+        run: pnpm run clean:build
 
       - name: Build package
-        run: yarn run build:package
-
-      - name: Install depenency(zero-install)
-        run: yarn install
+        run: pnpm run build:package
 
       - name: Build storybook
-        run: yarn run build:storybook
+        run: pnpm run build:storybook

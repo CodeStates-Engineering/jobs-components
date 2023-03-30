@@ -31,15 +31,18 @@ jobs:
 
       - name: Regist author
         run: git config --global user.email "engineering@codestates.com" && git config --global user.name "CodeStates Engineering"
+      
+      - name: Install depenency
+        run: pnpm install
 
       - name: Clean build
-        run: yarn run clean:build
+        run: pnpm run clean:build
 
       - name: Set new canary version
-        run: yarn run version:canary
+        run: pnpm run version:canary
 
       - name: Build Package
-        run: yarn run build:package
+        run: pnpm run build:package
 
       - name: Deploy package(canary)
-        run: yarn run deploy:package:canary
+        run: pnpm run deploy:package:canary

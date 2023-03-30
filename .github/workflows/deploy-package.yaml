@@ -48,20 +48,20 @@ jobs:
       - name: Push release branch
         run: git push
 
-      - name: Install Packages (for Storybook)
-        run: yarn
+      - name: Install Packages
+        run: pnpm install
 
       - name: Clean build
-        run: yarn run clean:build
+        run: pnpm run clean:build
 
       - name: Build package
-        run: yarn run build:package
+        run: pnpm run build:package
 
       - name: Deploy package
-        run: yarn run deploy:package
+        run: pnpm run deploy:package
 
       - name: Build storybook
-        run: yarn run build:storybook
+        run: pnpm run build:storybook
 
       - name: Deploy storybook
         uses: peaceiris/actions-gh-pages@v3
