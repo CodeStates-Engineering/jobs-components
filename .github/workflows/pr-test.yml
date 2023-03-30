@@ -1,37 +1,26 @@
-name: Deploy canary package
+name: PR Test
 
 on:
-  push:
-    branches:
-      - 'feature/**'
-      - 'fix/**'
-
-env:
-  NODE_VERSION: '18.13'
-  NPM_REGISTRY_URL: 'https://npm.pkg.github.com/'
+  pull_request:
+    branches: ['release']
 
 jobs:
-  Deploy:
-    if: "contains(github.event.head_commit.message, 'deploy canary')"
-
+  Test:
     runs-on: ubuntu-latest
     env:
       CSE_NPM_TOKEN: ${{secrets.CSE_NPM_TOKEN}}
 
     steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{secrets.CSE_NPM_TOKEN}}
+
       - name: Set node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
           registry-url: ${{ env.NPM_REGISTRY_URL }}
 
-      - uses: actions/checkout@v3
-        with:
-          token: ${{secrets.CSE_NPM_TOKEN}}
-
-      - name: Regist author
-        run: git config --global user.email "engineering@codestates.com" && git config --global user.name "CodeStates Engineering"
-      
       - uses: pnpm/action-setup@v2
         name: Install pnpm
         id: pnpm-install
@@ -56,14 +45,20 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
+      - name: Check eslint
+        run: pnpm lint
+
+      - name: Check prettier
+        run: pnpm prettier
+
+      - name: Check stylelint
+        run: pnpm lint:style
+
       - name: Clean build
         run: pnpm run clean:build
 
-      - name: Set new canary version
-        run: pnpm run version:canary
-
-      - name: Build Package
+      - name: Build package
         run: pnpm run build:package
 
-      - name: Deploy package(canary)
-        run: pnpm run deploy:package:canary
+      - name: Build storybook
+        run: pnpm run build:storybook

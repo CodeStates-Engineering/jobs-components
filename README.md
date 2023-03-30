@@ -1,13 +1,11 @@
 ![header](https://capsule-render.vercel.app/api?type=rect&color=0:EEFF00,100:a82da8&fontColor=FFFFFF&height=100&section=header&text=Codeship%20platform%20app%20library&fontSize=40&fontAlign=50&fontAlignY=50)
 
-![Node.js](https://img.shields.io/badge/Node%2018.13-339933?style=flat-square&logo=Node.js&logoColor=white) ![Yarn](https://img.shields.io/badge/Yarn%20Berry-2C8EBB?style=flat-square&logo=yarn&logoColor=white) ![React](https://img.shields.io/badge/React%2018-61DAFB?style=flat-square&logo=react&logoColor=black) ![Typescript](https://img.shields.io/badge/Typescript-3178c6?style=flat-square&logo=typescript&logoColor=white) ![SCSS](https://img.shields.io/badge/Sass-CC6699?style=flat-square&logo=sass&logoColor=white) ![CSS_Modules](https://img.shields.io/badge/CSS%20Modules-000000?style=flat-square&logo=CSS%20Modules&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node%2018.13-339933?style=flat-square&logo=Node.js&logoColor=white) ![Pnpm](https://img.shields.io/badge/Pnpm%208.1-F69220?style=flat-square&logo=pnpm&logoColor=white) ![React](https://img.shields.io/badge/React%2018-61DAFB?style=flat-square&logo=react&logoColor=black) ![Typescript](https://img.shields.io/badge/Typescript-3178c6?style=flat-square&logo=typescript&logoColor=white) ![SCSS](https://img.shields.io/badge/Sass-CC6699?style=flat-square&logo=sass&logoColor=white) ![CSS_Modules](https://img.shields.io/badge/CSS%20Modules-000000?style=flat-square&logo=CSS%20Modules&logoColor=white)
 ![RollupJS](https://img.shields.io/badge/Rollup.js-EC4A3F?style=flat-square&logo=rollup.js&logoColor=white)
 
 **Codestates 채용 플랫폼 Codeship의 웹 클라이언트입니다.**
 
 ## 📚 Package Install
-
-- 일반적으로 yarn berry zero install을 사용하기 때문에 따로 패키지 설치는 필요없습니다.
 
 private package 설치를 위해 환경변수를 사용합니다.
 
@@ -22,7 +20,7 @@ Github Personal Token은 engineering@codestates.com 계정으로 만들어두었
 (1Password > Engineering > Github Personal Token for CodeStates Engineering Team 참고) 환경 변수 설정이 완료되면 npm 패키지를 설치합니다.
 
 ```bash
-yarn install:dev
+pnpm install
 ```
 
 ## 📐 Code Style
@@ -34,11 +32,11 @@ yarn install:dev
 추가적으로 다음과 같은 스크립트를 지원합니다.
 
 ```bash
- yarn lint:all
+ pnpm lint:all
 ```
 
 ```bash
- yarn lint:all:fix
+ pnpm lint:all:fix
 ```
 
 ## 🌳 JOBS Components branch
@@ -91,10 +89,10 @@ version-up minor
 - Link: https://github.com/CodeStates-Engineering/codeship-platform-app-library/pkgs/npm/codeship-platform-app-library
 - 해당 패키지를 설치하기 위해선 위에서 설정한 "CSE_NPM_TOKEN"이 필요합니다.
 
-#### yarn
+#### pnpm
 
 ```bash
- yarn add @codestates-engineering/codeship-platform-app-library
+ pnpm add @codestates-engineering/codeship-platform-app-library
 ```
 
 #### npm

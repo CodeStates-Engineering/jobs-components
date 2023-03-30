@@ -6,7 +6,7 @@ on:
       - 'release'
 
 jobs:
-  create_release_tag:
+  Release:
     if: "contains(github.event.head_commit.message, 'ver: ')"
     runs-on: ubuntu-latest
 
