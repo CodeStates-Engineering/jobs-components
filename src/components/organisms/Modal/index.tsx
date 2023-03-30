@@ -14,7 +14,6 @@ export interface ModalProps
   className?: string;
   onClose?: () => void;
   tabItems?: TabMenuProps['items'];
-  footer?: React.ReactNode;
 }
 
 export const Modal = ({
@@ -24,7 +23,6 @@ export const Modal = ({
   blur = true,
   onClose,
   children,
-  footer,
 }: ModalProps) => (
   <FocusLayer focused={opened} onClick={onClose} blur={blur}>
     {opened ? (
@@ -48,10 +46,7 @@ export const Modal = ({
             onClick={onClose}
           />
         </header>
-        <section className={styles['modal-content']}>{children}</section>
-        {footer ? (
-          <footer className={styles['modal-footer']}>{footer}</footer>
-        ) : null}
+        {children}
       </article>
     ) : null}
   </FocusLayer>
