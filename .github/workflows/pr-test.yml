@@ -28,6 +28,9 @@ jobs:
           version: 8.1
           run_install: false
 
+      - name: Install dependencies
+        run: pnpm install
+
       - name: Get pnpm store directory
         id: pnpm-cache
         shell: bash
@@ -50,9 +53,6 @@ jobs:
 
       - name: Check stylelint
         run: pnpm lint:style
-
-      - name: Install dependencies
-        run: pnpm install
 
       - name: Clean build
         run: pnpm run clean:build
