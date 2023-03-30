@@ -10,7 +10,10 @@ import type { CompatibleLinkProps } from '../../../plugins';
 
 type LinkTypeElement = HTMLAnchorElement | HTMLButtonElement | HTMLSpanElement;
 
-export type LinkProps = Omit<CompatibleLinkProps, 'className'|'children'|'to' > & {
+export type LinkProps = Omit<
+  CompatibleLinkProps,
+  'className' | 'children' | 'to'
+> & {
   color?: 'puple-550' | 'puple-600' | 'bluish-gray-700' | 'bluish-gray-800';
   hoverType?: 'underline' | 'color-change';
   type?: 'button' | 'link' | 'span';
@@ -27,11 +30,11 @@ export const Link = ({
   hoverType = 'underline',
   fontSize,
   fontWeight,
-  to='#',
+  to = '#',
   replace,
   type = 'link',
   className,
-  children=<></>,
+  children = <></>,
   ...restProps
 }: LinkProps) => {
   const { fontSizeClassName, fontWeightClassName } = useTypography(
