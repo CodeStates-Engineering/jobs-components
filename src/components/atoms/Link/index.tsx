@@ -10,7 +10,7 @@ import type { CompatibleLinkProps } from '../../../plugins';
 
 type LinkTypeElement = HTMLAnchorElement | HTMLButtonElement | HTMLSpanElement;
 
-export type LinkProps = Omit<CompatibleLinkProps, 'className'> & {
+export type LinkProps = Omit<CompatibleLinkProps, 'className'|'children'|'to' > & {
   color?: 'puple-550' | 'puple-600' | 'bluish-gray-700' | 'bluish-gray-800';
   hoverType?: 'underline' | 'color-change';
   type?: 'button' | 'link' | 'span';
@@ -18,6 +18,8 @@ export type LinkProps = Omit<CompatibleLinkProps, 'className'> & {
   onClick?: MouseEventHandler<LinkTypeElement>;
   className?: string;
   onTouchStart?: TouchEventHandler<LinkTypeElement>;
+  children?: React.ReactNode;
+  to?: string;
 } & Typography;
 
 export const Link = ({
@@ -25,10 +27,11 @@ export const Link = ({
   hoverType = 'underline',
   fontSize,
   fontWeight,
-  to = '#',
+  to='#',
   replace,
   type = 'link',
   className,
+  children=<></>,
   ...restProps
 }: LinkProps) => {
   const { fontSizeClassName, fontWeightClassName } = useTypography(
@@ -38,6 +41,7 @@ export const Link = ({
 
   const commonProps = {
     ...restProps,
+    children,
     className: cleanClassName(
       `${styles.link} ${styles[`color-${color}`]} ${
         styles[`hover-type-${hoverType}`]
