@@ -24,7 +24,12 @@ export const Modal = ({
   onClose,
   children,
 }: ModalProps) => (
-  <FocusLayer focused={opened} onClick={onClose} blur={blur}>
+  <FocusLayer
+    focused={opened}
+    onClick={onClose}
+    blur={blur}
+    className={styles.container}
+  >
     {opened ? (
       <article
         className={cleanClassName(`${styles['modal-container']} ${className}`)}
