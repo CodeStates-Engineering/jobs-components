@@ -17,6 +17,9 @@
 .over-layer {
   z-index: 100;
   position: relative;
+  width: fit-content;
+  height: fit-content;
+  margin: 0 auto;
 }
 
 .fixed-body {
