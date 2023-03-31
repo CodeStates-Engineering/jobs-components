@@ -1,6 +1,10 @@
 @import '../../../styles/libs';
 
-.focus-layer {
+.fixed-body {
+  overflow: hidden;
+}
+
+.background-layer {
   position: fixed;
   top: 0;
   left: 0;
@@ -12,13 +16,15 @@
     background-color: rgba(0, 0, 0, 0.3);
   }
   @include fade-in(0.5s);
+
+  &.closing {
+    @include fade-out(0.3s);
+  }
 }
 
-.over-layer {
+.focus-layer {
   z-index: 100;
   position: relative;
-}
-
-.fixed-body {
-  overflow: hidden;
+  width: fit-content;
+  height: fit-content;
 }

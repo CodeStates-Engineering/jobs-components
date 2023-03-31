@@ -1,5 +1,6 @@
+import { useEffect, useState } from 'react';
+
 import styles from './index.module.scss';
-import { Compatibility } from '../../../plugins';
 import { cleanClassName } from '../../../utils';
 
 export interface FocusLayerProps {
@@ -19,7 +20,17 @@ export const FocusLayer = ({
   className,
   bodyScroll = false,
 }: FocusLayerProps) => {
-  Compatibility.useLayoutEffect(() => {
+  const [focusState, setFocusState] = useState<boolean | 'closing'>(
+    focused ?? false,
+  );
+
+  const isClosing = focusState === 'closing';
+
+  useEffect(() => {
+    setFocusState(
+      focused ? true : (beforeState) => (beforeState ? 'closing' : false),
+    );
+
     if (!bodyScroll) {
       const { classList } = document.body;
       if (focused) {
@@ -27,19 +38,32 @@ export const FocusLayer = ({
       }
       return () => classList.remove(styles['fixed-body']);
     }
-  }, [focused]);
+  }, [focused, bodyScroll]);
+
+  useEffect(() => {
+    if (isClosing) {
+      const timer = setTimeout(() => {
+        setFocusState(false);
+      }, 300);
+      return () => clearTimeout(timer);
+    }
+  }, [isClosing]);
 
   return (
-    <div className={className}>
-      <div className={styles['over-layer']}>{children}</div>
-      {focused ? (
+    <>
+      <div className={cleanClassName(`${styles['focus-layer']} ${className}`)}>
+        {children}
+      </div>
+      {focusState ? (
         <div
           onClick={onClick}
           className={cleanClassName(
-            `${styles['focus-layer']} ${blur && styles.blur}`,
+            `${styles['background-layer']} ${isClosing && styles.closing} ${
+              blur && styles.blur
+            }`,
           )}
         />
       ) : null}
-    </div>
+    </>
   );
 };
