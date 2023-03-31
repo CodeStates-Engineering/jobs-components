@@ -19,6 +19,9 @@ const PaginationStory: ComponentStory<typeof Pagination> = (args) => {
         height: '50vh',
         width: '100%',
         padding: '20px',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '20px',
       }}
     >
       <Pagination
@@ -26,6 +29,7 @@ const PaginationStory: ComponentStory<typeof Pagination> = (args) => {
         currentPage={currentPage}
         onChange={setCurrentPage}
       />
+      <Pagination displayedCount={args.displayedCount} />
     </div>
   );
 };
@@ -35,6 +39,7 @@ const defaultArgs: PaginationProps = {
   currentPage: 1,
   itemsPerPage: 10,
   totalItems: 503,
-  displayedCount: 10,
+  displayedCount: 9,
 };
+
 Default.args = defaultArgs;
