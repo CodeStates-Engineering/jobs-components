@@ -1,6 +1,5 @@
-import { useState } from 'react';
-
 import styles from './index.module.scss';
+import { useClosingState } from '../../../hooks';
 import { Compatibility } from '../../../plugins';
 import { cleanClassName } from '../../../utils';
 
@@ -21,17 +20,10 @@ export const FocusLayer = ({
   className,
   bodyScroll = false,
 }: FocusLayerProps) => {
-  const [focusState, setFocusState] = useState<boolean | 'closing'>(
-    focused ?? false,
-  );
-
-  const isClosing = focusState === 'closing';
+  const [focusStatus] = useClosingState(focused);
+  const isClosing = focusStatus === 'closing';
 
   Compatibility.useLayoutEffect(() => {
-    setFocusState(
-      focused ? true : (beforeState) => (beforeState ? 'closing' : false),
-    );
-
     if (!bodyScroll) {
       const { classList } = document.body;
       if (focused) {
@@ -41,21 +33,12 @@ export const FocusLayer = ({
     }
   }, [focused, bodyScroll]);
 
-  Compatibility.useLayoutEffect(() => {
-    if (isClosing) {
-      const timer = setTimeout(() => {
-        setFocusState(false);
-      }, 300);
-      return () => clearTimeout(timer);
-    }
-  }, [isClosing]);
-
   return (
     <>
       <div className={cleanClassName(`${styles['focus-layer']} ${className}`)}>
         {children}
       </div>
-      {focusState ? (
+      {focusStatus ? (
         <div
           onClick={onClick}
           className={cleanClassName(
