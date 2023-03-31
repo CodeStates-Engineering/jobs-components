@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import styles from './index.module.scss';
+import { Compatibility } from '../../../plugins';
 import { cleanClassName } from '../../../utils';
 
 export interface FocusLayerProps {
@@ -26,7 +27,7 @@ export const FocusLayer = ({
 
   const isClosing = focusState === 'closing';
 
-  useEffect(() => {
+  Compatibility.useLayoutEffect(() => {
     setFocusState(
       focused ? true : (beforeState) => (beforeState ? 'closing' : false),
     );
@@ -40,7 +41,7 @@ export const FocusLayer = ({
     }
   }, [focused, bodyScroll]);
 
-  useEffect(() => {
+  Compatibility.useLayoutEffect(() => {
     if (isClosing) {
       const timer = setTimeout(() => {
         setFocusState(false);
