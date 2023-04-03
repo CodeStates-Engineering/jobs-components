@@ -64,7 +64,11 @@ export const Selectbox = <_Option extends Option = Option>({
   );
 
   return (
-    <FocusLayer onClick={() => setOpened(false)} focused={opened}>
+    <FocusLayer
+      onClick={() => setOpened(false)}
+      focused={opened}
+      className={cleanClassName(`${styles.selectbox} ${className}`)}
+    >
       {label ? <Label htmlFor={label}>{label}</Label> : null}
       <InputContainer
         size={size}
@@ -74,7 +78,6 @@ export const Selectbox = <_Option extends Option = Option>({
         }}
         validationMessage={validationMessage}
         validationSpace={validationSpace}
-        className={className}
       >
         <Input
           id={id}
@@ -84,29 +87,28 @@ export const Selectbox = <_Option extends Option = Option>({
           value={selectedOption?.label}
           disabled={disabled}
           placeholder={placeholder}
-          className={styles['select-box-default-width']}
         />
         <ChevronDown
           className={cleanClassName(
             `${styles.arrow} ${opened && styles['opened-arrow']}`,
           )}
         />
-        <Options
-          opened={opened}
-          options={options}
-          value={selectedOption}
-          float={float}
-          className={styles['select-box-default-width']}
-          onSelect={(option) => {
-            const optionForSelect =
-              option === selectedOption ? undefined : option;
-            setSelectedOption?.(optionForSelect);
-            checkValidation?.(optionForSelect);
-            onChange?.(optionForSelect);
-            setOpened(false);
-          }}
-        />
       </InputContainer>
+      <Options
+        opened={opened}
+        options={options}
+        value={selectedOption}
+        float={float}
+        className={styles['select-box-default-width']}
+        onSelect={(option) => {
+          const optionForSelect =
+            option === selectedOption ? undefined : option;
+          setSelectedOption?.(optionForSelect);
+          checkValidation?.(optionForSelect);
+          onChange?.(optionForSelect);
+          setOpened(false);
+        }}
+      />
     </FocusLayer>
   );
 };

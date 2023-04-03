@@ -1,4 +1,5 @@
 import styles from './index.module.scss';
+import { useClosingState } from '../../../hooks';
 import { Compatibility } from '../../../plugins';
 import { cleanClassName } from '../../../utils';
 
@@ -19,6 +20,9 @@ export const FocusLayer = ({
   className,
   bodyScroll = false,
 }: FocusLayerProps) => {
+  const [focusStatus] = useClosingState(focused);
+  const isClosing = focusStatus === 'closing';
+
   Compatibility.useLayoutEffect(() => {
     if (!bodyScroll) {
       const { classList } = document.body;
@@ -27,19 +31,23 @@ export const FocusLayer = ({
       }
       return () => classList.remove(styles['fixed-body']);
     }
-  }, [focused]);
+  }, [focused, bodyScroll]);
 
   return (
-    <div className={className}>
-      <div className={styles['over-layer']}>{children}</div>
-      {focused ? (
+    <>
+      <div className={cleanClassName(`${styles['focus-layer']} ${className}`)}>
+        {children}
+      </div>
+      {focusStatus ? (
         <div
           onClick={onClick}
           className={cleanClassName(
-            `${styles['focus-layer']} ${blur && styles.blur}`,
+            `${styles['background-layer']} ${isClosing && styles.closing} ${
+              blur && styles.blur
+            }`,
           )}
         />
       ) : null}
-    </div>
+    </>
   );
 };

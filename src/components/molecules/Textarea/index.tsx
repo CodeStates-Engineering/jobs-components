@@ -1,5 +1,4 @@
 import type { DetailedHTMLProps, TextareaHTMLAttributes } from 'react';
-import { useRef } from 'react';
 
 import styles from './index.module.scss';
 import { useComponentSelfState, useValidation } from '../../../hooks';
@@ -59,10 +58,8 @@ export const Textarea = ({
     label,
   );
 
-  const ref = useRef<HTMLTextAreaElement>(null);
-
   return (
-    <div className={className}>
+    <div className={cleanClassName(`${styles} ${className}`)}>
       {label ? <Label htmlFor={label}>{label}</Label> : null}
       <InputContainer
         size="none"
@@ -74,7 +71,6 @@ export const Textarea = ({
           name={label}
           value={textareaValue}
           placeholder={placeholder}
-          ref={ref}
           style={{ height }}
           onChange={({ target: { value } }) => {
             setTextareaValue?.(value);
@@ -83,7 +79,7 @@ export const Textarea = ({
           }}
           disabled={!!disabled}
           className={cleanClassName(
-            `${styles.textarea} ${resize && styles.resize} ${
+            `${styles['textarea-content']} ${resize && styles.resize} ${
               disabled === 'read-only' && [styles['read-only']]
             } ${styles['full-size']}`,
           )}
