@@ -2,6 +2,11 @@
 
 .textarea {
   width: 100%;
+  height: fit-content;
+}
+
+.textarea-content {
+  width: 100%;
   resize: none;
   border: none;
   outline: none;

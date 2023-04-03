@@ -3,7 +3,7 @@ import { Search } from 'react-feather';
 
 import styles from './index.module.scss';
 import { useComponentSelfState, useValidation } from '../../../hooks';
-import { regex } from '../../../utils';
+import { cleanClassName, regex } from '../../../utils';
 import { FocusLayer, Options, Input, InputContainer, Label } from '../../atoms';
 
 import type { Validation } from '../../../hooks';
@@ -93,14 +93,17 @@ export const Searchbox = ({
   };
 
   return (
-    <FocusLayer onClick={() => setOpened(false)} focused={opened}>
+    <FocusLayer
+      onClick={() => setOpened(false)}
+      focused={opened}
+      className={cleanClassName(`${styles.searchbox} ${className}`)}
+    >
       {label ? <Label htmlFor={label}>{label}</Label> : null}
       <InputContainer
         size={size}
         onClick={onClick}
         validationMessage={validationMessage}
         validationSpace={validationSpace}
-        className={className}
       >
         <Input
           name={label}
@@ -119,25 +122,24 @@ export const Searchbox = ({
           placeholder={placeholder}
         />
         <Search />
-        <Options
-          opened={opened}
-          options={options}
-          className={styles['default-width']}
-          value={
-            inputText
-              ? {
-                  label: inputText,
-                  value: inputText,
-                }
-              : undefined
-          }
-          onSelect={(option) => {
-            setOpened(false);
-            handleChange(option?.value);
-          }}
-          float={float}
-        />
       </InputContainer>
+      <Options
+        opened={opened}
+        options={options}
+        value={
+          inputText
+            ? {
+                label: inputText,
+                value: inputText,
+              }
+            : undefined
+        }
+        onSelect={(option) => {
+          setOpened(false);
+          handleChange(option?.value);
+        }}
+        float={float}
+      />
     </FocusLayer>
   );
 };

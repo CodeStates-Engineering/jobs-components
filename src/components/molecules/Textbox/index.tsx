@@ -1,5 +1,6 @@
 import styles from './index.module.scss';
 import { useComponentSelfState, useValidation } from '../../../hooks';
+import { cleanClassName } from '../../../utils';
 import { InputContainer, Input, Label } from '../../atoms';
 
 import type { Validation } from '../../../hooks';
@@ -46,7 +47,7 @@ export const Textbox = <T extends InputType = 'text'>({
   );
 
   return (
-    <div className={className}>
+    <div className={cleanClassName(`${styles.textbox} ${className}`)}>
       {label ? <Label htmlFor={label}>{label}</Label> : null}
       <InputContainer
         size={size}

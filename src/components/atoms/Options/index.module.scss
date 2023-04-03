@@ -3,6 +3,14 @@
 $OPTIONS-BORDER-RADIUS: 10px;
 
 .options {
+  width: 100%;
+  position: absolute;
+  background-color: $WHITE;
+  border-radius: $OPTIONS-BORDER-RADIUS;
+  box-shadow: $NORMAL-BOX-SHADOW;
+  box-sizing: border-box;
+  padding: 8px;
+
   &.closing,
   &.opening {
     &.opening {
@@ -11,16 +19,8 @@ $OPTIONS-BORDER-RADIUS: 10px;
     &.closing {
       @include fade-out-top;
     }
-    z-index: -1;
     cursor: default;
   }
-
-  position: absolute;
-  background-color: $WHITE;
-  border-radius: $OPTIONS-BORDER-RADIUS;
-  box-shadow: $NORMAL-BOX-SHADOW;
-  box-sizing: border-box;
-  padding: 8px;
 
   &.top {
     bottom: 100%;
