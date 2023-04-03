@@ -32,6 +32,7 @@ export const Modal = ({
       onClick={onClose}
       blur={blur}
       className={styles.container}
+      priority={1}
     >
       {openStatus ? (
         <article

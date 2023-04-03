@@ -10,6 +10,7 @@ export interface FocusLayerProps {
   blur?: boolean;
   className?: string;
   bodyScroll?: boolean;
+  priority?: 1 | 2 | 3;
 }
 
 export const FocusLayer = ({
@@ -19,6 +20,7 @@ export const FocusLayer = ({
   blur,
   className,
   bodyScroll = false,
+  priority = 3,
 }: FocusLayerProps) => {
   const [focusStatus] = useClosingState(focused);
   const isClosing = focusStatus === 'closing';
@@ -33,18 +35,24 @@ export const FocusLayer = ({
     }
   }, [focused, bodyScroll]);
 
+  const priorityClassName = styles[`priority-${priority}`];
+
   return (
     <>
-      <div className={cleanClassName(`${styles['focus-layer']} ${className}`)}>
+      <div
+        className={cleanClassName(
+          `${styles['focus-layer']} ${priorityClassName} ${className}`,
+        )}
+      >
         {children}
       </div>
       {focusStatus ? (
         <div
           onClick={onClick}
           className={cleanClassName(
-            `${styles['background-layer']} ${isClosing && styles.closing} ${
-              blur && styles.blur
-            }`,
+            `${styles['background-layer']} ${
+              isClosing && styles.closing
+            } ${priorityClassName} ${blur && styles.blur}`,
           )}
         />
       ) : null}
