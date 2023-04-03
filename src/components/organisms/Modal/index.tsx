@@ -26,42 +26,36 @@ export const Modal = ({
   children,
 }: ModalProps) => {
   const [openStatus] = useClosingState(opened);
-  return (
-    <FocusLayer
-      focused={opened}
-      onClick={onClose}
-      blur={blur}
-      className={styles.container}
-      priority={1}
-    >
-      {openStatus ? (
-        <article
-          className={cleanClassName(
-            `${styles['modal-container']} ${
-              openStatus === 'closing' && styles.closing
-            } ${className}`,
-          )}
-        >
-          <header className={styles['modal-header']}>
-            <TabMenu
-              items={tabItems}
-              className={styles['tab-menu']}
-              fontSize="medium"
-              selectedColor="bluish-gray-800"
-              fontWeight={700}
-              bottomLineWeight="none"
-            />
-            <Button
-              icon={<X />}
-              themeType="ghost"
-              theme="bluish-gray-800"
-              size="small"
-              onClick={onClose}
-            />
-          </header>
-          {children}
-        </article>
-      ) : null}
+  return openStatus ? (
+    <FocusLayer focused={opened} onClick={onClose} blur={blur}>
+      <article
+        className={cleanClassName(
+          `${styles['modal-container']} ${
+            openStatus === 'closing' && styles.closing
+          } ${className}`,
+        )}
+      >
+        <header className={styles['modal-header']}>
+          <TabMenu
+            items={tabItems}
+            className={styles['tab-menu']}
+            fontSize="medium"
+            selectedColor="bluish-gray-800"
+            fontWeight={700}
+            bottomLineWeight="none"
+          />
+          <Button
+            icon={<X />}
+            themeType="ghost"
+            theme="bluish-gray-800"
+            size="small"
+            onClick={onClose}
+          />
+        </header>
+        {children}
+      </article>
     </FocusLayer>
+  ) : (
+    <></>
   );
 };

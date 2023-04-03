@@ -2,11 +2,16 @@
 
 .modal-container {
   background-color: $WHITE;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   @include fade-in(0.5s);
-  width: 520px;
-  border-radius: 16px;
-  margin: auto;
+  max-width: 520px;
+  min-width: 350px;
+  width: 95%;
   max-height: 80vh;
+  border-radius: 16px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -38,8 +43,4 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-}
-
-.container {
-  margin: 0 auto;
 }
