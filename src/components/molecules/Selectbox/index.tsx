@@ -68,6 +68,7 @@ export const Selectbox = <_Option extends Option = Option>({
       onClick={() => setOpened(false)}
       focused={opened}
       className={cleanClassName(`${styles.selectbox} ${className}`)}
+      bodyScroll
     >
       {label ? <Label htmlFor={label}>{label}</Label> : null}
       <InputContainer

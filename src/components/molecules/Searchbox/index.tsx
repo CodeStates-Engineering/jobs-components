@@ -97,6 +97,7 @@ export const Searchbox = ({
       onClick={() => setOpened(false)}
       focused={opened}
       className={cleanClassName(`${styles.searchbox} ${className}`)}
+      bodyScroll
     >
       {label ? <Label htmlFor={label}>{label}</Label> : null}
       <InputContainer

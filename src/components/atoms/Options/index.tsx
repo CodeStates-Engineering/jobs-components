@@ -217,7 +217,7 @@ export const Options = <
       className={cleanClassName(
         `${styles.options} ${styles[float]} ${
           isChangeOpenState && styles[openState]
-        } ${styles['default-width']} ${className}`,
+        } ${className}`,
       )}
     >
       <ul
