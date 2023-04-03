@@ -27,7 +27,7 @@ export const Modal = ({
 }: ModalProps) => {
   const [openStatus] = useClosingState(opened);
   return openStatus ? (
-    <FocusLayer focused={opened} onClick={onClose} blur={blur}>
+    <FocusLayer focused={opened} onClick={onClose} blur={blur} priority={1}>
       <article
         className={cleanClassName(
           `${styles['modal-container']} ${
