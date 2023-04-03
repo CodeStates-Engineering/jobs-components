@@ -1,0 +1,44 @@
+@import '../../../styles/libs';
+
+.skeleton {
+  background-color: $BLUISH-GRAY-100;
+  width: 100%;
+  position: relative;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.text-space {
+  visibility: hidden;
+  @include font-size;
+  @include font-weight;
+}
+
+.shimmer-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  animation: shining 2.5s infinite;
+}
+
+.shimmer {
+  width: 50%;
+  height: 100%;
+  background-color: rgba($WHITE, 0.5);
+  transform: skewX(-15deg);
+  box-shadow: 0 0 30px 30px rgba($WHITE, 0.4);
+}
+
+@keyframes shining {
+  0% {
+    transform: translateX(-150%);
+  }
+  50% {
+    transform: translateX(-60%);
+  }
+  100% {
+    transform: translate(150%);
+  }
+}

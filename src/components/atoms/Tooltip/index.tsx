@@ -38,7 +38,11 @@ export const Tooltip = ({
 
   return (
     <div
-      className={`${styles['tooltip-container']} ${styles[`float-${float}`]}`}
+      className={cleanClassName(
+        `${styles['tooltip-container']} ${
+          styles[`float-${float}`]
+        } ${className}`,
+      )}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -56,9 +60,7 @@ export const Tooltip = ({
                 setHovered(false);
               }
             }}
-            className={cleanClassName(
-              `${styles['tooltip-message-wrap']} ${className}`,
-            )}
+            className={styles['tooltip-message-wrap']}
           >
             {message}
           </div>

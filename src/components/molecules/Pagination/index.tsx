@@ -1,9 +1,8 @@
-import { useEffect, useMemo, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'react-feather';
 
 import styles from './index.module.scss';
 import { cleanClassName } from '../../../utils';
-import { Button } from '../../atoms';
+import { Button, Skeleton } from '../../atoms';
 
 import type { ButtonProps } from '../../atoms';
 
@@ -18,55 +17,12 @@ export interface PaginationProps {
 
 export const Pagination = ({
   onChange,
-  itemsPerPage = 1,
-  totalItems = 1,
-  currentPage = 1,
-  displayedCount = 1,
+  itemsPerPage = 0,
+  totalItems = 0,
+  currentPage = 0,
+  displayedCount = 10,
   className,
 }: PaginationProps) => {
-  const isReady = !!(itemsPerPage && totalItems && currentPage);
-  const paginationList = useMemo(() => {
-    if (isReady) {
-      const totalPages = Math.ceil(totalItems / itemsPerPage);
-      const displayedPaginationCount =
-        displayedCount > totalPages ? totalPages : displayedCount;
-
-      const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
-      const paginationList = Array.from(
-        { length: Math.ceil(totalPages / displayedPaginationCount) },
-        (_, index) => index,
-      ).map((index) =>
-        pages.slice(
-          index * displayedPaginationCount,
-          (index + 1) * displayedPaginationCount,
-        ),
-      );
-
-      const lastPaginationPartIndex = paginationList.length - 1;
-      const lastPaginationPart = paginationList[lastPaginationPartIndex];
-      if (lastPaginationPart.length < displayedPaginationCount) {
-        const lastPage = lastPaginationPart[lastPaginationPart.length - 1];
-        const lastPaginationPartStart = lastPage - displayedPaginationCount + 1;
-        paginationList[lastPaginationPartIndex] = Array.from(
-          { length: displayedPaginationCount },
-          (_, index) => lastPaginationPartStart + index,
-        );
-      }
-
-      return paginationList;
-    }
-    return [];
-  }, [displayedCount, itemsPerPage, totalItems, isReady]);
-
-  const [paginationIndex, setPaginationIndex] = useState(0);
-  useEffect(() => {
-    if (!paginationIndex && isReady) {
-      setPaginationIndex(
-        paginationList.findIndex((part) => part.includes(currentPage)),
-      );
-    }
-  }, [currentPage, isReady, paginationList, paginationIndex]);
-
   const commonButtonProps: ButtonProps = {
     size: 'small',
     shape: 'round',
@@ -74,65 +30,83 @@ export const Pagination = ({
     theme: 'bluish-gray-800',
     fontSize: 'small',
     fontWeight: 500,
+    focusOutline: false,
   };
 
-  return paginationList.length ? (
+  const isReady = !!(
+    itemsPerPage &&
+    totalItems &&
+    currentPage &&
+    displayedCount
+  );
+
+  const lastPage = isReady ? Math.ceil(totalItems / itemsPerPage) : 0;
+
+  const displayedPages: number[] = isReady
+    ? [currentPage]
+    : Array.from({ length: displayedCount });
+
+  if (isReady) {
+    for (let i = 1; i <= displayedCount; i += 1) {
+      const rightSidePage = currentPage + i;
+      if (rightSidePage <= lastPage) {
+        displayedPages.push(rightSidePage);
+      }
+      if (displayedPages.length >= displayedCount) {
+        break;
+      }
+
+      const leftSidePage = currentPage - i;
+      if (leftSidePage > 0) {
+        displayedPages.unshift(leftSidePage);
+      }
+      if (displayedPages.length >= displayedCount) {
+        break;
+      }
+    }
+  }
+
+  return (
     <ul className={cleanClassName(`${styles.pagination} ${className}`)}>
       <li>
         <Button
           {...commonButtonProps}
           icon={<ChevronLeft />}
-          onClick={() => {
-            if (isReady) {
-              const prevPaginationIndex = paginationIndex - 1;
-              setPaginationIndex(prevPaginationIndex);
-              const [prevPage] = paginationList[prevPaginationIndex].filter(
-                (page) => currentPage > page,
-              );
-              onChange?.(prevPage);
-            }
-          }}
-          disabled={paginationIndex === 0}
+          onClick={() => onChange?.(currentPage - 1)}
+          disabled={!isReady || currentPage <= 1}
         />
       </li>
-      {paginationList[paginationIndex].map((page) => {
-        const isCurrentPage = page === currentPage;
-        const buttonProps: ButtonProps = isCurrentPage
-          ? {
-              ...commonButtonProps,
-              theme: 'purple-600',
-              themeType: 'contained',
-            }
-          : commonButtonProps;
-        return (
-          <li key={page}>
-            <Button
-              {...buttonProps}
-              onClick={() => onChange?.(page)}
-              icon={page}
-            />
-          </li>
-        );
-      })}
+      {isReady
+        ? displayedPages.map((page, index) => {
+            const isCurrentPage = page === currentPage;
+            const buttonProps: ButtonProps = isCurrentPage
+              ? {
+                  ...commonButtonProps,
+                  theme: 'purple-600',
+                  themeType: 'contained',
+                }
+              : commonButtonProps;
+            return (
+              <li key={index}>
+                <Button
+                  {...buttonProps}
+                  onClick={() => onChange?.(page)}
+                  icon={page}
+                />
+              </li>
+            );
+          })
+        : displayedPages.map((_, index) => (
+            <Skeleton key={index} className={styles.skeleton} />
+          ))}
       <li>
         <Button
           {...commonButtonProps}
           icon={<ChevronRight />}
-          onClick={() => {
-            if (isReady) {
-              const nextPaginationIndex = paginationIndex + 1;
-              setPaginationIndex(nextPaginationIndex);
-              const [nextPage] = paginationList[nextPaginationIndex].filter(
-                (page) => currentPage < page,
-              );
-              onChange?.(nextPage);
-            }
-          }}
-          disabled={paginationIndex === paginationList.length - 1}
+          onClick={() => onChange?.(currentPage + 1)}
+          disabled={!isReady || currentPage >= lastPage}
         />
       </li>
     </ul>
-  ) : (
-    <></>
   );
 };

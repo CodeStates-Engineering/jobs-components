@@ -4,5 +4,10 @@
   display: flex;
   gap: 8px;
   width: fit-content;
-  @include fade-in(0.3s);
+}
+
+.skeleton {
+  width: 32px;
+  height: 32px;
+  border-radius: 100%;
 }
