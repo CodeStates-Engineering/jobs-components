@@ -1,4 +1,8 @@
-import type { MouseEventHandler, TouchEventHandler } from 'react';
+import type {
+  AnchorHTMLAttributes,
+  MouseEventHandler,
+  TouchEventHandler,
+} from 'react';
 
 import styles from './index.module.scss';
 import { useTypography } from '../../../hooks';
@@ -23,6 +27,7 @@ export type LinkProps = Omit<
   onTouchStart?: TouchEventHandler<LinkTypeElement>;
   children?: React.ReactNode;
   to?: string;
+  target?: AnchorHTMLAttributes<HTMLAnchorElement>['target'];
 } & Typography;
 
 export const Link = ({
@@ -35,6 +40,7 @@ export const Link = ({
   type = 'link',
   className,
   children = <></>,
+  target,
   ...restProps
 }: LinkProps) => {
   const { fontSizeClassName, fontWeightClassName } = useTypography(
@@ -56,7 +62,14 @@ export const Link = ({
 
   return {
     button: <button {...commonProps} />,
-    link: <Compatibility.Link {...commonProps} to={to} replace={replace} />,
+    link: (
+      <Compatibility.Link
+        {...commonProps}
+        to={to}
+        replace={replace}
+        target={target}
+      />
+    ),
     span: <span {...commonProps} />,
   }[type];
 };
