@@ -33,7 +33,7 @@ const OptionsStory: ComponentStory<typeof Options> = (args) => {
   const [option, setOption] = useState<DummyOption | DummyOption[]>();
   return (
     <div>
-      <div style={{ position: 'relative' }}>
+      <div style={{ position: 'relative', width: 300 }}>
         {JSON.stringify(option)}
         <Options
           {...args}
