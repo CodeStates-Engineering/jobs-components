@@ -4,6 +4,10 @@
   display: flex;
   gap: 16px;
   height: 100%;
+  overflow-x: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
   > li {
     display: flex;
     flex-direction: column;
@@ -22,4 +26,8 @@
   position: absolute;
   width: 100%;
   bottom: 0;
+}
+
+.tab-menu-link {
+  white-space: nowrap;
 }
