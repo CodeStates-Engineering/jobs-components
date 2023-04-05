@@ -16,9 +16,6 @@
   flex-direction: column;
   overflow: hidden;
   box-sizing: border-box;
-  &.closing {
-    @include fade-out(0.3s);
-  }
 }
 
 .modal-body {
