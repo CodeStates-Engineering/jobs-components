@@ -27,6 +27,7 @@
     resize: none;
     &.read-only {
       color: $BLUISH-GRAY-700;
+      cursor: default;
     }
   }
 }

@@ -1,15 +1,8 @@
 import type { ReactNode } from 'react';
-import {
-  useEffect,
-  useState,
-  useCallback,
-  createContext,
-  useContext,
-} from 'react';
+import { createContext, useContext } from 'react';
 import { X } from 'react-feather';
 
 import styles from './index.module.scss';
-import { useClosingState } from '../../../hooks';
 import { cleanClassName } from '../../../utils';
 import { Button, FocusLayer } from '../../atoms';
 import { TabMenu } from '../../molecules';
@@ -25,60 +18,31 @@ interface CommonProps {
 
 export interface ModalProps extends CommonProps {
   opened?: boolean;
-  onClickClosingArea?: () => (() => void) | void;
+  onClose?: () => void;
 }
-const ModalMain = ({
-  children,
-  className,
-  opened,
-  onClickClosingArea,
-}: ModalProps) => {
-  const [openStatus] = useClosingState(opened);
-
-  const [closeCallback, setCloseCallback] = useState<() => void>();
-
-  const handleClickClosingArea = useCallback(() => {
-    const callback = onClickClosingArea?.();
-    setCloseCallback(() => callback);
-  }, [onClickClosingArea]);
-
-  useEffect(() => {
-    if (!openStatus) {
-      closeCallback?.();
-    }
-  }, [openStatus, closeCallback]);
-
-  return openStatus ? (
-    <FocusLayer
-      focused={opened}
-      onClick={handleClickClosingArea}
-      blur
-      priority={1}
-    >
+const ModalMain = ({ children, className, opened, onClose }: ModalProps) => (
+  <FocusLayer focused={opened} onClick={onClose} blur priority={1}>
+    {opened ? (
       <article
-        className={cleanClassName(
-          `${styles['modal-container']} ${
-            openStatus === 'closing' && styles.closing
-          } ${className}`,
-        )}
+        className={cleanClassName(`${styles['modal-container']} ${className}`)}
       >
-        <ModalContext.Provider value={handleClickClosingArea}>
+        <ModalContext.Provider value={onClose}>
           {children}
         </ModalContext.Provider>
       </article>
-    </FocusLayer>
-  ) : (
-    <></>
-  );
-};
+    ) : null}
+  </FocusLayer>
+);
 
 export interface ModalTabMenuHeaderProps extends CommonProps {
   items?: TabMenuProps['items'];
+  disabledTabLink?: TabMenuProps['disabledTabLink'];
 }
 const ModalTabMenuHeader = ({
   className,
   items,
   children,
+  disabledTabLink,
 }: ModalTabMenuHeaderProps) => {
   const onClickClosingArea = useContext(ModalContext);
   return (
@@ -92,6 +56,7 @@ const ModalTabMenuHeader = ({
         selectedColor="bluish-gray-800"
         fontWeight={700}
         bottomLineWeight="none"
+        disabledTabLink={disabledTabLink}
       />
       {children}
       <Button

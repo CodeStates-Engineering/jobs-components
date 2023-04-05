@@ -11,10 +11,16 @@ export default {
   component: Link,
 } as ComponentMeta<typeof Link>;
 
-const LinkStory: ComponentStory<typeof Link> = (args) => <Link {...args} />;
+const LinkStory: ComponentStory<typeof Link> = (args) => (
+  <>
+    <a>ss</a>
+    <Link {...args} />
+  </>
+);
 
 export const Default = LinkStory.bind({});
 const defaultArgs: LinkProps = {
+  hoverType: 'none',
   children: 'Link',
   to: '#',
 };

@@ -28,6 +28,7 @@ export interface TabMenuProps {
   selectedLineWeight?: HrProps['weight'] | 'none';
   selectedLineColor?: HrProps['color'];
   className?: string;
+  disabledTabLink?: boolean;
 }
 
 export const TabMenu = ({
@@ -43,6 +44,7 @@ export const TabMenu = ({
   fontWeight = 700,
   fontSize = 'large',
   className,
+  disabledTabLink = false,
 }: TabMenuProps) => {
   selectedColor = selectedColor ?? color;
   const { pathname, search } = Compatibility.useLocation();
@@ -50,6 +52,16 @@ export const TabMenu = ({
     () => (search ? search.replace('?', '')?.split('&') : []),
     [search],
   );
+
+  const baseItemButtonProps: ButtonProps = {
+    fontSize,
+    fontWeight,
+    size: itemSize,
+    focusOutline: false,
+    shape: itemShape,
+    className: styles['tab-menu-link'],
+  };
+
   return (
     <nav className={className}>
       <ul className={styles['tab-menu']}>
@@ -63,24 +75,25 @@ export const TabMenu = ({
               queryStrings.includes(itemQueryString),
             );
 
+          const itemButtonProps: ButtonProps = {
+            ...baseItemButtonProps,
+            ...(isMatched
+              ? { themeType, theme: selectedColor }
+              : { themeType: 'ghost', theme: color }),
+            children: label,
+            onClick: () => onClick?.(item),
+          };
+
           return (
             <li key={index}>
               <div className={styles['tab-menu-link-wrap']}>
-                <Compatibility.Link to={to}>
-                  <Button
-                    fontSize={fontSize}
-                    fontWeight={fontWeight}
-                    themeType={isMatched ? themeType : 'ghost'}
-                    size={itemSize}
-                    theme={isMatched ? selectedColor : color}
-                    focusOutline={false}
-                    shape={itemShape}
-                    className={styles['tab-menu-link']}
-                    onClick={() => onClick?.(item)}
-                  >
-                    {label}
-                  </Button>
-                </Compatibility.Link>
+                {disabledTabLink ? (
+                  <Button {...itemButtonProps} />
+                ) : (
+                  <Compatibility.Link to={to}>
+                    <Button {...itemButtonProps} />
+                  </Compatibility.Link>
+                )}
               </div>
               {isMatched && (
                 <div className={styles['selected-line-wrap']}>

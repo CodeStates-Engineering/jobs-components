@@ -75,7 +75,7 @@ const ModalStory: ComponentStory<typeof Modal> = (args) => {
       <Modal
         {...args}
         opened={search.includes('?tab=')}
-        onClickClosingArea={() => navigate('/')}
+        onClose={() => navigate('/')}
       >
         <Modal.TabMenuHeader
           items={[

@@ -20,12 +20,15 @@
       text-decoration: underline;
     }
   }
+
   &.hover-type-color-change {
     transition: color 0.2s;
   }
+
   &.color-puple-550 {
     @include color($PURPLE-550);
   }
+
   &.color-puple-600 {
     @include color($PURPLE-600);
   }

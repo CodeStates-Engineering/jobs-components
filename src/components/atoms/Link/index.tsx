@@ -19,7 +19,7 @@ export type LinkProps = Omit<
   'className' | 'children' | 'to'
 > & {
   color?: 'puple-550' | 'puple-600' | 'bluish-gray-700' | 'bluish-gray-800';
-  hoverType?: 'underline' | 'color-change';
+  hoverType?: 'underline' | 'color-change' | 'none';
   type?: 'button' | 'link' | 'span';
   onMouseEnter?: MouseEventHandler<LinkTypeElement>;
   onClick?: MouseEventHandler<LinkTypeElement>;
@@ -35,7 +35,7 @@ export const Link = ({
   hoverType = 'underline',
   fontSize,
   fontWeight,
-  to = '#',
+  to,
   replace,
   type = 'link',
   className,
@@ -53,23 +53,28 @@ export const Link = ({
     children,
     className: cleanClassName(
       `${styles.link} ${styles[`color-${color}`]} ${
-        styles[`hover-type-${hoverType}`]
+        hoverType !== 'none' && styles[`hover-type-${hoverType}`]
       } ${styles[fontSizeClassName]} ${
         styles[fontWeightClassName]
       } ${className}`,
     ),
   };
 
-  return {
-    button: <button {...commonProps} />,
-    link: (
-      <Compatibility.Link
-        {...commonProps}
-        to={to}
-        replace={replace}
-        target={target}
-      />
-    ),
-    span: <span {...commonProps} />,
-  }[type];
+  switch (type) {
+    case 'button':
+      return <button {...commonProps} />;
+    case 'span':
+      return <span {...commonProps} />;
+    default: {
+      const linkProps = {
+        ...commonProps,
+        target,
+      };
+      return to ? (
+        <Compatibility.Link {...linkProps} to={to} replace={replace} />
+      ) : (
+        <a {...linkProps} />
+      );
+    }
+  }
 };
