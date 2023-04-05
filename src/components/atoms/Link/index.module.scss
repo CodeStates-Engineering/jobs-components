@@ -2,21 +2,19 @@
 
 @mixin color($color, $changeColor: darken($color, 50%)) {
   color: $color;
-  &.hover-type-color-change {
-    &:hover {
-      color: $changeColor;
-    }
+  &.hover-type-color-change:not(span):hover {
+    color: $changeColor;
   }
 }
 
 .link {
   @include font-size;
   @include font-weight;
-
   display: inline;
 
-  &.hover-type-underline {
-    &:hover {
+  &:not(span) {
+    cursor: pointer;
+    &.hover-type-underline:hover {
       text-decoration: underline;
     }
   }
@@ -31,6 +29,10 @@
 
   &.color-puple-600 {
     @include color($PURPLE-600);
+  }
+
+  &.color-bluish-gray-600 {
+    @include color($BLUISH-GRAY-600, $PURPLE-550);
   }
 
   &.color-bluish-gray-700 {

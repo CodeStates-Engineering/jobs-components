@@ -18,7 +18,13 @@ export type LinkProps = Omit<
   CompatibleLinkProps,
   'className' | 'children' | 'to'
 > & {
-  color?: 'puple-550' | 'puple-600' | 'bluish-gray-700' | 'bluish-gray-800';
+  color?:
+    | 'puple-550'
+    | 'puple-600'
+    | 'bluish-gray-600'
+    | 'bluish-gray-700'
+    | 'bluish-gray-800';
+
   hoverType?: 'underline' | 'color-change' | 'none';
   type?: 'button' | 'link' | 'span';
   onMouseEnter?: MouseEventHandler<LinkTypeElement>;
