@@ -1,8 +1,10 @@
-import { createContext, useContext } from 'react';
+import type { ReactNode } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { X } from 'react-feather';
 
 import styles from './index.module.scss';
 import { useClosingState } from '../../../hooks';
+import { Compatibility } from '../../../plugins';
 import { cleanClassName } from '../../../utils';
 import { Button, FocusLayer } from '../../atoms';
 import { TabMenu } from '../../molecules';
@@ -12,7 +14,7 @@ import type { TabMenuProps } from '../../molecules';
 const ModalContext = createContext<(() => void) | undefined>(undefined);
 
 interface CommonProps {
-  children?: React.ReactNode;
+  children?: ReactNode;
   className?: string;
 }
 
@@ -27,6 +29,15 @@ const ModalMain = ({
   onClickClosingArea,
 }: ModalProps) => {
   const [openStatus] = useClosingState(opened);
+
+  const [modalContents, setModalContents] = useState<ReactNode>(children);
+
+  Compatibility.useLayoutEffect(() => {
+    if (typeof openStatus === 'boolean') {
+      setModalContents(children);
+    }
+  }, [children, openStatus]);
+
   return openStatus ? (
     <FocusLayer focused={opened} onClick={onClickClosingArea} blur priority={1}>
       <article
@@ -37,7 +48,7 @@ const ModalMain = ({
         )}
       >
         <ModalContext.Provider value={onClickClosingArea}>
-          {children}
+          {modalContents}
         </ModalContext.Provider>
       </article>
     </FocusLayer>
