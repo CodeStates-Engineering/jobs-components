@@ -19,17 +19,17 @@
   &.closing {
     @include fade-out(0.3s);
   }
+}
 
-  > section {
-    padding: 24px;
-    flex: 1;
-    overflow-y: auto;
-  }
+.modal-body {
+  padding: 24px;
+  flex: 1;
+  overflow-y: auto;
+}
 
-  > footer {
-    padding: 16px 32px;
-    border-top: $BLUISH-GRAY-100 solid 1px;
-  }
+.modal-footer {
+  padding: 16px 32px;
+  border-top: $BLUISH-GRAY-100 solid 1px;
 }
 
 .tab-menu {

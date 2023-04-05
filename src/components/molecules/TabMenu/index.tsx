@@ -70,6 +70,7 @@ export const TabMenu = ({
                     theme={isMatched ? selectedColor : color}
                     focusOutline={false}
                     shape={itemShape}
+                    className={styles['tab-menu-link']}
                   >
                     {label}
                   </Button>

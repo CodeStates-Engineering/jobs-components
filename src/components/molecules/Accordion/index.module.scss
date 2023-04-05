@@ -1,0 +1,47 @@
+@import '../../../styles/libs';
+
+.accordian-container {
+  background-color: $WHITE;
+  border: 1px solid $BLUISH-GRAY-100;
+  border-radius: 16px;
+}
+
+.accordian-title-wrap {
+  width: 100%;
+}
+
+.accordian-title {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 24px;
+  align-items: center;
+  width: 100%;
+}
+
+.accordian-contents-wrap {
+  overflow: hidden;
+  width: 100%;
+  box-sizing: border-box;
+  transition: height 0.3s;
+}
+
+.accordian-contents {
+  padding: 24px;
+  width: 100%;
+  box-sizing: border-box;
+  @include fade-out-top(0.3s);
+  &.opened {
+    @include fade-in-top(0.3s);
+  }
+}
+
+.chevron-down-icon {
+  width: 18px;
+  height: 18px;
+  stroke-width: 2;
+  color: $BLUISH-GRAY-300;
+  transition: transform 0.3s ease-in-out;
+  &.opened {
+    transform: rotate(180deg);
+  }
+}
