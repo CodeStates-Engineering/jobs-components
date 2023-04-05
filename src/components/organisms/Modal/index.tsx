@@ -1,8 +1,15 @@
 import type { ReactNode } from 'react';
-import { createContext, useContext } from 'react';
+import {
+  useEffect,
+  useState,
+  useCallback,
+  createContext,
+  useContext,
+} from 'react';
 import { X } from 'react-feather';
 
 import styles from './index.module.scss';
+import { useClosingState } from '../../../hooks';
 import { cleanClassName } from '../../../utils';
 import { Button, FocusLayer } from '../../atoms';
 import { TabMenu } from '../../molecules';
@@ -18,26 +25,52 @@ interface CommonProps {
 
 export interface ModalProps extends CommonProps {
   opened?: boolean;
-  onClickClosingArea?: () => void;
+  onClickClosingArea?: () => (() => void) | void;
 }
 const ModalMain = ({
   children,
   className,
   opened,
   onClickClosingArea,
-}: ModalProps) => (
-  <FocusLayer focused={opened} onClick={onClickClosingArea} blur priority={1}>
-    <article
-      className={cleanClassName(`${styles['modal-container']} ${className}`)}
+}: ModalProps) => {
+  const [openStatus] = useClosingState(opened);
+
+  const [closeCallback, setCloseCallback] = useState<() => void>();
+
+  const handleClickClosingArea = useCallback(() => {
+    const callback = onClickClosingArea?.();
+    setCloseCallback(() => callback);
+  }, [onClickClosingArea]);
+
+  useEffect(() => {
+    if (!openStatus) {
+      closeCallback?.();
+    }
+  }, [openStatus, closeCallback]);
+
+  return openStatus ? (
+    <FocusLayer
+      focused={opened}
+      onClick={handleClickClosingArea}
+      blur
+      priority={1}
     >
-      {opened ? (
-        <ModalContext.Provider value={onClickClosingArea}>
+      <article
+        className={cleanClassName(
+          `${styles['modal-container']} ${
+            openStatus === 'closing' && styles.closing
+          } ${className}`,
+        )}
+      >
+        <ModalContext.Provider value={handleClickClosingArea}>
           {children}
         </ModalContext.Provider>
-      ) : null}
-    </article>
-  </FocusLayer>
-);
+      </article>
+    </FocusLayer>
+  ) : (
+    <></>
+  );
+};
 
 export interface ModalTabMenuHeaderProps extends CommonProps {
   items?: TabMenuProps['items'];

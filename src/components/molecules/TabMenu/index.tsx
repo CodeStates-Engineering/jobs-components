@@ -6,9 +6,13 @@ import { Button, Hr } from '../../atoms';
 
 import type { ButtonProps, HrProps } from '../../atoms';
 
-interface TabMenuItem {
+interface Item {
   label: string;
   to: string;
+}
+
+interface TabMenuItem extends Item {
+  onClick?: (item: Item) => void;
 }
 
 export interface TabMenuProps {
@@ -49,7 +53,8 @@ export const TabMenu = ({
   return (
     <nav className={className}>
       <ul className={styles['tab-menu']}>
-        {items?.map(({ label, to }, index) => {
+        {items?.map(({ onClick, ...item }, index) => {
+          const { label, to } = item;
           const [itemPathname, itemSearch] = to.split('?');
           const itemQueryStrings = itemSearch ? itemSearch.split('&') : [];
           const isMatched =
@@ -71,6 +76,7 @@ export const TabMenu = ({
                     focusOutline={false}
                     shape={itemShape}
                     className={styles['tab-menu-link']}
+                    onClick={() => onClick?.(item)}
                   >
                     {label}
                   </Button>

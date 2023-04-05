@@ -6,7 +6,7 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  @include fade-in(0.5s);
+  @include fade-in;
   max-width: 520px;
   min-width: 350px;
   width: 95%;
@@ -16,6 +16,9 @@
   flex-direction: column;
   overflow: hidden;
   box-sizing: border-box;
+  &.closing {
+    @include fade-out;
+  }
 }
 
 .modal-body {
