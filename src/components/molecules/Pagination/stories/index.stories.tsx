@@ -29,7 +29,7 @@ const PaginationStory: ComponentStory<typeof Pagination> = (args) => {
         currentPage={currentPage}
         onChange={setCurrentPage}
       />
-      <Pagination displayedCount={args.displayedCount} />
+      <Pagination displayedCount={args.displayedCount} loading />
     </div>
   );
 };

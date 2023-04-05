@@ -13,6 +13,7 @@ export interface PaginationProps {
   currentPage?: number;
   displayedCount?: number;
   className?: string;
+  loading?: boolean;
 }
 
 export const Pagination = ({
@@ -22,6 +23,7 @@ export const Pagination = ({
   currentPage = 0,
   displayedCount = 10,
   className,
+  loading,
 }: PaginationProps) => {
   const commonButtonProps: ButtonProps = {
     size: 'small',
@@ -33,20 +35,22 @@ export const Pagination = ({
     focusOutline: false,
   };
 
-  const isReady = !!(
+  const isPaginationExisted = !!(
     itemsPerPage &&
     totalItems &&
     currentPage &&
     displayedCount
   );
 
-  const lastPage = isReady ? Math.ceil(totalItems / itemsPerPage) : 0;
+  const lastPage = isPaginationExisted
+    ? Math.ceil(totalItems / itemsPerPage)
+    : 0;
 
-  const displayedPages: number[] = isReady
+  const displayedPages: number[] = isPaginationExisted
     ? [currentPage]
     : Array.from({ length: displayedCount });
 
-  if (isReady) {
+  if (isPaginationExisted) {
     for (let i = 1; i <= displayedCount; i += 1) {
       const rightSidePage = currentPage + i;
       if (rightSidePage <= lastPage) {
@@ -67,16 +71,22 @@ export const Pagination = ({
   }
 
   return (
-    <ul className={cleanClassName(`${styles.pagination} ${className}`)}>
+    <ul
+      className={cleanClassName(
+        `${styles.pagination} ${className} ${
+          !isPaginationExisted && !loading && styles.hidden
+        }`,
+      )}
+    >
       <li>
         <Button
           {...commonButtonProps}
           icon={<ChevronLeft />}
           onClick={() => onChange?.(currentPage - 1)}
-          disabled={!isReady || currentPage <= 1}
+          disabled={!isPaginationExisted || currentPage <= 1}
         />
       </li>
-      {isReady
+      {isPaginationExisted
         ? displayedPages.map((page, index) => {
             const isCurrentPage = page === currentPage;
             const buttonProps: ButtonProps = isCurrentPage
@@ -104,7 +114,7 @@ export const Pagination = ({
           {...commonButtonProps}
           icon={<ChevronRight />}
           onClick={() => onChange?.(currentPage + 1)}
-          disabled={!isReady || currentPage >= lastPage}
+          disabled={!isPaginationExisted || currentPage >= lastPage}
         />
       </li>
     </ul>
