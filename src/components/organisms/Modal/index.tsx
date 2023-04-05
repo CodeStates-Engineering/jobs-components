@@ -1,3 +1,4 @@
+import { createContext, useContext } from 'react';
 import { X } from 'react-feather';
 
 import styles from './index.module.scss';
@@ -6,28 +7,28 @@ import { cleanClassName } from '../../../utils';
 import { Button, FocusLayer } from '../../atoms';
 import { TabMenu } from '../../molecules';
 
-import type { FocusLayerProps } from '../../atoms';
 import type { TabMenuProps } from '../../molecules';
 
-export interface ModalProps
-  extends Pick<FocusLayerProps, 'blur' | 'className' | 'children'> {
-  opened?: boolean;
+const ModalContext = createContext<(() => void) | undefined>(undefined);
+
+interface CommonProps {
+  children?: React.ReactNode;
   className?: string;
-  onClose?: () => void;
-  tabItems?: TabMenuProps['items'];
 }
 
-export const Modal = ({
-  className,
-  opened = false,
-  tabItems,
-  blur = true,
-  onClose,
+export interface ModalProps extends CommonProps {
+  opened?: boolean;
+  onClickClosingArea?: () => void;
+}
+const ModalMain = ({
   children,
+  className,
+  opened,
+  onClickClosingArea,
 }: ModalProps) => {
   const [openStatus] = useClosingState(opened);
   return openStatus ? (
-    <FocusLayer focused={opened} onClick={onClose} blur={blur} priority={1}>
+    <FocusLayer focused={opened} onClick={onClickClosingArea} blur priority={1}>
       <article
         className={cleanClassName(
           `${styles['modal-container']} ${
@@ -35,27 +36,65 @@ export const Modal = ({
           } ${className}`,
         )}
       >
-        <header className={styles['modal-header']}>
-          <TabMenu
-            items={tabItems}
-            className={styles['tab-menu']}
-            fontSize="medium"
-            selectedColor="bluish-gray-800"
-            fontWeight={700}
-            bottomLineWeight="none"
-          />
-          <Button
-            icon={<X />}
-            themeType="ghost"
-            theme="bluish-gray-800"
-            size="small"
-            onClick={onClose}
-          />
-        </header>
-        {children}
+        <ModalContext.Provider value={onClickClosingArea}>
+          {children}
+        </ModalContext.Provider>
       </article>
     </FocusLayer>
   ) : (
     <></>
   );
 };
+
+export interface ModalTabMenuHeaderProps extends CommonProps {
+  items?: TabMenuProps['items'];
+}
+const ModalTabMenuHeader = ({
+  className,
+  items,
+  children,
+}: ModalTabMenuHeaderProps) => {
+  const onClickClosingArea = useContext(ModalContext);
+  return (
+    <header
+      className={cleanClassName(`${styles['modal-header']} ${className}`)}
+    >
+      <TabMenu
+        items={items}
+        className={styles['tab-menu']}
+        fontSize="medium"
+        selectedColor="bluish-gray-800"
+        fontWeight={700}
+        bottomLineWeight="none"
+      />
+      {children}
+      <Button
+        icon={<X />}
+        themeType="ghost"
+        theme="bluish-gray-800"
+        size="small"
+        onClick={onClickClosingArea}
+      />
+    </header>
+  );
+};
+
+export type ModalBodyProps = CommonProps;
+const ModalBody = ({ children, className }: ModalBodyProps) => (
+  <section className={cleanClassName(`${styles['modal-body']} ${className}`)}>
+    {children}
+  </section>
+);
+
+export type ModalFooterProps = CommonProps;
+const ModalFooter = ({ children, className }: ModalFooterProps) => (
+  <footer className={`${styles['modal-footer']} ${className}`}>
+    {children}
+  </footer>
+);
+
+export const Modal = Object.assign(ModalMain, {
+  TabMenuHeader: ModalTabMenuHeader,
+  Body: ModalBody,
+  Footer: ModalFooter,
+});
