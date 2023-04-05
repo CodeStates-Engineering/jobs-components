@@ -17,7 +17,6 @@ const SkeletonStory: ComponentStory<typeof Skeleton> = (args) => (
 
 export const Default = SkeletonStory.bind({});
 const defaultArgs: SkeletonProps = {
-  fontWeight: 700,
-  fontSize: 'normal',
+  children: 'Test text',
 };
 Default.args = defaultArgs;
