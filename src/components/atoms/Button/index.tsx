@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
 
 import styles from './index.module.scss';
@@ -15,7 +15,7 @@ type HtmlButtonProps = React.DetailedHTMLProps<
 
 export type ButtonProps = Pick<
   HtmlButtonProps,
-  'onClick' | 'children' | 'disabled' | 'type'
+  'children' | 'disabled' | 'type'
 > &
   Typography & {
     delay?: number;
@@ -28,6 +28,8 @@ export type ButtonProps = Pick<
     padding?: boolean;
     focusOutline?: boolean;
     className?: string;
+    onClick?: (event?: React.MouseEvent<HTMLButtonElement>) => void;
+    enterClick?: boolean;
   };
 
 export const Button = ({
@@ -47,6 +49,7 @@ export const Button = ({
   fontWeight = 700,
   focusOutline = true,
   className,
+  enterClick = false,
 }: ButtonProps) => {
   const [delayState, setDelayState] = useState<'before' | 'delaying' | 'after'>(
     'after',
@@ -74,6 +77,21 @@ export const Button = ({
     fontSize,
     fontWeight,
   );
+
+  useEffect(() => {
+    if (enterClick) {
+      const EVENT_TYPE = 'keydown';
+      const enterClickEventListener = ({ key }: KeyboardEvent) => {
+        if (key === 'Enter') {
+          onClick?.(undefined);
+        }
+      };
+
+      document.addEventListener(EVENT_TYPE, enterClickEventListener);
+      return () =>
+        document.removeEventListener(EVENT_TYPE, enterClickEventListener);
+    }
+  }, [enterClick, onClick]);
 
   return (
     <button
