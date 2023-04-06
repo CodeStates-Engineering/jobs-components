@@ -72,6 +72,7 @@ export const Button = ({
 
   const isDelaying = delayState === 'delaying';
   const isDelayButton = delayState === 'before' || isDelaying;
+  const isDisabled = disabled || isDelayButton;
 
   const { fontSizeClassName, fontWeightClassName } = useTypography(
     fontSize,
@@ -79,7 +80,7 @@ export const Button = ({
   );
 
   useEffect(() => {
-    if (enterClick) {
+    if (enterClick && !isDisabled) {
       const EVENT_TYPE = 'keydown';
       const enterClickEventListener = ({ key }: KeyboardEvent) => {
         if (key === 'Enter') {
@@ -91,7 +92,7 @@ export const Button = ({
       return () =>
         document.removeEventListener(EVENT_TYPE, enterClickEventListener);
     }
-  }, [enterClick, onClick]);
+  }, [enterClick, onClick, isDisabled]);
 
   return (
     <button
@@ -110,7 +111,7 @@ export const Button = ({
         } ${className}`,
       )}
       onClick={onClick}
-      disabled={disabled || isDelayButton}
+      disabled={isDisabled}
     >
       {delay && isDelayButton ? (
         <div
