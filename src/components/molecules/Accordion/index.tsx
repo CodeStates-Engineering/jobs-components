@@ -50,7 +50,7 @@ const AccordionTitle = ({ children, className }: AccordionTitleProps) => {
         className={cleanClassName(`${styles['accordian-title']} ${className}`)}
         onClick={() => setOpened?.(() => !opened)}
       >
-        {children}
+        <div className={styles['title-contents']}>{children}</div>
         <ChevronDown
           className={cleanClassName(
             `${styles['chevron-down-icon']} ${opened && styles.opened}`,

@@ -7,6 +7,10 @@
   overflow: hidden;
 }
 
+.title-contaienr {
+  display: flex;
+}
+
 .accordian-title-wrap {
   width: 100%;
 }
@@ -17,6 +21,11 @@
   padding: 16px 24px;
   align-items: center;
   width: 100%;
+  > .title-contents {
+    flex: 1;
+    text-align: start;
+    overflow: hidden;
+  }
 }
 
 .accordian-contents-wrap {
@@ -37,8 +46,11 @@
 }
 
 .chevron-down-icon {
+  min-width: 18px;
+  min-height: 18px;
   width: 18px;
   height: 18px;
+  margin-left: 1em;
   stroke-width: 2;
   color: $BLUISH-GRAY-300;
   transition: transform 0.3s ease-in-out;
