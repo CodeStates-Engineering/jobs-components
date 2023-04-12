@@ -5,7 +5,7 @@ import {
   useEffect as createEffect,
 } from 'react';
 
-import { ValidationContext } from './useValidationStore';
+import { ValidationContext } from '../utils';
 
 export type Validation<_Value> =
   | ((value: _Value) => string | undefined)
