@@ -8,11 +8,13 @@ import type { ButtonProps, HrProps } from '../../atoms';
 
 interface Item {
   label: string;
-  to: string;
+  path?: string;
+  to?: string;
 }
 
 interface TabMenuItem extends Item {
   onClick?: (item: Item) => void;
+  disabled?: boolean;
 }
 
 export interface TabMenuProps {
@@ -28,7 +30,6 @@ export interface TabMenuProps {
   selectedLineWeight?: HrProps['weight'] | 'none';
   selectedLineColor?: HrProps['color'];
   className?: string;
-  disabledTabLink?: boolean;
 }
 
 export const TabMenu = ({
@@ -44,7 +45,6 @@ export const TabMenu = ({
   fontWeight = 700,
   fontSize = 'large',
   className,
-  disabledTabLink = false,
 }: TabMenuProps) => {
   selectedColor = selectedColor ?? color;
   const { pathname, search } = Compatibility.useLocation();
@@ -65,15 +65,28 @@ export const TabMenu = ({
   return (
     <nav className={className}>
       <ul className={styles['tab-menu']}>
-        {items?.map(({ onClick, ...item }, index) => {
+        {items?.map(({ onClick, disabled, ...item }, index) => {
           const { label, to } = item;
-          const [itemPathname, itemSearch] = to.split('?');
-          const itemQueryStrings = itemSearch ? itemSearch.split('&') : [];
-          const isMatched =
-            pathname === itemPathname &&
-            itemQueryStrings.every((itemQueryString) =>
-              queryStrings.includes(itemQueryString),
+
+          const path = to ?? item.path;
+
+          const isMatched = (() => {
+            if (!path) {
+              return true;
+            }
+
+            const [tabPathname, tabSearch = undefined] = path.split('?');
+
+            return (
+              (pathname === tabPathname &&
+                tabSearch
+                  ?.split('&')
+                  .every((itemQueryString) =>
+                    queryStrings.includes(itemQueryString),
+                  )) ??
+              true
             );
+          })();
 
           const itemButtonProps: ButtonProps = {
             ...baseItemButtonProps,
@@ -82,17 +95,18 @@ export const TabMenu = ({
               : { themeType: 'ghost', theme: color }),
             children: label,
             onClick: () => onClick?.(item),
+            disabled,
           };
 
           return (
             <li key={index}>
               <div className={styles['tab-menu-link-wrap']}>
-                {disabledTabLink ? (
-                  <Button {...itemButtonProps} />
-                ) : (
+                {to && !disabled ? (
                   <Compatibility.Link to={to}>
                     <Button {...itemButtonProps} />
                   </Compatibility.Link>
+                ) : (
+                  <Button {...itemButtonProps} />
                 )}
               </div>
               {isMatched && (

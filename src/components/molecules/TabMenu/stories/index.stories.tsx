@@ -23,6 +23,7 @@ const items = [
   {
     label: '소프트웨어 개발',
     to: '/software-development',
+    disabled: true,
   },
   {
     label: '데이터',

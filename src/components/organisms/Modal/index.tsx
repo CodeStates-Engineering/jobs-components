@@ -36,13 +36,11 @@ const ModalMain = ({ children, className, opened, onClose }: ModalProps) => (
 
 export interface ModalTabMenuHeaderProps extends CommonProps {
   items?: TabMenuProps['items'];
-  disabledTabLink?: TabMenuProps['disabledTabLink'];
 }
 const ModalTabMenuHeader = ({
   className,
   items,
   children,
-  disabledTabLink,
 }: ModalTabMenuHeaderProps) => {
   const onClickClosingArea = useContext(ModalContext);
   return (
@@ -56,7 +54,6 @@ const ModalTabMenuHeader = ({
         selectedColor="bluish-gray-800"
         fontWeight={700}
         bottomLineWeight="none"
-        disabledTabLink={disabledTabLink}
       />
       {children}
       <Button
