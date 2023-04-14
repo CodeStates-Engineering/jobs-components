@@ -35,7 +35,7 @@ export type TextareaProps = Partial<
 
 export const Textarea = ({
   placeholder = '',
-  value: originalValue = '',
+  value: originalValue,
   resize = true,
   onlyUpdatedByParent,
   onChange,
@@ -48,7 +48,7 @@ export const Textarea = ({
   height,
 }: TextareaProps) => {
   const [textareaValue, setTextareaValue] = useComponentSelfState(
-    originalValue,
+    originalValue ?? '',
     onlyUpdatedByParent,
   );
 
