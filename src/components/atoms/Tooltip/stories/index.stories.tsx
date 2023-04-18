@@ -27,9 +27,22 @@ const TooltipStory: ComponentStory<typeof Tooltip> = (args) => (
 
 export const Default = TooltipStory.bind({});
 const defaultArgs: TooltipProps = {
-  message:
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nProin luctus pharetra massa, sed fermentum sapien rutrum nec. Ut at ipsum.',
-  children: <h1>Test Tooltip</h1>,
-  float: 'bottom',
+  children: (
+    <>
+      <Tooltip.Area>
+        <h1>Tooltip Area</h1>
+      </Tooltip.Area>
+      <Tooltip.Content>
+        <div
+          style={{
+            width: '200px',
+          }}
+        >
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin luctus
+          pharetra massa, sed fermentum sapien rutrum nec. Ut at ipsum.
+        </div>
+      </Tooltip.Content>
+    </>
+  ),
 };
 Default.args = defaultArgs;

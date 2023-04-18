@@ -1,24 +1,50 @@
-import { useState } from 'react';
+import { debounce } from 'lodash-es';
+
+import { useState, createContext, useMemo, useContext } from 'react';
+import type { MouseEventHandler } from 'react';
 
 import styles from './index.module.scss';
 import { useMountedEffect } from '../../../hooks';
 import { cleanClassName } from '../../../utils';
 
-export interface TooltipProps {
-  float?: 'top' | 'bottom';
+type HandleMouse = MouseEventHandler<HTMLDivElement> | undefined;
+type Displayed = boolean | 'closing';
+interface Coordinates {
+  left: number;
+  top: number;
+}
+
+interface TooltipContextType {
+  displayed: Displayed;
+  coordinates?: Coordinates;
+  handleMouseMove?: HandleMouse;
+  handleMouseEnterLeave?: {
+    onMouseEnter: HandleMouse;
+    onMouseLeave: HandleMouse;
+  };
+}
+
+const TooltipContext = createContext<TooltipContextType>({
+  displayed: false,
+  coordinates: {
+    left: 0,
+    top: 0,
+  },
+});
+
+interface CommonProps {
   children?: React.ReactNode;
-  message?: string;
   className?: string;
 }
 
-export const Tooltip = ({
-  float = 'bottom',
-  children,
-  message,
-  className,
-}: TooltipProps) => {
-  const [displayed, setDisplayed] = useState<'closing' | boolean>(false);
+export interface TooltipProps {
+  children?: React.ReactNode;
+}
+
+const TooltipMain = ({ children }: TooltipProps) => {
   const [hovered, setHovered] = useState(false);
+  const [displayed, setDisplayed] = useState<Displayed>(false);
+  const [coordinates, setCoordinates] = useState<Coordinates>();
 
   useMountedEffect(() => {
     if (displayed === 'closing') {
@@ -36,36 +62,78 @@ export const Tooltip = ({
     }
   }, [hovered]);
 
+  const throttledSetCoordinates = useMemo(
+    () =>
+      debounce((e) => {
+        setCoordinates({
+          left: e.clientX,
+          top: e.clientY + 10,
+        });
+      }, 100),
+    [],
+  );
+
+  const tooltipContext = useMemo(
+    () => ({
+      displayed,
+      coordinates,
+      handleMouseMove: throttledSetCoordinates,
+      handleMouseEnterLeave: {
+        onMouseEnter: () => setHovered(true),
+        onMouseLeave: () => setHovered(false),
+      },
+    }),
+    [coordinates, displayed, throttledSetCoordinates],
+  );
+
+  return (
+    <TooltipContext.Provider value={tooltipContext}>
+      {children}
+    </TooltipContext.Provider>
+  );
+};
+
+export type TooltipAreaProps = CommonProps;
+
+const TooltipArea = ({ children, className }: TooltipAreaProps) => {
+  const { handleMouseMove, handleMouseEnterLeave } = useContext(TooltipContext);
   return (
     <div
-      className={cleanClassName(
-        `${styles['tooltip-container']} ${
-          styles[`float-${float}`]
-        } ${className}`,
-      )}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      {...handleMouseEnterLeave}
+      className={cleanClassName(`${styles.tooltip} ${className}`)}
+      onMouseMove={handleMouseMove}
     >
-      <div className={styles['tooltip-opener']}>{children}</div>
-      {displayed && (
-        <div
-          className={`${styles['tooltip-message-container']} ${
-            displayed === 'closing' && styles.closing
-          }`}
-        >
-          <div className={styles.triangle} />
-          <div
-            onMouseEnter={() => {
-              if (displayed === 'closing') {
-                setHovered(false);
-              }
-            }}
-            className={styles['tooltip-message-wrap']}
-          >
-            {message}
-          </div>
-        </div>
-      )}
+      {children}
     </div>
   );
 };
+
+export type TooltipContentProps = CommonProps;
+
+const TooltipContent = ({ children, className }: TooltipContentProps) => {
+  const { displayed, coordinates, handleMouseEnterLeave } =
+    useContext(TooltipContext);
+  return displayed ? (
+    <div
+      {...handleMouseEnterLeave}
+      className={`${styles['tooltip-message-container']} ${
+        displayed === 'closing' && styles.closing
+      }`}
+      style={coordinates}
+    >
+      <div className={styles.triangle} />
+      <div
+        className={cleanClassName(
+          `${styles['tooltip-message-wrap']} ${className}`,
+        )}
+      >
+        {children}
+      </div>
+    </div>
+  ) : null;
+};
+
+export const Tooltip = Object.assign(TooltipMain, {
+  Area: TooltipArea,
+  Content: TooltipContent,
+});
