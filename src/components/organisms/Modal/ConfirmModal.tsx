@@ -23,7 +23,12 @@ export const ConfirmModal = ({
     <Modal.Header />
     <Modal.Body className={styles['confirm-body']}>{children}</Modal.Body>
     <Modal.Footer border={false} className={styles.footer}>
-      <Button {...confirmButtonProps} />
+      <Button
+        {...confirmButtonProps}
+        className={cleanClassName(
+          `${styles['confirm-button']} ${confirmButtonProps?.className}`,
+        )}
+      />
     </Modal.Footer>
   </Modal>
 );
