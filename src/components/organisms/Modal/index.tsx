@@ -34,18 +34,53 @@ const ModalMain = ({ children, className, opened, onClose }: ModalProps) => (
   </FocusLayer>
 );
 
-export interface ModalTabMenuHeaderProps extends CommonProps {
+export interface ModalHeaderProps extends CommonProps {
+  border?: boolean;
+}
+
+export const ModalHeader = ({
+  children,
+  className,
+  border = false,
+}: ModalHeaderProps) => {
+  const onClickClosingArea = useContext(ModalContext);
+  return (
+    <header
+      className={cleanClassName(
+        `${styles['modal-header']} ${
+          border && styles['with-border']
+        } ${className}`,
+      )}
+    >
+      <div>{children}</div>
+      <Button
+        icon={<X />}
+        themeType="ghost"
+        theme="bluish-gray-800"
+        size="small"
+        onClick={onClickClosingArea}
+      />
+    </header>
+  );
+};
+
+export interface ModalTabMenuHeaderProps
+  extends Omit<ModalHeaderProps, 'children'> {
   items?: TabMenuProps['items'];
 }
 const ModalTabMenuHeader = ({
   className,
   items,
-  children,
+  border = true,
 }: ModalTabMenuHeaderProps) => {
   const onClickClosingArea = useContext(ModalContext);
   return (
     <header
-      className={cleanClassName(`${styles['modal-header']} ${className}`)}
+      className={cleanClassName(
+        `${styles['modal-header']} ${styles['tab-menu']} ${
+          border && styles['with-border']
+        } ${className}`,
+      )}
     >
       <TabMenu
         items={items}
@@ -55,7 +90,6 @@ const ModalTabMenuHeader = ({
         fontWeight={700}
         bottomLineWeight="none"
       />
-      {children}
       <Button
         icon={<X />}
         themeType="ghost"
@@ -74,14 +108,26 @@ const ModalBody = ({ children, className }: ModalBodyProps) => (
   </section>
 );
 
-export type ModalFooterProps = CommonProps;
-const ModalFooter = ({ children, className }: ModalFooterProps) => (
-  <footer className={`${styles['modal-footer']} ${className}`}>
+export interface ModalFooterProps extends CommonProps {
+  border?: boolean;
+}
+
+const ModalFooter = ({
+  children,
+  className,
+  border = true,
+}: ModalFooterProps) => (
+  <footer
+    className={`${styles['modal-footer']} ${
+      border && styles['with-border']
+    } ${className}`}
+  >
     {children}
   </footer>
 );
 
 export const Modal = Object.assign(ModalMain, {
+  Header: ModalHeader,
   TabMenuHeader: ModalTabMenuHeader,
   Body: ModalBody,
   Footer: ModalFooter,

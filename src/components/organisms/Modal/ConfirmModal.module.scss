@@ -1,0 +1,19 @@
+@import '../../../styles/libs';
+
+.confirm-modal {
+  background-color: $BLUE-10;
+}
+
+.confirm-body {
+  padding: 0 32px;
+}
+
+.confirm-button {
+  min-width: 140px;
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  padding: 40px 32px;
+}
