@@ -1,4 +1,4 @@
-import { debounce } from 'lodash-es';
+import { throttle } from 'lodash-es';
 
 import { useState, createContext, useMemo, useContext } from 'react';
 import type { MouseEventHandler } from 'react';
@@ -64,7 +64,7 @@ const TooltipMain = ({ children }: TooltipProps) => {
 
   const throttledSetCoordinates = useMemo(
     () =>
-      debounce((e) => {
+      throttle((e) => {
         setCoordinates({
           left: e.clientX,
           top: e.clientY + 10,
@@ -113,6 +113,7 @@ export type TooltipContentProps = CommonProps;
 const TooltipContent = ({ children, className }: TooltipContentProps) => {
   const { displayed, coordinates, handleMouseEnterLeave } =
     useContext(TooltipContext);
+
   return displayed ? (
     <div
       {...handleMouseEnterLeave}
