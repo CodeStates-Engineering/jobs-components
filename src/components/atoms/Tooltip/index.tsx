@@ -48,18 +48,17 @@ const TooltipMain = ({ children }: TooltipProps) => {
 
   useMountedEffect(() => {
     if (displayed === 'closing') {
-      const closeTimer = setTimeout(() => setDisplayed(false), 300);
+      const closeTimer = setTimeout(() => setDisplayed(false), 200);
       return () => clearTimeout(closeTimer);
     }
   }, [displayed]);
 
   useMountedEffect(() => {
     if (hovered) {
-      setDisplayed(true);
-    } else {
-      const hoverOutTimer = setTimeout(() => setDisplayed('closing'), 100);
-      return () => clearTimeout(hoverOutTimer);
+      const openTimer = setTimeout(() => setDisplayed(true), 500);
+      return () => clearTimeout(openTimer);
     }
+    setDisplayed((prev) => (prev === true ? 'closing' : prev));
   }, [hovered]);
 
   const throttledSetCoordinates = useMemo(
