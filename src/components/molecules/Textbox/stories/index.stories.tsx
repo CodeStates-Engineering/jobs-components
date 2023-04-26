@@ -34,6 +34,18 @@ const TextboxStory: ComponentStory<typeof Textbox> = ({ ...args }) => (
       type="large-number"
       value={undefined}
     />
+    <Textbox
+      {...args}
+      label="Phone number"
+      type="phone-number"
+      value={undefined}
+    />
+    <Textbox
+      {...args}
+      label="Business number"
+      type="business-number"
+      value={undefined}
+    />
     <Textbox {...args} type="number" label="Number" value={undefined} />
     <Textbox {...args} unit={<AlertOctagon />} />
   </div>

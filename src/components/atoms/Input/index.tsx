@@ -8,7 +8,8 @@ export type InputType =
   | 'text'
   | 'number'
   | 'large-number'
-  | 'phone'
+  | 'phone-number'
+  | 'business-number'
   | 'password'
   | 'button';
 
@@ -49,7 +50,7 @@ export const Input: <T extends InputType = 'text'>(
   ) => {
     const [isFocused, setIsFucused] = useState(false);
 
-    const displayedValue = (() => {
+    const formatedValue = (() => {
       if (type === 'button' && !value) {
         return placeholder;
       }
@@ -69,8 +70,10 @@ export const Input: <T extends InputType = 'text'>(
           return valueString;
         case 'large-number':
           return Number(valueString).toLocaleString();
-        case 'phone':
+        case 'phone-number':
           return valueString.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+        case 'business-number':
+          return valueString.replace(/(\d{3})(\d{2})(\d{5})/, '$1-$2-$3');
         default:
           return valueString;
       }
@@ -82,8 +85,22 @@ export const Input: <T extends InputType = 'text'>(
         case 'number':
         case 'large-number':
           return (value) => (value ? Number(leftOnlyNumber(value)) : undefined);
-        case 'phone':
-          return (value) => (value ? leftOnlyNumber(value) : undefined);
+        case 'phone-number':
+          return (value) => {
+            let numberString = leftOnlyNumber(value);
+            if (numberString.length > 11) {
+              numberString = numberString.slice(0, 11);
+            }
+            return value ? numberString : undefined;
+          };
+        case 'business-number':
+          return (value) => {
+            let numberString = leftOnlyNumber(value);
+            if (numberString.length > 10) {
+              numberString = numberString.slice(0, 10);
+            }
+            return value ? numberString : undefined;
+          };
         default:
           return (value) => value || undefined;
       }
@@ -102,7 +119,7 @@ export const Input: <T extends InputType = 'text'>(
         type={type}
         placeholder={placeholder}
         onClick={onClick}
-        value={displayedValue}
+        value={formatedValue}
         className={cleanClassName(
           `${styles.input} ${disabled === 'read-only' && styles['read-only']} ${
             type === 'button' && styles.button
