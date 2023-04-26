@@ -26,9 +26,13 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   color: $BLUISH-GRAY-700;
-  &.active {
+  &.actived {
     &:hover {
       color: $PURPLE-600;
     }
+  }
+  &.disabled {
+    color: $BLUISH-GRAY-400;
+    cursor: not-allowed;
   }
 }

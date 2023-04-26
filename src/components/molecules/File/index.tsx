@@ -1,12 +1,12 @@
-/* eslint-disable */
+import { useRef } from 'react';
+import { X } from 'react-feather';
+
 import styles from './index.module.scss';
+import { useComponentSelfState } from '../../../hooks';
 import { cleanClassName } from '../../../utils';
 import { Button, InputContainer } from '../../atoms';
-import { useRef, useState } from 'react';
-import type { ButtonProps } from '../../atoms';
-import { useComponentSelfState } from '../../../hooks';
-import { X } from 'react-feather';
-import type { InputProps } from '../../atoms';
+
+import type { ButtonProps, InputProps } from '../../atoms';
 
 interface SavedFile {
   name: string;
@@ -42,6 +42,27 @@ export const File = ({
     value?.url,
   ]);
 
+  const isDownloadActived = disabled !== true;
+
+  const FileInput = (
+    <input
+      type="file"
+      className={styles['file-input']}
+      ref={inputRef}
+      accept={accept}
+      disabled={!!disabled}
+      onChange={({ target: { files } }) => {
+        const file = files?.[0];
+        if (file) {
+          onChange?.(file);
+          setSavedFile?.(
+            file && { name: file.name, url: URL.createObjectURL(file) },
+          );
+        }
+      }}
+    />
+  );
+
   return (
     <div
       className={cleanClassName(
@@ -50,10 +71,13 @@ export const File = ({
     >
       {savedFile ? (
         <InputContainer className={styles['download-link-container']}>
+          {disabled ? FileInput : null}
           <a
-            href={savedFile?.url}
+            href={isDownloadActived ? savedFile?.url : undefined}
             className={cleanClassName(
-              `${styles['download-link']} ${!disabled && styles.active}`,
+              `${styles['download-link']} ${
+                isDownloadActived ? styles.actived : styles.disabled
+              }`,
             )}
             download={download}
           >
@@ -92,21 +116,7 @@ export const File = ({
           {children}
         </Button>
       )}
-      <input
-        type="file"
-        className={styles['file-input']}
-        ref={inputRef}
-        accept={accept}
-        onChange={({ target: { files } }) => {
-          const file = files?.[0];
-          if (file) {
-            onChange?.(file);
-            setSavedFile?.(
-              file && { name: file.name, url: URL.createObjectURL(file) },
-            );
-          }
-        }}
-      />
+      {disabled ? null : FileInput}
     </div>
   );
 };
