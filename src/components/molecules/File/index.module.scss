@@ -1,0 +1,34 @@
+@import '../../../styles/libs';
+
+.file-container {
+  position: relative;
+  overflow: hidden;
+  height: fit-content;
+}
+
+.upload-button {
+  width: 100%;
+}
+
+.file-input {
+  display: none;
+}
+
+.download-link-container > div {
+  display: flex;
+  background-color: $BLUISH-GRAY-10 !important;
+  justify-content: space-between;
+}
+
+.download-link {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: $BLUISH-GRAY-700;
+  &.active {
+    &:hover {
+      color: $PURPLE-600;
+    }
+  }
+}
