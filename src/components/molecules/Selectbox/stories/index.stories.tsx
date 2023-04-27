@@ -39,11 +39,11 @@ const selectboxProps: SelectboxProps = {
   placeholder: 'Selectbox',
   options: dummyOptions,
   label: 'Selectbox',
-  validation: (option) => {
-    if (!option) {
+  validation: (value) => {
+    if (!value) {
       return 'Value is required';
     }
-    if (option.value === '0번 옵션이 선택') {
+    if (value === '0번 옵션이 선택') {
       return '0번 옵션은 선택할 수 없습니다.';
     }
   },
