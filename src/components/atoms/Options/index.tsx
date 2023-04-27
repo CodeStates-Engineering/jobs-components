@@ -230,6 +230,7 @@ export const Options = <
         {optionData.map(({ option, ref, isAlreadySelected }, index) => (
           <li key={index}>
             <button
+              type="button"
               ref={ref}
               className={cleanClassName(
                 `${styles['option-item']} ${
