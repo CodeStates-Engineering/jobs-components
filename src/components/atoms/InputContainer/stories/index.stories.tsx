@@ -12,30 +12,26 @@ export default {
   component: InputContainer,
 } as ComponentMeta<typeof InputContainer>;
 
-const ButtonStory: ComponentStory<typeof InputContainer> = (originalArgs) => {
-  const args = {
-    ...originalArgs,
-    children: (
+const ButtonStory: ComponentStory<typeof InputContainer> = (args) => (
+  <>
+    <div>
+      <InputContainer {...args} validationMessage="필수 입력값 입니다." />
+    </div>
+    <div>
+      <InputContainer {...args} />
+    </div>
+  </>
+);
+
+export const Default = ButtonStory.bind({});
+const defaultArgs: InputContainerProps = {
+  children: (
+    <InputContainer.Intreraction>
       <div style={{ visibility: 'hidden' }}>
         <Input />
       </div>
-    ),
-  };
-  return (
-    <>
-      <div>
-        <InputContainer {...args} validationMessage="필수 입력값 입니다." />
-        next line
-      </div>
-      <div>
-        <InputContainer {...args} />
-        next line
-      </div>
-    </>
-  );
+    </InputContainer.Intreraction>
+  ),
 };
-
-export const Default = ButtonStory.bind({});
-const defaultArgs: InputContainerProps = {};
 
 Default.args = defaultArgs;

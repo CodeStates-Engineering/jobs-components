@@ -4,18 +4,24 @@ import { cleanClassName } from '../../../utils';
 import { InputContainer, Input, Label } from '../../atoms';
 
 import type { Validation } from '../../../hooks';
-import type { InputProps, InputContainerProps, InputType } from '../../atoms';
+import type {
+  InputProps,
+  InputContainerProps,
+  InputType,
+  InputContainerIntreractionProps,
+} from '../../atoms';
 
 export type TextboxProps<_InputType extends InputType = 'text'> = Omit<
   InputProps<_InputType> & InputContainerProps,
   'validationMessage' | 'name' | 'children'
-> & {
-  onlyUpdatedByParent?: boolean;
-  label?: string;
-  unit?: React.ReactNode;
-  validation?: Validation<TextboxProps<_InputType>['value']>;
-  validationSpace?: boolean;
-};
+> &
+  InputContainerIntreractionProps & {
+    onlyUpdatedByParent?: boolean;
+    label?: string;
+    unit?: React.ReactNode;
+    validation?: Validation<TextboxProps<_InputType>['value']>;
+    validationSpace?: boolean;
+  };
 
 export const Textbox = <T extends InputType = 'text'>({
   value: originalValue,
@@ -50,31 +56,32 @@ export const Textbox = <T extends InputType = 'text'>({
     <div className={cleanClassName(`${styles.textbox} ${className}`)}>
       {label ? <Label htmlFor={label}>{label}</Label> : null}
       <InputContainer
-        size={size}
         validationMessage={validationMessage}
         validationSpace={validationSpace}
       >
-        <Input
-          onClick={onClick}
-          ref={ref}
-          name={label}
-          disabled={disabled}
-          placeholder={placeholder}
-          onFocus={onFocus}
-          value={value}
-          id={id}
-          onChange={(value) => {
-            setValue?.(value);
-            checkValidation?.(value);
-            onChange?.(value);
-          }}
-          type={type}
-        />
-        {typeof unit === 'string' ? (
-          <div className={styles.unit}>{unit}</div>
-        ) : (
-          unit
-        )}
+        <InputContainer.Intreraction size={size}>
+          <Input
+            onClick={onClick}
+            ref={ref}
+            name={label}
+            disabled={disabled}
+            placeholder={placeholder}
+            onFocus={onFocus}
+            value={value}
+            id={id}
+            onChange={(value) => {
+              setValue?.(value);
+              checkValidation?.(value);
+              onChange?.(value);
+            }}
+            type={type}
+          />
+          {typeof unit === 'string' ? (
+            <div className={styles.unit}>{unit}</div>
+          ) : (
+            unit
+          )}
+        </InputContainer.Intreraction>
       </InputContainer>
     </div>
   );

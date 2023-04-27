@@ -62,28 +62,29 @@ export const Textarea = ({
     <div className={cleanClassName(`${styles} ${className}`)}>
       {label ? <Label htmlFor={label}>{label}</Label> : null}
       <InputContainer
-        size="none"
         validationMessage={validationMessage}
         validationSpace={validationSpace}
       >
-        <textarea
-          id={id}
-          name={label}
-          value={textareaValue}
-          placeholder={placeholder}
-          style={{ height }}
-          onChange={({ target: { value } }) => {
-            setTextareaValue?.(value);
-            onChange?.(value);
-            checkValidation?.(value);
-          }}
-          disabled={!!disabled}
-          className={cleanClassName(
-            `${styles['textarea-content']} ${resize && styles.resize} ${
-              disabled === 'read-only' && [styles['read-only']]
-            } ${styles['full-size']}`,
-          )}
-        />
+        <InputContainer.Intreraction size="none">
+          <textarea
+            id={id}
+            name={label}
+            value={textareaValue}
+            placeholder={placeholder}
+            style={{ height }}
+            onChange={({ target: { value } }) => {
+              setTextareaValue?.(value);
+              onChange?.(value);
+              checkValidation?.(value);
+            }}
+            disabled={!!disabled}
+            className={cleanClassName(
+              `${styles['textarea-content']} ${resize && styles.resize} ${
+                disabled === 'read-only' && [styles['read-only']]
+              } ${styles['full-size']}`,
+            )}
+          />
+        </InputContainer.Intreraction>
       </InputContainer>
     </div>
   );

@@ -5,19 +5,26 @@
   height: $height;
 }
 
-.input-container {
-  position: relative;
+.input-interaction-wrap {
   width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.input-container {
+  width: 100%;
+  position: relative;
 }
 
 .input-wrap {
   width: 100%;
+  position: relative;
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.8em;
-  position: relative;
+
   box-sizing: border-box;
   transition: box-shadow 0.3s, background-color 0.3s;
   color: $BLUISH-GRAY-700;

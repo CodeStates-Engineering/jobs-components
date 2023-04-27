@@ -13,23 +13,29 @@ $OPTIONS-BORDER-RADIUS: 10px;
 
   &.closing,
   &.opening {
-    &.opening {
-      @include fade-in-top;
-    }
-    &.closing {
-      @include fade-out-top;
-    }
     cursor: default;
   }
 
   &.top {
     bottom: 100%;
     margin-bottom: 0.5rem;
+    &.opening {
+      @include fade-in-bottom;
+    }
+    &.closing {
+      @include fade-out-bottom;
+    }
   }
 
   &.bottom {
     top: 100%;
     margin-top: 0.5rem;
+    &.opening {
+      @include fade-in-top;
+    }
+    &.closing {
+      @include fade-out-top;
+    }
   }
 }
 

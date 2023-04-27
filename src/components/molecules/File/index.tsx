@@ -91,35 +91,38 @@ export const File = ({
           validationMessage={validationMessage}
           validationSpace={validationSpace}
         >
-          {disabled ? FileInput : null}
-          <a
-            href={isDownloadActived ? savedFile?.url : undefined}
-            className={cleanClassName(
-              `${styles['download-link']} ${
-                isDownloadActived ? styles.actived : styles.disabled
-              }`,
+          <InputContainer.Intreraction>
+            <a
+              href={isDownloadActived ? savedFile?.url : undefined}
+              className={cleanClassName(
+                `${styles['download-link']} ${
+                  isDownloadActived ? styles.actived : styles.disabled
+                }`,
+              )}
+              download={download}
+            >
+              {savedFile?.name}
+            </a>
+            {disabled ? (
+              FileInput
+            ) : (
+              <Button
+                icon={<X />}
+                size="small"
+                themeType="ghost"
+                shape="round"
+                theme="bluish-gray-800"
+                onClick={() => {
+                  setSavedFile?.(undefined);
+                  onChange?.(undefined);
+                  const { current } = inputRef;
+                  if (current) {
+                    current.value = '';
+                  }
+                }}
+              />
             )}
-            download={download}
-          >
-            {savedFile?.name}
-          </a>
-          {disabled ? null : (
-            <Button
-              icon={<X />}
-              size="small"
-              themeType="ghost"
-              shape="round"
-              theme="bluish-gray-800"
-              onClick={() => {
-                setSavedFile?.(undefined);
-                onChange?.(undefined);
-                const { current } = inputRef;
-                if (current) {
-                  current.value = '';
-                }
-              }}
-            />
-          )}
+          </InputContainer.Intreraction>
         </InputContainer>
       ) : (
         <Button
@@ -134,9 +137,9 @@ export const File = ({
           }}
         >
           {children}
+          {disabled ? null : FileInput}
         </Button>
       )}
-      {disabled ? null : FileInput}
     </div>
   );
 };

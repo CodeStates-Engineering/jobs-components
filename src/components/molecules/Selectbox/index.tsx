@@ -12,6 +12,7 @@ import type {
   InputContainerProps,
   OptionsProps,
   Option,
+  InputContainerIntreractionProps,
 } from '../../atoms';
 
 export type SelectboxProps<_Option extends Option = Option> = Omit<
@@ -24,9 +25,11 @@ export type SelectboxProps<_Option extends Option = Option> = Omit<
   | 'onChange'
   | 'name'
 > &
-  Partial<Pick<OptionsProps<_Option>, 'options' | 'value' | 'float'>> & {
+  Partial<Pick<OptionsProps<_Option>, 'options' | 'float'>> &
+  InputContainerIntreractionProps & {
     onlyUpdatedByParent?: boolean;
     onChange?: OptionsProps<_Option>['onSelect'];
+    value?: Exclude<OptionsProps<_Option>['value'], undefined>['value'];
     label?: string;
     validation?: Validation<SelectboxProps<_Option>['value']>;
     validationSpace?: boolean;
@@ -52,10 +55,12 @@ export const Selectbox = <_Option extends Option = Option>({
 }: SelectboxProps<_Option>) => {
   const [opened, setOpened] = useState(false);
 
-  const [selectedOption, setSelectedOption] = useComponentSelfState(
+  const [selectedValue, setSelectedValue] = useComponentSelfState(
     value,
     onlyUpdatedByParent,
   );
+
+  const selectedOption = options?.find(({ value }) => value === selectedValue);
 
   const { validationMessage, checkValidation } = useValidation(
     value,
@@ -72,44 +77,48 @@ export const Selectbox = <_Option extends Option = Option>({
     >
       {label ? <Label htmlFor={label}>{label}</Label> : null}
       <InputContainer
-        size={size}
-        onClick={(e) => {
-          setOpened(!opened);
-          onClick?.(e);
-        }}
         validationMessage={validationMessage}
         validationSpace={validationSpace}
       >
-        <Input
-          id={id}
-          name={label}
-          type="button"
-          ref={ref}
-          value={selectedOption?.label}
-          disabled={disabled}
-          placeholder={placeholder}
-        />
-        <ChevronDown
-          className={cleanClassName(
-            `${styles.arrow} ${opened && styles['opened-arrow']}`,
-          )}
+        <InputContainer.Intreraction
+          size={size}
+          onClick={(e) => {
+            setOpened(!opened);
+            onClick?.(e);
+          }}
+        >
+          <Input
+            id={id}
+            name={label}
+            type="button"
+            ref={ref}
+            value={selectedOption?.label}
+            disabled={disabled}
+            placeholder={placeholder}
+          />
+          <ChevronDown
+            className={cleanClassName(
+              `${styles.arrow} ${opened && styles['opened-arrow']}`,
+            )}
+          />
+        </InputContainer.Intreraction>
+        <Options
+          opened={opened}
+          options={options}
+          value={selectedOption}
+          float={float}
+          className={styles['select-box-default-width']}
+          onSelect={(option) => {
+            const optionForSelect =
+              option === selectedOption ? undefined : option;
+            const value = optionForSelect?.value;
+            setSelectedValue?.(value);
+            checkValidation?.(value);
+            onChange?.(optionForSelect);
+            setOpened(false);
+          }}
         />
       </InputContainer>
-      <Options
-        opened={opened}
-        options={options}
-        value={selectedOption}
-        float={float}
-        className={styles['select-box-default-width']}
-        onSelect={(option) => {
-          const optionForSelect =
-            option === selectedOption ? undefined : option;
-          setSelectedOption?.(optionForSelect);
-          checkValidation?.(optionForSelect);
-          onChange?.(optionForSelect);
-          setOpened(false);
-        }}
-      />
     </FocusLayer>
   );
 };

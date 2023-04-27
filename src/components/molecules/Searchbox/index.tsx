@@ -10,6 +10,7 @@ import type { Validation } from '../../../hooks';
 import type {
   InputProps,
   InputContainerProps,
+  InputContainerIntreractionProps,
   OptionsProps,
   Option,
 } from '../../atoms';
@@ -20,7 +21,8 @@ export type SearchboxProps = Omit<
   InputProps<'text'> & InputContainerProps,
   'type' | 'children' | 'validationMessage' | 'name'
 > &
-  Partial<Pick<BaseOptionsProps, 'float'>> & {
+  Partial<Pick<BaseOptionsProps, 'float'>> &
+  InputContainerIntreractionProps & {
     selfFilter?: boolean;
     onlyUpdatedByParent?: boolean;
     options?: string[];
@@ -101,46 +103,46 @@ export const Searchbox = ({
     >
       {label ? <Label htmlFor={label}>{label}</Label> : null}
       <InputContainer
-        size={size}
-        onClick={onClick}
         validationMessage={validationMessage}
         validationSpace={validationSpace}
       >
-        <Input
-          name={label}
-          ref={ref}
-          onChange={(value) => {
-            setOpened(true);
-            handleChange(value);
+        <InputContainer.Intreraction onClick={onClick} size={size}>
+          <Input
+            name={label}
+            ref={ref}
+            onChange={(value) => {
+              setOpened(true);
+              handleChange(value);
+            }}
+            onClick={() => {
+              setOpened(true);
+            }}
+            onFocus={onFocus}
+            id={id}
+            value={inputText}
+            disabled={disabled}
+            placeholder={placeholder}
+          />
+          <Search />
+        </InputContainer.Intreraction>
+        <Options
+          opened={opened}
+          options={options}
+          value={
+            inputText
+              ? {
+                  label: inputText,
+                  value: inputText,
+                }
+              : undefined
+          }
+          onSelect={(option) => {
+            setOpened(false);
+            handleChange(option?.value);
           }}
-          onClick={() => {
-            setOpened(true);
-          }}
-          onFocus={onFocus}
-          id={id}
-          value={inputText}
-          disabled={disabled}
-          placeholder={placeholder}
+          float={float}
         />
-        <Search />
       </InputContainer>
-      <Options
-        opened={opened}
-        options={options}
-        value={
-          inputText
-            ? {
-                label: inputText,
-                value: inputText,
-              }
-            : undefined
-        }
-        onSelect={(option) => {
-          setOpened(false);
-          handleChange(option?.value);
-        }}
-        float={float}
-      />
     </FocusLayer>
   );
 };

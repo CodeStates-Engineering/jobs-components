@@ -1,34 +1,31 @@
+import { createContext, useContext } from 'react';
+
 import styles from './index.module.scss';
 import { cleanClassName } from '../../../utils';
 
-export interface InputContainerProps
-  extends Pick<React.HTMLAttributes<HTMLDivElement>, 'onClick'> {
+interface CommonProps {
   children?: React.ReactNode;
-  validationMessage?: string | null;
-  validationSpace?: boolean;
-  size?: 'none' | 'small' | 'medium' | 'large';
   className?: string;
 }
 
-export const InputContainer = ({
+export interface InputContainerProps extends CommonProps {
+  validationMessage?: string | null;
+  validationSpace?: boolean;
+}
+
+const InputContainerContext =
+  createContext<InputContainerProps['validationMessage']>(undefined);
+
+const InputContainerMain = ({
   children,
+  className,
   validationMessage,
   validationSpace,
-  size = 'large',
-  onClick,
-  className,
 }: InputContainerProps) => (
   <div className={cleanClassName(`${styles['input-container']} ${className}`)}>
-    <div
-      className={cleanClassName(
-        `${styles['input-wrap']} ${validationMessage && styles.error} ${
-          size !== 'none' && styles[`size-${size}`]
-        }`,
-      )}
-      onClick={onClick}
-    >
-      {children}
-    </div>
+    <InputContainerContext.Provider value={validationMessage}>
+      <div className={styles['input-interaction-wrap']}>{children}</div>
+    </InputContainerContext.Provider>
     {validationMessage ? (
       <p className={styles['validation-message']}>{validationMessage}</p>
     ) : (
@@ -36,3 +33,33 @@ export const InputContainer = ({
     )}
   </div>
 );
+
+export interface InputContainerIntreractionProps extends CommonProps {
+  onClick?: React.HTMLAttributes<HTMLDivElement>['onClick'];
+  size?: 'none' | 'small' | 'medium' | 'large';
+}
+
+const InputContainerIntreraction = ({
+  children,
+  onClick,
+  size = 'large',
+  className,
+}: InputContainerIntreractionProps) => {
+  const validationMessage = useContext(InputContainerContext);
+  return (
+    <div
+      className={cleanClassName(
+        `${styles['input-wrap']} ${validationMessage && styles.error} ${
+          size !== 'none' && styles[`size-${size}`]
+        } ${className}`,
+      )}
+      onClick={onClick}
+    >
+      {children}
+    </div>
+  );
+};
+
+export const InputContainer = Object.assign(InputContainerMain, {
+  Intreraction: InputContainerIntreraction,
+});
