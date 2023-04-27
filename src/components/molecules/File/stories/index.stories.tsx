@@ -26,5 +26,6 @@ const FileStory: ComponentStory<typeof File> = (args) => (
 export const Default = FileStory.bind({});
 const defaultArgs: FileProps = {
   children: 'Upload',
+  validation: () => 'Test',
 };
 Default.args = defaultArgs;

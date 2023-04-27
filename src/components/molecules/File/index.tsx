@@ -87,11 +87,12 @@ export const File = ({
       {label ? <Label htmlFor={label}>{label}</Label> : null}
       {savedFile ? (
         <InputContainer
-          className={styles['download-link-container']}
           validationMessage={validationMessage}
           validationSpace={validationSpace}
         >
-          <InputContainer.Intreraction>
+          <InputContainer.Intreraction
+            className={styles['download-link-interaction']}
+          >
             <a
               href={isDownloadActived ? savedFile?.url : undefined}
               className={cleanClassName(
