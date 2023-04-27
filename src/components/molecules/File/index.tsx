@@ -2,10 +2,11 @@ import { useRef } from 'react';
 import { X } from 'react-feather';
 
 import styles from './index.module.scss';
-import { useComponentSelfState } from '../../../hooks';
+import { useComponentSelfState, useValidation } from '../../../hooks';
 import { cleanClassName } from '../../../utils';
-import { Button, InputContainer } from '../../atoms';
+import { Button, InputContainer, Label } from '../../atoms';
 
+import type { Validation } from '../../../hooks';
 import type { ButtonProps, InputProps } from '../../atoms';
 
 interface SavedFile {
@@ -21,6 +22,10 @@ export interface FileProps
   download?: boolean;
   disabled?: InputProps['disabled'];
   accept?: string;
+  validation?: Validation<FileProps['value']>;
+  validationSpace?: boolean;
+  label?: string;
+  id?: string;
 }
 
 export const File = ({
@@ -34,6 +39,10 @@ export const File = ({
   download = true,
   disabled = false,
   accept,
+  validation,
+  validationSpace,
+  label,
+  id,
 }: FileProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -43,6 +52,12 @@ export const File = ({
   ]);
 
   const isDownloadActived = disabled !== true;
+
+  const { validationMessage, checkValidation } = useValidation(
+    value,
+    validation,
+    label || id,
+  );
 
   const FileInput = (
     <input
@@ -54,10 +69,10 @@ export const File = ({
       onChange={({ target: { files } }) => {
         const file = files?.[0];
         if (file) {
+          const savedFile = { name: file.name, url: URL.createObjectURL(file) };
           onChange?.(file);
-          setSavedFile?.(
-            file && { name: file.name, url: URL.createObjectURL(file) },
-          );
+          checkValidation?.(savedFile);
+          setSavedFile?.(savedFile);
         }
       }}
     />
@@ -69,8 +84,13 @@ export const File = ({
         `${styles['download-link-container']} ${className}`,
       )}
     >
+      {label ? <Label htmlFor={label}>{label}</Label> : null}
       {savedFile ? (
-        <InputContainer className={styles['download-link-container']}>
+        <InputContainer
+          className={styles['download-link-container']}
+          validationMessage={validationMessage}
+          validationSpace={validationSpace}
+        >
           {disabled ? FileInput : null}
           <a
             href={isDownloadActived ? savedFile?.url : undefined}

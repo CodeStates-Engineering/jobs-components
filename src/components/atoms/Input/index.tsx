@@ -68,12 +68,19 @@ export const Input: <T extends InputType = 'text'>(
       switch (type) {
         case 'number':
           return valueString;
+
         case 'large-number':
           return Number(valueString).toLocaleString();
+
         case 'phone-number':
+          if (valueString.length === 10) {
+            return valueString.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+          }
           return valueString.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+
         case 'business-number':
           return valueString.replace(/(\d{3})(\d{2})(\d{5})/, '$1-$2-$3');
+
         default:
           return valueString;
       }
@@ -85,6 +92,7 @@ export const Input: <T extends InputType = 'text'>(
         case 'number':
         case 'large-number':
           return (value) => (value ? Number(leftOnlyNumber(value)) : undefined);
+
         case 'phone-number':
           return (value) => {
             let numberString = leftOnlyNumber(value);
@@ -93,6 +101,7 @@ export const Input: <T extends InputType = 'text'>(
             }
             return value ? numberString : undefined;
           };
+
         case 'business-number':
           return (value) => {
             let numberString = leftOnlyNumber(value);
@@ -101,6 +110,7 @@ export const Input: <T extends InputType = 'text'>(
             }
             return value ? numberString : undefined;
           };
+
         default:
           return (value) => value || undefined;
       }
