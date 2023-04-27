@@ -41,7 +41,9 @@ export const FocusLayer = ({
     <>
       <div
         className={cleanClassName(
-          `${styles['focus-layer']} ${priorityClassName} ${className}`,
+          `${styles['focus-layer']} ${
+            focusStatus && priorityClassName
+          } ${className}`,
         )}
       >
         {children}
