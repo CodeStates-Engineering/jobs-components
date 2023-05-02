@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { useEffect, useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
 
@@ -37,8 +38,6 @@ export const Button = ({
   type = 'button',
   children,
   size = 'large',
-  theme = 'purple-600',
-  themeType = 'contained',
   onClick,
   disabled,
   shape = 'default',
@@ -93,22 +92,19 @@ export const Button = ({
         document.removeEventListener(EVENT_TYPE, enterClickEventListener);
     }
   }, [enterClick, onClick, isDisabled]);
-
   return (
     <button
       type={type}
       className={cleanClassName(
         `${isDelayButton ? styles['delayed-button'] : styles.button} ${
           styles[fontSizeClassName]
-        } ${styles[fontWeightClassName]} ${styles[`theme-${theme}`]} ${
-          styles[themeType]
-        } ${focusOutline && styles['focus-outline']} ${
-          styles[`shape-${shape}`]
-        } ${styles[`size-${size}`]} ${
+        } ${styles[fontWeightClassName]} ${
+          focusOutline && styles['focus-outline']
+        } ${styles[`shape-${shape}`]} ${styles[`size-${size}`]} ${
           styles[`icon-direction-${iconDirection}`]
         } ${styles[`children-type-${childrenType}`]} ${
-          padding && styles.padding
-        } ${className}`,
+          styles['bluish-gray400_0_bluish-gray200']
+        } ${padding && styles.padding} ${className}`,
       )}
       onClick={onClick}
       disabled={isDisabled}
