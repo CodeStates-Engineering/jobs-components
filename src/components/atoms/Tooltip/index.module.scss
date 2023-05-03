@@ -2,14 +2,17 @@
 
 .tooltip-message-wrap {
   position: absolute;
-  color: $WHITE;
-  width: fit-content;
   z-index: 2;
-  background-color: $PURPLE-600;
-  font-size: $SMALL3X;
+
+  width: fit-content;
+  margin: 4px 0;
   padding: 8px 10px;
   border-radius: 8px;
-  margin: 4px 0;
+
+  background-color: $PURPLE-600;
+
+  color: $WHITE;
+  font-size: $SMALL3X;
 }
 
 .tooltip {
@@ -17,23 +20,25 @@
 }
 
 .triangle {
-  z-index: 1;
   position: absolute;
-  border: transparent;
+  z-index: 1;
+
   width: 0;
   height: 0;
-  border-style: solid;
+  border: transparent;
   border-width: 0 7.5px;
-  border-bottom-color: $PURPLE-600;
+  border-style: solid;
   border-bottom-width: 5px;
+  border-bottom-color: $PURPLE-600;
 }
 
 .tooltip-message-container {
-  z-index: 10;
   position: fixed;
-  flex-direction: column;
+  z-index: 10;
   display: flex;
+  flex-direction: column;
   align-items: center;
+
   transition: left 0.3s, top 0.3s;
   @include fade-in(0.3s);
   &.closing {

@@ -1,35 +1,39 @@
 @import '../../../styles/libs';
 
 @mixin size($paddingX, $height) {
-  padding: 0 $paddingX;
   height: $height;
+  padding: 0 $paddingX;
 }
 
 .input-interaction-wrap {
-  width: 100%;
   position: relative;
   z-index: 1;
+
+  width: 100%;
 }
 
 .input-container {
-  width: 100%;
   position: relative;
+
+  width: 100%;
 }
 
 .input-wrap {
-  width: 100%;
   position: relative;
-  border-radius: 8px;
+  z-index: 1;
   display: flex;
+  gap: 0.8em;
   align-items: center;
   justify-content: center;
-  gap: 0.8em;
 
   box-sizing: border-box;
-  transition: box-shadow 0.3s, background-color 0.3s;
+  width: 100%;
+  border-radius: 8px;
+
   color: $BLUISH-GRAY-700;
   font-size: $NORMAL;
-  z-index: 1;
+
+  transition: box-shadow 0.3s, background-color 0.3s;
 
   @include border($BLUISH-GRAY-200, 1px);
 
@@ -89,10 +93,12 @@
 
 .validation-message {
   @include shake-horizontal(0.9s);
-  font-size: $SMALL;
-  color: $PEACH-500;
   z-index: 0;
+
   padding-left: $SMALL3X;
+
+  color: $PEACH-500;
+  font-size: $SMALL;
 }
 
 .validation-space {

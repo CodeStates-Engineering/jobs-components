@@ -1,30 +1,34 @@
 @import '../../../styles/libs';
 
 .modal-container {
-  background-color: $WHITE;
   position: fixed;
-  left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%);
-  @include fade-in;
-  max-width: 520px;
-  min-width: 350px;
-  width: 95%;
-  max-height: 80vh;
-  border-radius: 16px;
+  left: 50%;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+
   box-sizing: border-box;
+  width: 95%;
+  min-width: 350px;
+  max-width: 520px;
+  max-height: 80vh;
+  border-radius: 16px;
+
+  background-color: $WHITE;
+
+  transform: translate(-50%, -50%);
+  @include fade-in;
   &.closing {
     @include fade-out;
   }
 }
 
 .modal-body {
-  padding: 24px;
   flex: 1;
   overflow-y: auto;
+
+  padding: 24px;
 }
 
 .modal-footer {
@@ -43,6 +47,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   padding: 0 24px;
 
   &.with-border {

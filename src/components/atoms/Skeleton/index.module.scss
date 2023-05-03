@@ -1,10 +1,12 @@
 @import '../../../styles/libs';
 
 .skeleton {
-  background-color: $BLUISH-GRAY-100;
   position: relative;
   overflow: hidden;
+
   border-radius: 4px;
+
+  background-color: $BLUISH-GRAY-100;
   @include fade-in;
 }
 
@@ -18,17 +20,21 @@
   position: absolute;
   top: 0;
   left: 0;
+
   width: 100%;
   height: 100%;
+
   animation: shining 2.5s infinite;
 }
 
 .shimmer {
   width: 50%;
   height: 100%;
+
   background-color: rgba($WHITE, 0.5);
-  transform: skewX(-15deg);
   box-shadow: 0 0 30px 30px rgba($WHITE, 0.4);
+
+  transform: skewX(-15deg);
 }
 
 @keyframes shining {

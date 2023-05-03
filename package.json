@@ -25,8 +25,8 @@
     "lint:fix": "npm run lint -- --fix",
     "prettier": "prettier 'src/**/*.{json,yaml,md,js,ts,tsx}' --check",
     "prettier:fix": "prettier 'src/**/*.{json,yaml,md,js,ts,tsx}' --write",
-    "lint:style": "stylelint './src/**/*.{js,ts,tsx}'",
-    "lint:style:fix": "stylelint './src/**/*.{js,ts,tsx}' --fix",
+    "lint:style": "stylelint './src/**/*.{scss,css}'",
+    "lint:style:fix": "stylelint './src/**/*.{scss,css}' --fix",
     "lint:all": "pnpm lint && pnpm prettier && pnpm lint:style",
     "lint:all:fix": "pnpm lint:fix && pnpm prettier:fix && pnpm lint:style:fix"
   },
@@ -107,15 +107,16 @@
     "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-url": "^3.0.1",
     "sass": "^1.60.0",
+    "stylelint": "^15.6.0",
     "tslib": "^2.5.0",
     "typescript": "^4.9.5",
     "web-vitals": "^3.3.0",
-    "webpack": "^5.77.0"
+    "webpack": "^5.77.0",
+    "eslint": "^8.39.0",
+    "prettier": "^2.8.8",
+    "@hyeokjaelee/stylelint-config": "^1.2.7"
   },
   "peerDependencies": {
     "react": "^18.0.0"
-  },
-  "optionalDependencies": {
-    "stylelint": "^15.3.0"
   }
 }

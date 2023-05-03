@@ -6,6 +6,7 @@
   $border: transparent
 ) {
   background-color: $backgroundColor;
+
   color: $textColor;
   @include border($border, 1px);
 
@@ -19,6 +20,7 @@
         border-radius: 0;
         > .delay-bar {
           bottom: -90%;
+
           background-color: $textColor;
         }
       }
@@ -33,9 +35,11 @@
 ) {
   &:disabled {
     background-color: $backgroundColor;
+
     color: $textColor;
     @include border($border, 1px);
   }
+
   &.delayed-button > .delay-bar {
     background-color: $backgroundColor;
   }
@@ -48,6 +52,7 @@
 ) {
   &:not(:disabled):hover {
     background-color: $backgroundColor;
+
     color: $textColor;
     @include border($border, 1px);
   }
@@ -60,6 +65,7 @@
 ) {
   &:not(:disabled):active {
     background-color: $backgroundColor;
+
     color: $textColor;
     @include border($border, 1px);
   }
@@ -72,6 +78,7 @@
 ) {
   &:not(:disabled):focus {
     background-color: $backgroundColor;
+
     color: $textColor;
     @include border($border, 2px);
   }
@@ -79,14 +86,16 @@
 
 .button,
 .delayed-button {
-  overflow: hidden;
   position: relative;
-  box-sizing: border-box;
-  transition: background-color 0.3s, color 0.3s;
   display: flex;
+  gap: 8px;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  overflow: hidden;
+
+  box-sizing: border-box;
+
+  transition: background-color 0.3s, color 0.3s;
 
   &:disabled {
     cursor: not-allowed;
@@ -150,24 +159,27 @@
 }
 
 .button-content {
-  z-index: 2;
   position: relative;
+  z-index: 2;
+
   margin: 14px 0;
   &.icon {
-    margin: 0;
     display: flex;
     align-items: center;
     justify-content: center;
+
+    margin: 0;
   }
 }
 
 .delay-bar {
-  width: 100%;
-  height: 100%;
+  position: absolute;
   bottom: 0;
   left: 0;
-  position: absolute;
   z-index: 1;
+
+  width: 100%;
+  height: 100%;
   &.delaying {
     transform: translateX(100%);
   }

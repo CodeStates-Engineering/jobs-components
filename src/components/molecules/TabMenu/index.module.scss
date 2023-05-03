@@ -3,29 +3,31 @@
 .tab-menu {
   display: flex;
   gap: 16px;
-  height: 100%;
   overflow-x: auto;
+
+  height: 100%;
   &::-webkit-scrollbar {
     display: none;
   }
   > li {
+    position: relative;
     display: flex;
     flex-direction: column;
-    position: relative;
   }
 }
 
 .tab-menu-link-wrap {
-  flex: 1;
   display: flex;
+  flex: 1;
   align-items: center;
   justify-content: center;
 }
 
 .selected-line-wrap {
   position: absolute;
-  width: 100%;
   bottom: 0;
+
+  width: 100%;
 }
 
 .tab-menu-link {

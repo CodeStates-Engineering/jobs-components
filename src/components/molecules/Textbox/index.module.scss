@@ -6,10 +6,12 @@
 }
 
 .unit {
-  background-color: $GRAY-800;
-  border-radius: 3px;
-  font-size: 0.9rem;
   padding: 0 0.5em;
+  border-radius: 3px;
+
+  background-color: $GRAY-800;
+
   color: $WHITE;
+  font-size: 0.9rem;
   white-space: nowrap;
 }
