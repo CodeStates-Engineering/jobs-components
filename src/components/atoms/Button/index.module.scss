@@ -13,15 +13,15 @@
   &.delayed-button {
     &:disabled {
       background-color: $backgroundColor;
-    }
 
-    @if $backgroundColor == transparent {
-      @if $border == transparent {
-        border-radius: 0;
-        > .delay-bar {
-          bottom: -90%;
+      @if $backgroundColor == transparent {
+        @if $border == transparent {
+          border-radius: 0;
+          > .delay-bar {
+            bottom: -90%;
 
-          background-color: $textColor;
+            background-color: $textColor;
+          }
         }
       }
     }
@@ -185,6 +185,7 @@
   }
 }
 
+//* Theme
 .white_purple600 {
   @include default-theme($WHITE, $PURPLE-600);
   @include disable-theme($PURPLE-10, $PURPLE-300);
@@ -193,10 +194,58 @@
   @include active-theme($WHITE, $PURPLE-700);
 }
 
+.white_bluish-gray800 {
+  @include default-theme($WHITE, $BLUISH-GRAY-800);
+  @include disable-theme($BLUISH-GRAY-10, $BLUISH-GRAY-300);
+  @include hover-theme($WHITE, $BLUISH-GRAY-700);
+  @include focus-theme($WHITE, $BLUISH-GRAY-800, $BLUE-500);
+  @include active-theme($WHITE, $BLUISH-GRAY-900);
+}
+
+.purple600_0 {
+  @include default-theme($PURPLE-600, transparent);
+  @include disable-theme($PURPLE-300, transparent);
+  @include hover-theme($PURPLE-600, $BLUISH-GRAY-10);
+  @include focus-theme($PURPLE-600, $BLUISH-GRAY-100);
+  @include active-theme($PURPLE-600, transparent, $BLUE-500);
+}
+
+.bluish-gray700_0 {
+  @include default-theme($BLUISH-GRAY-700, transparent);
+  @include disable-theme($BLUISH-GRAY-300, transparent);
+  @include hover-theme($BLUISH-GRAY-700, $BLUISH-GRAY-10);
+  @include focus-theme($BLUISH-GRAY-700, $BLUISH-GRAY-100);
+  @include active-theme($BLUISH-GRAY-700, transparent, $BLUE-500);
+}
+
+.bluish-gray300_0 {
+  @include default-theme($BLUISH-GRAY-300, transparent);
+  @include disable-theme($BLUISH-GRAY-300, transparent);
+  @include hover-theme($BLUISH-GRAY-300, $BLUISH-GRAY-10);
+  @include focus-theme($BLUISH-GRAY-300, $BLUISH-GRAY-100);
+  @include active-theme($BLUISH-GRAY-300, transparent, $BLUE-500);
+}
+
+.bluish-gray500_0 {
+  @include default-theme($BLUISH-GRAY-500, transparent);
+  @include disable-theme($BLUISH-GRAY-300, transparent);
+  @include hover-theme($BLUISH-GRAY-500, $BLUISH-GRAY-10);
+  @include focus-theme($BLUISH-GRAY-500, $BLUISH-GRAY-100);
+  @include active-theme($BLUISH-GRAY-500, transparent, $BLUE-500);
+}
+
 .bluish-gray400_0_bluish-gray200 {
   @include default-theme($BLUISH-GRAY-400, transparent, $BLUISH-GRAY-200);
   @include disable-theme($BLUISH-GRAY-300, $BLUISH-GRAY-10, $BLUISH-GRAY-200);
   @include hover-theme($BLUISH-GRAY-400, $BLUISH-GRAY-50, $BLUISH-GRAY-200);
   @include focus-theme($BLUISH-GRAY-400, transparent, $BLUE-500);
-  @include active-theme($WHITE, $PURPLE-700);
+  @include active-theme($BLUISH-GRAY-400, $BLUISH-GRAY-100, $BLUISH-GRAY-200);
+}
+
+.bluish-gray700_0_bluish-gray200 {
+  @include default-theme($BLUISH-GRAY-700, transparent, $BLUISH-GRAY-200);
+  @include disable-theme($BLUISH-GRAY-300, $BLUISH-GRAY-10, $BLUISH-GRAY-200);
+  @include hover-theme($BLUISH-GRAY-700, $BLUISH-GRAY-50, $BLUISH-GRAY-200);
+  @include focus-theme($BLUISH-GRAY-700, $BLUISH-GRAY-100, $BLUISH-GRAY-200);
+  @include active-theme($BLUISH-GRAY-700, $PURPLE-700);
 }

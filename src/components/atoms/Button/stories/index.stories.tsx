@@ -23,67 +23,36 @@ const ButtonStory: ComponentStory<typeof Button> = (args) => {
     },
   };
 
-  const ghostTypeProps = {
-    ...buttonArgs,
-    themeType: 'ghost' as const,
-  };
-
-  const containedTypeProps = {
-    ...buttonArgs,
-    theme: 'bluish-gray-800' as const,
-    themeType: 'contained' as const,
-  };
   return (
-    <>
-      <div style={{ display: 'flex', gap: 10, flexDirection: 'column' }}>
-        <Button {...ghostTypeProps} />
-        <Button {...ghostTypeProps} delay={5000} />
-        <Button {...ghostTypeProps} disabled />
-        <Button {...ghostTypeProps} icon={<AlertOctagon />} />
-        <Button {...ghostTypeProps} icon={<AlertOctagon />}>
-          {null}
-        </Button>
-      </div>
-      <div style={{ display: 'flex', gap: 10, flexDirection: 'column' }}>
-        <Button {...containedTypeProps} />
-        <Button {...containedTypeProps} delay={5000} />
-        <Button {...containedTypeProps} disabled />
-        <Button {...containedTypeProps} icon={<AlertOctagon />} />
-        <Button {...containedTypeProps} icon={<AlertOctagon />}>
-          {null}
-        </Button>
-      </div>
-      <div
-        style={{
-          display: 'flex',
-          gap: 10,
-          flexDirection: 'column',
-          marginLeft: 50,
-        }}
+    <div
+      style={{
+        display: 'flex',
+        gap: 10,
+        flexDirection: 'column',
+        marginLeft: 50,
+      }}
+    >
+      <Button {...buttonArgs} />
+      <Button {...buttonArgs} delay={5000} />
+      <Button {...buttonArgs} disabled />
+      <Button {...buttonArgs} icon={<AlertOctagon />} />
+      <Button
+        {...buttonArgs}
+        icon={
+          <AlertOctagon
+            width={args.padding ? '24px' : '40px'}
+            height={args.padding ? '24px' : '40px'}
+          />
+        }
       >
-        <Button {...buttonArgs} />
-        <Button {...buttonArgs} delay={5000} />
-        <Button {...buttonArgs} disabled />
-        <Button {...buttonArgs} icon={<AlertOctagon />} />
-        <Button
-          {...buttonArgs}
-          icon={
-            <AlertOctagon
-              width={args.padding ? '24px' : '40px'}
-              height={args.padding ? '24px' : '40px'}
-            />
-          }
-        >
-          {null}
-        </Button>
-      </div>
-    </>
+        {null}
+      </Button>
+    </div>
   );
 };
 
 export const Default = ButtonStory.bind({});
 const defaultArgs: ButtonProps = {
-  themeType: 'contained',
   padding: true,
   focusOutline: true,
 };

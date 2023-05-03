@@ -21,8 +21,15 @@ export type ButtonProps = Pick<
   Typography & {
     delay?: number;
     size?: 'small' | 'medium' | 'large';
-    theme?: 'purple-600' | 'bluish-gray-800' | 'bluish-gray-300';
-    themeType?: 'contained' | 'ghost';
+    theme?:
+      | 'white/purple600'
+      | 'white/bluish-gray800'
+      | 'purple600/0'
+      | 'bluish-gray700/0'
+      | 'bluish-gray300/0'
+      | 'bluish-gray500/0'
+      | 'bluish-gray400/0/bluish-gray200'
+      | 'bluish-gray700/0/bluish-gray200';
     icon?: ReactNode;
     iconDirection?: 'left' | 'right';
     shape?: 'round' | 'default';
@@ -38,6 +45,7 @@ export const Button = ({
   type = 'button',
   children,
   size = 'large',
+  theme = 'white/purple600',
   onClick,
   disabled,
   shape = 'default',
@@ -103,7 +111,7 @@ export const Button = ({
         } ${styles[`shape-${shape}`]} ${styles[`size-${size}`]} ${
           styles[`icon-direction-${iconDirection}`]
         } ${styles[`children-type-${childrenType}`]} ${
-          styles['bluish-gray400_0_bluish-gray200']
+          styles[theme.replaceAll('/', '_')]
         } ${padding && styles.padding} ${className}`,
       )}
       onClick={onClick}
