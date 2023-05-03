@@ -2,12 +2,13 @@
 
 .toast-container {
   position: fixed;
+  z-index: 9999;
   display: flex;
   align-items: center;
+
   width: 100%;
-  margin: 40px 0;
   height: 0;
-  z-index: 9999;
+  margin: 40px 0;
   &.float-direction-from-top {
     top: 0;
     flex-direction: column;

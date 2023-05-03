@@ -3,6 +3,7 @@
 .file-container {
   position: relative;
   overflow: hidden;
+
   height: fit-content;
 }
 
@@ -16,16 +17,18 @@
 
 .download-link-interaction {
   display: flex;
-  background-color: $BLUISH-GRAY-10 !important;
   justify-content: space-between;
+
+  background-color: $BLUISH-GRAY-10 !important;
 }
 
 .download-link {
   flex: 1;
   overflow: hidden;
+
+  color: $BLUISH-GRAY-700;
   text-overflow: ellipsis;
   white-space: nowrap;
-  color: $BLUISH-GRAY-700;
   &.actived {
     &:hover {
       color: $PURPLE-600;
@@ -33,6 +36,7 @@
   }
   &.disabled {
     color: $BLUISH-GRAY-400;
+
     cursor: not-allowed;
   }
 }

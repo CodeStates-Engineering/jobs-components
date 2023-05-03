@@ -6,15 +6,18 @@
 }
 
 .textarea-content {
-  width: 100%;
-  resize: none;
-  border: none;
-  outline: none;
-  font-size: $NORMAL;
-  background-color: transparent;
   box-sizing: border-box;
+  width: 100%;
   padding: 18px;
+  border: none;
+
+  background-color: transparent;
+  outline: none;
+
+  font-size: $NORMAL;
   font-size: inherit;
+
+  resize: none;
   &.resize {
     resize: vertical;
   }
@@ -27,6 +30,7 @@
     resize: none;
     &.read-only {
       color: $BLUISH-GRAY-700;
+
       cursor: default;
     }
   }

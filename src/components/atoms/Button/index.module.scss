@@ -1,113 +1,101 @@
 @import '../../../styles/libs';
 
-@mixin button-theme(
-  $containedBackgroundColor: transparent,
-  $containedTextColor: transparent,
-  $containedDisabledBackgroundColor: transparent,
-  $containedDisabledTextColor: transparent,
-  $containedHoverBackgroundColol: transparent,
-  $containedHoverTextColor: transparent,
-  $containedActiveBackgroundColor: transparent,
-  $containedActiveTextColor: transparent,
-  $containedFocusBackgroundColor: transparent,
-  $containedFocusTextColor: transparent,
-  $containedFocusBorderColor: transparent,
-  $ghostTextColor: transparent,
-  $ghostDisabledTextColor: transparent,
-  $ghostHoverBackgroundColor: transparent,
-  $ghostHoverTextColor: transparent,
-  $ghostActiveBackgroundColor: transparent,
-  $ghostActiveTextColor: transparent,
-  $ghostFocusTextColor: transparent,
-  $ghostFocusBorderColor: transparent
+@mixin default-theme(
+  $textColor: transparent,
+  $backgroundColor: transparent,
+  $border: transparent
 ) {
-  &.contained {
-    background-color: $containedBackgroundColor;
-    color: $containedTextColor;
+  background-color: $backgroundColor;
 
-    &:disabled {
-      background-color: $containedDisabledBackgroundColor;
-      color: $containedDisabledTextColor;
-    }
-
-    &:not(:disabled) {
-      &:hover {
-        background-color: $containedHoverBackgroundColol;
-        color: $containedHoverTextColor;
-      }
-
-      &:active {
-        background-color: $containedActiveBackgroundColor;
-        color: $containedActiveTextColor;
-      }
-
-      &:focus {
-        background-color: $containedFocusBackgroundColor;
-        color: $containedFocusTextColor;
-        &.focus-outline {
-          @include border($containedFocusBorderColor, 2px);
-        }
-      }
-    }
-  }
-
-  &.ghost {
-    background-color: transparent;
-    color: $ghostTextColor;
-
-    &:disabled {
-      color: $ghostDisabledTextColor;
-    }
-
-    &:not(:disabled) {
-      &:hover {
-        background-color: $ghostHoverBackgroundColor;
-        color: $ghostHoverTextColor;
-      }
-
-      &:active {
-        background-color: $ghostActiveBackgroundColor;
-        color: $ghostActiveTextColor;
-      }
-
-      &:focus {
-        color: $ghostFocusTextColor;
-        &.focus-outline {
-          @include border($ghostFocusBorderColor, 2px);
-        }
-      }
-    }
-  }
+  color: $textColor;
+  @include border($border, 1px);
 
   &.delayed-button {
     &:disabled {
-      background-color: $containedBackgroundColor;
-    }
-    > .delay-bar {
-      background-color: $containedDisabledBackgroundColor;
-    }
+      background-color: $backgroundColor;
 
-    &.ghost {
-      border-radius: 0;
-      background-color: transparent;
-      > .delay-bar {
-        bottom: -90%;
-        background-color: $ghostTextColor;
+      @if $backgroundColor == transparent {
+        @if $border == transparent {
+          border-radius: 0;
+          > .delay-bar {
+            bottom: -90%;
+
+            background-color: $textColor;
+          }
+        }
       }
     }
   }
 }
 
+@mixin disable-theme(
+  $textColor: transparent,
+  $backgroundColor: transparent,
+  $border: transparent
+) {
+  &:disabled {
+    background-color: $backgroundColor;
+
+    color: $textColor;
+    @include border($border, 1px);
+  }
+
+  &.delayed-button > .delay-bar {
+    background-color: $backgroundColor;
+  }
+}
+
+@mixin hover-theme(
+  $textColor: transparent,
+  $backgroundColor: transparent,
+  $border: transparent
+) {
+  &:not(:disabled):hover {
+    background-color: $backgroundColor;
+
+    color: $textColor;
+    @include border($border, 1px);
+  }
+}
+
+@mixin active-theme(
+  $textColor: transparent,
+  $backgroundColor: transparent,
+  $border: transparent
+) {
+  &:not(:disabled):active {
+    background-color: $backgroundColor;
+
+    color: $textColor;
+    @include border($border, 1px);
+  }
+}
+
+@mixin focus-theme(
+  $textColor: transparent,
+  $backgroundColor: transparent,
+  $border: transparent
+) {
+  &:not(:disabled):focus {
+    background-color: $backgroundColor;
+
+    color: $textColor;
+    @include border($border, 2px);
+  }
+}
+
 .button,
 .delayed-button {
-  overflow: hidden;
   position: relative;
-  box-sizing: border-box;
-  transition: background-color 0.3s, color 0.3s;
   display: flex;
+  gap: 8px;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  overflow: hidden;
+
+  box-sizing: border-box;
+
+  transition: background-color 0.3s, color 0.3s;
 
   &:disabled {
     cursor: not-allowed;
@@ -115,78 +103,6 @@
 
   @include font-size;
   @include font-weight;
-
-  //* Theme
-  &.theme-purple-600 {
-    @include button-theme(
-      $PURPLE-600,
-      $WHITE,
-      $PURPLE-300,
-      $PURPLE-10,
-      $PURPLE-550,
-      $WHITE,
-      $PURPLE-700,
-      $WHITE,
-      $PURPLE-600,
-      $WHITE,
-      $BLUE-500,
-      $PURPLE-600,
-      $PURPLE-300,
-      $BLUISH-GRAY-10,
-      $PURPLE-600,
-      $BLUISH-GRAY-100,
-      $PURPLE-600,
-      $PURPLE-600,
-      $PURPLE-500
-    );
-  }
-  &.theme-bluish-gray-800 {
-    @include button-theme(
-      $BLUISH-GRAY-800,
-      $WHITE,
-      $BLUISH-GRAY-300,
-      $BLUISH-GRAY-10,
-      $BLUISH-GRAY-700,
-      $WHITE,
-      $BLUISH-GRAY-900,
-      $WHITE,
-      $BLUISH-GRAY-800,
-      $WHITE,
-      $BLUE-500,
-      $BLUISH-GRAY-700,
-      $BLUISH-GRAY-300,
-      $BLUISH-GRAY-10,
-      $BLUISH-GRAY-700,
-      $BLUISH-GRAY-100,
-      $BLUISH-GRAY-700,
-      $BLUISH-GRAY-700,
-      $BLUE-500
-    );
-  }
-
-  &.theme-bluish-gray-300 {
-    @include button-theme(
-      transparent,
-      transparent,
-      transparent,
-      transparent,
-      transparent,
-      transparent,
-      transparent,
-      transparent,
-      transparent,
-      transparent,
-      transparent,
-      $BLUISH-GRAY-300,
-      $BLUISH-GRAY-300,
-      $BLUISH-GRAY-10,
-      $BLUISH-GRAY-300,
-      $BLUISH-GRAY-100,
-      $BLUISH-GRAY-300,
-      $BLUISH-GRAY-300,
-      $BLUE-500
-    );
-  }
 
   //* Size
   &.padding {
@@ -243,25 +159,93 @@
 }
 
 .button-content {
-  z-index: 2;
   position: relative;
+  z-index: 2;
+
   margin: 14px 0;
   &.icon {
-    margin: 0;
     display: flex;
     align-items: center;
     justify-content: center;
+
+    margin: 0;
   }
 }
 
 .delay-bar {
-  width: 100%;
-  height: 100%;
+  position: absolute;
   bottom: 0;
   left: 0;
-  position: absolute;
   z-index: 1;
+
+  width: 100%;
+  height: 100%;
   &.delaying {
     transform: translateX(100%);
   }
+}
+
+//* Theme
+.white_purple600 {
+  @include default-theme($WHITE, $PURPLE-600);
+  @include disable-theme($PURPLE-10, $PURPLE-300);
+  @include hover-theme($WHITE, $PURPLE-550);
+  @include focus-theme($WHITE, $PURPLE-600, $BLUE-500);
+  @include active-theme($WHITE, $PURPLE-700);
+}
+
+.white_bluish-gray800 {
+  @include default-theme($WHITE, $BLUISH-GRAY-800);
+  @include disable-theme($BLUISH-GRAY-10, $BLUISH-GRAY-300);
+  @include hover-theme($WHITE, $BLUISH-GRAY-700);
+  @include focus-theme($WHITE, $BLUISH-GRAY-800, $BLUE-500);
+  @include active-theme($WHITE, $BLUISH-GRAY-900);
+}
+
+.purple600_0 {
+  @include default-theme($PURPLE-600, transparent);
+  @include disable-theme($PURPLE-300, transparent);
+  @include hover-theme($PURPLE-600, $BLUISH-GRAY-10);
+  @include focus-theme($PURPLE-600, $BLUISH-GRAY-100);
+  @include active-theme($PURPLE-600, transparent, $BLUE-500);
+}
+
+.bluish-gray700_0 {
+  @include default-theme($BLUISH-GRAY-700, transparent);
+  @include disable-theme($BLUISH-GRAY-300, transparent);
+  @include hover-theme($BLUISH-GRAY-700, $BLUISH-GRAY-10);
+  @include focus-theme($BLUISH-GRAY-700, $BLUISH-GRAY-100);
+  @include active-theme($BLUISH-GRAY-700, transparent, $BLUE-500);
+}
+
+.bluish-gray300_0 {
+  @include default-theme($BLUISH-GRAY-300, transparent);
+  @include disable-theme($BLUISH-GRAY-300, transparent);
+  @include hover-theme($BLUISH-GRAY-300, $BLUISH-GRAY-10);
+  @include focus-theme($BLUISH-GRAY-300, $BLUISH-GRAY-100);
+  @include active-theme($BLUISH-GRAY-300, transparent, $BLUE-500);
+}
+
+.bluish-gray500_0 {
+  @include default-theme($BLUISH-GRAY-500, transparent);
+  @include disable-theme($BLUISH-GRAY-300, transparent);
+  @include hover-theme($BLUISH-GRAY-500, $BLUISH-GRAY-10);
+  @include focus-theme($BLUISH-GRAY-500, $BLUISH-GRAY-100);
+  @include active-theme($BLUISH-GRAY-500, transparent, $BLUE-500);
+}
+
+.bluish-gray400_0_bluish-gray200 {
+  @include default-theme($BLUISH-GRAY-400, transparent, $BLUISH-GRAY-200);
+  @include disable-theme($BLUISH-GRAY-300, $BLUISH-GRAY-10, $BLUISH-GRAY-200);
+  @include hover-theme($BLUISH-GRAY-400, $BLUISH-GRAY-50, $BLUISH-GRAY-200);
+  @include focus-theme($BLUISH-GRAY-400, transparent, $BLUE-500);
+  @include active-theme($BLUISH-GRAY-400, $BLUISH-GRAY-100, $BLUISH-GRAY-200);
+}
+
+.bluish-gray700_0_bluish-gray200 {
+  @include default-theme($BLUISH-GRAY-700, transparent, $BLUISH-GRAY-200);
+  @include disable-theme($BLUISH-GRAY-300, $BLUISH-GRAY-10, $BLUISH-GRAY-200);
+  @include hover-theme($BLUISH-GRAY-700, $BLUISH-GRAY-50, $BLUISH-GRAY-200);
+  @include focus-theme($BLUISH-GRAY-700, $BLUISH-GRAY-100, $BLUISH-GRAY-200);
+  @include active-theme($BLUISH-GRAY-700, $PURPLE-700);
 }

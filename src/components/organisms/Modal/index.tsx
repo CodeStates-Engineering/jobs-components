@@ -55,8 +55,7 @@ export const ModalHeader = ({
       <div>{children}</div>
       <Button
         icon={<X />}
-        themeType="ghost"
-        theme="bluish-gray-800"
+        theme="bluish-gray700/0"
         size="small"
         onClick={onClickClosingArea}
       />
@@ -86,14 +85,12 @@ const ModalTabMenuHeader = ({
         items={items}
         className={styles['tab-menu']}
         fontSize="medium"
-        selectedColor="bluish-gray-800"
         fontWeight={700}
         bottomLineWeight="none"
       />
       <Button
         icon={<X />}
-        themeType="ghost"
-        theme="bluish-gray-800"
+        theme="bluish-gray700/0"
         size="small"
         onClick={onClickClosingArea}
       />

@@ -28,8 +28,7 @@ export const Pagination = ({
   const commonButtonProps: ButtonProps = {
     size: 'small',
     shape: 'round',
-    themeType: 'ghost',
-    theme: 'bluish-gray-800',
+    theme: 'white/bluish-gray800',
     fontSize: 'small',
     fontWeight: 500,
     focusOutline: false,
@@ -92,8 +91,7 @@ export const Pagination = ({
             const buttonProps: ButtonProps = isCurrentPage
               ? {
                   ...commonButtonProps,
-                  theme: 'purple-600',
-                  themeType: 'contained',
+                  theme: 'white/purple600',
                 }
               : commonButtonProps;
             return (

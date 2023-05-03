@@ -1,3 +1,3 @@
 {
-  "extends": ["@codestates-engineering/eslint-config-codestates/stylelint"]
+  "extends": ["@hyeokjaelee/stylelint-config"]
 }

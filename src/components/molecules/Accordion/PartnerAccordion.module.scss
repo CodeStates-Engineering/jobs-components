@@ -10,18 +10,19 @@
 }
 
 .title-text {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   flex: 1;
-  font-weight: 700;
+  overflow: hidden;
+
   color: $BLUISH-GRAY-700;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .title-contents {
   display: flex;
-  align-items: center;
   gap: 16px;
+  align-items: center;
 }
 
 .partner-profile-icon {
@@ -29,6 +30,6 @@
 }
 
 .contents {
-  font-weight: 500;
   color: $BLUISH-GRAY-700;
+  font-weight: 500;
 }

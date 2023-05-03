@@ -1,10 +1,12 @@
 @import '../../../styles/libs';
 
 .accordian-container {
-  background-color: $WHITE;
+  overflow: hidden;
+
   border: 1px solid $BLUISH-GRAY-100;
   border-radius: 16px;
-  overflow: hidden;
+
+  background-color: $WHITE;
 }
 
 .title-contaienr {
@@ -17,28 +19,32 @@
 
 .accordian-title {
   display: flex;
-  justify-content: space-between;
-  padding: 16px 24px;
   align-items: center;
+  justify-content: space-between;
+
   width: 100%;
+  padding: 16px 24px;
   > .title-contents {
     flex: 1;
-    text-align: start;
     overflow: hidden;
+
+    text-align: start;
   }
 }
 
 .accordian-contents-wrap {
   overflow: hidden;
-  width: 100%;
+
   box-sizing: border-box;
+  width: 100%;
+
   transition: height 0.3s;
 }
 
 .accordian-contents {
-  padding: 24px;
-  width: 100%;
   box-sizing: border-box;
+  width: 100%;
+  padding: 24px;
   @include fade-out-top(0.3s);
   &.opened {
     @include fade-in-top(0.3s);
@@ -46,14 +52,16 @@
 }
 
 .chevron-down-icon {
-  min-width: 18px;
-  min-height: 18px;
   width: 18px;
+  min-width: 18px;
   height: 18px;
+  min-height: 18px;
   margin-left: 1em;
-  stroke-width: 2;
+
   color: $BLUISH-GRAY-300;
+
   transition: transform 0.3s ease-in-out;
+  stroke-width: 2;
   &.opened {
     transform: rotate(180deg);
   }

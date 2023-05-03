@@ -3,13 +3,15 @@
 $OPTIONS-BORDER-RADIUS: 10px;
 
 .options {
-  width: 100%;
   position: absolute;
-  background-color: $WHITE;
-  border-radius: $OPTIONS-BORDER-RADIUS;
-  box-shadow: $NORMAL-BOX-SHADOW;
+
   box-sizing: border-box;
+  width: 100%;
   padding: 8px;
+  border-radius: $OPTIONS-BORDER-RADIUS;
+
+  background-color: $WHITE;
+  box-shadow: $NORMAL-BOX-SHADOW;
 
   &.closing,
   &.opening {
@@ -18,6 +20,7 @@ $OPTIONS-BORDER-RADIUS: 10px;
 
   &.top {
     bottom: 100%;
+
     margin-bottom: 0.5rem;
     &.opening {
       @include fade-in-bottom;
@@ -29,6 +32,7 @@ $OPTIONS-BORDER-RADIUS: 10px;
 
   &.bottom {
     top: 100%;
+
     margin-top: 0.5rem;
     &.opening {
       @include fade-in-top;
@@ -40,18 +44,20 @@ $OPTIONS-BORDER-RADIUS: 10px;
 }
 
 .option-container {
-  max-height: 300px;
-  overflow-y: auto;
   display: flex;
-  scroll-snap-type: y mandatory;
   flex-direction: column;
   gap: 4px;
+  overflow-y: auto;
+
+  max-height: 300px;
+  scroll-snap-type: y mandatory;
   &::-webkit-scrollbar {
     display: none;
   }
 
   > li {
     scroll-snap-align: start;
+
     width: 100%;
   }
 
@@ -59,25 +65,30 @@ $OPTIONS-BORDER-RADIUS: 10px;
     transition: background-color 0.3s, color 0.3s;
     &:hover {
       background-color: $BLUISH-GRAY-10;
+
       color: $BLUISH-GRAY-700;
     }
   }
 }
 
 .option-item {
-  color: $BLUISH-GRAY-700;
+  display: flex;
+  gap: 4px;
+  justify-content: space-between;
+
   min-width: 100%;
-  text-align: start;
-  white-space: pre-wrap;
   max-width: 100%;
   padding: 0.8em;
   border-radius: 5px;
-  display: flex;
-  justify-content: space-between;
+
   outline: none;
-  gap: 4px;
+
+  color: $BLUISH-GRAY-700;
+  text-align: start;
+  white-space: pre-wrap;
   &.selected {
     background-color: $BLUE-10;
+
     color: $BLUE-600;
   }
 

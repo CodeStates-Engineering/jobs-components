@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { useEffect, useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
 
@@ -20,8 +21,15 @@ export type ButtonProps = Pick<
   Typography & {
     delay?: number;
     size?: 'small' | 'medium' | 'large';
-    theme?: 'purple-600' | 'bluish-gray-800' | 'bluish-gray-300';
-    themeType?: 'contained' | 'ghost';
+    theme?:
+      | 'white/purple600'
+      | 'white/bluish-gray800'
+      | 'purple600/0'
+      | 'bluish-gray700/0'
+      | 'bluish-gray300/0'
+      | 'bluish-gray500/0'
+      | 'bluish-gray400/0/bluish-gray200'
+      | 'bluish-gray700/0/bluish-gray200';
     icon?: ReactNode;
     iconDirection?: 'left' | 'right';
     shape?: 'round' | 'default';
@@ -37,8 +45,7 @@ export const Button = ({
   type = 'button',
   children,
   size = 'large',
-  theme = 'purple-600',
-  themeType = 'contained',
+  theme = 'white/purple600',
   onClick,
   disabled,
   shape = 'default',
@@ -93,22 +100,19 @@ export const Button = ({
         document.removeEventListener(EVENT_TYPE, enterClickEventListener);
     }
   }, [enterClick, onClick, isDisabled]);
-
   return (
     <button
       type={type}
       className={cleanClassName(
         `${isDelayButton ? styles['delayed-button'] : styles.button} ${
           styles[fontSizeClassName]
-        } ${styles[fontWeightClassName]} ${styles[`theme-${theme}`]} ${
-          styles[themeType]
-        } ${focusOutline && styles['focus-outline']} ${
-          styles[`shape-${shape}`]
-        } ${styles[`size-${size}`]} ${
+        } ${styles[fontWeightClassName]} ${
+          focusOutline && styles['focus-outline']
+        } ${styles[`shape-${shape}`]} ${styles[`size-${size}`]} ${
           styles[`icon-direction-${iconDirection}`]
         } ${styles[`children-type-${childrenType}`]} ${
-          padding && styles.padding
-        } ${className}`,
+          styles[theme.replaceAll('/', '_')]
+        } ${padding && styles.padding} ${className}`,
       )}
       onClick={onClick}
       disabled={isDisabled}

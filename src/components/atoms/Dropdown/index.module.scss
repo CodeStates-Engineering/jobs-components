@@ -2,13 +2,14 @@
 
 .dropdown {
   position: absolute;
+
   width: fit-content;
   height: fit-content;
-  box-shadow: 0px 0px 8px rgba(152, 151, 151, 0.08),
-    0px 4px 16px rgba(171, 171, 171, 0.24);
-  border-radius: 8px;
-  background-color: $WHITE;
   border: 1px solid $BLUISH-GRAY-100;
+  border-radius: 8px;
+
+  background-color: $WHITE;
+  box-shadow: 0 0 8px rgb(152 151 151 / 8%), 0 4px 16px rgb(171 171 171 / 24%);
 
   @include fade-in(0.3s);
 

@@ -21,11 +21,14 @@ export interface TabMenuProps {
   items?: TabMenuItem[];
   color?: ButtonProps['theme'];
   itemSize?: ButtonProps['size'];
-  themeType?: ButtonProps['themeType'];
   itemShape?: ButtonProps['shape'];
   bottomLineWeight?: HrProps['weight'] | 'none';
   fontWeight?: ButtonProps['fontWeight'];
   fontSize?: ButtonProps['fontSize'];
+  theme?: {
+    default: ButtonProps['theme'];
+    selected: ButtonProps['theme'];
+  };
   selectedColor?: ButtonProps['theme'];
   selectedLineWeight?: HrProps['weight'] | 'none';
   selectedLineColor?: HrProps['color'];
@@ -34,19 +37,20 @@ export interface TabMenuProps {
 
 export const TabMenu = ({
   items,
-  color = 'bluish-gray-300',
   itemSize = 'large',
   itemShape,
-  themeType = 'ghost',
-  selectedColor = 'bluish-gray-800',
   bottomLineWeight = 'medium',
   selectedLineWeight = 'medium',
+  theme = {
+    default: 'bluish-gray300/0',
+    selected: 'bluish-gray700/0',
+  },
   selectedLineColor = 'purple-550',
   fontWeight = 700,
   fontSize = 'large',
   className,
 }: TabMenuProps) => {
-  selectedColor = selectedColor ?? color;
+  theme.selected ??= theme.default;
   const { pathname, search } = Compatibility.useLocation();
   const queryStrings = useMemo(
     () => (search ? search.replace('?', '')?.split('&') : []),
@@ -91,8 +95,8 @@ export const TabMenu = ({
           const itemButtonProps: ButtonProps = {
             ...baseItemButtonProps,
             ...(isMatched
-              ? { themeType, theme: selectedColor }
-              : { themeType: 'ghost', theme: color }),
+              ? { theme: theme.selected }
+              : { theme: theme.default }),
             children: label,
             onClick: () => onClick?.(item),
             disabled,
