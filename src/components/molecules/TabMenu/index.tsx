@@ -19,7 +19,6 @@ interface TabMenuItem extends Item {
 
 export interface TabMenuProps {
   items?: TabMenuItem[];
-  color?: ButtonProps['theme'];
   itemSize?: ButtonProps['size'];
   itemShape?: ButtonProps['shape'];
   bottomLineWeight?: HrProps['weight'] | 'none';
@@ -29,7 +28,6 @@ export interface TabMenuProps {
     default: ButtonProps['theme'];
     selected: ButtonProps['theme'];
   };
-  selectedColor?: ButtonProps['theme'];
   selectedLineWeight?: HrProps['weight'] | 'none';
   selectedLineColor?: HrProps['color'];
   className?: string;
@@ -38,7 +36,7 @@ export interface TabMenuProps {
 export const TabMenu = ({
   items,
   itemSize = 'large',
-  itemShape,
+  itemShape = 'round',
   bottomLineWeight = 'medium',
   selectedLineWeight = 'medium',
   theme = {
@@ -50,7 +48,6 @@ export const TabMenu = ({
   fontSize = 'large',
   className,
 }: TabMenuProps) => {
-  theme.selected ??= theme.default;
   const { pathname, search } = Compatibility.useLocation();
   const queryStrings = useMemo(
     () => (search ? search.replace('?', '')?.split('&') : []),

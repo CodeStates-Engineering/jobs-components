@@ -52,8 +52,6 @@ export const Default = TabMenuStory.bind({});
 const defaultArgs: TabMenuProps = {
   items,
   itemSize: 'medium',
-  color: 'bluish-gray-300',
-  selectedColor: 'bluish-gray-800',
   bottomLineWeight: 'medium',
   selectedLineWeight: 'medium',
   fontWeight: 500,
@@ -70,10 +68,11 @@ const roundArgs: TabMenuProps = {
   bottomLineWeight: 'none',
   itemSize: 'small',
   fontSize: 'small2x',
-  selectedColor: 'purple-600',
-  color: 'bluish-gray-300',
+  theme: {
+    default: 'bluish-gray300/0',
+    selected: 'white/purple600',
+  },
   itemShape: 'round',
-  themeType: 'contained',
 };
 
 Round.args = roundArgs;

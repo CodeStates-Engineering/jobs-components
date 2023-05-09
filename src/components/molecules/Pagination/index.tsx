@@ -28,7 +28,7 @@ export const Pagination = ({
   const commonButtonProps: ButtonProps = {
     size: 'small',
     shape: 'round',
-    theme: 'white/bluish-gray800',
+    theme: 'bluish-gray500/0',
     fontSize: 'small',
     fontWeight: 500,
     focusOutline: false,
@@ -86,7 +86,7 @@ export const Pagination = ({
         />
       </li>
       {isPaginationExisted
-        ? displayedPages.map((page, index) => {
+        ? displayedPages.map((page) => {
             const isCurrentPage = page === currentPage;
             const buttonProps: ButtonProps = isCurrentPage
               ? {
@@ -95,7 +95,7 @@ export const Pagination = ({
                 }
               : commonButtonProps;
             return (
-              <li key={index}>
+              <li key={page}>
                 <Button
                   {...buttonProps}
                   onClick={() => onChange?.(page)}
