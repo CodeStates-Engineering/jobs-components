@@ -39,9 +39,10 @@ interface CommonProps {
 
 export interface TooltipProps {
   children?: React.ReactNode;
+  mouseEnterDelay?: number;
 }
 
-const TooltipMain = ({ children }: TooltipProps) => {
+const TooltipMain = ({ children, mouseEnterDelay = 300 }: TooltipProps) => {
   const [hovered, setHovered] = useState(false);
   const [displayed, setDisplayed] = useState<Displayed>(false);
   const [coordinates, setCoordinates] = useState<Coordinates>();
@@ -55,7 +56,7 @@ const TooltipMain = ({ children }: TooltipProps) => {
 
   useMountedEffect(() => {
     if (hovered) {
-      const openTimer = setTimeout(() => setDisplayed(true), 500);
+      const openTimer = setTimeout(() => setDisplayed(true), mouseEnterDelay);
       return () => clearTimeout(openTimer);
     }
     setDisplayed((prev) => (prev === true ? 'closing' : prev));
