@@ -93,7 +93,7 @@ jobs:
         run: "npm version major -m 'ver: %s'"
 
       - name: Push release branch
-        run: git push
+        run: git push -f
 
   tag:
     needs: update
