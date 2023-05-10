@@ -1,0 +1,210 @@
+name: CD
+
+on: push
+
+env:
+  NODE_VERSION: '18.13'
+  ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+  CSE_NPM_TOKEN: ${{secrets.CSE_NPM_TOKEN}}
+  NPM_REGISTRY_URL: 'https://npm.pkg.github.com/'
+
+jobs:
+  check_valid_commit:
+    if: "!contains(github.event.head_commit.message, 'ver: ')"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check branch
+        run: exit 0
+
+  pushed_dev_branch:
+    needs: check_valid_commit
+    if: "!startsWith(github.ref, 'refs/heads/release')"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check branch
+        run: exit 0
+
+  pushed_release_branch:
+    needs: check_valid_commit
+    if: startsWith(github.ref, 'refs/heads/release')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check branch
+        run: exit 0
+
+  test_build:
+    needs: check_valid_commit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{secrets.CSE_NPM_TOKEN}}
+
+      - name: Set node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          registry-url: ${{ env.NPM_REGISTRY_URL }}
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        id: pnpm-install
+        with:
+          version: 8.3
+          run_install: true
+
+      - name: Clean build
+        run: pnpm run clean:build
+
+      - name: Build package
+        run: pnpm run build:package
+
+      - name: Build storybook
+        run: pnpm run build:storybook
+
+  update:
+    needs: ['pushed_release_branch', 'test_build']
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          registry-url: https://registry.npmjs.org/
+
+      - name: Regist author
+        run: git config --global user.email "engineering@codestates.com" && git config --global user.name "CodeStates Engineering"
+
+      - name: Pull branch
+        run: git pull
+
+      - name: Set new patch version
+        if: "!contains(github.event.head_commit.message, '+m')"
+        run: "npm version patch -m 'ver: %s'"
+
+      - name: Set new minor version
+        if: "contains(github.event.head_commit.message, '+minor')"
+        run: "npm version minor -m 'ver: %s'"
+
+      - name: Set new major version
+        if: "contains(github.event.head_commit.message, '+major')"
+        run: "npm version major -m 'ver: %s'"
+
+      - name: Push release branch
+        run: git push
+
+  tag:
+    needs: update
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Pull branch
+        run: git pull
+
+      - name: Get version
+        id: get-version
+        uses: beaconbrigade/package-json-version@v0.3
+        with:
+          path: .
+
+      - name: Create release & tag
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.get-version.outputs.version }}
+          release_name: ${{ steps.get-version.outputs.version }}
+
+  deploy:
+    needs: update
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{secrets.CSE_NPM_TOKEN}}
+
+      - name: Set node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          registry-url: ${{ env.NPM_REGISTRY_URL }}
+
+      - name: Pull branch
+        run: git pull
+
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 8.3
+          run_install: true
+
+      - name: Clean build
+        run: pnpm run clean:build
+
+      - name: Build package
+        run: pnpm run build:package
+
+      - name: Deploy package
+        run: pnpm run deploy:package
+
+      - name: Build storybook
+        run: pnpm run build:storybook
+
+      - name: Deploy storybook
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.CSE_NPM_TOKEN }}
+          publish_dir: ./dist/storybook
+
+  deploy_canary:
+    if: "!contains(github.event.head_commit.message, '-canary')"
+    needs: ['pushed_dev_branch', 'test_build']
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          registry-url: ${{ env.NPM_REGISTRY_URL }}
+
+      - uses: actions/checkout@v3
+        with:
+          token: ${{secrets.CSE_NPM_TOKEN}}
+
+      - name: Regist author
+        run: git config --global user.email "engineering@codestates.com" && git config --global user.name "CodeStates Engineering"
+
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 8.3
+          run_install: true
+
+      - name: Set canary version
+        run: pnpm run version:canary
+
+      - name: Get version
+        id: get-version
+        uses: beaconbrigade/package-json-version@v0.3
+        with:
+          path: .
+
+      - name: Create release & tag
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.get-version.outputs.version }}
+          release_name: ${{ steps.get-version.outputs.version }}
+
+      - name: Build Package
+        run: pnpm run build:package
+
+      - name: Deploy package(canary)
+        run: pnpm run deploy:package:canary
