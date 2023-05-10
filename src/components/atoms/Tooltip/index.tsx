@@ -42,14 +42,14 @@ export interface TooltipProps {
   mouseEnterDelay?: number;
 }
 
-const TooltipMain = ({ children, mouseEnterDelay = 300 }: TooltipProps) => {
+const TooltipMain = ({ children, mouseEnterDelay = 200 }: TooltipProps) => {
   const [hovered, setHovered] = useState(false);
   const [displayed, setDisplayed] = useState<Displayed>(false);
   const [coordinates, setCoordinates] = useState<Coordinates>();
 
   useMountedEffect(() => {
     if (displayed === 'closing') {
-      const closeTimer = setTimeout(() => setDisplayed(false), 200);
+      const closeTimer = setTimeout(() => setDisplayed(false), 100);
       return () => clearTimeout(closeTimer);
     }
   }, [displayed]);
