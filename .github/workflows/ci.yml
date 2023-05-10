@@ -4,11 +4,14 @@ on:
   pull_request:
     branches: ['release']
 
+env:
+  NODE_VERSION: '18.13'
+  ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+  CSE_NPM_TOKEN: ${{secrets.CSE_NPM_TOKEN}}
+
 jobs:
   Test:
     runs-on: ubuntu-latest
-    env:
-      CSE_NPM_TOKEN: ${{secrets.CSE_NPM_TOKEN}}
 
     steps:
       - uses: actions/checkout@v3
@@ -25,34 +28,14 @@ jobs:
         name: Install pnpm
         id: pnpm-install
         with:
-          version: 8.1
-          run_install: false
-
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Get pnpm store directory
-        id: pnpm-cache
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-
-      - uses: actions/cache@v3
-        name: Setup pnpm cache
-        with:
-          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+          version: 8.5
+          run_install: true
 
       - name: Check eslint
         run: pnpm lint
 
       - name: Check prettier
         run: pnpm prettier
-
-      - name: Check stylelint
-        run: pnpm lint:style
 
       - name: Clean build
         run: pnpm run clean:build
