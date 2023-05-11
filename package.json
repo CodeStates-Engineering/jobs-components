@@ -114,7 +114,8 @@
     "webpack": "^5.77.0",
     "eslint": "^8.39.0",
     "prettier": "^2.8.8",
-    "@hyeokjaelee/stylelint-config": "^1.2.7"
+    "@hyeokjaelee/stylelint-config": "^1.2.7",
+    "pnpm": "8.5.0"
   },
   "peerDependencies": {
     "react": "^18.0.0"

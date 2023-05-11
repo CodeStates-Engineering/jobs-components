@@ -36,7 +36,7 @@ export interface TabMenuProps {
 export const TabMenu = ({
   items,
   itemSize = 'large',
-  itemShape = 'round',
+  itemShape = 'default',
   bottomLineWeight = 'medium',
   selectedLineWeight = 'medium',
   theme = {
