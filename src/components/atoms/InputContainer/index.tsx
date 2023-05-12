@@ -34,17 +34,17 @@ const InputContainerMain = ({
   </div>
 );
 
-export interface InputContainerIntreractionProps extends CommonProps {
+export interface InputContainerInteractionProps extends CommonProps {
   onClick?: React.HTMLAttributes<HTMLDivElement>['onClick'];
   size?: 'none' | 'small' | 'medium' | 'large';
 }
 
-const InputContainerIntreraction = ({
+const InputContainerInteraction = ({
   children,
   onClick,
   size = 'large',
   className,
-}: InputContainerIntreractionProps) => {
+}: InputContainerInteractionProps) => {
   const validationMessage = useContext(InputContainerContext);
   return (
     <div
@@ -61,5 +61,5 @@ const InputContainerIntreraction = ({
 };
 
 export const InputContainer = Object.assign(InputContainerMain, {
-  Intreraction: InputContainerIntreraction,
+  Interaction: InputContainerInteraction,
 });

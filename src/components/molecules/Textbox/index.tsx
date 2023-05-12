@@ -8,14 +8,14 @@ import type {
   InputProps,
   InputContainerProps,
   InputType,
-  InputContainerIntreractionProps,
+  InputContainerInteractionProps,
 } from '../../atoms';
 
 export type TextboxProps<_InputType extends InputType = 'text'> = Omit<
   InputProps<_InputType> & InputContainerProps,
   'validationMessage' | 'name' | 'children'
 > &
-  InputContainerIntreractionProps & {
+  InputContainerInteractionProps & {
     onlyUpdatedByParent?: boolean;
     label?: string;
     unit?: React.ReactNode;
@@ -59,7 +59,7 @@ export const Textbox = <T extends InputType = 'text'>({
         validationMessage={validationMessage}
         validationSpace={validationSpace}
       >
-        <InputContainer.Intreraction size={size}>
+        <InputContainer.Interaction size={size}>
           <Input
             onClick={onClick}
             ref={ref}
@@ -81,7 +81,7 @@ export const Textbox = <T extends InputType = 'text'>({
           ) : (
             unit
           )}
-        </InputContainer.Intreraction>
+        </InputContainer.Interaction>
       </InputContainer>
     </div>
   );

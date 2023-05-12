@@ -90,7 +90,7 @@ export const File = ({
           validationMessage={validationMessage}
           validationSpace={validationSpace}
         >
-          <InputContainer.Intreraction
+          <InputContainer.Interaction
             className={styles['download-link-interaction']}
           >
             <a
@@ -122,7 +122,7 @@ export const File = ({
                 }}
               />
             )}
-          </InputContainer.Intreraction>
+          </InputContainer.Interaction>
         </InputContainer>
       ) : (
         <Button

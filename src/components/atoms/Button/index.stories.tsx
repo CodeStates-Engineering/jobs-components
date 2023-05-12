@@ -97,7 +97,9 @@ export const Shape: Story = {
   render: (args) => (
     <>
       {(['default', 'round'] satisfies ButtonProps['shape'][]).map((shape) => (
-        <Button {...{ ...args, shape }}>{shape}</Button>
+        <Button {...{ ...args, shape }} key={shape}>
+          {shape}
+        </Button>
       ))}
     </>
   ),
@@ -108,7 +110,9 @@ export const Size: Story = {
     <>
       {(['small', 'medium', 'large'] satisfies ButtonProps['size'][]).map(
         (size) => (
-          <Button {...{ ...args, size }}>{size}</Button>
+          <Button {...{ ...args, size }} key={size}>
+            {size}
+          </Button>
         ),
       )}
     </>
@@ -133,6 +137,7 @@ export const Icon: Story = {
             display: 'flex',
             gap: '10px',
           }}
+          key={shape}
         >
           <Button {...{ ...args, shape }} />
           <Button {...omit({ ...args, shape }, 'children')} />
@@ -143,7 +148,7 @@ export const Icon: Story = {
   ),
 };
 
-export const Delay = {
+export const Delay: Story = {
   args: {
     delay: 10000,
   },

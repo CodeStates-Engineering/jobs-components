@@ -12,7 +12,7 @@ import type {
   InputContainerProps,
   OptionsProps,
   Option,
-  InputContainerIntreractionProps,
+  InputContainerInteractionProps,
 } from '../../atoms';
 
 export type SelectboxProps<_Option extends Option = Option> = Omit<
@@ -26,7 +26,7 @@ export type SelectboxProps<_Option extends Option = Option> = Omit<
   | 'name'
 > &
   Partial<Pick<OptionsProps<_Option>, 'options' | 'float'>> &
-  InputContainerIntreractionProps & {
+  InputContainerInteractionProps & {
     onlyUpdatedByParent?: boolean;
     onChange?: OptionsProps<_Option>['onSelect'];
     value?: Exclude<OptionsProps<_Option>['value'], undefined>['value'];
@@ -80,7 +80,7 @@ export const Selectbox = <_Option extends Option = Option>({
         validationMessage={validationMessage}
         validationSpace={validationSpace}
       >
-        <InputContainer.Intreraction
+        <InputContainer.Interaction
           size={size}
           onClick={(e) => {
             setOpened(!opened);
@@ -101,7 +101,7 @@ export const Selectbox = <_Option extends Option = Option>({
               `${styles.arrow} ${opened && styles['opened-arrow']}`,
             )}
           />
-        </InputContainer.Intreraction>
+        </InputContainer.Interaction>
         <Options
           opened={opened}
           options={options}

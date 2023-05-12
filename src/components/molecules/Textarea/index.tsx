@@ -65,7 +65,7 @@ export const Textarea = ({
         validationMessage={validationMessage}
         validationSpace={validationSpace}
       >
-        <InputContainer.Intreraction size="none">
+        <InputContainer.Interaction size="none">
           <textarea
             id={id}
             name={label}
@@ -84,7 +84,7 @@ export const Textarea = ({
               } ${styles['full-size']}`,
             )}
           />
-        </InputContainer.Intreraction>
+        </InputContainer.Interaction>
       </InputContainer>
     </div>
   );
