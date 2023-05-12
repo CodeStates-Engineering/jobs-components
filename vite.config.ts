@@ -3,6 +3,7 @@ import path from 'node:path';
 import generatePackageJson from 'rollup-plugin-generate-package-json';
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
+import { viteStaticCopy } from 'vite-plugin-static-copy';
 
 import react from '@vitejs/plugin-react-swc';
 
@@ -11,6 +12,18 @@ export default defineConfig({
     react(),
     dts({
       insertTypesEntry: true,
+    }),
+    viteStaticCopy({
+      targets: [
+        {
+          src: 'src/styles/libs',
+          dest: 'styles',
+        },
+        {
+          src: 'src/styles/_libs.scss',
+          dest: 'styles',
+        },
+      ],
     }),
   ],
   build: {
