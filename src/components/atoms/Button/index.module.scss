@@ -251,3 +251,11 @@
   @include focus-theme($BLUISH-GRAY-700, $BLUISH-GRAY-100, $BLUISH-GRAY-200);
   @include active-theme($BLUISH-GRAY-700, $PURPLE-700);
 }
+
+.bluish-gray400_bluish-gray10_bluish-gray200 {
+  @include default-theme($BLUISH-GRAY-400, $BLUISH-GRAY-10, $BLUISH-GRAY-200);
+  @include disable-theme($BLUISH-GRAY-300, $BLUISH-GRAY-50, $BLUISH-GRAY-200);
+  @include hover-theme($BLUISH-GRAY-700, $BLUISH-GRAY-50, $BLUISH-GRAY-200);
+  @include focus-theme($BLUISH-GRAY-400, transparent, $BLUE-500);
+  @include active-theme($BLUISH-GRAY-700, $BLUISH-GRAY-100, $BLUISH-GRAY-200);
+}

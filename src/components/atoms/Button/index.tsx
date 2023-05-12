@@ -29,7 +29,8 @@ export type ButtonProps = Pick<
       | 'bluish-gray300/0'
       | 'bluish-gray500/0'
       | 'bluish-gray400/0/bluish-gray200'
-      | 'bluish-gray700/0/bluish-gray200';
+      | 'bluish-gray700/0/bluish-gray200'
+      | 'bluish-gray400/bluish-gray10/bluish-gray200';
     icon?: ReactNode;
     iconDirection?: 'left' | 'right';
     shape?: 'round' | 'default';
@@ -100,6 +101,7 @@ export const Button = ({
         document.removeEventListener(EVENT_TYPE, enterClickEventListener);
     }
   }, [enterClick, onClick, isDisabled]);
+
   return (
     <button
       type={type}

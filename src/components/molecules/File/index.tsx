@@ -111,7 +111,7 @@ export const File = ({
                 icon={<X />}
                 size="small"
                 shape="round"
-                theme="bluish-gray400/0/bluish-gray200"
+                theme="bluish-gray700/0"
                 onClick={() => {
                   setSavedFile?.(undefined);
                   onChange?.(undefined);
@@ -131,7 +131,7 @@ export const File = ({
           fontSize={fontSize}
           fontWeight={fontWeight}
           disabled={!!disabled}
-          theme="bluish-gray700/0"
+          theme="bluish-gray400/bluish-gray10/bluish-gray200"
           onClick={() => {
             inputRef.current?.click();
           }}
