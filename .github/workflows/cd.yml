@@ -19,7 +19,7 @@ jobs:
 
   pushed_dev_branch:
     needs: check_valid_commit
-    if: "!startsWith(github.ref, 'refs/heads/release/')"
+    if: "startsWith(github.ref, 'refs/heads/feature/')"
     runs-on: ubuntu-latest
     steps:
       - name: Check branch
