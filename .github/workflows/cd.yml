@@ -19,15 +19,15 @@ jobs:
 
   pushed_dev_branch:
     needs: check_valid_commit
-    if: startsWith(github.ref, 'refs/heads/dev/')
+    if: "!startsWith(github.ref, 'refs/heads/release/')"
     runs-on: ubuntu-latest
     steps:
       - name: Check branch
         run: exit 0
 
-  pushed_main_branch:
+  pushed_release_branch:
     needs: check_valid_commit
-    if: startsWith(github.ref, 'refs/heads/main')
+    if: startsWith(github.ref, 'refs/heads/release/')
     runs-on: ubuntu-latest
     steps:
       - name: Check branch
@@ -85,7 +85,7 @@ jobs:
         run: pnpm build:doc
 
   update:
-    needs: ['pushed_main_branch', 'test_code_convention', 'test_build']
+    needs: ['pushed_release_branch', 'test_code_convention', 'test_build']
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
