@@ -4,6 +4,11 @@ on:
   pull_request:
     branches: 'main'
 
+env:
+  NODE_VERSION: '18.13'
+  CSE_NPM_TOKEN: ${{secrets.CSE_NPM_TOKEN}}
+  NPM_REGISTRY_URL: 'https://npm.pkg.github.com/'
+
 jobs:
   test_code_convention:
     runs-on: ubuntu-latest
@@ -15,7 +20,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
-          registry-url: https://registry.npmjs.org/
+          registry-url: ${{ env.NPM_REGISTRY_URL }}
 
       - uses: pnpm/action-setup@v2
         name: Install pnpm
@@ -40,7 +45,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
-          registry-url: https://registry.npmjs.org/
+          registry-url: ${{ env.NPM_REGISTRY_URL }}
 
       - uses: pnpm/action-setup@v2
         name: Install pnpm
