@@ -1,5 +1,5 @@
 import '../src/styles/_global.scss';
-import '../src/styles/storybook.scss';
+
 import React from 'react';
 
 import { MemoryRouter } from 'react-router-dom';

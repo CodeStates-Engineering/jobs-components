@@ -80,7 +80,9 @@
     background-color: $backgroundColor;
 
     color: $textColor;
-    @include border($border, 2px);
+    &.focus-outline {
+      @include border($border, 2px);
+    }
   }
 }
 
