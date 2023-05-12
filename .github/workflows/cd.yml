@@ -5,6 +5,9 @@ on: push
 env:
   NODE_VERSION: '18.13'
   ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+  CSE_NPM_TOKEN: ${{secrets.CSE_NPM_TOKEN}}
+  NPM_REGISTRY_URL: 'https://npm.pkg.github.com/'
+  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
 jobs:
   check_valid_commit:
@@ -167,13 +170,11 @@ jobs:
 
       - name: Deploy library
         run: pnpm run deploy:lib
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Deploy document
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.ACCESS_TOKEN }}
+          github_token: ${{ secrets.CSE_NPM_TOKEN }}
           publish_dir: ./dist/document
 
   deploy_canary:
