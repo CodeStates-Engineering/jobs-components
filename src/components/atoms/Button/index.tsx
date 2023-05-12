@@ -101,7 +101,7 @@ export const Button = ({
         document.removeEventListener(EVENT_TYPE, enterClickEventListener);
     }
   }, [enterClick, onClick, isDisabled]);
-  console.log(theme.replaceAll('/', '_'));
+
   return (
     <button
       type={type}
