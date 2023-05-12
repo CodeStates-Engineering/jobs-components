@@ -74,11 +74,7 @@ body {
 
   background: var(--baseBackground);
 }
-input:checked[type='checkbox'] {
-  background-color: #666;
-  -webkit-appearance: checkbox;
-  appearance: checkbox;
-}
+
 html input[type='button'],
 input[type='email'],
 input[type='password'],

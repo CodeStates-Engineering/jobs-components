@@ -1,5 +1,6 @@
-import '../src/global.scss';
-import '@storybook/addon-console';
+import '../src/styles/_global.scss';
+
+import React from 'react';
 
 import { MemoryRouter } from 'react-router-dom';
 import { Compatibility } from '../src/plugins';

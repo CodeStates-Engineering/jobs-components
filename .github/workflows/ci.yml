@@ -1,13 +1,13 @@
-name: PR Test
+name: CI
 
 on:
   pull_request:
-    branches: ['release']
+    branches: 'main'
 
 env:
   NODE_VERSION: '18.13'
-  ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
   CSE_NPM_TOKEN: ${{secrets.CSE_NPM_TOKEN}}
+  NPM_REGISTRY_URL: 'https://npm.pkg.github.com/'
 
 jobs:
   test_code_convention:
@@ -15,8 +15,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-        with:
-          token: ${{secrets.CSE_NPM_TOKEN}}
 
       - name: Set node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v3
@@ -31,19 +29,17 @@ jobs:
           version: 8.5
           run_install: true
 
-      - name: Check eslint
-        run: pnpm lint
+      - name: Test eslint
+        run: pnpm rule:eslint
 
-      - name: Check prettier
-        run: pnpm prettier
+      - name: Test prettier
+        run: pnpm rule:prettier
 
-  build_test:
+  test_build:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
-        with:
-          token: ${{secrets.CSE_NPM_TOKEN}}
 
       - name: Set node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v3
@@ -58,11 +54,8 @@ jobs:
           version: 8.5
           run_install: true
 
-      - name: Clean build
-        run: pnpm run clean:build
+      - name: Test build library
+        run: pnpm build:lib
 
-      - name: Build package
-        run: pnpm run build:package
-
-      - name: Build storybook
-        run: pnpm run build:storybook
+      - name: Test build document
+        run: pnpm build:doc

@@ -48,7 +48,7 @@ export const Button = ({
   size = 'large',
   theme = 'white/purple600',
   onClick,
-  disabled,
+  disabled = false,
   shape = 'default',
   iconDirection = 'left',
   icon,
