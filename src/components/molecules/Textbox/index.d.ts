@@ -1,7 +1,7 @@
 /// <reference types="react" />
 import type { Validation } from '../../../hooks';
-import type { InputProps, InputContainerProps, InputType, InputContainerIntreractionProps } from '../../atoms';
-export type TextboxProps<_InputType extends InputType = 'text'> = Omit<InputProps<_InputType> & InputContainerProps, 'validationMessage' | 'name' | 'children'> & InputContainerIntreractionProps & {
+import type { InputProps, InputContainerProps, InputType, InputContainerInteractionProps } from '../../atoms';
+export type TextboxProps<_InputType extends InputType = 'text'> = Omit<InputProps<_InputType> & InputContainerProps, 'validationMessage' | 'name' | 'children'> & InputContainerInteractionProps & {
     onlyUpdatedByParent?: boolean;
     label?: string;
     unit?: React.ReactNode;

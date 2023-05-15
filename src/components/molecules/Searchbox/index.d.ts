@@ -1,8 +1,8 @@
 /// <reference types="react" />
 import type { Validation } from '../../../hooks';
-import type { InputProps, InputContainerProps, InputContainerIntreractionProps, OptionsProps, Option } from '../../atoms';
+import type { InputProps, InputContainerProps, InputContainerInteractionProps, OptionsProps, Option } from '../../atoms';
 type BaseOptionsProps = OptionsProps<Option<string>, false>;
-export type SearchboxProps = Omit<InputProps<'text'> & InputContainerProps, 'type' | 'children' | 'validationMessage' | 'name'> & Partial<Pick<BaseOptionsProps, 'float'>> & InputContainerIntreractionProps & {
+export type SearchboxProps = Omit<InputProps<'text'> & InputContainerProps, 'type' | 'children' | 'validationMessage' | 'name'> & Partial<Pick<BaseOptionsProps, 'float'>> & InputContainerInteractionProps & {
     selfFilter?: boolean;
     onlyUpdatedByParent?: boolean;
     options?: string[];

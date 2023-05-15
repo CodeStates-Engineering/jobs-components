@@ -1,2 +1,0 @@
-import{I as a}from"./index-6c3eb542.js";import"./jsx-runtime-94f6e698.js";import"./index-8db94870.js";import"./_commonjsHelpers-042e6b4d.js";import"./index-64131664.js";const n={title:"atoms/Input",component:a,args:{placeholder:"placeholder"}},r={};var e,t,o;r.parameters={...r.parameters,docs:{...(e=r.parameters)==null?void 0:e.docs,source:{originalSource:"{}",...(o=(t=r.parameters)==null?void 0:t.docs)==null?void 0:o.source}}};const d=["Default"];export{r as Default,d as __namedExportsOrder,n as default};
-//# sourceMappingURL=index.stories-f808450d.js.map

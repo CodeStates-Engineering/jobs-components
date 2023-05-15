@@ -1,7 +1,7 @@
 /// <reference types="react" />
 import type { Validation } from '../../../hooks';
-import type { InputProps, InputContainerProps, OptionsProps, Option, InputContainerIntreractionProps } from '../../atoms';
-export type SelectboxProps<_Option extends Option = Option> = Omit<InputProps<'button'> & InputContainerProps, 'type' | 'children' | 'validationMessage' | 'onFocus' | 'value' | 'onChange' | 'name'> & Partial<Pick<OptionsProps<_Option>, 'options' | 'float'>> & InputContainerIntreractionProps & {
+import type { InputProps, InputContainerProps, OptionsProps, Option, InputContainerInteractionProps } from '../../atoms';
+export type SelectboxProps<_Option extends Option = Option> = Omit<InputProps<'button'> & InputContainerProps, 'type' | 'children' | 'validationMessage' | 'onFocus' | 'value' | 'onChange' | 'name'> & Partial<Pick<OptionsProps<_Option>, 'options' | 'float'>> & InputContainerInteractionProps & {
     onlyUpdatedByParent?: boolean;
     onChange?: OptionsProps<_Option>['onSelect'];
     value?: Exclude<OptionsProps<_Option>['value'], undefined>['value'];

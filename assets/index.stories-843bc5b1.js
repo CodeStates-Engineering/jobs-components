@@ -1,0 +1,6 @@
+import{j as o}from"./jsx-runtime-94f6e698.js";import{T as s}from"./index-0229dc09.js";import"./index-8db94870.js";import"./_commonjsHelpers-042e6b4d.js";import"./useComponentSelfState-dbdc13dc.js";import"./index-e3b5ba34.js";import"./useValidation-c7011735.js";import"./index-64131664.js";import"./index-adb8cc3f.js";import"./index-85fe2785.js";import"./useTypography-0e7bc425.js";import"./index-6c3eb542.js";import"./index-8f534833.js";import"./index-1fc0ca9a.js";import"./index-f1d4be6e.js";import"./index-bc98936d.js";import"./index-31028963.js";import"./index-f799b55c.js";import"./index-636e19d2.js";import"./index-6f0f2d7c.js";import"./index-300c5525.js";import"./isObject-3c28966c.js";import"./index-2a531a4b.js";const R={title:"molecules/Textarea",component:s},p=t=>o.jsx("div",{style:{width:"300px"},children:o.jsx(s,{...t})}),r=p.bind({}),m={label:"Textarea",placeholder:"Textarea",validation:t=>{if(!t)return"This field is required"},disabled:!1};r.args=m;var e,i,a;r.parameters={...r.parameters,docs:{...(e=r.parameters)==null?void 0:e.docs,source:{originalSource:`args => <div style={{
+  width: '300px'
+}}>
+    <Textarea {...args} />
+  </div>`,...(a=(i=r.parameters)==null?void 0:i.docs)==null?void 0:a.source}}};const k=["Default"];export{r as Default,k as __namedExportsOrder,R as default};
+//# sourceMappingURL=index.stories-843bc5b1.js.map

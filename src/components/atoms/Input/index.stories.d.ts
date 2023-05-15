@@ -4,3 +4,4 @@ declare const meta: Meta<typeof Input>;
 export default meta;
 type Story = StoryObj<typeof Input>;
 export declare const Default: Story;
+export declare const Type: Story;
