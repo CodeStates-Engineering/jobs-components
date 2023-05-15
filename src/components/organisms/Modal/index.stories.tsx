@@ -1,17 +1,11 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import type { ComponentStory, ComponentMeta } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 
-import { Modal } from '..';
-import { Button } from '../../../atoms';
-
-import type { ModalProps } from '..';
-
-export default {
-  title: 'organisms/Modal',
-  component: Modal,
-} as ComponentMeta<typeof Modal>;
+import { Modal } from '.';
+import { Button } from '../../atoms';
 
 const DUMMY_TEXT = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur
 consectetur vulputate ultrices. Proin vestibulum velit et ornare lacinia.
@@ -55,75 +49,102 @@ orci, non mattis nisi. Phasellus fringilla ut nisi ultrices convallis.
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed luctus est ut
 enim molestie, in condimentum eros aliquet.`;
 
-const ModalStory: ComponentStory<typeof Modal> = (args) => {
-  const navigate = useNavigate();
-  const { search } = useLocation();
-
-  return (
-    <div
-      style={{
-        height: '100vh',
-        width: '100%',
-      }}
-    >
-      <Button
-        onClick={() => {
-          navigate('/?tab=1');
+const meta: Meta<typeof Modal> = {
+  title: 'organisms/Modal',
+  component: Modal,
+  decorators: [
+    (Story) => (
+      <div
+        style={{
+          height: '100vh',
+          width: '100%',
         }}
       >
-        Open
-      </Button>
-      <Modal
-        {...args}
-        opened={search.includes('?tab=')}
-        onClose={() => navigate('/')}
-      />
-    </div>
-  );
+        <Story />
+      </div>
+    ),
+  ],
 };
 
-export const Default = ModalStory.bind({});
-const defaultArgs: ModalProps = {
-  children: (
-    <>
-      <Modal.Header />
-      <Modal.Body>
-        <p>{DUMMY_TEXT}</p>
-      </Modal.Body>
-      <Modal.Footer>footer children</Modal.Footer>
-    </>
-  ),
-};
-Default.args = defaultArgs;
+export default meta;
 
-export const WithTabMenu = ModalStory.bind({});
-WithTabMenu.args = {
-  children: (
-    <>
-      <Modal.TabMenuHeader
-        items={[
-          {
-            label: 'Tab 1',
-            to: '/?tab=1',
-          },
-          {
-            label: 'Tab 2',
-            to: '/?tab=2',
-          },
-          {
-            label: 'Tab 3',
-            to: '/?tab=3',
-          },
-          {
-            label: 'Tab 4',
-            to: '/?tab=4',
-          },
-        ]}
-      />
-      <Modal.Body>
-        <p>{DUMMY_TEXT}</p>
-      </Modal.Body>
-      <Modal.Footer>footer children</Modal.Footer>
-    </>
-  ),
-} satisfies ModalProps;
+type Story = StoryObj<typeof Modal>;
+
+export const Default: Story = {
+  render: (args) => {
+    const navigate = useNavigate();
+    const { search } = useLocation();
+
+    return (
+      <>
+        <Button
+          onClick={() => {
+            navigate('/?tab=1');
+          }}
+        >
+          Open
+        </Button>
+        <Modal
+          {...args}
+          opened={search.includes('?tab=')}
+          onClose={() => navigate('/')}
+        >
+          <Modal.Header />
+          <Modal.Body>
+            <p>{DUMMY_TEXT}</p>
+          </Modal.Body>
+          <Modal.Footer>footer children</Modal.Footer>
+        </Modal>
+      </>
+    );
+  },
+};
+
+export const WithTabMenu: Story = {
+  render: (args) => {
+    const navigate = useNavigate();
+    const { search } = useLocation();
+
+    return (
+      <>
+        <Button
+          onClick={() => {
+            navigate('/?tab=1');
+          }}
+        >
+          Open
+        </Button>
+        <Modal
+          {...args}
+          opened={search.includes('?tab=')}
+          onClose={() => navigate('/')}
+        >
+          <Modal.TabMenuHeader
+            items={[
+              {
+                label: 'Tab 1',
+                to: '/?tab=1',
+              },
+              {
+                label: 'Tab 2',
+                to: '/?tab=2',
+              },
+              {
+                label: 'Tab 3',
+                to: '/?tab=3',
+              },
+              {
+                label: 'Tab 4',
+                to: '/?tab=4',
+              },
+            ]}
+          />
+          <Modal.Body>
+            <p>{DUMMY_TEXT}</p>
+          </Modal.Body>
+          <Modal.Footer>footer children</Modal.Footer>
+        </Modal>
+      </>
+    );
+  },
+};
