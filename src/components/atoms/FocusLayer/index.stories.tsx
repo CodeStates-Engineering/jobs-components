@@ -11,6 +11,12 @@ const meta: Meta<typeof FocusLayer> = {
     blur: true,
     children: 'In',
     focused: true,
+    priority: 3,
+  },
+  argTypes: {
+    priority: {
+      description: 'Layer는 우선순위를 가지며 숫자가 낮을수록 우선순위가 높다.',
+    },
   },
   decorators: [
     (Story) => (

@@ -10,7 +10,7 @@ import type { Validation } from '../../../hooks';
 import type {
   InputProps,
   InputContainerProps,
-  InputContainerIntreractionProps,
+  InputContainerInteractionProps,
   OptionsProps,
   Option,
 } from '../../atoms';
@@ -22,7 +22,7 @@ export type SearchboxProps = Omit<
   'type' | 'children' | 'validationMessage' | 'name'
 > &
   Partial<Pick<BaseOptionsProps, 'float'>> &
-  InputContainerIntreractionProps & {
+  InputContainerInteractionProps & {
     selfFilter?: boolean;
     onlyUpdatedByParent?: boolean;
     options?: string[];
@@ -106,7 +106,7 @@ export const Searchbox = ({
         validationMessage={validationMessage}
         validationSpace={validationSpace}
       >
-        <InputContainer.Intreraction onClick={onClick} size={size}>
+        <InputContainer.Interaction onClick={onClick} size={size}>
           <Input
             name={label}
             ref={ref}
@@ -124,7 +124,7 @@ export const Searchbox = ({
             placeholder={placeholder}
           />
           <Search />
-        </InputContainer.Intreraction>
+        </InputContainer.Interaction>
         <Options
           opened={opened}
           options={options}

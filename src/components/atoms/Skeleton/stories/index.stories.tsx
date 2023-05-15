@@ -1,22 +1,14 @@
-import React from 'react';
-
-import type { ComponentStory, ComponentMeta } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 
 import { Skeleton } from '..';
 
-import type { SkeletonProps } from '..';
-
-export default {
+const meta: Meta<typeof Skeleton> = {
   title: 'atoms/Skeleton',
   component: Skeleton,
-} as ComponentMeta<typeof Skeleton>;
-
-const SkeletonStory: ComponentStory<typeof Skeleton> = (args) => (
-  <Skeleton {...args} />
-);
-
-export const Default = SkeletonStory.bind({});
-const defaultArgs: SkeletonProps = {
-  children: 'Test text',
 };
-Default.args = defaultArgs;
+
+export default meta;
+
+type Story = StoryObj<typeof Skeleton>;
+
+export const Default: Story = {};
