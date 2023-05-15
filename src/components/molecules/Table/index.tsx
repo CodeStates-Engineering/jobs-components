@@ -26,29 +26,48 @@ interface DataConfig {
 }
 
 interface TableContextType {
+  draggingTitleIndex: number | null;
+  setDraggingTitleIndex?: (titleIndex: number | null) => void;
+  fixedTitleCount: number;
   dataConfigs?: DataConfig[];
   setDataConfigs?: (dataConfig: DataConfig[]) => void;
-  titleRenderingIndex: number;
+  titleIndex: number;
+  cellIndex: number;
 }
 
 export interface TableProps {
+  fixedTitleCount: number;
   className?: string;
   children?: ReactNode;
 }
 
 const TableContext = createContext<TableContextType>({
-  titleRenderingIndex: 0,
+  draggingTitleIndex: null,
+  fixedTitleCount: 0,
+  titleIndex: 0,
+  cellIndex: 0,
 });
 
-const TableMain = ({ className, children }: TableProps) => {
+const TableMain = ({
+  className,
+  children,
+  fixedTitleCount = 3,
+}: TableProps) => {
   const [dataConfigs, setDataConfigs] = useState<DataConfig[]>([]);
+  const [draggingTitleIndex, setDraggingTitleIndex] = useState<number | null>(
+    null,
+  );
   const tableContextValue = useMemo(
     () => ({
+      fixedTitleCount,
+      draggingTitleIndex,
+      setDraggingTitleIndex,
+      titleIndex: 0,
+      cellIndex: 0,
       dataConfigs,
       setDataConfigs,
-      titleRenderingIndex: 0,
     }),
-    [dataConfigs],
+    [dataConfigs, draggingTitleIndex, fixedTitleCount],
   );
 
   return (
@@ -107,21 +126,29 @@ export interface TableHeaderItemProps {
 
 const TableTitle = ({ children }: TableHeaderItemProps) => {
   const tableContext = useContext(TableContext);
-  const { dataConfigs, titleRenderingIndex, setDataConfigs } = tableContext;
+  const {
+    dataConfigs,
+    titleIndex,
+    setDataConfigs,
+    setDraggingTitleIndex,
+    draggingTitleIndex,
+    fixedTitleCount,
+  } = tableContext;
   const ref = useRef<HTMLTableCellElement>(null);
 
   useEffect(() => {
     if (dataConfigs) {
-      const dataConfig = dataConfigs[titleRenderingIndex];
+      const dataConfig = dataConfigs[titleIndex];
       const { range } = dataConfig;
 
       if (!range.start && !range.end) {
         const [start] = ref.current?.getClientRects() || [];
         range.start = start.x;
         range.end = range.start + (ref.current?.offsetWidth || 0);
+        setDataConfigs?.([...dataConfigs]);
       }
     }
-  }, [dataConfigs, titleRenderingIndex]);
+  }, [dataConfigs, titleIndex, setDataConfigs]);
 
   const handleDrag = useMemo(
     () =>
@@ -130,46 +157,74 @@ const TableTitle = ({ children }: TableHeaderItemProps) => {
           const sortedDataConfigs = [...dataConfigs].sort(
             (a, b) => a.order.current - b.order.current,
           );
+
           const dataConfigIndexToChange = sortedDataConfigs.findIndex(
             ({ range: { start, end } }) => start <= clientX && clientX < end,
           );
 
-          if (dataConfigIndexToChange >= 0) {
+          if (
+            dataConfigIndexToChange >= 0 &&
+            configIndex !== dataConfigIndexToChange
+          ) {
             const orginalDataConfig = sortedDataConfigs[configIndex];
             const originalOrder = orginalDataConfig.order.original;
             const dataConfigToChange =
               sortedDataConfigs[dataConfigIndexToChange];
             const orderToChange = dataConfigToChange.order.original;
-
             orginalDataConfig.order.original = orderToChange;
             dataConfigToChange.order.original = originalOrder;
-
+            setDraggingTitleIndex?.(dataConfigIndexToChange);
             setDataConfigs?.(sortedDataConfigs);
           }
         },
-        300,
+        50,
       ),
-    [setDataConfigs],
+    [setDataConfigs, setDraggingTitleIndex],
   );
 
   if (!dataConfigs) {
     return <></>;
   }
 
-  if (titleRenderingIndex < dataConfigs.length) {
-    tableContext.titleRenderingIndex += 1;
+  if (titleIndex < dataConfigs.length - 1) {
+    tableContext.titleIndex += 1;
   } else {
-    tableContext.titleRenderingIndex = 0;
+    tableContext.titleIndex = 0;
+  }
+
+  let left = 0;
+  if (titleIndex < fixedTitleCount && dataConfigs) {
+    dataConfigs.forEach(({ range, order: { current } }) => {
+      if (!current) {
+        left -= range.start;
+      }
+      if (current === titleIndex) {
+        left += range.start;
+      }
+    });
   }
 
   return (
     <th
       ref={ref}
       draggable
-      className={styles['table-title']}
-      onDrag={({ clientX }) => {
-        handleDrag(clientX, dataConfigs, titleRenderingIndex);
+      style={{
+        left,
       }}
+      className={`${styles['table-title']} ${
+        titleIndex < fixedTitleCount && styles.fixed
+      }`}
+      onDragStart={() => {
+        setDraggingTitleIndex?.(titleIndex);
+      }}
+      onDrag={(e) => {
+        e.preventDefault();
+        handleDrag(e.clientX, dataConfigs, titleIndex);
+      }}
+      onDragOver={(e) => {
+        e.preventDefault();
+      }}
+      onDragEnd={() => setDraggingTitleIndex?.(null)}
     >
       {children}
     </th>
@@ -197,10 +252,50 @@ const TableRow = ({ children }: TableRowProps) => {
     });
   }
 
-  return <tr>{sortedChildren}</tr>;
+  return <tr className={styles.row}>{sortedChildren}</tr>;
 };
 
-const TableCell = ({ children }: TableRowProps) => <td>{children}</td>;
+const TableCell = ({ children }: TableRowProps) => {
+  const tableContext = useContext(TableContext);
+  const { cellIndex, dataConfigs, draggingTitleIndex, fixedTitleCount } =
+    tableContext;
+
+  if (dataConfigs) {
+    if (cellIndex < dataConfigs.length - 1) {
+      tableContext.cellIndex += 1;
+    } else {
+      tableContext.cellIndex = 0;
+    }
+  }
+
+  let left = 0;
+  let width = 0;
+  if (cellIndex < fixedTitleCount && dataConfigs) {
+    dataConfigs.forEach(({ range, order: { current } }) => {
+      if (!current) {
+        left -= range.start;
+      }
+      if (current === cellIndex) {
+        left += range.start;
+        width = range.end - range.start;
+      }
+    });
+  }
+
+  return (
+    <td
+      style={{
+        left,
+        width,
+      }}
+      className={`${styles.cell} ${
+        cellIndex < fixedTitleCount && styles.fixed
+      } ${draggingTitleIndex === cellIndex && styles['cell-dragging']}`}
+    >
+      {children}
+    </td>
+  );
+};
 
 export const Table = Object.assign(TableMain, {
   Header: TableHeader,

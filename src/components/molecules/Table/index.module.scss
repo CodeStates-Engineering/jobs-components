@@ -1,5 +1,34 @@
 @import '../../../styles/libs';
 
 .table-title {
-  cursor: pointer;
+  padding: 10px 20px;
+
+  white-space: nowrap;
+
+  cursor: move;
+}
+
+.cell {
+  overflow: hidden;
+
+  box-sizing: border-box;
+  padding: 10px 20px;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  transition: background-color 0.3s;
+}
+
+.fixed {
+  position: sticky;
+  z-index: 1;
+}
+
+.cell-dragging {
+  background-color: $GRAY-400;
+}
+
+.row {
+  position: relative;
 }
