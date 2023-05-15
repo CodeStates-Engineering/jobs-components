@@ -11,3 +11,4 @@ export * from './Accordion';
 export * from './Accordion/PartnerAccordion';
 
 export * from './File';
+export * from './Table';
