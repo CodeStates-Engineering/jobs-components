@@ -1,6 +1,5 @@
-import { cloneDeep, throttle } from 'lodash-es';
+import { cloneDeep, debounce, throttle } from 'lodash-es';
 
-import type { ReactNode } from 'react';
 import {
   useRef,
   useContext,
@@ -10,30 +9,43 @@ import {
   createContext,
   Children,
 } from 'react';
+import type { ReactNode, Dispatch, SetStateAction } from 'react';
 
 import styles from './index.module.scss';
 import { cleanClassName } from '../../../utils';
 
-interface DataConfig {
-  order: {
-    original: number;
-    current: number;
-  };
-  range: {
-    start: number;
-    end: number;
+interface TitleData {
+  order: number;
+  width: number;
+}
+
+interface TableState {
+  dragOverIndex?: number;
+  headerHeight?: number;
+  titles: TitleData[];
+}
+
+interface TableContextValue {
+  tableState: TableState;
+  setTableState: Dispatch<SetStateAction<TableState>>;
+  fixedTitleCount: number;
+  rendering: {
+    titleIndex: number;
+    cellIndex: number;
   };
 }
 
-interface TableContextType {
-  draggingTitleIndex: number | null;
-  setDraggingTitleIndex?: (titleIndex: number | null) => void;
-  fixedTitleCount: number;
-  dataConfigs?: DataConfig[];
-  setDataConfigs?: (dataConfig: DataConfig[]) => void;
-  titleIndex: number;
-  cellIndex: number;
-}
+const TableContext = createContext<TableContextValue>({
+  tableState: {
+    titles: [],
+  },
+  setTableState: () => undefined,
+  fixedTitleCount: 0,
+  rendering: {
+    titleIndex: 0,
+    cellIndex: 0,
+  },
+});
 
 export interface TableProps {
   fixedTitleCount: number;
@@ -41,33 +53,26 @@ export interface TableProps {
   children?: ReactNode;
 }
 
-const TableContext = createContext<TableContextType>({
-  draggingTitleIndex: null,
-  fixedTitleCount: 0,
-  titleIndex: 0,
-  cellIndex: 0,
-});
-
 const TableMain = ({
   className,
   children,
   fixedTitleCount = 3,
 }: TableProps) => {
-  const [dataConfigs, setDataConfigs] = useState<DataConfig[]>([]);
-  const [draggingTitleIndex, setDraggingTitleIndex] = useState<number | null>(
-    null,
-  );
-  const tableContextValue = useMemo(
+  const [tableState, setTableState] = useState<TableState>({
+    titles: [],
+  });
+
+  const tableContextValue: TableContextValue = useMemo(
     () => ({
+      tableState,
+      setTableState,
       fixedTitleCount,
-      draggingTitleIndex,
-      setDraggingTitleIndex,
-      titleIndex: 0,
-      cellIndex: 0,
-      dataConfigs,
-      setDataConfigs,
+      rendering: {
+        titleIndex: 0,
+        cellIndex: 0,
+      },
     }),
-    [dataConfigs, draggingTitleIndex, fixedTitleCount],
+    [fixedTitleCount, tableState],
   );
 
   return (
@@ -81,41 +86,42 @@ const TableMain = ({
 
 export interface TableHeaderProps {
   children?: ReactNode;
+  height?: number;
 }
 
-const TableHeader = ({ children }: TableHeaderProps) => {
+const TableHeader = ({ children, height }: TableHeaderProps) => {
   const titleCount = Children.count(children);
-  const { setDataConfigs, dataConfigs } = useContext(TableContext);
-  useEffect(() => {
-    setDataConfigs?.(
-      Array.from({ length: titleCount }, (_, index) => ({
-        order: {
-          original: index,
-          current: index,
-        },
-        range: {
-          start: 0,
-          end: 0,
-        },
+  const {
+    tableState: { headerHeight },
+    setTableState,
+  } = useContext(TableContext);
+  useEffect(
+    () =>
+      setTableState((prevState) => ({
+        ...prevState,
+        headerHeight: height,
+        titles: Array.from(
+          {
+            length: titleCount,
+          },
+          (_, order) => ({
+            order,
+            width: 0,
+          }),
+        ),
       })),
-    );
-  }, [titleCount, setDataConfigs]);
-
-  const sortedChildren: ReactNode[] = new Array(titleCount);
-
-  if (dataConfigs) {
-    Children.forEach(children, (child, index) => {
-      const currentOrder = dataConfigs.sort(
-        (a, b) => a.order.original - b.order.original,
-      )[index]?.order.current;
-
-      sortedChildren[currentOrder] = child;
-    });
-  }
+    [titleCount, setTableState, height],
+  );
 
   return (
-    <thead>
-      <tr>{sortedChildren}</tr>
+    <thead className={styles.header}>
+      <tr
+        style={{
+          height: headerHeight,
+        }}
+      >
+        {children}
+      </tr>
     </thead>
   );
 };
@@ -125,106 +131,69 @@ export interface TableHeaderItemProps {
 }
 
 const TableTitle = ({ children }: TableHeaderItemProps) => {
-  const tableContext = useContext(TableContext);
-  const {
-    dataConfigs,
-    titleIndex,
-    setDataConfigs,
-    setDraggingTitleIndex,
-    draggingTitleIndex,
-    fixedTitleCount,
-  } = tableContext;
+  const { tableState, setTableState } = useContext(TableContext);
+
+  const { dragOverIndex, titles } = tableState;
+
   const ref = useRef<HTMLTableCellElement>(null);
+  const { current: element } = ref;
+
+  const index = element?.cellIndex ?? 0;
+  const order = titles[index]?.order ?? 0;
+
+  const sortedTitles = [...titles].sort((a, b) => a.order - b.order);
+  let left = 0;
+  if (order) {
+    for (let i = 0; i < order; i += 1) {
+      left += sortedTitles[i].width;
+    }
+  }
 
   useEffect(() => {
-    if (dataConfigs) {
-      const dataConfig = dataConfigs[titleIndex];
-      const { range } = dataConfig;
+    if (element) {
+      const { offsetWidth, cellIndex, offsetHeight } = element;
+      setTableState((prevState) => {
+        prevState.titles[cellIndex].width = offsetWidth;
 
-      if (!range.start && !range.end) {
-        const [start] = ref.current?.getClientRects() || [];
-        range.start = start.x;
-        range.end = range.start + (ref.current?.offsetWidth || 0);
-        setDataConfigs?.([...dataConfigs]);
-      }
+        if ((prevState.headerHeight ?? 0) < offsetHeight) {
+          prevState.headerHeight = offsetHeight;
+        }
+        return { ...prevState };
+      });
     }
-  }, [dataConfigs, titleIndex, setDataConfigs]);
+  }, [element, setTableState]);
 
   const handleDrag = useMemo(
     () =>
-      throttle(
-        (clientX: number, dataConfigs: DataConfig[], configIndex: number) => {
-          const sortedDataConfigs = [...dataConfigs].sort(
-            (a, b) => a.order.current - b.order.current,
-          );
-
-          const dataConfigIndexToChange = sortedDataConfigs.findIndex(
-            ({ range: { start, end } }) => start <= clientX && clientX < end,
-          );
-
-          if (
-            dataConfigIndexToChange >= 0 &&
-            configIndex !== dataConfigIndexToChange
-          ) {
-            const orginalDataConfig = sortedDataConfigs[configIndex];
-            const originalOrder = orginalDataConfig.order.original;
-            const dataConfigToChange =
-              sortedDataConfigs[dataConfigIndexToChange];
-            const orderToChange = dataConfigToChange.order.original;
-            orginalDataConfig.order.original = orderToChange;
-            dataConfigToChange.order.original = originalOrder;
-            setDraggingTitleIndex?.(dataConfigIndexToChange);
-            setDataConfigs?.(sortedDataConfigs);
-          }
-        },
-        50,
-      ),
-    [setDataConfigs, setDraggingTitleIndex],
+      debounce((tableState: TableState) => {
+        const { titles, dragOverIndex } = tableState;
+        if (dragOverIndex !== undefined && dragOverIndex !== index) {
+          const dragOverTitleOrder = titles[dragOverIndex].order;
+          titles[dragOverIndex].order = titles[index].order;
+          titles[index].order = dragOverTitleOrder;
+          setTableState({ ...tableState });
+        }
+      }, 100),
+    [index, setTableState],
   );
-
-  if (!dataConfigs) {
-    return <></>;
-  }
-
-  if (titleIndex < dataConfigs.length - 1) {
-    tableContext.titleIndex += 1;
-  } else {
-    tableContext.titleIndex = 0;
-  }
-
-  let left = 0;
-  if (titleIndex < fixedTitleCount && dataConfigs) {
-    dataConfigs.forEach(({ range, order: { current } }) => {
-      if (!current) {
-        left -= range.start;
-      }
-      if (current === titleIndex) {
-        left += range.start;
-      }
-    });
-  }
 
   return (
     <th
       ref={ref}
-      draggable
       style={{
         left,
       }}
-      className={`${styles['table-title']} ${
-        titleIndex < fixedTitleCount && styles.fixed
-      }`}
-      onDragStart={() => {
-        setDraggingTitleIndex?.(titleIndex);
-      }}
-      onDrag={(e) => {
-        e.preventDefault();
-        handleDrag(e.clientX, dataConfigs, titleIndex);
-      }}
+      draggable
       onDragOver={(e) => {
         e.preventDefault();
+        if (dragOverIndex !== index) {
+          tableState.dragOverIndex = index;
+        }
       }}
-      onDragEnd={() => setDraggingTitleIndex?.(null)}
+      onDrag={() => {
+        handleDrag(tableState);
+      }}
+      className={styles.title}
     >
       {children}
     </th>
@@ -242,59 +211,29 @@ export interface TableRowProps {
 }
 
 const TableRow = ({ children }: TableRowProps) => {
-  const { dataConfigs } = useContext(TableContext);
+  const {
+    tableState: { titles },
+  } = useContext(TableContext);
 
-  const sortedChildren: ReactNode[] = new Array(Children.count(children));
-
-  if (dataConfigs?.length) {
-    Children.forEach(children, (child, index) => {
-      sortedChildren[dataConfigs[index].order.current] = child;
-    });
-  }
-
-  return <tr className={styles.row}>{sortedChildren}</tr>;
+  return <tr>{children}</tr>;
 };
 
 const TableCell = ({ children }: TableRowProps) => {
-  const tableContext = useContext(TableContext);
-  const { cellIndex, dataConfigs, draggingTitleIndex, fixedTitleCount } =
-    tableContext;
+  const {
+    rendering,
+    fixedTitleCount,
+    tableState: { titles, draggingTitleIndex },
+  } = useContext(TableContext);
 
-  if (dataConfigs) {
-    if (cellIndex < dataConfigs.length - 1) {
-      tableContext.cellIndex += 1;
-    } else {
-      tableContext.cellIndex = 0;
-    }
+  const { cellIndex } = rendering;
+
+  if (cellIndex < titles.length - 1) {
+    rendering.cellIndex += 1;
+  } else {
+    rendering.cellIndex = 0;
   }
 
-  let left = 0;
-  let width = 0;
-  if (cellIndex < fixedTitleCount && dataConfigs) {
-    dataConfigs.forEach(({ range, order: { current } }) => {
-      if (!current) {
-        left -= range.start;
-      }
-      if (current === cellIndex) {
-        left += range.start;
-        width = range.end - range.start;
-      }
-    });
-  }
-
-  return (
-    <td
-      style={{
-        left,
-        width,
-      }}
-      className={`${styles.cell} ${
-        cellIndex < fixedTitleCount && styles.fixed
-      } ${draggingTitleIndex === cellIndex && styles['cell-dragging']}`}
-    >
-      {children}
-    </td>
-  );
+  return <td>{children}</td>;
 };
 
 export const Table = Object.assign(TableMain, {

@@ -16,7 +16,7 @@ const meta: Meta<typeof Table> = {
           ))}
         </Table.Header>
         <Table.Body>
-          {new Array(15).fill(0).map((_, rowIndex) => (
+          {new Array(30).fill(0).map((_, rowIndex) => (
             <Table.Row key={`row${rowIndex}`}>
               {new Array(15).fill(0).map((_, cellIndex) => (
                 <Table.Cell key={` Cell ${rowIndex}-${cellIndex}`}>
@@ -34,6 +34,7 @@ const meta: Meta<typeof Table> = {
     (Story) => (
       <article
         style={{
+          height: '500px',
           width: '100%',
         }}
       >

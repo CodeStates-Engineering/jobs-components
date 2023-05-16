@@ -1,34 +1,23 @@
 @import '../../../styles/libs';
 
-.table-title {
-  padding: 10px 20px;
-
-  white-space: nowrap;
-
-  cursor: move;
-}
-
-.cell {
-  overflow: hidden;
-
-  box-sizing: border-box;
-  padding: 10px 20px;
-
-  text-overflow: ellipsis;
-  white-space: nowrap;
-
-  transition: background-color 0.3s;
-}
-
-.fixed {
-  position: sticky;
-  z-index: 1;
-}
-
-.cell-dragging {
-  background-color: $GRAY-400;
-}
-
-.row {
+.table {
   position: relative;
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+
+  background-color: $WHITE;
+}
+
+.title {
+  position: absolute;
+
+  padding: 10px;
+
+  white-space: pre;
+
+  transition: left 0.3s ease-in-out;
 }
