@@ -1,4 +1,4 @@
-import { cloneDeep, debounce, throttle } from 'lodash-es';
+import { cloneDeep, debounce, isNumber, omit, throttle } from 'lodash-es';
 
 import {
   useRef,
@@ -16,12 +16,11 @@ import { cleanClassName } from '../../../utils';
 
 interface TitleData {
   order: number;
-  width: number;
+  width?: number;
 }
 
 interface TableState {
-  dragOverIndex?: number;
-  headerHeight?: number;
+  draggingIndex?: number;
   titles: TitleData[];
 }
 
@@ -29,10 +28,6 @@ interface TableContextValue {
   tableState: TableState;
   setTableState: Dispatch<SetStateAction<TableState>>;
   fixedTitleCount: number;
-  rendering: {
-    titleIndex: number;
-    cellIndex: number;
-  };
 }
 
 const TableContext = createContext<TableContextValue>({
@@ -41,10 +36,6 @@ const TableContext = createContext<TableContextValue>({
   },
   setTableState: () => undefined,
   fixedTitleCount: 0,
-  rendering: {
-    titleIndex: 0,
-    cellIndex: 0,
-  },
 });
 
 export interface TableProps {
@@ -67,10 +58,6 @@ const TableMain = ({
       tableState,
       setTableState,
       fixedTitleCount,
-      rendering: {
-        titleIndex: 0,
-        cellIndex: 0,
-      },
     }),
     [fixedTitleCount, tableState],
   );
@@ -86,42 +73,40 @@ const TableMain = ({
 
 export interface TableHeaderProps {
   children?: ReactNode;
-  height?: number;
 }
 
-const TableHeader = ({ children, height }: TableHeaderProps) => {
+const TableHeader = ({ children }: TableHeaderProps) => {
   const titleCount = Children.count(children);
   const {
-    tableState: { headerHeight },
     setTableState,
+    tableState: { titles },
   } = useContext(TableContext);
-  useEffect(
-    () =>
-      setTableState((prevState) => ({
-        ...prevState,
-        headerHeight: height,
-        titles: Array.from(
-          {
-            length: titleCount,
-          },
-          (_, order) => ({
-            order,
-            width: 0,
-          }),
-        ),
-      })),
-    [titleCount, setTableState, height],
-  );
+  useEffect(() => {
+    setTableState((prevState) => ({
+      ...prevState,
+      titles: Array.from(
+        {
+          length: titleCount,
+        },
+        (_, order) => ({
+          order,
+        }),
+      ),
+    }));
+  }, [titleCount, setTableState]);
+
+  const sortedChildren: ReactNode[] = Array.from({
+    length: titleCount,
+  });
+
+  Children.forEach(children, (child, index) => {
+    const order = titles[index]?.order;
+    sortedChildren[order] = child;
+  });
 
   return (
-    <thead className={styles.header}>
-      <tr
-        style={{
-          height: headerHeight,
-        }}
-      >
-        {children}
-      </tr>
+    <thead>
+      <tr>{sortedChildren}</tr>
     </thead>
   );
 };
@@ -131,69 +116,70 @@ export interface TableHeaderItemProps {
 }
 
 const TableTitle = ({ children }: TableHeaderItemProps) => {
-  const { tableState, setTableState } = useContext(TableContext);
+  const { tableState, setTableState, fixedTitleCount } =
+    useContext(TableContext);
 
-  const { dragOverIndex, titles } = tableState;
+  const { titles } = tableState;
 
   const ref = useRef<HTMLTableCellElement>(null);
-  const { current: element } = ref;
-
-  const index = element?.cellIndex ?? 0;
-  const order = titles[index]?.order ?? 0;
-
-  const sortedTitles = [...titles].sort((a, b) => a.order - b.order);
-  let left = 0;
-  if (order) {
-    for (let i = 0; i < order; i += 1) {
-      left += sortedTitles[i].width;
-    }
-  }
 
   useEffect(() => {
+    const { current: element } = ref;
     if (element) {
-      const { offsetWidth, cellIndex, offsetHeight } = element;
+      const { offsetWidth, cellIndex } = element;
       setTableState((prevState) => {
         prevState.titles[cellIndex].width = offsetWidth;
-
-        if ((prevState.headerHeight ?? 0) < offsetHeight) {
-          prevState.headerHeight = offsetHeight;
-        }
         return { ...prevState };
       });
     }
-  }, [element, setTableState]);
+  }, [ref, setTableState]);
 
-  const handleDrag = useMemo(
-    () =>
-      debounce((tableState: TableState) => {
-        const { titles, dragOverIndex } = tableState;
-        if (dragOverIndex !== undefined && dragOverIndex !== index) {
-          const dragOverTitleOrder = titles[dragOverIndex].order;
-          titles[dragOverIndex].order = titles[index].order;
-          titles[index].order = dragOverTitleOrder;
-          setTableState({ ...tableState });
-        }
-      }, 100),
-    [index, setTableState],
+  const index = titles.findIndex(
+    (title) => title.order === ref.current?.cellIndex,
   );
+
+  const { draggingIndex } = tableState;
+
+  const setDraggingIndex = (draggingIndex?: number) =>
+    setTableState((prevState) => ({
+      ...prevState,
+      draggingIndex,
+    }));
+
+  const handleDragEnter = () => {
+    if (isNumber(draggingIndex) && index >= 0) {
+      let sortedTitles = [...titles];
+
+      const [draggingTitle] = sortedTitles.splice(draggingIndex, 1);
+
+      sortedTitles = sortedTitles.sort((a, b) => a.order - b.order);
+
+      const { order } = titles[index];
+
+      sortedTitles = [
+        ...sortedTitles.slice(0, order),
+        draggingTitle,
+        ...sortedTitles.slice(order),
+      ];
+
+      sortedTitles.forEach((title, newOrder) => {
+        title.order = newOrder;
+      });
+
+      setTableState({
+        ...tableState,
+      });
+    }
+  };
 
   return (
     <th
       ref={ref}
-      style={{
-        left,
-      }}
       draggable
-      onDragOver={(e) => {
-        e.preventDefault();
-        if (dragOverIndex !== index) {
-          tableState.dragOverIndex = index;
-        }
-      }}
-      onDrag={() => {
-        handleDrag(tableState);
-      }}
-      className={styles.title}
+      onDragOver={(e) => e.preventDefault()}
+      onDragStart={() => setDraggingIndex(index)}
+      onDrop={() => handleDragEnter()}
+      onDragEnd={() => setDraggingIndex()}
     >
       {children}
     </th>
@@ -215,25 +201,30 @@ const TableRow = ({ children }: TableRowProps) => {
     tableState: { titles },
   } = useContext(TableContext);
 
-  return <tr>{children}</tr>;
+  return <tr className={styles.row}>{children}</tr>;
 };
 
 const TableCell = ({ children }: TableRowProps) => {
   const {
-    rendering,
-    fixedTitleCount,
-    tableState: { titles, draggingTitleIndex },
+    tableState: { titles, headerHeight },
   } = useContext(TableContext);
 
-  const { cellIndex } = rendering;
+  const ref = useRef<HTMLTableCellElement>(null);
+  const index = ref.current?.cellIndex;
 
-  if (cellIndex < titles.length - 1) {
-    rendering.cellIndex += 1;
-  } else {
-    rendering.cellIndex = 0;
-  }
+  const { width } = titles[index ?? 0] ?? {};
 
-  return <td>{children}</td>;
+  return (
+    <td
+      ref={ref}
+      className={styles.cell}
+      style={{
+        width,
+      }}
+    >
+      {children}
+    </td>
+  );
 };
 
 export const Table = Object.assign(TableMain, {
