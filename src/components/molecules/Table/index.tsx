@@ -1,4 +1,4 @@
-import { cloneDeep, debounce, isNumber, omit, throttle } from 'lodash-es';
+import { isNumber } from 'lodash-es';
 
 import {
   useRef,
@@ -10,17 +10,25 @@ import {
   Children,
 } from 'react';
 import type { ReactNode, Dispatch, SetStateAction } from 'react';
+import { Copy } from 'react-feather';
+import nodeToString from 'react-node-to-string';
 
 import styles from './index.module.scss';
 import { cleanClassName } from '../../../utils';
+import { Button } from '../../atoms';
 
 interface TitleData {
-  order: number;
+  order: {
+    origin: number;
+    current: number;
+  };
   width?: number;
 }
 
 interface TableState {
-  draggingIndex?: number;
+  draggingOrder?: number;
+  dropOrder?: number;
+  hoveredOrder?: number;
   titles: TitleData[];
 }
 
@@ -28,6 +36,7 @@ interface TableContextValue {
   tableState: TableState;
   setTableState: Dispatch<SetStateAction<TableState>>;
   fixedTitleCount: number;
+  isLeftScrolled: boolean;
 }
 
 const TableContext = createContext<TableContextValue>({
@@ -36,6 +45,7 @@ const TableContext = createContext<TableContextValue>({
   },
   setTableState: () => undefined,
   fixedTitleCount: 0,
+  isLeftScrolled: false,
 });
 
 export interface TableProps {
@@ -44,30 +54,33 @@ export interface TableProps {
   children?: ReactNode;
 }
 
-const TableMain = ({
-  className,
-  children,
-  fixedTitleCount = 3,
-}: TableProps) => {
+const TableMain = ({ className, children, fixedTitleCount }: TableProps) => {
   const [tableState, setTableState] = useState<TableState>({
     titles: [],
   });
+  const [isLeftScrolled, setIsLeftScrolled] = useState(false);
 
   const tableContextValue: TableContextValue = useMemo(
     () => ({
       tableState,
       setTableState,
       fixedTitleCount,
+      isLeftScrolled,
     }),
-    [fixedTitleCount, tableState],
+    [fixedTitleCount, tableState, isLeftScrolled],
   );
 
   return (
-    <table className={styles.table}>
-      <TableContext.Provider value={tableContextValue}>
-        {children}
-      </TableContext.Provider>
-    </table>
+    <article
+      className={cleanClassName(`${styles.table} ${className}`)}
+      onScroll={(e) => setIsLeftScrolled(e.currentTarget.scrollLeft > 0)}
+    >
+      <table>
+        <TableContext.Provider value={tableContextValue}>
+          {children}
+        </TableContext.Provider>
+      </table>
+    </article>
   );
 };
 
@@ -88,35 +101,32 @@ const TableHeader = ({ children }: TableHeaderProps) => {
         {
           length: titleCount,
         },
-        (_, order) => ({
-          order,
+        (_, index) => ({
+          order: {
+            origin: index,
+            current: index,
+          },
         }),
       ),
     }));
   }, [titleCount, setTableState]);
 
-  const sortedChildren: ReactNode[] = Array.from({
-    length: titleCount,
-  });
-
-  Children.forEach(children, (child, index) => {
-    const order = titles[index]?.order;
-    sortedChildren[order] = child;
-  });
+  const childrenArray = Children.toArray(children);
 
   return (
-    <thead>
-      <tr>{sortedChildren}</tr>
+    <thead className={styles.header}>
+      <tr>{titles.map(({ order: { origin } }) => childrenArray[origin])}</tr>
     </thead>
   );
 };
 
-export interface TableHeaderItemProps {
+export interface TableTitleProps {
   children?: ReactNode;
+  width?: number;
 }
 
-const TableTitle = ({ children }: TableHeaderItemProps) => {
-  const { tableState, setTableState, fixedTitleCount } =
+const TableTitle = ({ children, width }: TableTitleProps) => {
+  const { tableState, setTableState, fixedTitleCount, isLeftScrolled } =
     useContext(TableContext);
 
   const { titles } = tableState;
@@ -127,61 +137,126 @@ const TableTitle = ({ children }: TableHeaderItemProps) => {
     const { current: element } = ref;
     if (element) {
       const { offsetWidth, cellIndex } = element;
+
       setTableState((prevState) => {
-        prevState.titles[cellIndex].width = offsetWidth;
+        prevState.titles[cellIndex].width = width ?? offsetWidth;
+
         return { ...prevState };
       });
     }
-  }, [ref, setTableState]);
+  }, [ref, setTableState, width]);
 
-  const index = titles.findIndex(
-    (title) => title.order === ref.current?.cellIndex,
-  );
+  const currentOrder = ref.current?.cellIndex ?? -1;
 
-  const { draggingIndex } = tableState;
+  const { draggingOrder, hoveredOrder, dropOrder } = tableState;
 
-  const setDraggingIndex = (draggingIndex?: number) =>
-    setTableState((prevState) => ({
-      ...prevState,
-      draggingIndex,
-    }));
-
-  const handleDragEnter = () => {
-    if (isNumber(draggingIndex) && index >= 0) {
-      let sortedTitles = [...titles];
-
-      const [draggingTitle] = sortedTitles.splice(draggingIndex, 1);
-
-      sortedTitles = sortedTitles.sort((a, b) => a.order - b.order);
-
-      const { order } = titles[index];
-
-      sortedTitles = [
-        ...sortedTitles.slice(0, order),
-        draggingTitle,
-        ...sortedTitles.slice(order),
-      ];
-
-      sortedTitles.forEach((title, newOrder) => {
-        title.order = newOrder;
-      });
-
-      setTableState({
-        ...tableState,
-      });
+  const setHoveredOrder = (hoveredOrder?: number) => {
+    if (draggingOrder === undefined) {
+      setTableState((prevState) => ({
+        ...prevState,
+        hoveredOrder,
+      }));
     }
   };
 
+  const handleDrop = () => {
+    if (isNumber(draggingOrder) && currentOrder >= 0) {
+      let sortedTitles = [...titles];
+
+      const [draggingTitle] = sortedTitles.splice(draggingOrder, 1);
+
+      sortedTitles = sortedTitles.sort(
+        (a, b) => a.order.current - b.order.current,
+      );
+
+      const { order } = titles[currentOrder];
+
+      sortedTitles = [
+        ...sortedTitles.slice(0, order.current),
+        draggingTitle,
+        ...sortedTitles.slice(order.current),
+      ];
+
+      sortedTitles.forEach((title, newOrder) => {
+        title.order.current = newOrder;
+      });
+
+      const newTableState = {
+        ...tableState,
+        titles: sortedTitles,
+        dropOrder: undefined,
+        draggingOrder: undefined,
+        hoveredOrder: undefined,
+      };
+
+      setTableState(newTableState);
+
+      setTimeout(() =>
+        setTableState({
+          ...newTableState,
+          hoveredOrder: currentOrder,
+        }),
+      );
+    }
+  };
+
+  const isDropTarget = dropOrder === currentOrder;
+  const isDragging = draggingOrder === currentOrder;
+
+  let left = 0;
+  for (let i = 0; i < currentOrder; i += 1) {
+    left += titles[i]?.width ?? 0;
+  }
+
   return (
     <th
+      style={{
+        left,
+      }}
+      className={cleanClassName(
+        `${styles.title} ${currentOrder < fixedTitleCount && styles.fixed} ${
+          currentOrder === fixedTitleCount - 1 &&
+          isLeftScrolled &&
+          styles.shadow
+        } ${hoveredOrder === currentOrder && styles.hovered} ${
+          hoveredOrder === currentOrder && styles.hovered
+        } ${hoveredOrder === currentOrder && styles.hovered} ${
+          isDropTarget &&
+          (isDragging ||
+            ((draggingOrder ?? 0) > dropOrder
+              ? styles['drop-left']
+              : styles['drop-right']))
+        } ${isDragging && (isDropTarget ? styles.restoring : styles.dragging)}`,
+      )}
       ref={ref}
       draggable
+      onMouseEnter={() => setHoveredOrder(currentOrder)}
+      onMouseLeave={() => {
+        setHoveredOrder();
+      }}
       onDragOver={(e) => e.preventDefault()}
-      onDragStart={() => setDraggingIndex(index)}
-      onDrop={() => handleDragEnter()}
-      onDragEnd={() => setDraggingIndex()}
+      onDragStart={() =>
+        setTableState((prevState) => ({
+          ...prevState,
+          draggingOrder: currentOrder,
+        }))
+      }
+      onDragEnter={() =>
+        setTableState((prevState) => ({
+          ...prevState,
+          dropOrder: currentOrder,
+        }))
+      }
+      onDrop={handleDrop}
     >
-      {children}
+      <div
+        className={styles['title-content']}
+        style={{
+          width,
+        }}
+      >
+        {children}
+      </div>
     </th>
   );
 };
@@ -201,28 +276,96 @@ const TableRow = ({ children }: TableRowProps) => {
     tableState: { titles },
   } = useContext(TableContext);
 
-  return <tr className={styles.row}>{children}</tr>;
+  const childrenArray = Children.toArray(children);
+
+  return (
+    <tr className={styles.row}>
+      {titles.map(({ order: { origin } }) => childrenArray[origin])}
+    </tr>
+  );
 };
 
-const TableCell = ({ children }: TableRowProps) => {
+export interface TableCellProps {
+  children?: ReactNode;
+  onCopy?: (value: string) => void;
+}
+
+const TableCell = ({ children, onCopy }: TableCellProps) => {
   const {
-    tableState: { titles, headerHeight },
+    tableState: { titles, hoveredOrder, draggingOrder, dropOrder },
+    fixedTitleCount,
+    isLeftScrolled,
   } = useContext(TableContext);
 
   const ref = useRef<HTMLTableCellElement>(null);
-  const index = ref.current?.cellIndex;
+  const currentOrder = ref.current?.cellIndex ?? -1;
 
-  const { width } = titles[index ?? 0] ?? {};
+  const { width } = titles[currentOrder ?? 0] ?? {};
+  let left = 0;
+  for (let i = 0; i < currentOrder; i += 1) {
+    left += titles[i]?.width ?? 0;
+  }
+
+  const [isHovered, setIsHovered] = useState(false);
+
+  const isDropTarget = dropOrder === currentOrder;
+  const isDragging = draggingOrder === currentOrder;
 
   return (
     <td
       ref={ref}
-      className={styles.cell}
       style={{
-        width,
+        left,
       }}
+      className={cleanClassName(
+        `${styles.cell} ${currentOrder < fixedTitleCount && styles.fixed} ${
+          currentOrder === fixedTitleCount - 1 &&
+          isLeftScrolled &&
+          styles.shadow
+        } ${hoveredOrder === currentOrder && styles.hovered} ${
+          isDropTarget &&
+          (isDragging ||
+            ((draggingOrder ?? 0) > dropOrder
+              ? styles['drop-left']
+              : styles['drop-right']))
+        } ${isDragging && (isDropTarget ? styles.restoring : styles.dragging)}`,
+      )}
     >
-      {children}
+      <div
+        style={{
+          width,
+        }}
+        className={cleanClassName(`${styles['cell-content']}`)}
+        onMouseEnter={({ currentTarget }) => {
+          if (currentTarget.scrollWidth > currentTarget.clientWidth || onCopy) {
+            setIsHovered(true);
+          }
+        }}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        {children}
+        {isHovered ? (
+          <div className={styles['hovered-cell']}>
+            {children}
+            {onCopy ? (
+              <div className={styles['copy-button-wrap']}>
+                <Button
+                  className={styles['copy-button']}
+                  size="small"
+                  shape="round"
+                  theme="bluish-gray700/0"
+                  icon={<Copy size={14} />}
+                  onClick={() => {
+                    const childrenString = nodeToString(children);
+                    navigator.clipboard.writeText(childrenString);
+                    onCopy?.(childrenString);
+                  }}
+                />
+              </div>
+            ) : null}
+          </div>
+        ) : null}
+      </div>
     </td>
   );
 };

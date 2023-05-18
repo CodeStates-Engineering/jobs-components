@@ -8,17 +8,18 @@ const meta: Meta<typeof Table> = {
   title: 'molecules/Table',
   component: Table,
   args: {
+    fixedTitleCount: 3,
     children: (
       <>
         <Table.Header>
-          {new Array(15).fill(0).map((_, index) => (
+          {new Array(30).fill(0).map((_, index) => (
             <Table.Title key={`key-${index}`}>Title {index}</Table.Title>
           ))}
         </Table.Header>
         <Table.Body>
-          {new Array(15).fill(0).map((_, rowIndex) => (
+          {new Array(30).fill(0).map((_, rowIndex) => (
             <Table.Row key={`row${rowIndex}`}>
-              {new Array(15).fill(0).map((_, cellIndex) => (
+              {new Array(30).fill(0).map((_, cellIndex) => (
                 <Table.Cell key={` Cell ${rowIndex}-${cellIndex}`}>
                   Cell {rowIndex}-{cellIndex}
                 </Table.Cell>
@@ -32,7 +33,12 @@ const meta: Meta<typeof Table> = {
 
   decorators: [
     (Story) => (
-      <article>
+      <article
+        style={{
+          width: '100%',
+          height: 900,
+        }}
+      >
         <Story />
       </article>
     ),
