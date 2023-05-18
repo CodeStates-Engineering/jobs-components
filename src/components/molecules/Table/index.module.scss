@@ -80,7 +80,7 @@
   border-left: 20px $BLUISH-GRAY-10 solid;
 }
 
-.cell-content {
+.cell-content-container {
   position: relative;
   overflow: hidden;
 
@@ -88,13 +88,17 @@
   padding: 8px 16px;
 
   text-overflow: ellipsis;
-  white-space: pre;
-  &:has(.hovered-cell) {
+  white-space: nowrap;
+  &:has(.hovered-cell-content) {
     overflow: unset;
   }
 }
 
-.hovered-cell {
+.hidden {
+  visibility: hidden;
+}
+
+.hovered-cell-content {
   position: absolute;
   top: 7px;
   left: 8px;
@@ -107,6 +111,8 @@
   border-radius: 4px;
 
   background-color: $WHITE;
+
+  white-space: pre;
 
   transition: background-color 0.3s, border 0.3s;
   @include fade-in(0.2s);
