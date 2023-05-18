@@ -219,8 +219,6 @@ const TableTitle = ({ children, width }: TableTitleProps) => {
           isLeftScrolled &&
           styles.shadow
         } ${hoveredOrder === currentOrder && styles.hovered} ${
-          hoveredOrder === currentOrder && styles.hovered
-        } ${hoveredOrder === currentOrder && styles.hovered} ${
           isDropTarget &&
           (isDragging ||
             ((draggingOrder ?? 0) > dropOrder
