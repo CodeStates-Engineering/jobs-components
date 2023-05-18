@@ -30,7 +30,7 @@
 
   cursor: move;
 
-  transition: background-color 0.3s, box-shadow 0.3s, border-width 0.3s;
+  transition: background-color 0.3s, box-shadow 0.3s;
   &.hovered {
     background-color: $BLUISH-GRAY-10;
   }
@@ -57,13 +57,18 @@
 
   background-color: $WHITE;
 
-  transition: background-color 0.3s, box-shadow 0.3s, border-width 0.3s;
+  transition: background-color 0.3s, box-shadow 0.3s;
   &.hovered {
     background-color: $BLUISH-GRAY-10;
   }
   &:hover {
     z-index: 3;
   }
+}
+
+.drop-left,
+.drop-right {
+  transition: border-width 0.3s;
 }
 
 .drop-right {
