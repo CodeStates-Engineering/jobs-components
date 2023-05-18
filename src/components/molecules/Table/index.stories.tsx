@@ -13,14 +13,19 @@ const meta: Meta<typeof Table> = {
       <>
         <Table.Header>
           {new Array(30).fill(0).map((_, index) => (
-            <Table.Title key={`key-${index}`}>Title {index}</Table.Title>
+            <Table.Title width={60} key={`key-${index}`}>
+              Title {index}
+            </Table.Title>
           ))}
         </Table.Header>
         <Table.Body>
           {new Array(30).fill(0).map((_, rowIndex) => (
             <Table.Row key={`row${rowIndex}`}>
               {new Array(30).fill(0).map((_, cellIndex) => (
-                <Table.Cell key={` Cell ${rowIndex}-${cellIndex}`}>
+                <Table.Cell
+                  key={` Cell ${rowIndex}-${cellIndex}`}
+                  onCopy={() => undefined}
+                >
                   Cell {rowIndex}-{cellIndex}
                 </Table.Cell>
               ))}
