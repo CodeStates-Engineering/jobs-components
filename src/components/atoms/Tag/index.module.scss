@@ -1,0 +1,82 @@
+@import '../../../styles/libs';
+
+@mixin border-by-color($borderColor) {
+  border: 1px solid $borderColor;
+}
+
+.tag-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 1px 8px;
+  border-radius: 4px;
+
+  font-weight: 600;
+  white-space: pre;
+}
+.size-14 {
+  height: 14px;
+  font-size: $SMALL3X;
+}
+.size-18 {
+  height: 18px;
+  font-size: $SMALL3X;
+}
+.size-26 {
+  height: 26px;
+  font-size: $SMALL;
+}
+
+.close {
+  width: 8px;
+  height: 8px;
+  stroke-width: 1.5;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+//* Close Button Size
+.close-14 {
+  margin-left: 4px;
+}
+.close-18 {
+  margin-left: 6px;
+}
+.close-26 {
+  margin-left: 6px;
+}
+
+//* Theme
+.green50 {
+  color: $GREEN-600;
+  background: $GREEN-50;
+  @include border-by-color($GREEN-100);
+}
+.purple50 {
+  color: $PURPLE-550;
+  background: $PURPLE-50;
+  @include border-by-color($PURPLE-100);
+}
+.blue50 {
+  color: $BLUE-600;
+  background: $BLUE-50;
+  @include border-by-color($BLUE-100);
+}
+.peach50 {
+  color: $PEACH-600;
+  background: $PEACH-50;
+  @include border-by-color($PEACH-100);
+}
+.orange50 {
+  color: $ORANGE-600;
+  background: $ORANGE-50;
+  @include border-by-color($ORANGE-100);
+}
+.bluish-gray50 {
+  color: $BLUISH_GRAY-600;
+  background: $BLUISH_GRAY-50;
+  @include border-by-color($BLUISH_GRAY-100);
+}
