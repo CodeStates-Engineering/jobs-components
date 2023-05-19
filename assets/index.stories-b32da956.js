@@ -1,0 +1,2 @@
+import{L as a}from"./index-fc2f7366.js";import"./jsx-runtime-94f6e698.js";import"./index-8db94870.js";import"./_commonjsHelpers-042e6b4d.js";import"./index-64131664.js";const i={title:"atoms/Label",component:a,args:{children:"Label",htmlFor:""}},r={};var e,t,o;r.parameters={...r.parameters,docs:{...(e=r.parameters)==null?void 0:e.docs,source:{originalSource:"{}",...(o=(t=r.parameters)==null?void 0:t.docs)==null?void 0:o.source}}};const n=["Default"];export{r as Default,n as __namedExportsOrder,i as default};
+//# sourceMappingURL=index.stories-b32da956.js.map
