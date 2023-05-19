@@ -123,6 +123,13 @@
     }
   }
 
+  &.size-small3x {
+    height: 20px;
+    &.children-type-icon {
+      width: 20px;
+    }
+  }
+
   &.size-small {
     height: 32px;
     &.children-type-icon {

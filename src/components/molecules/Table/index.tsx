@@ -352,7 +352,7 @@ const TableCell = ({ children, onCopy, className }: TableCellProps) => {
               <div className={styles['copy-button-wrap']}>
                 <Button
                   className={styles['copy-button']}
-                  size="small"
+                  size="small3x"
                   shape="round"
                   theme="bluish-gray700/0"
                   icon={<Copy size={14} />}

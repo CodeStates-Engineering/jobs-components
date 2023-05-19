@@ -20,7 +20,7 @@ export type ButtonProps = Pick<
 > &
   Typography & {
     delay?: number;
-    size?: 'small' | 'medium' | 'large';
+    size?: 'small3x' | 'small' | 'medium' | 'large';
     theme?:
       | 'white/purple600'
       | 'white/bluish-gray800'
