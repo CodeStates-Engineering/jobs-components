@@ -210,8 +210,6 @@ const TableTitle = ({ children, width, className }: TableTitleProps) => {
   const isFixed = currentOrder < fixedTitleCount;
   const isLastFixed = currentOrder === fixedTitleCount - 1;
   const isHovered = hoveredOrder === currentOrder;
-  const isLeftDropTarget =
-    isDragging || (draggingOrder ?? 0) > (dropOrder ?? 0);
 
   return (
     <th
@@ -222,10 +220,13 @@ const TableTitle = ({ children, width, className }: TableTitleProps) => {
         `${styles.title} ${isFixed && styles.fixed} ${
           isLastFixed && isLeftScrolled && styles.shadow
         } ${isHovered && styles.hovered} ${
-          isDropTarget && isLeftDropTarget
-            ? styles['drop-left']
-            : styles['drop-right']
-        })
+          isDropTarget &&
+          (isDragging ||
+            ((draggingOrder ?? 0) > dropOrder
+              ? styles['drop-left']
+              : styles['drop-right']))
+        } ${isDragging && (isDropTarget ? styles.restoring : styles.dragging)} 
+
         } ${
           isDragging && (isDropTarget ? styles.restoring : styles.dragging)
         } ${className}`,
@@ -310,8 +311,6 @@ const TableCell = ({ children, onCopy, className }: TableCellProps) => {
   const isFixed = currentOrder < fixedTitleCount;
   const isLastFixed = currentOrder === fixedTitleCount - 1;
   const isTitleHovered = hoveredOrder === currentOrder;
-  const isLeftDropTarget =
-    isDragging || (draggingOrder ?? 0) > (dropOrder ?? 0);
 
   return (
     <td
@@ -324,8 +323,10 @@ const TableCell = ({ children, onCopy, className }: TableCellProps) => {
           isLastFixed && isLeftScrolled && styles.shadow
         } ${isTitleHovered && styles.hovered} ${
           isDropTarget &&
-          (isLeftDropTarget ? styles['drop-left'] : styles['drop-right'])
-        })
+          (isDragging ||
+            ((draggingOrder ?? 0) > dropOrder
+              ? styles['drop-left']
+              : styles['drop-right']))
         } ${
           isDragging && (isDropTarget ? styles.restoring : styles.dragging)
         } ${className}`,
