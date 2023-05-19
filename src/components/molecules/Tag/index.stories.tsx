@@ -5,7 +5,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Tag } from '.';
 
 const meta: Meta<typeof Tag> = {
-  title: 'atoms/Tag',
+  title: 'molucules/Tag',
   component: Tag,
   decorators: [
     (Story) => (
@@ -73,15 +73,19 @@ export const Color: Story = {
 };
 
 export const Closable: Story = {
+  args: {
+    onClose: () => {
+      // eslint-disable-next-line no-alert
+      window.alert('close');
+    },
+  },
   render: (args) => (
     <>
-      <Tag {...args} size="14" closable>
+      <Tag {...args} size="14">
         Tag
       </Tag>
-      <Tag {...args} closable>
-        Tag
-      </Tag>
-      <Tag {...args} size="26" closable>
+      <Tag {...args}>Tag</Tag>
+      <Tag {...args} size="26">
         Tag
       </Tag>
     </>

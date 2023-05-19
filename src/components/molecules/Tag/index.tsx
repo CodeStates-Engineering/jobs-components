@@ -1,8 +1,9 @@
-import type { ReactNode, MouseEventHandler } from 'react';
+import type { ReactNode, MouseEvent } from 'react';
 import { useState } from 'react';
 import { X } from 'react-feather';
 
 import styles from './index.module.scss';
+import { Button } from '../../atoms/Button';
 
 interface TagProps {
   color?:
@@ -13,25 +14,19 @@ interface TagProps {
     | 'orange50'
     | 'bluish-gray50';
   size?: '14' | '18' | '26';
-  closable?: boolean;
   className?: string;
-  children: ReactNode;
-  onClose?: MouseEventHandler<SVGElement>;
+  children?: ReactNode;
+  onClose?: (e?: MouseEvent<HTMLButtonElement>) => void;
 }
 
 export const Tag = ({
   color = 'green50',
   size = '18',
-  closable = false,
   className,
   children,
   onClose,
 }: TagProps) => {
   const [display, setDisplay] = useState(true);
-  const handleClose: MouseEventHandler<SVGElement> = (e) => {
-    onClose?.(e);
-    setDisplay(false);
-  };
 
   return display ? (
     <div
@@ -40,13 +35,19 @@ export const Tag = ({
       } ${className}`}
     >
       {children}
-      {closable && (
-        <X
-          viewBox="8 8 8 8"
-          className={`${styles.close} ${styles[`close-${size}`]}`}
-          onClick={handleClose}
+      {onClose ? (
+        <Button
+          size="small3x"
+          className={`${styles['close-button']} ${styles[`close-${size}`]}`}
+          theme="bluish-gray700/0"
+          shape="round"
+          onClick={(e) => {
+            onClose?.(e);
+            setDisplay(false);
+          }}
+          icon={<X size="13px" className={styles['close-icon']} />}
         />
-      )}
+      ) : null}
     </div>
   ) : null;
 };
