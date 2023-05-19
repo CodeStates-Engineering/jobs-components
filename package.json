@@ -67,5 +67,8 @@
   },
   "peerDependencies": {
     "react": "^18.2.0"
+  },
+  "dependencies": {
+    "react-node-to-string": "^0.1.1"
   }
 }
