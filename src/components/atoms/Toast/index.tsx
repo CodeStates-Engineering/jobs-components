@@ -1,103 +1,67 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
+import type { CSSProperties, MouseEventHandler } from 'react';
 
 import styles from './index.module.scss';
 import CircleCheck from '../../../assets/svgs/circle-check.svg';
 import CircleExclamation from '../../../assets/svgs/circle-exclamation.svg';
+import { useClosingState } from '../../../hooks';
 import { cleanClassName } from '../../../utils';
 
 export interface ToastProps {
   type?: 'success' | 'fail';
   children?: React.ReactNode;
-  isSpaceHolding?: boolean;
   floatDirection?: 'from-top' | 'from-bottom';
-  holdTime?: number;
+  opened?: boolean;
   className?: string;
+  onMouseEnter?: MouseEventHandler<HTMLDivElement>;
+  onMouseLeave?: MouseEventHandler<HTMLDivElement>;
 }
-
-type ToastState =
-  | 'opening'
-  | 'opened'
-  | 'holding'
-  | 'closing'
-  | 'closed'
-  | 'deleted';
-
-export const CLOSE_TOAST_ANIMATION_DURATION = 500;
 
 export const Toast = ({
   type = 'success',
   children,
-  isSpaceHolding = false,
+  opened = true,
   floatDirection = 'from-top',
-  holdTime = 3000,
   className,
+  onMouseEnter,
+  onMouseLeave,
 }: ToastProps) => {
-  const [toastState, setToastState] = useState<ToastState>('opening');
+  const [openStatus] = useClosingState(opened, 500);
+  const isOpened = openStatus === true;
+  const ref = useRef<HTMLDivElement>(null);
+  const [style, setStyle] = useState<CSSProperties>();
 
   useEffect(() => {
-    switch (toastState) {
-      case 'opening':
-        setTimeout(() => setToastState('opened'));
-        break;
-
-      case 'opened': {
-        const holdTimer = setTimeout(() => setToastState('closing'), holdTime);
-        return () => clearTimeout(holdTimer);
-      }
-
-      case 'closing': {
-        const closeTimer = setTimeout(
-          () => setToastState('closed'),
-          CLOSE_TOAST_ANIMATION_DURATION,
-        );
-        return () => clearTimeout(closeTimer);
-      }
-      default:
+    const height = ref.current?.clientHeight;
+    if (height) {
+      setStyle({
+        height,
+      });
     }
-  }, [toastState, holdTime]);
+  }, [ref]);
 
-  useEffect(() => {
-    if (toastState === 'closed' && !isSpaceHolding) {
-      setToastState('deleted');
-    }
-  }, [isSpaceHolding, toastState]);
-
-  const isToastHoldable = ['opened', 'holding', 'closing'].includes(toastState);
-
-  const hasSpace =
-    ['opened', 'holding'].includes(toastState) ||
-    (['closing', 'closed'].includes(toastState) && isSpaceHolding);
-
-  return toastState === 'deleted' ? (
-    <></>
-  ) : (
+  return (
     <div
+      ref={ref}
+      style={
+        isOpened
+          ? style
+          : {
+              height: 0,
+            }
+      }
       className={cleanClassName(
         `${styles['toast-wrap']} ${
-          hasSpace && styles['has-space']
+          isOpened && styles['has-space']
         } ${className}`,
       )}
     >
       <div
-        onMouseEnter={() => {
-          if (isToastHoldable) {
-            setToastState('holding');
-          }
-        }}
-        onMouseLeave={() => {
-          if (isToastHoldable) {
-            setToastState('opened');
-          }
-        }}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
         className={cleanClassName(
           `${styles.toast} ${styles[`float-direction-${floatDirection}`]} ${
-            {
-              opening: styles.invisible,
-              opened: styles.opened,
-              holding: styles.opened,
-              closing: styles.closing,
-              closed: styles.invisible,
-            }[toastState]
+            isOpened ? styles.opened : styles.closing
           }`,
         )}
       >

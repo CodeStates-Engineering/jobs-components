@@ -9,8 +9,8 @@ const meta: Meta<typeof Toast> = {
   component: Toast,
   args: {
     children: 'Toast message',
-    holdTime: 99999999,
     type: 'success',
+    opened: true,
   },
 };
 
