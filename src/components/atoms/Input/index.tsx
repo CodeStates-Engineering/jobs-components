@@ -28,6 +28,7 @@ export interface InputProps<T extends InputType = 'text'>
   ref?: Ref<HTMLInputElement>;
   name?: string;
   className?: string;
+  onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
 }
 
 export const Input: <T extends InputType = 'text'>(
@@ -45,6 +46,7 @@ export const Input: <T extends InputType = 'text'>(
       onFocus,
       name,
       className,
+      onBlur,
     },
     ref,
   ) => {
@@ -125,7 +127,10 @@ export const Input: <T extends InputType = 'text'>(
           setIsFucused(true);
           onFocus?.(e);
         }}
-        onBlur={() => setIsFucused(false)}
+        onBlur={(e) => {
+          setIsFucused(false);
+          onBlur?.(e);
+        }}
         type={type}
         placeholder={placeholder}
         onClick={onClick}
