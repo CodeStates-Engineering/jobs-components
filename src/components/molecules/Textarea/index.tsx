@@ -6,13 +6,17 @@ import { cleanClassName } from '../../../utils';
 import { InputContainer, Label } from '../../atoms';
 
 import type { Validation } from '../../../hooks';
-import type { InputContainerProps } from '../../atoms';
+import type {
+  InputContainerProps,
+  InputContainerInteractionProps,
+} from '../../atoms';
 
 export type TextareaProps = Partial<
   Omit<
     InputContainerProps,
     'size' | 'onClick' | 'children' | 'validationMessage'
   > &
+    Omit<InputContainerInteractionProps, 'size' | 'children'> &
     Pick<
       DetailedHTMLProps<
         TextareaHTMLAttributes<HTMLTextAreaElement>,
@@ -46,6 +50,8 @@ export const Textarea = ({
   validationSpace,
   className,
   height,
+  onClick,
+  borderRadius,
 }: TextareaProps) => {
   const [textareaValue, setTextareaValue] = useComponentSelfState(
     originalValue ?? '',
@@ -65,7 +71,11 @@ export const Textarea = ({
         validationMessage={validationMessage}
         validationSpace={validationSpace}
       >
-        <InputContainer.Interaction size="none">
+        <InputContainer.Interaction
+          size="none"
+          onClick={onClick}
+          borderRadius={borderRadius}
+        >
           <textarea
             id={id}
             name={label}

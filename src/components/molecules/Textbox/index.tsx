@@ -15,7 +15,7 @@ export type TextboxProps<_InputType extends InputType = 'text'> = Omit<
   InputProps<_InputType> & InputContainerProps,
   'validationMessage' | 'name' | 'children'
 > &
-  InputContainerInteractionProps & {
+  Omit<InputContainerInteractionProps, 'children'> & {
     onlyUpdatedByParent?: boolean;
     label?: string;
     unit?: React.ReactNode;
@@ -40,6 +40,8 @@ export const Textbox = <T extends InputType = 'text'>({
   validation,
   validationSpace,
   className,
+  borderRadius,
+  onBlur,
 }: TextboxProps<T>) => {
   const [value, setValue] = useComponentSelfState(
     originalValue,
@@ -59,9 +61,10 @@ export const Textbox = <T extends InputType = 'text'>({
         validationMessage={validationMessage}
         validationSpace={validationSpace}
       >
-        <InputContainer.Interaction size={size}>
+        <InputContainer.Interaction size={size} borderRadius={borderRadius}>
           <Input
             onClick={onClick}
+            onBlur={onBlur}
             ref={ref}
             name={label}
             disabled={disabled}

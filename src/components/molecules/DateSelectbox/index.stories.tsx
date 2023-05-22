@@ -22,6 +22,7 @@ const meta: Meta<typeof DateSelectbox> = {
   args: {
     placeholder: 'DateSelectbox',
     label: 'DateSelectbox',
+    borderRadius: '4',
   },
 };
 

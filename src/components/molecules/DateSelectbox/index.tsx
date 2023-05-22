@@ -64,6 +64,7 @@ export const DateSelectbox = <_DateType extends DateType>({
   validation,
   validationSpace,
   className,
+  borderRadius,
 }: DateSelectboxProps<_DateType>) => {
   const DATE_FORMAT = 'YYYY.MM.DD';
   const TIME_FORMAT = 'HH:mm';
@@ -191,7 +192,7 @@ export const DateSelectbox = <_DateType extends DateType>({
         validationMessage={validationMessage}
         validationSpace={validationSpace}
       >
-        <InputContainer.Interaction size={size}>
+        <InputContainer.Interaction size={size} borderRadius={borderRadius}>
           <Input
             {...inputProps}
             onClick={onClick}

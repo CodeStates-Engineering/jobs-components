@@ -50,6 +50,7 @@ export const Searchbox = ({
   validation,
   validationSpace,
   className,
+  borderRadius,
 }: SearchboxProps) => {
   const [opened, setOpened] = useState(false);
   const [inputText, setInputText] = useComponentSelfState(
@@ -106,7 +107,11 @@ export const Searchbox = ({
         validationMessage={validationMessage}
         validationSpace={validationSpace}
       >
-        <InputContainer.Interaction onClick={onClick} size={size}>
+        <InputContainer.Interaction
+          onClick={onClick}
+          size={size}
+          borderRadius={borderRadius}
+        >
           <Input
             name={label}
             ref={ref}

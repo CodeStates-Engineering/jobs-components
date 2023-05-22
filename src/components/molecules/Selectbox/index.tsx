@@ -52,6 +52,7 @@ export const Selectbox = <_Option extends Option = Option>({
   validation,
   validationSpace,
   className,
+  borderRadius,
 }: SelectboxProps<_Option>) => {
   const [opened, setOpened] = useState(false);
 
@@ -82,6 +83,7 @@ export const Selectbox = <_Option extends Option = Option>({
       >
         <InputContainer.Interaction
           size={size}
+          borderRadius={borderRadius}
           onClick={(e) => {
             setOpened(!opened);
             onClick?.(e);
