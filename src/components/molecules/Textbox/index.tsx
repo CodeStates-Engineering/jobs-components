@@ -21,6 +21,7 @@ export type TextboxProps<_InputType extends InputType = 'text'> = Omit<
     unit?: React.ReactNode;
     validation?: Validation<TextboxProps<_InputType>['value']>;
     validationSpace?: boolean;
+    labelDirection?: 'column' | 'row';
   };
 
 export const Textbox = <T extends InputType = 'text'>({
@@ -42,6 +43,7 @@ export const Textbox = <T extends InputType = 'text'>({
   className,
   borderRadius,
   onBlur,
+  labelDirection = 'column',
 }: TextboxProps<T>) => {
   const [value, setValue] = useComponentSelfState(
     originalValue,
@@ -55,7 +57,11 @@ export const Textbox = <T extends InputType = 'text'>({
   );
 
   return (
-    <div className={cleanClassName(`${styles.textbox} ${className}`)}>
+    <div
+      className={cleanClassName(
+        `${styles.textbox} ${styles[`label-${labelDirection}`]} ${className}`,
+      )}
+    >
       {label ? <Label htmlFor={label}>{label}</Label> : null}
       <InputContainer
         validationMessage={validationMessage}

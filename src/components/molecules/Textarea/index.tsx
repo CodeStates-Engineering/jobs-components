@@ -35,6 +35,7 @@ export type TextareaProps = Partial<
   className?: string;
   disabled?: boolean | 'read-only';
   height?: React.CSSProperties['height'];
+  labelDirection?: 'column' | 'row';
 };
 
 export const Textarea = ({
@@ -52,6 +53,7 @@ export const Textarea = ({
   height,
   onClick,
   borderRadius,
+  labelDirection = 'column',
 }: TextareaProps) => {
   const [textareaValue, setTextareaValue] = useComponentSelfState(
     originalValue ?? '',
@@ -65,7 +67,11 @@ export const Textarea = ({
   );
 
   return (
-    <div className={cleanClassName(`${styles} ${className}`)}>
+    <div
+      className={cleanClassName(
+        `${styles[`label-${labelDirection}`]} ${className}`,
+      )}
+    >
       {label ? <Label htmlFor={label}>{label}</Label> : null}
       <InputContainer
         validationMessage={validationMessage}

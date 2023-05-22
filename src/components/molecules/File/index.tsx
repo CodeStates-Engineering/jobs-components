@@ -7,7 +7,11 @@ import { cleanClassName } from '../../../utils';
 import { Button, InputContainer, Label } from '../../atoms';
 
 import type { Validation } from '../../../hooks';
-import type { ButtonProps, InputProps } from '../../atoms';
+import type {
+  ButtonProps,
+  InputProps,
+  InputContainerInteractionProps,
+} from '../../atoms';
 
 interface SavedFile {
   name: string;
@@ -26,6 +30,8 @@ export interface FileProps
   validationSpace?: boolean;
   label?: string;
   id?: string;
+  borderRadius?: InputContainerInteractionProps['borderRadius'];
+  labelDirection?: 'column' | 'row';
 }
 
 export const File = ({
@@ -43,6 +49,8 @@ export const File = ({
   validationSpace,
   label,
   id,
+  borderRadius,
+  labelDirection = 'column',
 }: FileProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -81,7 +89,7 @@ export const File = ({
   return (
     <div
       className={cleanClassName(
-        `${styles['download-link-container']} ${className}`,
+        `${styles.file} ${styles[`label-${labelDirection}`]} ${className}`,
       )}
     >
       {label ? <Label htmlFor={label}>{label}</Label> : null}
@@ -91,6 +99,7 @@ export const File = ({
           validationSpace={validationSpace}
         >
           <InputContainer.Interaction
+            borderRadius={borderRadius}
             className={styles['download-link-interaction']}
           >
             <a

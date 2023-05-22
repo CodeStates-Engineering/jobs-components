@@ -16,6 +16,7 @@ export interface InputContainerProps extends CommonProps {
 const InputContainerContext =
   createContext<InputContainerProps['validationMessage']>(undefined);
 
+// TODO: 추후 라벨 컴포넌트를 해당 컴포넌트에서 관리하도록 변경해야할듯.
 const InputContainerMain = ({
   children,
   className,

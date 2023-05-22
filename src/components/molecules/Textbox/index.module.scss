@@ -3,6 +3,20 @@
 .textbox {
   width: 100%;
   height: fit-content;
+
+  &.label-row,
+  &.label-column {
+    display: flex;
+    gap: 10px;
+  }
+
+  &.label-row {
+    align-items: center;
+  }
+  &.label-column {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
 .unit {

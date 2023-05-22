@@ -46,6 +46,7 @@ export type DateSelectboxProps<_DateType = DateType> = Omit<
     onChange?: (value?: DateValue<_DateType>) => void;
     validation?: Validation<DateSelectboxProps['value']>;
     validationSpace?: boolean;
+    labelDirection?: 'column' | 'row';
   };
 
 export const DateSelectbox = <_DateType extends DateType>({
@@ -65,6 +66,7 @@ export const DateSelectbox = <_DateType extends DateType>({
   validationSpace,
   className,
   borderRadius,
+  labelDirection = 'column',
 }: DateSelectboxProps<_DateType>) => {
   const DATE_FORMAT = 'YYYY.MM.DD';
   const TIME_FORMAT = 'HH:mm';
@@ -182,7 +184,11 @@ export const DateSelectbox = <_DateType extends DateType>({
 
   return (
     <FocusLayer
-      className={cleanClassName(`${styles['date-selectbox']} ${className}`)}
+      className={cleanClassName(
+        `${styles['date-selectbox']} ${
+          styles[`label-${labelDirection}`]
+        } ${className}`,
+      )}
       bodyScroll
       focused={opened}
       onClick={() => setOpened(false)}

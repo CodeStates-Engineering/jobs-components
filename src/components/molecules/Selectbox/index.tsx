@@ -34,6 +34,7 @@ export type SelectboxProps<_Option extends Option = Option> = Omit<
     validation?: Validation<SelectboxProps<_Option>['value']>;
     validationSpace?: boolean;
     className?: string;
+    labelDirection?: 'column' | 'row';
   };
 
 export const Selectbox = <_Option extends Option = Option>({
@@ -53,6 +54,7 @@ export const Selectbox = <_Option extends Option = Option>({
   validationSpace,
   className,
   borderRadius,
+  labelDirection = 'column',
 }: SelectboxProps<_Option>) => {
   const [opened, setOpened] = useState(false);
 
@@ -73,7 +75,9 @@ export const Selectbox = <_Option extends Option = Option>({
     <FocusLayer
       onClick={() => setOpened(false)}
       focused={opened}
-      className={cleanClassName(`${styles.selectbox} ${className}`)}
+      className={cleanClassName(
+        `${styles.selectbox} ${styles[`label-${labelDirection}`]} ${className}`,
+      )}
       bodyScroll
     >
       {label ? <Label htmlFor={label}>{label}</Label> : null}

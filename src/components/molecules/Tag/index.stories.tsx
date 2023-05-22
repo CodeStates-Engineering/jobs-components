@@ -5,7 +5,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Tag } from '.';
 
 const meta: Meta<typeof Tag> = {
-  title: 'molucules/Tag',
+  title: 'molecules/Tag',
   component: Tag,
   decorators: [
     (Story) => (
