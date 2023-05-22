@@ -1,10 +1,13 @@
+import ko from 'date-fns/locale/ko';
 import days from 'dayjs';
 import { isDate, isNaN } from 'lodash-es';
 
 import { useState } from 'react';
 import { DayPicker } from 'react-day-picker';
 import type { DayPickerProps, DateRange } from 'react-day-picker';
+import { Calendar } from 'react-feather';
 
+import '../../../styles/dayPicker.scss';
 import styles from './index.module.scss';
 import { useComponentSelfState, useValidation } from '../../../hooks';
 import { cleanClassName } from '../../../utils';
@@ -21,7 +24,6 @@ import type { Validation } from '../../../hooks';
 import type {
   InputProps,
   InputContainerProps,
-  InputType,
   InputContainerInteractionProps,
 } from '../../atoms';
 
@@ -39,7 +41,6 @@ export type DateSelectboxProps<_DateType = DateType> = Omit<
   InputContainerInteractionProps & {
     onlyUpdatedByParent?: boolean;
     label?: string;
-    unit?: React.ReactNode;
     type: _DateType;
     value?: DateValue<_DateType>;
     onChange?: (value?: DateValue<_DateType>) => void;
@@ -49,7 +50,6 @@ export type DateSelectboxProps<_DateType = DateType> = Omit<
 
 export const DateSelectbox = <_DateType extends DateType>({
   value: originalValue,
-  unit,
   type = 'single',
   onlyUpdatedByParent,
   onChange,
@@ -66,6 +66,8 @@ export const DateSelectbox = <_DateType extends DateType>({
   className,
 }: DateSelectboxProps<_DateType>) => {
   const DATE_FORMAT = 'YYYY.MM.DD';
+  const TIME_FORMAT = 'HH:mm';
+  const DATE_TIME_FORMAT = `${DATE_FORMAT} ${TIME_FORMAT}`;
   const MONTH_FORMAT = 'YYYY.MM';
   const [opened, setOpened] = useState(false);
   const [value, setValue] = useComponentSelfState<DateValue | undefined>(
@@ -96,6 +98,7 @@ export const DateSelectbox = <_DateType extends DateType>({
       checkValidation?.(date);
     };
 
+    // TODO: 추후 다른 타입에 대한 처리 추가
     switch (type) {
       case 'multiple': {
         return {
@@ -110,7 +113,6 @@ export const DateSelectbox = <_DateType extends DateType>({
       }
 
       case 'range': {
-        const handleChange = onChange as (value?: DateRange) => void;
         return {
           dayPickerProps: {
             mode: type,
@@ -129,7 +131,7 @@ export const DateSelectbox = <_DateType extends DateType>({
           inputProps: {
             value:
               inputValue ||
-              (selectedDate && days(selectedDate).format(DATE_FORMAT)),
+              (selectedDate && days(selectedDate).format(DATE_TIME_FORMAT)),
             onChange: (value) => {
               if (value) {
                 setInputValue(value);
@@ -151,7 +153,7 @@ export const DateSelectbox = <_DateType extends DateType>({
             },
             onBlur: () => {
               setInputValue(
-                selectedDate ? days(selectedDate).format(DATE_FORMAT) : '',
+                selectedDate ? days(selectedDate).format(DATE_TIME_FORMAT) : '',
               );
             },
           },
@@ -159,10 +161,15 @@ export const DateSelectbox = <_DateType extends DateType>({
             mode: type,
             selected: selectedDate,
             onSelect: (value?: Date) => {
-              if (value) {
-                setInputValue(days(value).format(DATE_FORMAT));
-              }
-              handleChange(value);
+              const dateString = value
+                ? `${days(value).format(DATE_FORMAT)} ${
+                    selectedDate
+                      ? days(selectedDate).format(TIME_FORMAT)
+                      : '00:00'
+                  }`
+                : '';
+              setInputValue(dateString);
+              handleChange(value ? new Date(dateString) : undefined);
               setOpened(false);
             },
             defaultMonth: selectedDate,
@@ -199,14 +206,17 @@ export const DateSelectbox = <_DateType extends DateType>({
             id={id}
             type="text"
           />
-          {typeof unit === 'string' ? (
-            <div className={styles.unit}>{unit}</div>
-          ) : (
-            unit
-          )}
+          <Calendar size="1.2em" className={styles['calendar-icon']} />
         </InputContainer.Interaction>
-        <Dropdown opened={opened}>
-          <DayPicker {...dayPickerProps} />
+        <Dropdown opened={opened} className={styles.calendar}>
+          <DayPicker
+            {...dayPickerProps}
+            className={styles['day-picker']}
+            locale={ko}
+            formatters={{
+              formatCaption: (month) => `${days(month).format('YYYY MM월')}`,
+            }}
+          />
         </Dropdown>
       </InputContainer>
     </FocusLayer>
