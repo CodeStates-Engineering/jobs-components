@@ -1,6 +1,6 @@
 /// <reference types="react" />
 import type { Validation } from '../../../hooks';
-import type { ButtonProps, InputProps } from '../../atoms';
+import type { ButtonProps, InputProps, InputContainerInteractionProps } from '../../atoms';
 interface SavedFile {
     name: string;
     url: string;
@@ -16,6 +16,8 @@ export interface FileProps extends Pick<ButtonProps, 'size' | 'fontSize' | 'font
     validationSpace?: boolean;
     label?: string;
     id?: string;
+    borderRadius?: InputContainerInteractionProps['borderRadius'];
+    labelDirection?: 'column' | 'row';
 }
-export declare const File: ({ children, size, value, onChange, fontWeight, fontSize, className, download, disabled, accept, validation, validationSpace, label, id, }: FileProps) => JSX.Element;
+export declare const File: ({ children, size, value, onChange, fontWeight, fontSize, className, download, disabled, accept, validation, validationSpace, label, id, borderRadius, labelDirection, }: FileProps) => JSX.Element;
 export {};

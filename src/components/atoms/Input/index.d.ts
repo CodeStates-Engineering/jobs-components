@@ -8,5 +8,6 @@ export interface InputProps<T extends InputType = 'text'> extends Pick<React.Det
     ref?: Ref<HTMLInputElement>;
     name?: string;
     className?: string;
+    onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
 }
 export declare const Input: <T extends InputType = 'text'>(props: InputProps<T>) => JSX.Element | null;

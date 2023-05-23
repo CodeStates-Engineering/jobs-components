@@ -10,6 +10,7 @@ export type SearchboxProps = Omit<InputProps<'text'> & InputContainerProps, 'typ
     validation?: Validation<SearchboxProps['value']>;
     validationSpace?: boolean;
     className?: string;
+    labelDirection?: 'column' | 'row';
 };
-export declare const Searchbox: ({ float, value, options: stringOptions, onChange, selfFilter, onlyUpdatedByParent, disabled, placeholder, onFocus, size, id, onClick, ref, label, validation, validationSpace, className, }: SearchboxProps) => JSX.Element;
+export declare const Searchbox: ({ float, value, options: stringOptions, onChange, selfFilter, onlyUpdatedByParent, disabled, placeholder, onFocus, size, id, onClick, ref, label, validation, validationSpace, className, borderRadius, labelDirection, }: SearchboxProps) => JSX.Element;
 export {};

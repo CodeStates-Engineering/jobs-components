@@ -1,0 +1,2 @@
+import{f as u}from"./isObject-3c28966c.js";function a(r){return function(t){return r(t)}}var n=typeof exports=="object"&&exports&&!exports.nodeType&&exports,e=n&&typeof module=="object"&&module&&!module.nodeType&&module,s=e&&e.exports===n,o=s&&u.process,i=function(){try{var r=e&&e.require&&e.require("util").types;return r||o&&o.binding&&o.binding("util")}catch{}}();const d=i;export{a as b,d as n};
+//# sourceMappingURL=_nodeUtil-14e51ba2.js.map

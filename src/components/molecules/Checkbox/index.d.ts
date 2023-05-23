@@ -11,5 +11,6 @@ export interface CheckboxProps {
     label?: string;
     description?: React.ReactNode;
     className?: string;
+    labelDirection?: 'column' | 'row';
 }
-export declare const Checkbox: ({ value, onChange, disabled, onlyUpdatedByParent, id, size, essential, label, description, className, }: CheckboxProps) => JSX.Element;
+export declare const Checkbox: ({ value, onChange, disabled, onlyUpdatedByParent, id, size, essential, label, description, className, labelDirection, }: CheckboxProps) => JSX.Element;
