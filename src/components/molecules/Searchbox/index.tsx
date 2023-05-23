@@ -30,6 +30,7 @@ export type SearchboxProps = Omit<
     validation?: Validation<SearchboxProps['value']>;
     validationSpace?: boolean;
     className?: string;
+    labelDirection?: 'column' | 'row';
   };
 
 export const Searchbox = ({
@@ -50,6 +51,8 @@ export const Searchbox = ({
   validation,
   validationSpace,
   className,
+  borderRadius,
+  labelDirection = 'column',
 }: SearchboxProps) => {
   const [opened, setOpened] = useState(false);
   const [inputText, setInputText] = useComponentSelfState(
@@ -98,7 +101,9 @@ export const Searchbox = ({
     <FocusLayer
       onClick={() => setOpened(false)}
       focused={opened}
-      className={cleanClassName(`${styles.searchbox} ${className}`)}
+      className={cleanClassName(
+        `${styles.searchbox} ${styles[`label-${labelDirection}`]} ${className}`,
+      )}
       bodyScroll
     >
       {label ? <Label htmlFor={label}>{label}</Label> : null}
@@ -106,7 +111,11 @@ export const Searchbox = ({
         validationMessage={validationMessage}
         validationSpace={validationSpace}
       >
-        <InputContainer.Interaction onClick={onClick} size={size}>
+        <InputContainer.Interaction
+          onClick={onClick}
+          size={size}
+          borderRadius={borderRadius}
+        >
           <Input
             name={label}
             ref={ref}

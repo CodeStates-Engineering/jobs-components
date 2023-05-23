@@ -6,13 +6,17 @@ import { cleanClassName } from '../../../utils';
 import { InputContainer, Label } from '../../atoms';
 
 import type { Validation } from '../../../hooks';
-import type { InputContainerProps } from '../../atoms';
+import type {
+  InputContainerProps,
+  InputContainerInteractionProps,
+} from '../../atoms';
 
 export type TextareaProps = Partial<
   Omit<
     InputContainerProps,
     'size' | 'onClick' | 'children' | 'validationMessage'
   > &
+    Omit<InputContainerInteractionProps, 'size' | 'children'> &
     Pick<
       DetailedHTMLProps<
         TextareaHTMLAttributes<HTMLTextAreaElement>,
@@ -31,6 +35,7 @@ export type TextareaProps = Partial<
   className?: string;
   disabled?: boolean | 'read-only';
   height?: React.CSSProperties['height'];
+  labelDirection?: 'column' | 'row';
 };
 
 export const Textarea = ({
@@ -46,6 +51,9 @@ export const Textarea = ({
   validationSpace,
   className,
   height,
+  onClick,
+  borderRadius,
+  labelDirection = 'column',
 }: TextareaProps) => {
   const [textareaValue, setTextareaValue] = useComponentSelfState(
     originalValue ?? '',
@@ -59,13 +67,21 @@ export const Textarea = ({
   );
 
   return (
-    <div className={cleanClassName(`${styles} ${className}`)}>
+    <div
+      className={cleanClassName(
+        `${styles[`label-${labelDirection}`]} ${className}`,
+      )}
+    >
       {label ? <Label htmlFor={label}>{label}</Label> : null}
       <InputContainer
         validationMessage={validationMessage}
         validationSpace={validationSpace}
       >
-        <InputContainer.Interaction size="none">
+        <InputContainer.Interaction
+          size="none"
+          onClick={onClick}
+          borderRadius={borderRadius}
+        >
           <textarea
             id={id}
             name={label}

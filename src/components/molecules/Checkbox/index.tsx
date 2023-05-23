@@ -18,6 +18,7 @@ export interface CheckboxProps {
   label?: string;
   description?: React.ReactNode;
   className?: string;
+  labelDirection?: 'column' | 'row';
 }
 
 export const Checkbox = ({
@@ -31,6 +32,7 @@ export const Checkbox = ({
   label,
   description,
   className,
+  labelDirection = 'column',
 }: CheckboxProps) => {
   const [checked, setChecked] = useComponentSelfState(
     value,
@@ -65,7 +67,11 @@ export const Checkbox = ({
   const isValid = !validationMessage;
 
   return (
-    <div className={cleanClassName(className)}>
+    <div
+      className={cleanClassName(
+        `${styles[`label-${labelDirection}`]} ${className}`,
+      )}
+    >
       {label ? <Label htmlFor={label}>{label}</Label> : null}
       <div className={styles['checkbox-container-wrap']}>
         <div

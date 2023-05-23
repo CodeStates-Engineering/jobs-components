@@ -18,7 +18,8 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "types": ["./src/types.d.ts"]
+    "types": ["./src/types.d.ts"],
+    "allowSyntheticDefaultImports": true
   },
   "files": ["./src/index.tsx"],
   "exclude": ["node_modules", "dist"],

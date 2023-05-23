@@ -4,6 +4,7 @@ export * from './TabMenu';
 export * from './Checkbox';
 export * from './Searchbox';
 export * from './Textarea';
+export * from './DateSelectbox';
 export * from './ToastContainer';
 export * from './Pagination';
 

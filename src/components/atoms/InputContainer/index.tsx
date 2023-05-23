@@ -16,6 +16,7 @@ export interface InputContainerProps extends CommonProps {
 const InputContainerContext =
   createContext<InputContainerProps['validationMessage']>(undefined);
 
+// TODO: 추후 라벨 컴포넌트를 해당 컴포넌트에서 관리하도록 변경해야할듯.
 const InputContainerMain = ({
   children,
   className,
@@ -37,6 +38,7 @@ const InputContainerMain = ({
 export interface InputContainerInteractionProps extends CommonProps {
   onClick?: React.HTMLAttributes<HTMLDivElement>['onClick'];
   size?: 'none' | 'small' | 'medium' | 'large';
+  borderRadius?: '4' | '8';
 }
 
 const InputContainerInteraction = ({
@@ -44,14 +46,15 @@ const InputContainerInteraction = ({
   onClick,
   size = 'large',
   className,
+  borderRadius = '8',
 }: InputContainerInteractionProps) => {
   const validationMessage = useContext(InputContainerContext);
   return (
     <div
       className={cleanClassName(
-        `${styles['input-wrap']} ${validationMessage && styles.error} ${
-          size !== 'none' && styles[`size-${size}`]
-        } ${className}`,
+        `${styles['input-wrap']} ${styles[`border-radius-${borderRadius}`]} ${
+          validationMessage && styles.error
+        } ${size !== 'none' && styles[`size-${size}`]} ${className}`,
       )}
       onClick={onClick}
     >
