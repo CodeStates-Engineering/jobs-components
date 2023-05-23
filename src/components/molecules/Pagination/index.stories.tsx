@@ -47,7 +47,11 @@ export const Default: Story = {
           currentPage={currentPage}
           onChange={setCurrentPage}
         />
-        <Pagination displayedCount={args.displayedCount} loading />
+        <Pagination
+          displayedCount={args.displayedCount}
+          loading
+          type="simple"
+        />
       </>
     );
   },
