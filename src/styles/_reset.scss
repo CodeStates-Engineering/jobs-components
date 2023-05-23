@@ -56,7 +56,7 @@ select,
 textarea {
   vertical-align: middle;
 
-  font-size: 100%;
+  font-size: inherit;
 }
 button {
   border: 0;
@@ -99,8 +99,8 @@ select,
 td,
 textarea,
 th {
-  font-weight: 400;
-  font-size: 1rem;
+  font-weight: inherit;
+  font-size: inherit;
   font-family: inherit;
   line-height: 1.5;
 }
@@ -116,6 +116,6 @@ code,
 dfn,
 em,
 var {
-  font-weight: 400;
+  font-weight: inherit;
   font-style: normal;
 }
