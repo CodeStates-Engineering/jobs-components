@@ -7,5 +7,6 @@ export interface PaginationProps {
     displayedCount?: number;
     className?: string;
     loading?: boolean;
+    type?: 'default' | 'simple';
 }
-export declare const Pagination: ({ onChange, itemsPerPage, totalItems, currentPage, displayedCount, className, loading, }: PaginationProps) => JSX.Element;
+export declare const Pagination: ({ onChange, itemsPerPage, totalItems, currentPage, displayedCount, className, loading, type, }: PaginationProps) => JSX.Element;
