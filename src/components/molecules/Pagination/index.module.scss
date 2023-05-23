@@ -14,5 +14,25 @@
 .skeleton {
   width: 32px;
   height: 32px;
-  border-radius: 100%;
+  &.border-radius {
+    border-radius: 100%;
+  }
+}
+
+.page-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 0 16px;
+
+  color: $BLUISH-GRAY-500;
+  font-weight: 400;
+  font-size: $SMALL;
+}
+
+.page-indicator-skeleton {
+  width: 5em;
+  height: 1em;
+  margin: auto 1em;
 }
