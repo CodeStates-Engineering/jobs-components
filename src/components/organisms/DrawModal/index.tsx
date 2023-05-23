@@ -20,7 +20,7 @@ const DrawModalMain = ({
   className,
   opened = false,
   onClose,
-  direction = 'right',
+  direction = 'left',
 }: DrawModalProps) => {
   const [openState, setOpenState] = useState<boolean | 'closing'>(opened);
 
