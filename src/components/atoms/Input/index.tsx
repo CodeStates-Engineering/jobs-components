@@ -50,7 +50,7 @@ export const Input: <T extends InputType = 'text'>(
     },
     ref,
   ) => {
-    const [isFocused, setIsFucused] = useState(false);
+    const [isFocused, setIsFocused] = useState(false);
 
     const formatedValue = (() => {
       if (type === 'button' && !value) {
@@ -124,11 +124,11 @@ export const Input: <T extends InputType = 'text'>(
         name={name}
         ref={ref}
         onFocus={(e) => {
-          setIsFucused(true);
+          setIsFocused(true);
           onFocus?.(e);
         }}
         onBlur={(e) => {
-          setIsFucused(false);
+          setIsFocused(false);
           onBlur?.(e);
         }}
         type={type}
