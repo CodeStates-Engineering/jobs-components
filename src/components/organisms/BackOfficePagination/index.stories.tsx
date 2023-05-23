@@ -3,11 +3,11 @@ import React, { useState } from 'react';
 
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Pagination } from '.';
+import { BackOfficePagination } from '.';
 
-const meta: Meta<typeof Pagination> = {
-  title: 'molecules/Pagination',
-  component: Pagination,
+const meta: Meta<typeof BackOfficePagination> = {
+  title: 'organisms/BackOfficePagination',
+  component: BackOfficePagination,
   decorators: [
     (Story) => (
       <div
@@ -28,13 +28,12 @@ const meta: Meta<typeof Pagination> = {
     currentPage: 1,
     itemsPerPage: 10,
     totalItems: 503,
-    displayedCount: 9,
   },
 };
 
 export default meta;
 
-type Story = StoryObj<typeof Pagination>;
+type Story = StoryObj<typeof BackOfficePagination>;
 
 export const Default: Story = {
   render: (args) => {
@@ -42,17 +41,12 @@ export const Default: Story = {
 
     return (
       <>
-        <Pagination
+        <BackOfficePagination
           {...args}
           currentPage={currentPage}
           onChange={setCurrentPage}
         />
-        <Pagination
-          {...args}
-          displayedCount={args.displayedCount}
-          currentPage={undefined}
-          loading
-        />
+        <BackOfficePagination {...args} currentPage={undefined} loading />
       </>
     );
   },
