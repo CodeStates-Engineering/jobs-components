@@ -4,7 +4,7 @@ import { Pagination, Selectbox } from '../../molecules';
 
 import type { PaginationProps } from '../../molecules';
 
-interface BackOfficePaginationProps
+export interface BackOfficePaginationProps
   extends Omit<PaginationProps, 'type' | 'displayedCount'> {
   onChangeItemsPerPage?: (itemsPerPage?: number) => void;
   itemPerPageOptions?: number[];
