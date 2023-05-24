@@ -15,9 +15,11 @@ import type {
   LabelContainerProps,
 } from '../../atoms';
 
-export interface SelectboxProps<_ValidOptionValue = ValidOptionValue>
-  extends Pick<
-      OptionsProps<_ValidOptionValue>,
+export interface SelectboxProps<
+  _ValidOptionValue = ValidOptionValue,
+  _Multiple = boolean,
+> extends Pick<
+      OptionsProps<_ValidOptionValue, _Multiple>,
       'options' | 'float' | 'onChange' | 'value' | 'multiple' | 'optionStyle'
     >,
     Pick<InputProps<'button'>, 'disabled' | 'placeholder' | 'id' | 'ref'>,
@@ -34,6 +36,7 @@ export interface SelectboxProps<_ValidOptionValue = ValidOptionValue>
 
 export const Selectbox = <
   _ValidOptionValue extends ValidOptionValue = ValidOptionValue,
+  _Multiple extends boolean = false,
 >({
   value,
   options,
@@ -53,7 +56,7 @@ export const Selectbox = <
   labelStyle,
   multiple,
   optionStyle,
-}: SelectboxProps<_ValidOptionValue>) => {
+}: SelectboxProps<_ValidOptionValue, _Multiple>) => {
   const [opened, setOpened] = useState(false);
 
   const [selectedValue, setSelectedValue] = useComponentSelfState(

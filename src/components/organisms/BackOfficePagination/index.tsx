@@ -31,8 +31,7 @@ export const BackOfficePagination = ({
           size: 'small',
           fontSize: 'small',
         }}
-        onChange={(option) => {
-          const value = option?.value;
+        onChange={(value) => {
           onChangeItemsPerPage?.(value);
           setPerPage?.(value);
         }}
