@@ -1,4 +1,6 @@
 /// <reference types="react" />
+import type { Typography } from '../../../hooks';
+import type { LabelContainerProps } from '../../atoms';
 export interface CheckboxProps {
     value?: boolean;
     onChange?: (checked: boolean) => void;
@@ -6,11 +8,14 @@ export interface CheckboxProps {
     disabled?: boolean;
     id?: string;
     onlyUpdatedByParent?: boolean;
-    size?: 'small' | 'medium';
     essential?: boolean;
     label?: string;
     description?: React.ReactNode;
     className?: string;
-    labelDirection?: 'column' | 'row';
+    labelStyle?: Typography & Pick<LabelContainerProps, 'direction'>;
+    inputStyle?: {
+        size?: 'small' | 'medium';
+        width?: CSSStyleDeclaration['width'];
+    };
 }
-export declare const Checkbox: ({ value, onChange, disabled, onlyUpdatedByParent, id, size, essential, label, description, className, labelDirection, }: CheckboxProps) => JSX.Element;
+export declare const Checkbox: ({ value, onChange, disabled, onlyUpdatedByParent, id, essential, label, description, className, labelStyle, inputStyle, }: CheckboxProps) => JSX.Element;

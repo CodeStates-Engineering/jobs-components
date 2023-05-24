@@ -8,7 +8,7 @@ export interface TableProps extends CommonProps {
 }
 export type TableHeaderProps = CommonProps;
 export interface TableTitleProps extends CommonProps {
-    width?: number;
+    width?: React.CSSProperties['width'];
 }
 export type TableBodyProps = CommonProps;
 export type TableRowProps = CommonProps;

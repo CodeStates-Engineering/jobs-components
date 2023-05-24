@@ -1,11 +1,11 @@
 /// <reference types="react" />
-import type { Validation } from '../../../hooks';
-import type { ButtonProps, InputProps, InputContainerInteractionProps } from '../../atoms';
+import type { Validation, Typography } from '../../../hooks';
+import type { ButtonProps, InputProps, InputWrapProps, LabelContainerProps } from '../../atoms';
 interface SavedFile {
     name: string;
     url: string;
 }
-export interface FileProps extends Pick<ButtonProps, 'size' | 'fontSize' | 'fontWeight' | 'className'> {
+export interface FileProps extends Pick<ButtonProps, 'className'> {
     children?: React.ReactNode;
     value?: SavedFile;
     onChange?: (file?: File) => void;
@@ -16,8 +16,10 @@ export interface FileProps extends Pick<ButtonProps, 'size' | 'fontSize' | 'font
     validationSpace?: boolean;
     label?: string;
     id?: string;
-    borderRadius?: InputContainerInteractionProps['borderRadius'];
-    labelDirection?: 'column' | 'row';
+    inputStyle?: {
+        size?: 'small' | 'medium' | 'large';
+    } & Pick<InputWrapProps, 'borderRadius' | 'width'> & Typography;
+    labelStyle?: Pick<LabelContainerProps, 'direction'> & Typography;
 }
-export declare const File: ({ children, size, value, onChange, fontWeight, fontSize, className, download, disabled, accept, validation, validationSpace, label, id, borderRadius, labelDirection, }: FileProps) => JSX.Element;
+export declare const File: ({ children, value, onChange, className, download, disabled, accept, validation, validationSpace, label, id, labelStyle, inputStyle, }: FileProps) => JSX.Element;
 export {};

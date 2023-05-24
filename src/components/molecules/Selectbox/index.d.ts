@@ -1,14 +1,13 @@
 /// <reference types="react" />
-import type { Validation } from '../../../hooks';
-import type { InputProps, InputContainerProps, OptionsProps, Option, InputContainerInteractionProps } from '../../atoms';
-export type SelectboxProps<_Option extends Option = Option> = Omit<InputProps<'button'> & InputContainerProps, 'type' | 'children' | 'validationMessage' | 'onFocus' | 'value' | 'onChange' | 'name'> & Partial<Pick<OptionsProps<_Option>, 'options' | 'float'>> & InputContainerInteractionProps & {
+import type { Validation, Typography } from '../../../hooks';
+import type { InputProps, OptionsProps, ValidOptionValue, InputWrapProps, LabelContainerProps } from '../../atoms';
+export interface SelectboxProps<_ValidOptionValue = ValidOptionValue, _Multiple = boolean> extends Pick<OptionsProps<_ValidOptionValue, _Multiple>, 'options' | 'float' | 'onChange' | 'value' | 'multiple' | 'optionStyle'>, Pick<InputProps<'button'>, 'disabled' | 'placeholder' | 'id' | 'ref'>, Pick<InputWrapProps, 'onClick'> {
     onlyUpdatedByParent?: boolean;
-    onChange?: OptionsProps<_Option>['onSelect'];
-    value?: Exclude<OptionsProps<_Option>['value'], undefined>['value'];
     label?: string;
-    validation?: Validation<SelectboxProps<_Option>['value']>;
+    validation?: Validation<SelectboxProps<_ValidOptionValue>['value']>;
     validationSpace?: boolean;
     className?: string;
-    labelDirection?: 'column' | 'row';
-};
-export declare const Selectbox: <_Option extends Option<string | number | undefined> = Option<string | number | undefined>>({ value, options, onChange, float, onlyUpdatedByParent, disabled, placeholder, size, id, ref, onClick, label, validation, validationSpace, className, borderRadius, labelDirection, }: SelectboxProps<_Option>) => JSX.Element;
+    inputStyle?: Pick<InputWrapProps, 'borderRadius' | 'size' | 'width'> & Typography;
+    labelStyle?: Pick<LabelContainerProps, 'direction'> & Typography;
+}
+export declare const Selectbox: <_ValidOptionValue extends ValidOptionValue = ValidOptionValue, _Multiple extends boolean = false>({ value, options, onChange, float, onlyUpdatedByParent, disabled, placeholder, id, ref, onClick, label, validation, validationSpace, className, inputStyle, labelStyle, multiple, optionStyle, }: SelectboxProps<_ValidOptionValue, _Multiple>) => JSX.Element;
