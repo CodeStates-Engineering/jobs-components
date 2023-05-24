@@ -25,6 +25,18 @@ const meta: Meta<typeof Textbox> = {
   args: {
     placeholder: 'Textbox',
     label: 'Textbox',
+    labelStyle: {
+      fontSize: 'small',
+      fontWeight: 500,
+      direction: 'column',
+    },
+    inputStyle: {
+      width: '300px',
+      fontSize: 'normal',
+      fontWeight: 500,
+      borderRadius: '8',
+      size: 'large',
+    },
     validation: (value?: string | number) => {
       if (!value) {
         return 'Value is required';

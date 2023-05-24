@@ -4,34 +4,41 @@ import { Search } from 'react-feather';
 import styles from './index.module.scss';
 import { useComponentSelfState, useValidation } from '../../../hooks';
 import { cleanClassName, regex } from '../../../utils';
-import { FocusLayer, Options, Input, InputContainer, Label } from '../../atoms';
+import { FocusLayer, Options, Input, Label } from '../../atoms';
 
-import type { Validation } from '../../../hooks';
+import type { Validation, Typography } from '../../../hooks';
 import type {
   InputProps,
-  InputContainerProps,
-  InputContainerInteractionProps,
+  InputWrapProps,
   OptionsProps,
   Option,
+  LabelContainerProps,
 } from '../../atoms';
 
-type BaseOptionsProps = OptionsProps<Option<string>, false>;
-
-export type SearchboxProps = Omit<
-  InputProps<'text'> & InputContainerProps,
-  'type' | 'children' | 'validationMessage' | 'name'
-> &
-  Partial<Pick<BaseOptionsProps, 'float'>> &
-  InputContainerInteractionProps & {
-    selfFilter?: boolean;
-    onlyUpdatedByParent?: boolean;
-    options?: string[];
-    label?: string;
-    validation?: Validation<SearchboxProps['value']>;
-    validationSpace?: boolean;
-    className?: string;
-    labelDirection?: 'column' | 'row';
-  };
+export interface SearchboxProps
+  extends Pick<
+      InputProps<'text'>,
+      | 'value'
+      | 'onChange'
+      | 'disabled'
+      | 'placeholder'
+      | 'onFocus'
+      | 'onClick'
+      | 'id'
+      | 'ref'
+    >,
+    Pick<OptionsProps<Option<string>, false>, 'float'> {
+  selfFilter?: boolean;
+  onlyUpdatedByParent?: boolean;
+  options?: string[];
+  label?: string;
+  validation?: Validation<SearchboxProps['value']>;
+  validationSpace?: boolean;
+  className?: string;
+  inputStyle?: Pick<InputWrapProps, 'size' | 'width' | 'borderRadius'> &
+    Typography;
+  labelStyle?: Pick<LabelContainerProps, 'direction'> & Typography;
+}
 
 export const Searchbox = ({
   float,
@@ -43,7 +50,6 @@ export const Searchbox = ({
   disabled,
   placeholder,
   onFocus,
-  size,
   id,
   onClick,
   ref,
@@ -51,8 +57,8 @@ export const Searchbox = ({
   validation,
   validationSpace,
   className,
-  borderRadius,
-  labelDirection = 'column',
+  inputStyle,
+  labelStyle,
 }: SearchboxProps) => {
   const [opened, setOpened] = useState(false);
   const [inputText, setInputText] = useComponentSelfState(
@@ -101,39 +107,47 @@ export const Searchbox = ({
     <FocusLayer
       onClick={() => setOpened(false)}
       focused={opened}
-      className={cleanClassName(
-        `${styles.searchbox} ${styles[`label-${labelDirection}`]} ${className}`,
-      )}
+      className={cleanClassName(`${styles.searchbox} ${className}`)}
       bodyScroll
     >
-      {label ? <Label htmlFor={label}>{label}</Label> : null}
-      <InputContainer
+      <Input.Container
         validationMessage={validationMessage}
         validationSpace={validationSpace}
       >
-        <InputContainer.Interaction
-          onClick={onClick}
-          size={size}
-          borderRadius={borderRadius}
-        >
-          <Input
-            name={label}
-            ref={ref}
-            onChange={(value) => {
-              setOpened(true);
-              handleChange(value);
-            }}
-            onClick={() => {
-              setOpened(true);
-            }}
-            onFocus={onFocus}
-            id={id}
-            value={inputText}
-            disabled={disabled}
-            placeholder={placeholder}
-          />
-          <Search />
-        </InputContainer.Interaction>
+        <Label.Container direction={labelStyle?.direction}>
+          {label ? (
+            <Label
+              fontSize={labelStyle?.fontSize}
+              fontWeight={labelStyle?.fontWeight}
+              htmlFor={label}
+            >
+              {label}
+            </Label>
+          ) : null}
+          <Input.Wrap
+            onClick={onClick}
+            size={inputStyle?.size}
+            borderRadius={inputStyle?.borderRadius}
+          >
+            <Input
+              name={label}
+              ref={ref}
+              onChange={(value) => {
+                setOpened(true);
+                handleChange(value);
+              }}
+              fontSize={inputStyle?.fontSize}
+              fontWeight={inputStyle?.fontWeight}
+              onClick={() => setOpened(true)}
+              onFocus={onFocus}
+              id={id}
+              value={inputText}
+              disabled={disabled}
+              placeholder={placeholder}
+            />
+            <Search />
+          </Input.Wrap>
+        </Label.Container>
         <Options
           opened={opened}
           options={options}
@@ -151,7 +165,7 @@ export const Searchbox = ({
           }}
           float={float}
         />
-      </InputContainer>
+      </Input.Container>
     </FocusLayer>
   );
 };

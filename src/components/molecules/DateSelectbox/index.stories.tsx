@@ -19,10 +19,22 @@ const meta: Meta<typeof DateSelectbox> = {
       </div>
     ),
   ],
+
   args: {
     placeholder: 'DateSelectbox',
     label: 'DateSelectbox',
-    borderRadius: '4',
+    labelStyle: {
+      fontSize: 'small',
+      fontWeight: 500,
+      direction: 'column',
+    },
+    inputStyle: {
+      width: '300px',
+      fontSize: 'normal',
+      fontWeight: 500,
+      borderRadius: '8',
+      size: 'large',
+    },
   },
 };
 

@@ -1,28 +1,40 @@
 import styles from './index.module.scss';
 import { useComponentSelfState, useValidation } from '../../../hooks';
 import { cleanClassName } from '../../../utils';
-import { InputContainer, Input, Label } from '../../atoms';
+import { Input, Label } from '../../atoms';
 
-import type { Validation } from '../../../hooks';
+import type { Validation, Typography } from '../../../hooks';
 import type {
   InputProps,
-  InputContainerProps,
   InputType,
-  InputContainerInteractionProps,
+  InputWrapProps,
+  LabelContainerProps,
 } from '../../atoms';
 
-export type TextboxProps<_InputType extends InputType = 'text'> = Omit<
-  InputProps<_InputType> & InputContainerProps,
-  'validationMessage' | 'name' | 'children'
-> &
-  Omit<InputContainerInteractionProps, 'children'> & {
-    onlyUpdatedByParent?: boolean;
-    label?: string;
-    unit?: React.ReactNode;
-    validation?: Validation<TextboxProps<_InputType>['value']>;
-    validationSpace?: boolean;
-    labelDirection?: 'column' | 'row';
-  };
+export interface TextboxProps<_InputType = Exclude<InputType, 'button'>>
+  extends Pick<
+    InputProps<_InputType>,
+    | 'value'
+    | 'onChange'
+    | 'type'
+    | 'placeholder'
+    | 'disabled'
+    | 'onFocus'
+    | 'ref'
+    | 'id'
+    | 'onClick'
+    | 'className'
+    | 'onBlur'
+  > {
+  onlyUpdatedByParent?: boolean;
+  label?: string;
+  unit?: React.ReactNode;
+  validation?: Validation<TextboxProps<_InputType>['value']>;
+  validationSpace?: boolean;
+  labelStyle?: Pick<LabelContainerProps, 'direction'> & Typography;
+  inputStyle?: Pick<InputWrapProps, 'borderRadius' | 'width' | 'size'> &
+    Typography;
+}
 
 export const Textbox = <T extends InputType = 'text'>({
   value: originalValue,
@@ -33,7 +45,6 @@ export const Textbox = <T extends InputType = 'text'>({
   placeholder,
   disabled,
   onFocus,
-  size,
   id,
   onClick,
   ref,
@@ -41,9 +52,9 @@ export const Textbox = <T extends InputType = 'text'>({
   validation,
   validationSpace,
   className,
-  borderRadius,
   onBlur,
-  labelDirection = 'column',
+  labelStyle,
+  inputStyle,
 }: TextboxProps<T>) => {
   const [value, setValue] = useComponentSelfState(
     originalValue,
@@ -57,18 +68,29 @@ export const Textbox = <T extends InputType = 'text'>({
   );
 
   return (
-    <div
-      className={cleanClassName(
-        `${styles.textbox} ${styles[`label-${labelDirection}`]} ${className}`,
-      )}
+    <Input.Container
+      validationMessage={validationMessage}
+      validationSpace={validationSpace}
+      className={cleanClassName(`${styles.textbox} ${className}`)}
     >
-      {label ? <Label htmlFor={label}>{label}</Label> : null}
-      <InputContainer
-        validationMessage={validationMessage}
-        validationSpace={validationSpace}
-      >
-        <InputContainer.Interaction size={size} borderRadius={borderRadius}>
+      <Label.Container direction={labelStyle?.direction}>
+        {label ? (
+          <Label
+            fontSize={labelStyle?.fontSize}
+            fontWeight={labelStyle?.fontWeight}
+            htmlFor={label}
+          >
+            {label}
+          </Label>
+        ) : null}
+        <Input.Wrap
+          size={inputStyle?.size}
+          borderRadius={inputStyle?.borderRadius}
+          width={inputStyle?.width}
+        >
           <Input
+            fontSize={inputStyle?.fontSize}
+            fontWeight={inputStyle?.fontWeight}
             onClick={onClick}
             onBlur={onBlur}
             ref={ref}
@@ -90,8 +112,8 @@ export const Textbox = <T extends InputType = 'text'>({
           ) : (
             unit
           )}
-        </InputContainer.Interaction>
-      </InputContainer>
-    </div>
+        </Input.Wrap>
+      </Label.Container>
+    </Input.Container>
   );
 };

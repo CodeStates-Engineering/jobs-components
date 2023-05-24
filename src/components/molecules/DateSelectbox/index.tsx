@@ -11,20 +11,14 @@ import '../../../styles/dayPicker.scss';
 import styles from './index.module.scss';
 import { useComponentSelfState, useValidation } from '../../../hooks';
 import { cleanClassName } from '../../../utils';
-import {
-  InputContainer,
-  Input,
-  Label,
-  Dropdown,
-  FocusLayer,
-} from '../../atoms';
+import { Input, Label, Dropdown, FocusLayer } from '../../atoms';
 
 import 'react-day-picker/dist/style.css';
-import type { Validation } from '../../../hooks';
+import type { Validation, Typography } from '../../../hooks';
 import type {
   InputProps,
-  InputContainerProps,
-  InputContainerInteractionProps,
+  InputWrapProps,
+  LabelContainerProps,
 } from '../../atoms';
 
 type DateType = Exclude<DayPickerProps['mode'], 'default'>;
@@ -34,20 +28,28 @@ type DateValue<_DateType = DateType> = _DateType extends 'multiple'
   ? DateRange
   : Date;
 
-export type DateSelectboxProps<_DateType = DateType> = Omit<
-  InputProps<'text'> & InputContainerProps,
-  'validationMessage' | 'name' | 'children' | 'type' | 'value' | 'onChange'
-> &
-  InputContainerInteractionProps & {
-    onlyUpdatedByParent?: boolean;
-    label?: string;
-    type: _DateType;
-    value?: DateValue<_DateType>;
-    onChange?: (value?: DateValue<_DateType>) => void;
-    validation?: Validation<DateSelectboxProps['value']>;
-    validationSpace?: boolean;
-    labelDirection?: 'column' | 'row';
-  };
+export interface DateSelectboxProps<_DateType = DateType>
+  extends Pick<
+    InputProps<'text'>,
+    | 'className'
+    | 'placeholder'
+    | 'disabled'
+    | 'onFocus'
+    | 'id'
+    | 'onClick'
+    | 'ref'
+  > {
+  onlyUpdatedByParent?: boolean;
+  label?: string;
+  type?: _DateType;
+  value?: DateValue<_DateType>;
+  onChange?: (value?: DateValue<_DateType>) => void;
+  validation?: Validation<DateSelectboxProps['value']>;
+  validationSpace?: boolean;
+  inputStyle?: Typography &
+    Pick<InputWrapProps, 'size' | 'borderRadius' | 'width'>;
+  labelStyle?: Pick<LabelContainerProps, 'direction'> & Typography;
+}
 
 export const DateSelectbox = <_DateType extends DateType>({
   value: originalValue,
@@ -57,7 +59,6 @@ export const DateSelectbox = <_DateType extends DateType>({
   placeholder,
   disabled,
   onFocus,
-  size,
   id,
   onClick,
   ref,
@@ -65,8 +66,8 @@ export const DateSelectbox = <_DateType extends DateType>({
   validation,
   validationSpace,
   className,
-  borderRadius,
-  labelDirection = 'column',
+  inputStyle,
+  labelStyle,
 }: DateSelectboxProps<_DateType>) => {
   const DATE_FORMAT = 'YYYY.MM.DD';
   const TIME_FORMAT = 'HH:mm';
@@ -184,37 +185,49 @@ export const DateSelectbox = <_DateType extends DateType>({
 
   return (
     <FocusLayer
-      className={cleanClassName(
-        `${styles['date-selectbox']} ${
-          styles[`label-${labelDirection}`]
-        } ${className}`,
-      )}
+      className={cleanClassName(`${styles['date-selectbox']} ${className}`)}
       bodyScroll
       focused={opened}
       onClick={() => setOpened(false)}
     >
-      {label ? <Label htmlFor={label}>{label}</Label> : null}
-      <InputContainer
+      <Input.Container
         validationMessage={validationMessage}
         validationSpace={validationSpace}
       >
-        <InputContainer.Interaction size={size} borderRadius={borderRadius}>
-          <Input
-            {...inputProps}
-            onClick={onClick}
-            ref={ref}
-            name={label}
-            disabled={disabled}
-            placeholder={placeholder}
-            onFocus={(e) => {
-              onFocus?.(e);
-              setOpened(true);
-            }}
-            id={id}
-            type="text"
-          />
-          <Calendar size="1.2em" className={styles['calendar-icon']} />
-        </InputContainer.Interaction>
+        <Label.Container direction={labelStyle?.direction}>
+          {label ? (
+            <Label
+              htmlFor={label}
+              fontSize={labelStyle?.fontSize}
+              fontWeight={labelStyle?.fontWeight}
+            >
+              {label}
+            </Label>
+          ) : null}
+          <Input.Wrap
+            size={inputStyle?.size}
+            borderRadius={inputStyle?.borderRadius}
+            width={inputStyle?.width}
+          >
+            <Input
+              {...inputProps}
+              onClick={onClick}
+              ref={ref}
+              name={label}
+              disabled={disabled}
+              placeholder={placeholder}
+              fontSize={inputStyle?.fontSize}
+              fontWeight={inputStyle?.fontWeight}
+              onFocus={(e) => {
+                onFocus?.(e);
+                setOpened(true);
+              }}
+              id={id}
+              type="text"
+            />
+            <Calendar size="1.2em" className={styles['calendar-icon']} />
+          </Input.Wrap>
+        </Label.Container>
         <Dropdown opened={opened} className={styles.calendar}>
           <DayPicker
             {...dayPickerProps}
@@ -225,7 +238,7 @@ export const DateSelectbox = <_DateType extends DateType>({
             }}
           />
         </Dropdown>
-      </InputContainer>
+      </Input.Container>
     </FocusLayer>
   );
 };

@@ -2,9 +2,22 @@
 
 .label {
   display: inline-block;
-
+  @include font-size;
+  @include font-weight;
   color: $BLUISH-GRAY-700;
-  font-weight: 500;
-  font-size: 16px;
   white-space: pre;
+}
+
+.label-container {
+  display: flex;
+  gap: 10px;
+
+  &.row {
+    align-items: center;
+    justify-content: space-between;
+  }
+  &.column {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }

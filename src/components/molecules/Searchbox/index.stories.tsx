@@ -24,6 +24,7 @@ const meta: Meta<typeof Searchbox> = {
       <div
         style={{
           width: '300px',
+          height: '500px',
         }}
       >
         <Story />
@@ -35,6 +36,18 @@ const meta: Meta<typeof Searchbox> = {
     options: dummyOptions,
     selfFilter: true,
     label: 'Searchbox',
+    labelStyle: {
+      fontSize: 'small',
+      fontWeight: 500,
+      direction: 'column',
+    },
+    inputStyle: {
+      width: '300px',
+      fontSize: 'normal',
+      fontWeight: 500,
+      borderRadius: '8',
+      size: 'large',
+    },
     validation: (value?: string) => {
       if (!value) {
         return 'Value is required';

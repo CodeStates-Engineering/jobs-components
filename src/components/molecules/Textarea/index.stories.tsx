@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Textarea } from '..';
+import { Textarea } from '.';
 
 const meta: Meta<typeof Textarea> = {
   title: 'molecules/Textarea',
@@ -14,6 +14,18 @@ const meta: Meta<typeof Textarea> = {
       }
     },
     disabled: false,
+    labelStyle: {
+      fontSize: 'small',
+      fontWeight: 500,
+      direction: 'column',
+    },
+    inputStyle: {
+      width: '300px',
+      fontSize: 'normal',
+      fontWeight: 500,
+      borderRadius: '8',
+      height: '300px',
+    },
   },
 };
 

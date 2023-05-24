@@ -2,15 +2,20 @@ import { useRef } from 'react';
 import { X } from 'react-feather';
 
 import styles from './index.module.scss';
-import { useComponentSelfState, useValidation } from '../../../hooks';
+import {
+  useComponentSelfState,
+  useTypography,
+  useValidation,
+} from '../../../hooks';
 import { cleanClassName } from '../../../utils';
-import { Button, InputContainer, Label } from '../../atoms';
+import { Button, Label, Input } from '../../atoms';
 
-import type { Validation } from '../../../hooks';
+import type { Validation, Typography } from '../../../hooks';
 import type {
   ButtonProps,
   InputProps,
-  InputContainerInteractionProps,
+  InputWrapProps,
+  LabelContainerProps,
 } from '../../atoms';
 
 interface SavedFile {
@@ -18,8 +23,7 @@ interface SavedFile {
   url: string;
 }
 
-export interface FileProps
-  extends Pick<ButtonProps, 'size' | 'fontSize' | 'fontWeight' | 'className'> {
+export interface FileProps extends Pick<ButtonProps, 'className'> {
   children?: React.ReactNode;
   value?: SavedFile;
   onChange?: (file?: File) => void;
@@ -30,17 +34,17 @@ export interface FileProps
   validationSpace?: boolean;
   label?: string;
   id?: string;
-  borderRadius?: InputContainerInteractionProps['borderRadius'];
-  labelDirection?: 'column' | 'row';
+  inputStyle?: {
+    size?: 'small' | 'medium' | 'large';
+  } & Pick<InputWrapProps, 'borderRadius' | 'width'> &
+    Typography;
+  labelStyle?: Pick<LabelContainerProps, 'direction'> & Typography;
 }
 
 export const File = ({
   children,
-  size,
   value,
   onChange,
-  fontWeight,
-  fontSize,
   className,
   download = true,
   disabled = false,
@@ -49,8 +53,8 @@ export const File = ({
   validationSpace,
   label,
   id,
-  borderRadius,
-  labelDirection = 'column',
+  labelStyle,
+  inputStyle,
 }: FileProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -58,6 +62,11 @@ export const File = ({
     value?.name,
     value?.url,
   ]);
+
+  const { fontSizeClassName, fontWeightClassName } = useTypography(
+    inputStyle?.fontSize,
+    inputStyle?.fontWeight,
+  );
 
   const isDownloadActived = disabled !== true;
 
@@ -87,27 +96,32 @@ export const File = ({
   );
 
   return (
-    <div
-      className={cleanClassName(
-        `${styles.file} ${styles[`label-${labelDirection}`]} ${className}`,
-      )}
+    <Input.Container
+      validationMessage={validationMessage}
+      validationSpace={validationSpace}
+      className={className}
     >
-      {label ? <Label htmlFor={label}>{label}</Label> : null}
-      {savedFile ? (
-        <InputContainer
-          validationMessage={validationMessage}
-          validationSpace={validationSpace}
-        >
-          <InputContainer.Interaction
-            borderRadius={borderRadius}
+      <Label.Container direction={labelStyle?.direction}>
+        {label ? (
+          <Label
+            htmlFor={label}
+            fontSize={labelStyle?.fontSize}
+            fontWeight={labelStyle?.fontWeight}
+          >
+            {label}
+          </Label>
+        ) : null}
+        {savedFile ? (
+          <Input.Wrap
+            borderRadius={inputStyle?.borderRadius}
             className={styles['download-link-interaction']}
           >
             <a
               href={isDownloadActived ? savedFile?.url : undefined}
               className={cleanClassName(
-                `${styles['download-link']} ${
-                  isDownloadActived ? styles.actived : styles.disabled
-                }`,
+                `${styles['download-link']} ${styles[fontSizeClassName]} ${
+                  styles[fontWeightClassName]
+                } ${isDownloadActived ? styles.actived : styles.disabled}`,
               )}
               download={download}
             >
@@ -117,7 +131,7 @@ export const File = ({
               FileInput
             ) : (
               <Button
-                icon={<X />}
+                icon={<X size="1em" />}
                 size="small"
                 shape="round"
                 theme="bluish-gray700/0"
@@ -131,24 +145,24 @@ export const File = ({
                 }}
               />
             )}
-          </InputContainer.Interaction>
-        </InputContainer>
-      ) : (
-        <Button
-          size={size}
-          className={styles['upload-button']}
-          fontSize={fontSize}
-          fontWeight={fontWeight}
-          disabled={!!disabled}
-          theme="bluish-gray400/bluish-gray10/bluish-gray200"
-          onClick={() => {
-            inputRef.current?.click();
-          }}
-        >
-          {children}
-          {disabled ? null : FileInput}
-        </Button>
-      )}
-    </div>
+          </Input.Wrap>
+        ) : (
+          <Button
+            size={inputStyle?.size}
+            className={styles['upload-button']}
+            fontSize={inputStyle?.fontSize}
+            fontWeight={inputStyle?.fontWeight}
+            disabled={!!disabled}
+            theme="bluish-gray400/bluish-gray10/bluish-gray200"
+            onClick={() => {
+              inputRef.current?.click();
+            }}
+          >
+            {children}
+            {disabled ? null : FileInput}
+          </Button>
+        )}
+      </Label.Container>
+    </Input.Container>
   );
 };
