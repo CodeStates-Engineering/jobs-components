@@ -11,7 +11,7 @@ const meta: Meta<typeof DateSelectbox> = {
     (Story) => (
       <div
         style={{
-          width: '500px',
+          width: '350px',
           height: '500px',
         }}
       >
@@ -29,7 +29,7 @@ const meta: Meta<typeof DateSelectbox> = {
       direction: 'column',
     },
     inputStyle: {
-      width: '300px',
+      width: '100%',
       fontSize: 'normal',
       fontWeight: 500,
       borderRadius: '8',

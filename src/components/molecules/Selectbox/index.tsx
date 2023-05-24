@@ -10,20 +10,21 @@ import type { Validation, Typography } from '../../../hooks';
 import type {
   InputProps,
   OptionsProps,
-  Option,
+  ValidOptionValue,
   InputWrapProps,
   LabelContainerProps,
 } from '../../atoms';
 
-export interface SelectboxProps<_Option extends Option = Option>
-  extends Pick<OptionsProps<_Option>, 'options' | 'float'>,
+export interface SelectboxProps<_ValidOptionValue = ValidOptionValue>
+  extends Pick<
+      OptionsProps<_ValidOptionValue>,
+      'options' | 'float' | 'onChange' | 'value' | 'multiple' | 'optionStyle'
+    >,
     Pick<InputProps<'button'>, 'disabled' | 'placeholder' | 'id' | 'ref'>,
     Pick<InputWrapProps, 'onClick'> {
   onlyUpdatedByParent?: boolean;
-  onChange?: OptionsProps<_Option>['onSelect'];
-  value?: Exclude<OptionsProps<_Option>['value'], undefined>['value'];
   label?: string;
-  validation?: Validation<SelectboxProps<_Option>['value']>;
+  validation?: Validation<SelectboxProps<_ValidOptionValue>['value']>;
   validationSpace?: boolean;
   className?: string;
   inputStyle?: Pick<InputWrapProps, 'borderRadius' | 'size' | 'width'> &
@@ -31,7 +32,9 @@ export interface SelectboxProps<_Option extends Option = Option>
   labelStyle?: Pick<LabelContainerProps, 'direction'> & Typography;
 }
 
-export const Selectbox = <_Option extends Option = Option>({
+export const Selectbox = <
+  _ValidOptionValue extends ValidOptionValue = ValidOptionValue,
+>({
   value,
   options,
   onChange,
@@ -48,7 +51,9 @@ export const Selectbox = <_Option extends Option = Option>({
   className,
   inputStyle,
   labelStyle,
-}: SelectboxProps<_Option>) => {
+  multiple,
+  optionStyle,
+}: SelectboxProps<_ValidOptionValue>) => {
   const [opened, setOpened] = useState(false);
 
   const [selectedValue, setSelectedValue] = useComponentSelfState(
@@ -115,16 +120,15 @@ export const Selectbox = <_Option extends Option = Option>({
         <Options
           opened={opened}
           options={options}
-          value={selectedOption}
+          multiple={multiple}
+          value={selectedValue}
           float={float}
           className={styles['select-box-default-width']}
-          onSelect={(option) => {
-            const optionForSelect =
-              option === selectedOption ? undefined : option;
-            const value = optionForSelect?.value;
+          optionStyle={optionStyle}
+          onChange={(value) => {
             setSelectedValue?.(value);
             checkValidation?.(value);
-            onChange?.(optionForSelect);
+            onChange?.(value);
             setOpened(false);
           }}
         />

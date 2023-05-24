@@ -11,7 +11,6 @@ import type {
   InputProps,
   InputWrapProps,
   OptionsProps,
-  Option,
   LabelContainerProps,
 } from '../../atoms';
 
@@ -27,7 +26,7 @@ export interface SearchboxProps
       | 'id'
       | 'ref'
     >,
-    Pick<OptionsProps<Option<string>, false>, 'float'> {
+    Pick<OptionsProps<string, false>, 'float' | 'optionStyle'> {
   selfFilter?: boolean;
   onlyUpdatedByParent?: boolean;
   options?: string[];
@@ -59,6 +58,7 @@ export const Searchbox = ({
   className,
   inputStyle,
   labelStyle,
+  optionStyle,
 }: SearchboxProps) => {
   const [opened, setOpened] = useState(false);
   const [inputText, setInputText] = useComponentSelfState(
@@ -149,19 +149,13 @@ export const Searchbox = ({
           </Input.Wrap>
         </Label.Container>
         <Options
+          optionStyle={optionStyle}
           opened={opened}
           options={options}
-          value={
-            inputText
-              ? {
-                  label: inputText,
-                  value: inputText,
-                }
-              : undefined
-          }
-          onSelect={(option) => {
+          value={inputText}
+          onChange={(value) => {
             setOpened(false);
-            handleChange(option?.value);
+            handleChange(value);
           }}
           float={float}
         />
