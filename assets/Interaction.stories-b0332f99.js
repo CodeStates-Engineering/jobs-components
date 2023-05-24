@@ -1,6 +1,0 @@
-import{j as a}from"./jsx-runtime-94f6e698.js";import{r as u}from"./index-8db94870.js";import{I as c}from"./index-e06e8374.js";import"./_commonjsHelpers-042e6b4d.js";import"./index-64131664.js";const x={title:"atoms/InputContainer/Interaction",component:c.Interaction,args:{size:"large"},argTypes:{size:{options:["none","small","medium","large"],control:{type:"select",default:"large"}}}},e={},r={render:l=>a.jsx(a.Fragment,{children:["none","small","medium","large"].map(t=>u.createElement(c.Interaction,{...l,size:t,key:t}))})};var s,o,n;e.parameters={...e.parameters,docs:{...(s=e.parameters)==null?void 0:s.docs,source:{originalSource:"{}",...(n=(o=e.parameters)==null?void 0:o.docs)==null?void 0:n.source}}};var i,m,p;r.parameters={...r.parameters,docs:{...(i=r.parameters)==null?void 0:i.docs,source:{originalSource:`{
-  render: args => <>
-      {(['none', 'small', 'medium', 'large'] satisfies InputContainerInteractionProps['size'][]).map(size => <InputContainer.Interaction {...args} size={size} key={size} />)}
-    </>
-}`,...(p=(m=r.parameters)==null?void 0:m.docs)==null?void 0:p.source}}};const y=["Default","Size"];export{e as Default,r as Size,y as __namedExportsOrder,x as default};
-//# sourceMappingURL=Interaction.stories-b0332f99.js.map
