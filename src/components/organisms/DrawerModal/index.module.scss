@@ -1,9 +1,8 @@
 @import '../../../styles/libs';
 
-.draw-modal-container-right {
+@mixin drawer-common() {
   position: fixed;
   top: 0%;
-  right: 0%;
   display: flex;
   flex-direction: column;
 
@@ -11,45 +10,44 @@
   height: 100%;
 
   background: $WHITE;
+}
+
+.drawer-modal-container-right {
+  @include drawer-common();
+  right: 0%;
+
   box-shadow: 0px 4px 54px rgba(0, 0, 0, 0.15);
 
-  @include slide-in-right(0.5s);
+  @include slide-in-right(0.25s);
 
-  & .closing {
-    @include fade-out(0.5s, 0s);
+  &.closing {
+    @include slide-out-right(0.25s);
   }
 }
 
-.draw-modal-container-left {
-  position: fixed;
-  top: 0%;
+.drawer-modal-container-left {
+  @include drawer-common();
   left: 0%;
-  display: flex;
-  flex-direction: column;
 
-  min-width: 800px;
-  height: 100%;
-
-  background: $WHITE;
   box-shadow: 0px 0px 54px 4px rgba(0, 0, 0, 0.15);
 
-  @include slide-in-left(0.5s);
+  @include slide-in-left(0.25s);
 
-  & .closing {
-    @include fade-out(0.5s, 0s);
+  &.closing {
+    @include slide-out-left(0.25s);
   }
 }
 
-.draw-modal-header {
+.drawer-modal-header {
   width: 100%;
   height: 64px;
   border-bottom: 1px solid $BLUISH-GRAY-100;
 }
-.draw-modal-body {
+.drawer-modal-body {
   width: 100%;
   height: 100%;
 }
-.draw-modal-footer {
+.drawer-modal-footer {
   width: 100%;
   height: 56px;
   margin-top: auto;

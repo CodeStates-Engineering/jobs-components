@@ -3,12 +3,12 @@ import React, { useState } from 'react';
 
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { DrawModal } from '.';
+import { DrawerModal } from '.';
 import { Button } from '../../atoms';
 
-const meta: Meta<typeof DrawModal> = {
-  title: 'organisms/DrawModal',
-  component: DrawModal,
+const meta: Meta<typeof DrawerModal> = {
+  title: 'organisms/DrawerModal',
+  component: DrawerModal,
   decorators: [
     (Story) => (
       <div
@@ -29,7 +29,7 @@ const meta: Meta<typeof DrawModal> = {
 
 export default meta;
 
-type Story = StoryObj<typeof DrawModal>;
+type Story = StoryObj<typeof DrawerModal>;
 
 export const Default: Story = {
   render: (args) => {
@@ -43,17 +43,17 @@ export const Default: Story = {
         >
           Open
         </Button>
-        <DrawModal
+        <DrawerModal
           {...args}
           opened={opened}
           onClose={() => {
             setOpened(false);
           }}
         >
-          <DrawModal.Header>HEADER</DrawModal.Header>
-          <DrawModal.Body>BODY</DrawModal.Body>
-          <DrawModal.Footer>FOOTER</DrawModal.Footer>
-        </DrawModal>
+          <DrawerModal.Header>HEADER</DrawerModal.Header>
+          <DrawerModal.Body>BODY</DrawerModal.Body>
+          <DrawerModal.Footer>FOOTER</DrawerModal.Footer>
+        </DrawerModal>
       </>
     );
   },
@@ -80,7 +80,7 @@ export const Direction: Story = {
         >
           From Right
         </Button>
-        <DrawModal
+        <DrawerModal
           {...args}
           opened={leftOpened}
           onClose={() => {
@@ -88,11 +88,11 @@ export const Direction: Story = {
           }}
           direction="left"
         >
-          <DrawModal.Header>HEADER</DrawModal.Header>
-          <DrawModal.Body>BODY</DrawModal.Body>
-          <DrawModal.Footer>FOOTER</DrawModal.Footer>
-        </DrawModal>
-        <DrawModal
+          <DrawerModal.Header>HEADER</DrawerModal.Header>
+          <DrawerModal.Body>BODY</DrawerModal.Body>
+          <DrawerModal.Footer>FOOTER</DrawerModal.Footer>
+        </DrawerModal>
+        <DrawerModal
           {...args}
           opened={rightOpened}
           onClose={() => {
@@ -100,10 +100,10 @@ export const Direction: Story = {
           }}
           direction="right"
         >
-          <DrawModal.Header>HEADER</DrawModal.Header>
-          <DrawModal.Body>BODY</DrawModal.Body>
-          <DrawModal.Footer>FOOTER</DrawModal.Footer>
-        </DrawModal>
+          <DrawerModal.Header>HEADER</DrawerModal.Header>
+          <DrawerModal.Body>BODY</DrawerModal.Body>
+          <DrawerModal.Footer>FOOTER</DrawerModal.Footer>
+        </DrawerModal>
       </>
     );
   },
