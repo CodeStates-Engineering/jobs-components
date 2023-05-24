@@ -1,8 +1,8 @@
 import React, { createContext } from 'react';
 
 import styles from './index.module.scss';
-import { FocusLayer } from '../../atoms';
 import { useClosingState } from '../../../hooks';
+import { FocusLayer } from '../../atoms';
 
 const DrawerModalContext = createContext<(() => void) | undefined>(undefined);
 
