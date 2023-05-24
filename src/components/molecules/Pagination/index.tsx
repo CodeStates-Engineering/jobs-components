@@ -1,4 +1,9 @@
-import { ChevronLeft, ChevronRight } from 'react-feather';
+import {
+  ChevronLeft,
+  ChevronRight,
+  ChevronsLeft,
+  ChevronsRight,
+} from 'react-feather';
 
 import styles from './index.module.scss';
 import { cleanClassName } from '../../../utils';
@@ -14,6 +19,7 @@ export interface PaginationProps {
   displayedCount?: number;
   className?: string;
   loading?: boolean;
+  type?: 'default' | 'simple';
 }
 
 export const Pagination = ({
@@ -24,8 +30,9 @@ export const Pagination = ({
   displayedCount = 10,
   className,
   loading,
+  type = 'default',
 }: PaginationProps) => {
-  const commonButtonProps: ButtonProps = {
+  let commonButtonProps: ButtonProps = {
     size: 'small',
     shape: 'round',
     theme: 'bluish-gray500/0',
@@ -33,6 +40,14 @@ export const Pagination = ({
     fontWeight: 500,
     focusOutline: false,
   };
+
+  if (type === 'simple') {
+    commonButtonProps = {
+      ...commonButtonProps,
+      shape: 'default',
+      theme: 'bluish-gray700/0/bluish-gray200',
+    };
+  }
 
   const isPaginationExisted = !!(
     itemsPerPage &&
@@ -44,6 +59,9 @@ export const Pagination = ({
   const lastPage = isPaginationExisted
     ? Math.ceil(totalItems / itemsPerPage)
     : 0;
+
+  const isFirstPage = !isPaginationExisted || currentPage <= 1;
+  const isLastPage = !isPaginationExisted || currentPage >= lastPage;
 
   const displayedPages: number[] = isPaginationExisted
     ? [currentPage]
@@ -68,6 +86,7 @@ export const Pagination = ({
       }
     }
   }
+  const isSimpleType = type === 'simple';
 
   return (
     <ul
@@ -77,44 +96,78 @@ export const Pagination = ({
         }`,
       )}
     >
+      {isSimpleType ? (
+        <li>
+          <Button
+            {...commonButtonProps}
+            icon={<ChevronsLeft />}
+            onClick={() => onChange?.(1)}
+            disabled={isFirstPage}
+          />
+        </li>
+      ) : null}
       <li>
         <Button
           {...commonButtonProps}
           icon={<ChevronLeft />}
           onClick={() => onChange?.(currentPage - 1)}
-          disabled={!isPaginationExisted || currentPage <= 1}
+          disabled={isFirstPage}
         />
       </li>
-      {isPaginationExisted
-        ? displayedPages.map((page) => {
-            const isCurrentPage = page === currentPage;
-            const buttonProps: ButtonProps = isCurrentPage
-              ? {
-                  ...commonButtonProps,
-                  theme: 'white/purple600',
-                }
-              : commonButtonProps;
-            return (
-              <li key={page}>
-                <Button
-                  {...buttonProps}
-                  onClick={() => onChange?.(page)}
-                  icon={page}
+      {
+        {
+          default: isPaginationExisted
+            ? displayedPages.map((page) => {
+                const isCurrentPage = page === currentPage;
+                const buttonProps: ButtonProps = isCurrentPage
+                  ? {
+                      ...commonButtonProps,
+                      theme: 'white/purple600',
+                    }
+                  : commonButtonProps;
+                return (
+                  <li key={page}>
+                    <Button
+                      {...buttonProps}
+                      onClick={() => onChange?.(page)}
+                      icon={page}
+                    />
+                  </li>
+                );
+              })
+            : displayedPages.map((_, index) => (
+                <Skeleton
+                  key={index}
+                  className={`${styles.skeleton} ${styles['border-radius']}`}
                 />
-              </li>
-            );
-          })
-        : displayedPages.map((_, index) => (
-            <Skeleton key={index} className={styles.skeleton} />
-          ))}
+              )),
+          simple: isPaginationExisted ? (
+            <li className={styles['page-indicator']}>
+              Page {currentPage} of {lastPage}
+            </li>
+          ) : (
+            <Skeleton className={styles['page-indicator-skeleton']} />
+          ),
+        }[type]
+      }
       <li>
         <Button
           {...commonButtonProps}
           icon={<ChevronRight />}
           onClick={() => onChange?.(currentPage + 1)}
-          disabled={!isPaginationExisted || currentPage >= lastPage}
+          disabled={isLastPage}
         />
       </li>
+      {isSimpleType ? (
+        <li>
+          <Button
+            {...commonButtonProps}
+            icon={<ChevronsRight />}
+            onClick={() => onChange?.(lastPage)}
+            disabled={isLastPage}
+          />
+        </li>
+      ) : null}
     </ul>
   );
 };

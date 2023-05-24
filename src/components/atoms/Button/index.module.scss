@@ -201,7 +201,7 @@
   @include default-theme($WHITE, $PURPLE-600);
   @include disable-theme($PURPLE-10, $PURPLE-300);
   @include hover-theme($WHITE, $PURPLE-550);
-  @include focus-theme($WHITE, $PURPLE-600, $BLUE-500);
+  //@include focus-theme($WHITE, $PURPLE-600, $BLUE-500);
   @include active-theme($WHITE, $PURPLE-700);
 }
 
@@ -209,7 +209,7 @@
   @include default-theme($WHITE, $BLUISH-GRAY-800);
   @include disable-theme($BLUISH-GRAY-10, $BLUISH-GRAY-300);
   @include hover-theme($WHITE, $BLUISH-GRAY-700);
-  @include focus-theme($WHITE, $BLUISH-GRAY-800, $BLUE-500);
+  //@include focus-theme($WHITE, $BLUISH-GRAY-800, $BLUE-500);
   @include active-theme($WHITE, $BLUISH-GRAY-900);
 }
 
@@ -217,7 +217,7 @@
   @include default-theme($PURPLE-600, transparent);
   @include disable-theme($PURPLE-300, transparent);
   @include hover-theme($PURPLE-600, $BLUISH-GRAY-10);
-  @include focus-theme($PURPLE-600, $BLUISH-GRAY-100);
+  //@include focus-theme($PURPLE-600, $BLUISH-GRAY-100);
   @include active-theme($PURPLE-600, transparent, $BLUE-500);
 }
 
@@ -225,7 +225,7 @@
   @include default-theme($BLUISH-GRAY-700, transparent);
   @include disable-theme($BLUISH-GRAY-300, transparent);
   @include hover-theme($BLUISH-GRAY-700, $BLUISH-GRAY-10);
-  @include focus-theme($BLUISH-GRAY-700, $BLUISH-GRAY-100);
+  //@include focus-theme($BLUISH-GRAY-700, $BLUISH-GRAY-100);
   @include active-theme($BLUISH-GRAY-700, transparent, $BLUE-500);
 }
 
@@ -233,7 +233,7 @@
   @include default-theme($BLUISH-GRAY-300, transparent);
   @include disable-theme($BLUISH-GRAY-300, transparent);
   @include hover-theme($BLUISH-GRAY-300, $BLUISH-GRAY-10);
-  @include focus-theme($BLUISH-GRAY-300, $BLUISH-GRAY-100);
+  // @include focus-theme($BLUISH-GRAY-300, $BLUISH-GRAY-100);
   @include active-theme($BLUISH-GRAY-300, transparent, $BLUE-500);
 }
 
@@ -241,7 +241,7 @@
   @include default-theme($BLUISH-GRAY-500, transparent);
   @include disable-theme($BLUISH-GRAY-300, transparent);
   @include hover-theme($BLUISH-GRAY-500, $BLUISH-GRAY-10);
-  @include focus-theme($BLUISH-GRAY-500, $BLUISH-GRAY-100);
+  //@include focus-theme($BLUISH-GRAY-500, $BLUISH-GRAY-100);
   @include active-theme($BLUISH-GRAY-500, transparent, $BLUE-500);
 }
 
@@ -249,7 +249,7 @@
   @include default-theme($BLUISH-GRAY-400, transparent, $BLUISH-GRAY-200);
   @include disable-theme($BLUISH-GRAY-300, $BLUISH-GRAY-10, $BLUISH-GRAY-200);
   @include hover-theme($BLUISH-GRAY-400, $BLUISH-GRAY-50, $BLUISH-GRAY-200);
-  @include focus-theme($BLUISH-GRAY-400, transparent, $BLUE-500);
+  //@include focus-theme($BLUISH-GRAY-400, transparent, $BLUE-500);
   @include active-theme($BLUISH-GRAY-400, $BLUISH-GRAY-100, $BLUISH-GRAY-200);
 }
 
@@ -257,14 +257,14 @@
   @include default-theme($BLUISH-GRAY-700, transparent, $BLUISH-GRAY-200);
   @include disable-theme($BLUISH-GRAY-300, $BLUISH-GRAY-10, $BLUISH-GRAY-200);
   @include hover-theme($BLUISH-GRAY-700, $BLUISH-GRAY-50, $BLUISH-GRAY-200);
-  @include focus-theme($BLUISH-GRAY-700, $BLUISH-GRAY-100, $BLUISH-GRAY-200);
-  @include active-theme($BLUISH-GRAY-700, $PURPLE-700);
+  //@include focus-theme($BLUISH-GRAY-700, transparent, $BLUE-500);
+  @include active-theme($BLUISH-GRAY-700, $BLUISH-GRAY-100, $BLUISH-GRAY-200);
 }
 
 .bluish-gray400_bluish-gray10_bluish-gray200 {
   @include default-theme($BLUISH-GRAY-400, $BLUISH-GRAY-10, $BLUISH-GRAY-200);
   @include disable-theme($BLUISH-GRAY-300, $BLUISH-GRAY-50, $BLUISH-GRAY-200);
   @include hover-theme($BLUISH-GRAY-700, $BLUISH-GRAY-50, $BLUISH-GRAY-200);
-  @include focus-theme($BLUISH-GRAY-400, transparent, $BLUE-500);
+  //@include focus-theme($BLUISH-GRAY-400, transparent, $BLUE-500);
   @include active-theme($BLUISH-GRAY-700, $BLUISH-GRAY-100, $BLUISH-GRAY-200);
 }
