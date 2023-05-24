@@ -122,7 +122,7 @@ const TableHeader = ({ children, className }: TableHeaderProps) => {
 };
 
 export interface TableTitleProps extends CommonProps {
-  width?: number;
+  width?: React.CSSProperties['width'];
 }
 
 const TableTitle = ({ children, width, className }: TableTitleProps) => {
@@ -137,9 +137,8 @@ const TableTitle = ({ children, width, className }: TableTitleProps) => {
     const { current: element } = ref;
     if (element) {
       const { offsetWidth, cellIndex } = element;
-
       setTableState((prevState) => {
-        prevState.titles[cellIndex].width = width ?? offsetWidth;
+        prevState.titles[cellIndex].width = offsetWidth;
 
         return { ...prevState };
       });
@@ -210,7 +209,6 @@ const TableTitle = ({ children, width, className }: TableTitleProps) => {
   const isFixed = currentOrder < fixedTitleCount;
   const isLastFixed = currentOrder === fixedTitleCount - 1;
   const isHovered = hoveredOrder === currentOrder;
-
   return (
     <th
       style={{
@@ -264,9 +262,18 @@ const TableTitle = ({ children, width, className }: TableTitleProps) => {
 
 export type TableBodyProps = CommonProps;
 
-const TableBody = ({ children, className }: TableBodyProps) => (
-  <tbody className={className}>{children}</tbody>
-);
+const TableBody = ({ children, className }: TableBodyProps) => {
+  const isReady = !(
+    useContext(TableContext).tableState.titles[0]?.width === undefined
+  );
+  return (
+    <tbody
+      className={cleanClassName(`${isReady || styles.invisible} ${className}`)}
+    >
+      {children}
+    </tbody>
+  );
+};
 
 export type TableRowProps = CommonProps;
 
@@ -332,41 +339,50 @@ const TableCell = ({ children, onCopy, className }: TableCellProps) => {
         } ${className}`,
       )}
     >
-      <div
-        style={{
-          width,
-        }}
-        className={styles['cell-content-container']}
-        onMouseEnter={({ currentTarget }) => {
-          if (currentTarget.scrollWidth > currentTarget.clientWidth || onCopy) {
-            setIsHovered(true);
-          }
-        }}
-        onMouseLeave={() => setIsHovered(false)}
-      >
-        {isHovered ? <div className={styles.hidden}>{children}</div> : children}
-        {isHovered ? (
-          <div className={styles['hovered-cell-content']}>
-            {children}
-            {onCopy ? (
-              <div className={styles['copy-button-wrap']}>
-                <Button
-                  className={styles['copy-button']}
-                  size="small3x"
-                  shape="round"
-                  theme="bluish-gray700/0"
-                  icon={<Copy size={14} />}
-                  onClick={() => {
-                    const childrenString = nodeToString(children);
-                    navigator.clipboard.writeText(childrenString);
-                    onCopy?.(childrenString);
-                  }}
-                />
-              </div>
-            ) : null}
-          </div>
-        ) : null}
-      </div>
+      {width === undefined ? null : (
+        <div
+          style={{
+            width,
+          }}
+          className={styles['cell-content-container']}
+          onMouseEnter={({ currentTarget }) => {
+            if (
+              currentTarget.scrollWidth > currentTarget.clientWidth ||
+              onCopy
+            ) {
+              setIsHovered(true);
+            }
+          }}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          {isHovered ? (
+            <div className={styles.hidden}>{children}</div>
+          ) : (
+            children
+          )}
+          {isHovered ? (
+            <div className={styles['hovered-cell-content']}>
+              {children}
+              {onCopy ? (
+                <div className={styles['copy-button-wrap']}>
+                  <Button
+                    className={styles['copy-button']}
+                    size="small3x"
+                    shape="round"
+                    theme="bluish-gray700/0"
+                    icon={<Copy size={14} />}
+                    onClick={() => {
+                      const childrenString = nodeToString(children);
+                      navigator.clipboard.writeText(childrenString);
+                      onCopy?.(childrenString);
+                    }}
+                  />
+                </div>
+              ) : null}
+            </div>
+          ) : null}
+        </div>
+      )}
     </td>
   );
 };

@@ -4,40 +4,40 @@ import { ChevronDown } from 'react-feather';
 import styles from './index.module.scss';
 import { useComponentSelfState, useValidation } from '../../../hooks';
 import { cleanClassName } from '../../../utils';
-import { FocusLayer, Options, Input, InputContainer, Label } from '../../atoms';
+import { FocusLayer, Options, Input, Label } from '../../atoms';
 
-import type { Validation } from '../../../hooks';
+import type { Validation, Typography } from '../../../hooks';
 import type {
   InputProps,
-  InputContainerProps,
   OptionsProps,
-  Option,
-  InputContainerInteractionProps,
+  ValidOptionValue,
+  InputWrapProps,
+  LabelContainerProps,
 } from '../../atoms';
 
-export type SelectboxProps<_Option extends Option = Option> = Omit<
-  InputProps<'button'> & InputContainerProps,
-  | 'type'
-  | 'children'
-  | 'validationMessage'
-  | 'onFocus'
-  | 'value'
-  | 'onChange'
-  | 'name'
-> &
-  Partial<Pick<OptionsProps<_Option>, 'options' | 'float'>> &
-  InputContainerInteractionProps & {
-    onlyUpdatedByParent?: boolean;
-    onChange?: OptionsProps<_Option>['onSelect'];
-    value?: Exclude<OptionsProps<_Option>['value'], undefined>['value'];
-    label?: string;
-    validation?: Validation<SelectboxProps<_Option>['value']>;
-    validationSpace?: boolean;
-    className?: string;
-    labelDirection?: 'column' | 'row';
-  };
+export interface SelectboxProps<
+  _ValidOptionValue = ValidOptionValue,
+  _Multiple = boolean,
+> extends Pick<
+      OptionsProps<_ValidOptionValue, _Multiple>,
+      'options' | 'float' | 'onChange' | 'value' | 'multiple' | 'optionStyle'
+    >,
+    Pick<InputProps<'button'>, 'disabled' | 'placeholder' | 'id' | 'ref'>,
+    Pick<InputWrapProps, 'onClick'> {
+  onlyUpdatedByParent?: boolean;
+  label?: string;
+  validation?: Validation<SelectboxProps<_ValidOptionValue>['value']>;
+  validationSpace?: boolean;
+  className?: string;
+  inputStyle?: Pick<InputWrapProps, 'borderRadius' | 'size' | 'width'> &
+    Typography;
+  labelStyle?: Pick<LabelContainerProps, 'direction'> & Typography;
+}
 
-export const Selectbox = <_Option extends Option = Option>({
+export const Selectbox = <
+  _ValidOptionValue extends ValidOptionValue = ValidOptionValue,
+  _Multiple extends boolean = false,
+>({
   value,
   options,
   onChange,
@@ -45,7 +45,6 @@ export const Selectbox = <_Option extends Option = Option>({
   onlyUpdatedByParent,
   disabled,
   placeholder,
-  size,
   id,
   ref,
   onClick,
@@ -53,9 +52,11 @@ export const Selectbox = <_Option extends Option = Option>({
   validation,
   validationSpace,
   className,
-  borderRadius,
-  labelDirection = 'column',
-}: SelectboxProps<_Option>) => {
+  inputStyle,
+  labelStyle,
+  multiple,
+  optionStyle,
+}: SelectboxProps<_ValidOptionValue, _Multiple>) => {
   const [opened, setOpened] = useState(false);
 
   const [selectedValue, setSelectedValue] = useComponentSelfState(
@@ -75,56 +76,66 @@ export const Selectbox = <_Option extends Option = Option>({
     <FocusLayer
       onClick={() => setOpened(false)}
       focused={opened}
-      className={cleanClassName(
-        `${styles.selectbox} ${styles[`label-${labelDirection}`]} ${className}`,
-      )}
+      className={cleanClassName(`${styles.selectbox} ${className}`)}
       bodyScroll
     >
-      {label ? <Label htmlFor={label}>{label}</Label> : null}
-      <InputContainer
+      <Input.Container
         validationMessage={validationMessage}
         validationSpace={validationSpace}
       >
-        <InputContainer.Interaction
-          size={size}
-          borderRadius={borderRadius}
-          onClick={(e) => {
-            setOpened(!opened);
-            onClick?.(e);
-          }}
-        >
-          <Input
-            id={id}
-            name={label}
-            type="button"
-            ref={ref}
-            value={selectedOption?.label}
-            disabled={disabled}
-            placeholder={placeholder}
-          />
-          <ChevronDown
-            className={cleanClassName(
-              `${styles.arrow} ${opened && styles['opened-arrow']}`,
-            )}
-          />
-        </InputContainer.Interaction>
+        <Label.Container direction={labelStyle?.direction}>
+          {label ? (
+            <Label
+              htmlFor={label}
+              fontSize={labelStyle?.fontSize}
+              fontWeight={labelStyle?.fontWeight}
+            >
+              {label}
+            </Label>
+          ) : null}
+          <Input.Wrap
+            size={inputStyle?.size}
+            borderRadius={inputStyle?.borderRadius}
+            width={inputStyle?.width}
+            onClick={(e) => {
+              setOpened(!opened);
+              onClick?.(e);
+            }}
+          >
+            <Input
+              id={id}
+              name={label}
+              type="button"
+              ref={ref}
+              value={selectedOption?.label}
+              disabled={disabled}
+              placeholder={placeholder}
+              fontSize={inputStyle?.fontSize}
+              fontWeight={inputStyle?.fontWeight}
+            />
+            <ChevronDown
+              className={cleanClassName(
+                `${styles.arrow} ${opened && styles['opened-arrow']}`,
+              )}
+            />
+          </Input.Wrap>
+        </Label.Container>
         <Options
           opened={opened}
           options={options}
-          value={selectedOption}
+          multiple={multiple}
+          value={selectedValue}
           float={float}
           className={styles['select-box-default-width']}
-          onSelect={(option) => {
-            const optionForSelect =
-              option === selectedOption ? undefined : option;
-            const value = optionForSelect?.value;
+          optionStyle={optionStyle}
+          onChange={(value) => {
             setSelectedValue?.(value);
             checkValidation?.(value);
-            onChange?.(optionForSelect);
+            onChange?.(value);
             setOpened(false);
           }}
         />
-      </InputContainer>
+      </Input.Container>
     </FocusLayer>
   );
 };

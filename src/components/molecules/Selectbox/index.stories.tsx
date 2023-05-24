@@ -25,6 +25,7 @@ const meta: Meta<typeof Selectbox> = {
       <div
         style={{
           width: '300px',
+          height: '500px',
         }}
       >
         <Story />
@@ -42,6 +43,18 @@ const meta: Meta<typeof Selectbox> = {
       if (value === '0번 옵션이 선택') {
         return '0번 옵션은 선택할 수 없습니다.';
       }
+    },
+    labelStyle: {
+      fontSize: 'small',
+      fontWeight: 500,
+      direction: 'column',
+    },
+    inputStyle: {
+      width: '300px',
+      fontSize: 'normal',
+      fontWeight: 500,
+      borderRadius: '8',
+      size: 'large',
     },
   },
 };

@@ -1,18 +1,17 @@
 @import '../../../styles/libs';
 
-$OPTIONS-BORDER-RADIUS: 10px;
-
 .options {
   position: absolute;
 
   box-sizing: border-box;
   width: 100%;
   padding: 8px;
-  border-radius: $OPTIONS-BORDER-RADIUS;
+  border-radius: 10px;
 
   background-color: $WHITE;
   box-shadow: $NORMAL-BOX-SHADOW;
 
+  color: $BLUISH-GRAY-700;
   &.closing,
   &.opening {
     cursor: default;
@@ -46,58 +45,66 @@ $OPTIONS-BORDER-RADIUS: 10px;
 .option-container {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 1px;
   overflow-y: auto;
 
-  max-height: 300px;
-  scroll-snap-type: y mandatory;
+  width: 100%;
+  max-height: 400px;
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+
   &::-webkit-scrollbar {
     display: none;
   }
+}
 
-  > li {
-    scroll-snap-align: start;
+.option-wrap {
+  scroll-snap-align: start;
 
-    width: 100%;
-  }
-
-  &.mouse-hover-enabled > li > .option-item {
-    transition: background-color 0.3s, color 0.3s;
-    &:hover {
-      background-color: $BLUISH-GRAY-10;
-
-      color: $BLUISH-GRAY-700;
-    }
-  }
+  width: 100%;
 }
 
 .option-item {
   display: flex;
   gap: 4px;
   justify-content: space-between;
-
+  @include font-size;
+  @include font-weight;
   min-width: 100%;
   max-width: 100%;
-  padding: 0.8em;
+  padding: 0.8em 0.6em;
+  border: 0;
   border-radius: 5px;
 
+  background-color: transparent;
   outline: none;
 
-  color: $BLUISH-GRAY-700;
+  color: inherit;
+  font-weight: 400;
   text-align: start;
   white-space: pre-wrap;
+
+  cursor: pointer;
   &.selected {
     background-color: $BLUE-10;
 
     color: $BLUE-600;
   }
-
-  &.hovered {
-    background-color: $BLUISH-GRAY-10;
-  }
 }
 
-.check-icon-wrap {
-  width: 24px;
-  height: 24px;
+.hovered {
+  background-color: $BLUISH-GRAY-10;
+
+  color: $BLUISH-GRAY-700;
+}
+
+.icon-wrap {
+  margin-top: 0.1em;
+
+  visibility: hidden;
+  &.show {
+    visibility: visible;
+  }
 }

@@ -1,31 +1,27 @@
 import type { DetailedHTMLProps, TextareaHTMLAttributes } from 'react';
+import { useMemo } from 'react';
 
 import styles from './index.module.scss';
-import { useComponentSelfState, useValidation } from '../../../hooks';
+import {
+  useComponentSelfState,
+  useTypography,
+  useValidation,
+} from '../../../hooks';
 import { cleanClassName } from '../../../utils';
-import { InputContainer, Label } from '../../atoms';
+import { Input, Label } from '../../atoms';
 
-import type { Validation } from '../../../hooks';
-import type {
-  InputContainerProps,
-  InputContainerInteractionProps,
-} from '../../atoms';
+import type { Validation, Typography } from '../../../hooks';
+import type { InputWrapProps, LabelContainerProps } from '../../atoms';
 
-export type TextareaProps = Partial<
-  Omit<
-    InputContainerProps,
-    'size' | 'onClick' | 'children' | 'validationMessage'
-  > &
-    Omit<InputContainerInteractionProps, 'size' | 'children'> &
-    Pick<
+export interface TextareaProps
+  extends Pick<
       DetailedHTMLProps<
         TextareaHTMLAttributes<HTMLTextAreaElement>,
         HTMLTextAreaElement
       >,
       'placeholder' | 'id'
-    >
-> & {
-  resize?: boolean;
+    >,
+    Pick<InputWrapProps, 'onClick'> {
   onlyUpdatedByParent?: boolean;
   onChange?: (value?: string) => void;
   value?: string;
@@ -34,14 +30,17 @@ export type TextareaProps = Partial<
   validationSpace?: boolean;
   className?: string;
   disabled?: boolean | 'read-only';
-  height?: React.CSSProperties['height'];
-  labelDirection?: 'column' | 'row';
-};
+  inputStyle?: {
+    resize?: boolean;
+    height?: React.CSSProperties['height'];
+  } & Pick<InputWrapProps, 'borderRadius' | 'width'> &
+    Typography;
+  labelStyle?: Pick<LabelContainerProps, 'direction'> & Typography;
+}
 
 export const Textarea = ({
   placeholder = '',
   value: originalValue,
-  resize = true,
   onlyUpdatedByParent,
   onChange,
   disabled,
@@ -50,14 +49,18 @@ export const Textarea = ({
   label,
   validationSpace,
   className,
-  height,
   onClick,
-  borderRadius,
-  labelDirection = 'column',
+  inputStyle,
+  labelStyle,
 }: TextareaProps) => {
   const [textareaValue, setTextareaValue] = useComponentSelfState(
     originalValue ?? '',
     onlyUpdatedByParent,
+  );
+
+  const { fontSizeClassName, fontWeightClassName } = useTypography(
+    inputStyle?.fontSize,
+    inputStyle?.fontWeight,
   );
 
   const { validationMessage, checkValidation } = useValidation(
@@ -66,28 +69,41 @@ export const Textarea = ({
     label,
   );
 
+  const style = useMemo(
+    () => ({
+      height: inputStyle?.height,
+    }),
+    [inputStyle?.height],
+  );
+
   return (
-    <div
-      className={cleanClassName(
-        `${styles[`label-${labelDirection}`]} ${className}`,
-      )}
+    <Input.Container
+      validationMessage={validationMessage}
+      validationSpace={validationSpace}
+      className={className}
     >
-      {label ? <Label htmlFor={label}>{label}</Label> : null}
-      <InputContainer
-        validationMessage={validationMessage}
-        validationSpace={validationSpace}
-      >
-        <InputContainer.Interaction
+      <Label.Container direction={labelStyle?.direction}>
+        {label ? (
+          <Label
+            htmlFor={label}
+            fontSize={labelStyle?.fontSize}
+            fontWeight={labelStyle?.fontWeight}
+          >
+            {label}
+          </Label>
+        ) : null}
+        <Input.Wrap
           size="none"
           onClick={onClick}
-          borderRadius={borderRadius}
+          width={inputStyle?.width}
+          borderRadius={inputStyle?.borderRadius}
         >
           <textarea
             id={id}
             name={label}
             value={textareaValue}
             placeholder={placeholder}
-            style={{ height }}
+            style={style}
             onChange={({ target: { value } }) => {
               setTextareaValue?.(value);
               onChange?.(value);
@@ -95,13 +111,15 @@ export const Textarea = ({
             }}
             disabled={!!disabled}
             className={cleanClassName(
-              `${styles['textarea-content']} ${resize && styles.resize} ${
+              `${styles['textarea-content']} ${
+                (inputStyle?.resize ?? true) && styles.resize
+              } ${styles[fontSizeClassName]} ${styles[fontWeightClassName]} ${
                 disabled === 'read-only' && [styles['read-only']]
               } ${styles['full-size']}`,
             )}
           />
-        </InputContainer.Interaction>
-      </InputContainer>
-    </div>
+        </Input.Wrap>
+      </Label.Container>
+    </Input.Container>
   );
 };

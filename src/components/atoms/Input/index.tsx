@@ -1,8 +1,17 @@
 import type { Ref } from 'react';
-import { useState, useMemo, forwardRef } from 'react';
+import {
+  useState,
+  useMemo,
+  forwardRef,
+  createContext,
+  useContext,
+} from 'react';
 
 import styles from './index.module.scss';
+import { useTypography } from '../../../hooks';
 import { cleanClassName } from '../../../utils';
+
+import type { Typography } from '../../../hooks';
 
 export type InputType =
   | 'text'
@@ -13,14 +22,15 @@ export type InputType =
   | 'password'
   | 'button';
 
-export interface InputProps<T extends InputType = 'text'>
+export interface InputProps<T = InputType>
   extends Pick<
-    React.DetailedHTMLProps<
-      React.InputHTMLAttributes<HTMLInputElement>,
-      HTMLInputElement
+      React.DetailedHTMLProps<
+        React.InputHTMLAttributes<HTMLInputElement>,
+        HTMLInputElement
+      >,
+      'placeholder' | 'onFocus' | 'id' | 'onClick'
     >,
-    'placeholder' | 'onFocus' | 'id' | 'onClick'
-  > {
+    Typography {
   type?: T;
   value?: T extends 'number' | 'large-number' ? number : string;
   disabled?: boolean | 'read-only';
@@ -31,7 +41,7 @@ export interface InputProps<T extends InputType = 'text'>
   onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
 }
 
-export const Input: <T extends InputType = 'text'>(
+const InputMain: <T extends InputType = 'text'>(
   props: InputProps<T>,
 ) => JSX.Element | null = forwardRef(
   (
@@ -47,11 +57,16 @@ export const Input: <T extends InputType = 'text'>(
       name,
       className,
       onBlur,
+      fontSize,
+      fontWeight,
     },
     ref,
   ) => {
     const [isFocused, setIsFocused] = useState(false);
-
+    const { fontSizeClassName, fontWeightClassName } = useTypography(
+      fontSize,
+      fontWeight,
+    );
     const formatedValue = (() => {
       if (type === 'button' && !value) {
         return placeholder;
@@ -138,7 +153,9 @@ export const Input: <T extends InputType = 'text'>(
         className={cleanClassName(
           `${styles.input} ${disabled === 'read-only' && styles['read-only']} ${
             type === 'button' && styles.button
-          } ${value || styles.empty} ${styles['default-width']} ${className}`,
+          } ${value || styles.empty} ${styles[fontSizeClassName]} ${
+            styles[fontWeightClassName]
+          } ${styles['default-width']} ${className}`,
         )}
         disabled={!!disabled}
         onChange={({ target: { value } }) =>
@@ -148,3 +165,72 @@ export const Input: <T extends InputType = 'text'>(
     );
   },
 );
+
+interface CommonProps {
+  children?: React.ReactNode;
+  className?: string;
+}
+
+export interface InputContainerProps extends CommonProps {
+  validationMessage?: string | null;
+  validationSpace?: boolean;
+}
+
+const InputContainerContext =
+  createContext<InputContainerProps['validationMessage']>(undefined);
+
+const InputContainer = ({
+  children,
+  className,
+  validationMessage,
+  validationSpace,
+}: InputContainerProps) => (
+  <div className={cleanClassName(`${styles['input-container']} ${className}`)}>
+    <InputContainerContext.Provider value={validationMessage}>
+      <div className={styles['input-interaction-wrap']}>{children}</div>
+    </InputContainerContext.Provider>
+    {validationMessage ? (
+      <p className={styles['validation-message']}>{validationMessage}</p>
+    ) : (
+      validationSpace && <div className={styles['validation-space']} />
+    )}
+  </div>
+);
+
+export interface InputWrapProps extends CommonProps {
+  onClick?: React.HTMLAttributes<HTMLDivElement>['onClick'];
+  size?: 'none' | 'small' | 'medium' | 'large';
+  borderRadius?: '4' | '8';
+  width?: CSSStyleDeclaration['width'];
+}
+
+const InputWrap = ({
+  children,
+  onClick,
+  size = 'large',
+  className,
+  borderRadius = '8',
+  width,
+}: InputWrapProps) => {
+  const validationMessage = useContext(InputContainerContext);
+  const style = useMemo(() => ({ width }), [width]);
+
+  return (
+    <div
+      className={cleanClassName(
+        `${styles['input-wrap']} ${styles[`border-radius-${borderRadius}`]} ${
+          validationMessage && styles.error
+        } ${size !== 'none' && styles[`size-${size}`]} ${className}`,
+      )}
+      style={style}
+      onClick={onClick}
+    >
+      {children}
+    </div>
+  );
+};
+
+export const Input = Object.assign(InputMain, {
+  Container: InputContainer,
+  Wrap: InputWrap,
+});

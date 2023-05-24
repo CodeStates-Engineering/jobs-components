@@ -2,19 +2,19 @@ import React from 'react';
 
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { InputContainer } from '.';
+import { Input } from '.';
 
-const meta: Meta<typeof InputContainer> = {
-  title: 'atoms/InputContainer',
-  component: InputContainer,
+const meta: Meta<typeof Input.Container> = {
+  title: 'atoms/Input/Container',
+  component: Input.Container,
   args: {
-    children: <InputContainer.Interaction />,
+    children: <Input.Wrap />,
   },
 };
 
 export default meta;
 
-type Story = StoryObj<typeof InputContainer>;
+type Story = StoryObj<typeof Input.Container>;
 
 export const Default: Story = {};
 

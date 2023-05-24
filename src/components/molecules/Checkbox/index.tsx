@@ -6,6 +6,9 @@ import { useComponentSelfState, useValidation } from '../../../hooks';
 import { cleanClassName } from '../../../utils';
 import { Label } from '../../atoms';
 
+import type { Typography } from '../../../hooks';
+import type { LabelContainerProps } from '../../atoms';
+
 export interface CheckboxProps {
   value?: boolean;
   onChange?: (checked: boolean) => void;
@@ -13,12 +16,15 @@ export interface CheckboxProps {
   disabled?: boolean;
   id?: string;
   onlyUpdatedByParent?: boolean;
-  size?: 'small' | 'medium';
   essential?: boolean;
   label?: string;
   description?: React.ReactNode;
   className?: string;
-  labelDirection?: 'column' | 'row';
+  labelStyle?: Typography & Pick<LabelContainerProps, 'direction'>;
+  inputStyle?: {
+    size?: 'small' | 'medium';
+    width?: CSSStyleDeclaration['width'];
+  };
 }
 
 export const Checkbox = ({
@@ -27,16 +33,24 @@ export const Checkbox = ({
   disabled,
   onlyUpdatedByParent,
   id,
-  size = 'medium',
   essential,
   label,
   description,
   className,
-  labelDirection = 'column',
+  labelStyle,
+  inputStyle,
 }: CheckboxProps) => {
   const [checked, setChecked] = useComponentSelfState(
     value,
     onlyUpdatedByParent,
+  );
+
+  const size = inputStyle?.size ?? 'medium';
+  const style = useMemo(
+    () => ({
+      width: inputStyle?.width,
+    }),
+    [inputStyle?.width],
   );
 
   const checkIconSize = {
@@ -67,13 +81,17 @@ export const Checkbox = ({
   const isValid = !validationMessage;
 
   return (
-    <div
-      className={cleanClassName(
-        `${styles[`label-${labelDirection}`]} ${className}`,
-      )}
-    >
-      {label ? <Label htmlFor={label}>{label}</Label> : null}
-      <div className={styles['checkbox-container-wrap']}>
+    <Label.Container direction={labelStyle?.direction} className={className}>
+      {label ? (
+        <Label
+          htmlFor={label}
+          fontSize={labelStyle?.fontSize}
+          fontWeight={labelStyle?.fontWeight}
+        >
+          {label}
+        </Label>
+      ) : null}
+      <div className={styles['checkbox-container-wrap']} style={style}>
         <div
           className={cleanClassName(
             `${styles['checkbox-container']} ${styles[`size-${size}`]} ${
@@ -101,6 +119,6 @@ export const Checkbox = ({
         </div>
         {description && <div className={styles.description}>{description}</div>}
       </div>
-    </div>
+    </Label.Container>
   );
 };

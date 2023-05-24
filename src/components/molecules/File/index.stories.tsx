@@ -23,6 +23,19 @@ const meta: Meta<typeof File> = {
   args: {
     children: 'Upload',
     validation: () => 'Test',
+    label: 'File',
+    labelStyle: {
+      fontSize: 'small',
+      fontWeight: 500,
+      direction: 'column',
+    },
+    inputStyle: {
+      width: '300px',
+      fontSize: 'normal',
+      fontWeight: 500,
+      borderRadius: '8',
+      size: 'large',
+    },
   },
 };
 

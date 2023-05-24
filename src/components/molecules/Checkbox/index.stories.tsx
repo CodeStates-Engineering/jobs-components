@@ -9,6 +9,14 @@ const meta: Meta<typeof Checkbox> = {
     label: 'Checkbox',
     description: '[필수] Checkbox description',
     essential: true,
+    labelStyle: {
+      fontSize: 'small',
+      fontWeight: 500,
+      direction: 'column',
+    },
+    inputStyle: {
+      size: 'medium',
+    },
   },
 };
 
