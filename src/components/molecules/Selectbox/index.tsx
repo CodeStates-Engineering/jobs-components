@@ -88,6 +88,7 @@ export const Selectbox = <_Option extends Option = Option>({
           <Input.Wrap
             size={inputStyle?.size}
             borderRadius={inputStyle?.borderRadius}
+            width={inputStyle?.width}
             onClick={(e) => {
               setOpened(!opened);
               onClick?.(e);
