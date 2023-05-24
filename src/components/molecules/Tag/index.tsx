@@ -29,7 +29,7 @@ export const Tag = ({
   const [display, setDisplay] = useState(true);
 
   return display ? (
-    <div
+    <span
       className={`${styles['tag-container']} ${styles[`size-${size}`]} ${
         styles[color.replaceAll('/', '_')]
       } ${className}`}
@@ -48,6 +48,6 @@ export const Tag = ({
           icon={<X size="13px" className={styles['close-icon']} />}
         />
       ) : null}
-    </div>
+    </span>
   ) : null;
 };
