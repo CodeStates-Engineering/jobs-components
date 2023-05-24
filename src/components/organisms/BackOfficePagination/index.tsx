@@ -21,13 +21,16 @@ export const BackOfficePagination = ({
     <div className={styles['back-office-pagination']}>
       <Pagination type="simple" {...paginationProps} itemsPerPage={perPage} />
       <Selectbox
-        size="small"
         className={styles['back-office-per-page']}
         value={perPage}
         options={itemPerPageOptions.map((value) => ({
           label: `${value}개씩 보기`,
           value,
         }))}
+        inputStyle={{
+          size: 'small',
+          fontSize: 'small',
+        }}
         onChange={(option) => {
           const value = option?.value;
           onChangeItemsPerPage?.(value);
