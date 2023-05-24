@@ -21,7 +21,7 @@ const DrawerModalMain = ({
   className,
   opened = false,
   onClose,
-  direction = 'left',
+  direction = 'right',
 }: DrawerModalProps) => {
   const [openState] = useClosingState(opened, 250);
   const isClosing = openState === 'closing';

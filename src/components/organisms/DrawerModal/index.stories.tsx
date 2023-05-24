@@ -13,6 +13,7 @@ const meta: Meta<typeof DrawerModal> = {
     (Story) => (
       <div
         style={{
+          transform: 'scale(1)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
