@@ -9,10 +9,10 @@
   align-items: center;
   justify-content: center;
 
-  padding: 1px 8px;
   border-radius: 4px;
 
   font-weight: 600;
+  line-height: 0;
   white-space: pre;
 
   &:has(.close-button) {
@@ -21,17 +21,17 @@
 }
 
 .size-14 {
-  height: 14px;
+  padding: 1px 8px;
 
   font-size: $SMALL3X;
 }
 .size-18 {
-  height: 18px;
+  padding: 3px 8px;
 
   font-size: $SMALL3X;
 }
 .size-26 {
-  height: 26px;
+  padding: 6px 8px;
 
   font-size: $SMALL;
 }
