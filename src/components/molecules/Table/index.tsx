@@ -73,23 +73,9 @@ const TableMain = ({ className, children, fixedTitleCount }: TableProps) => {
     [fixedTitleCount, tableState, isLeftScrolled],
   );
 
-  const isReady = !(tableState.titles[0]?.width === undefined);
-
-  useEffect(() => {
-    if (isReady) {
-      setTimeout(() =>
-        setTableState((tableState) => ({
-          ...tableState,
-        })),
-      );
-    }
-  }, [isReady, setTableState]);
-
   return (
     <article
-      className={cleanClassName(
-        `${styles.table} ${isReady || styles.invisible} ${className}`,
-      )}
+      className={cleanClassName(`${styles.table} ${className}`)}
       onScroll={(e) => setIsLeftScrolled(e.currentTarget.scrollLeft > 0)}
     >
       <table>
@@ -305,6 +291,7 @@ const TableCell = ({ children, onCopy, className }: TableCellProps) => {
     tableState: { titles, hoveredOrder, draggingOrder, dropOrder },
     fixedTitleCount,
     isLeftScrolled,
+    setTableState,
   } = useContext(TableContext);
 
   const ref = useRef<HTMLTableCellElement>(null);
@@ -323,6 +310,11 @@ const TableCell = ({ children, onCopy, className }: TableCellProps) => {
   const isFixed = currentOrder < fixedTitleCount;
   const isLastFixed = currentOrder === fixedTitleCount - 1;
   const isTitleHovered = hoveredOrder === currentOrder;
+
+  useEffect(
+    () => setTableState((tableState) => ({ ...tableState })),
+    [children, setTableState],
+  );
 
   return (
     <td
