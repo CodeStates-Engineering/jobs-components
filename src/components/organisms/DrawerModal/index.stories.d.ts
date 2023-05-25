@@ -5,3 +5,4 @@ export default meta;
 type Story = StoryObj<typeof DrawerModal>;
 export declare const Default: Story;
 export declare const Direction: Story;
+export declare const WithContents: Story;
