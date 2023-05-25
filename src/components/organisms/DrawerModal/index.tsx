@@ -48,6 +48,7 @@ const DrawerModalMain = ({
   );
 };
 
+// TODO: Header 및 Footer 높낮이 유동
 export type DrawerModalHeaderProps = CommonProps;
 const DrawerModalHeader = ({ children, className }: DrawerModalHeaderProps) => (
   <header className={`${styles['drawer-modal-header']} ${className}`}>

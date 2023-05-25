@@ -38,15 +38,21 @@
 }
 
 .drawer-modal-header {
+  overflow: hidden;
+
   width: 100%;
   height: 64px;
   border-bottom: 1px solid $BLUISH-GRAY-100;
 }
 .drawer-modal-body {
+  overflow: scroll;
+
   width: 100%;
   height: 100%;
 }
 .drawer-modal-footer {
+  overflow: hidden;
+
   width: 100%;
   height: 56px;
   margin-top: auto;
