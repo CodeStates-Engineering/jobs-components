@@ -24,17 +24,19 @@ export const Tag = ({
   size = '18',
   className,
   children,
-  onClose,
+  onClose = undefined,
 }: TagProps) => {
   const [display, setDisplay] = useState(true);
 
   return display ? (
-    <span
-      className={`${styles['tag-container']} ${styles[`size-${size}`]} ${
+    <div
+      className={`${styles['tag-container']} ${
         styles[color.replaceAll('/', '_')]
       } ${className}`}
     >
-      {children}
+      <span className={`${styles['tag-content']} ${styles[`size-${size}`]}`}>
+        {children}
+      </span>
       {onClose ? (
         <Button
           size="small3x"
@@ -48,6 +50,6 @@ export const Tag = ({
           icon={<X size="13px" className={styles['close-icon']} />}
         />
       ) : null}
-    </span>
+    </div>
   ) : null;
 };

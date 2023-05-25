@@ -7,44 +7,46 @@
 .tag-container {
   display: flex;
   align-items: center;
-  justify-content: center;
 
+  width: fit-content;
+  height: fit-content;
   border-radius: 4px;
 
   font-weight: 600;
-  line-height: 0;
   white-space: pre;
+}
 
-  &:has(.close-button) {
-    padding-right: 0;
-  }
+.tag-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .size-14 {
-  padding: 1px 8px;
+  padding: 3px 0px 1px 8px;
 
   font-size: $SMALL3X;
 }
 .size-18 {
-  padding: 3px 8px;
+  padding: 5px 0px 3px 8px;
 
   font-size: $SMALL3X;
 }
 .size-26 {
-  padding: 6px 8px;
+  padding: 6px 0px 6px 8px;
 
   font-size: $SMALL;
 }
 
 //* Close Button Size
 .close-14 {
-  margin-left: 4px;
+  margin-left: 1px;
 }
 .close-18 {
-  margin-left: 6px;
+  margin-left: 2px;
 }
 .close-26 {
-  margin-left: 6px;
+  margin-left: 4px;
 }
 
 @mixin theme($color, $backgroundColor, $borderColor) {
