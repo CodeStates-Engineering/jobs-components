@@ -34,7 +34,11 @@ export const Tag = ({
         styles[color.replaceAll('/', '_')]
       } ${className}`}
     >
-      <span className={`${styles['tag-content']} ${styles[`size-${size}`]}`}>
+      <span
+        className={`${styles['tag-content']} ${styles[`size-${size}`]} ${
+          onClose && styles.close
+        }`}
+      >
         {children}
       </span>
       {onClose ? (

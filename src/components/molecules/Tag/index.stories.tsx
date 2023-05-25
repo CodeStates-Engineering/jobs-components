@@ -28,7 +28,7 @@ export default meta;
 type Story = StoryObj<typeof Tag>;
 
 export const Default: Story = {
-  render: (args) => <Tag {...args}>Tag</Tag>,
+  render: (args) => <Tag {...args} onClose={undefined} />,
 };
 
 export const Size: Story = {
