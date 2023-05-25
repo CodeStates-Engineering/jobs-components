@@ -1,5 +1,4 @@
-/* eslint-disable */
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
 
 import styles from './index.module.scss';
@@ -14,32 +13,31 @@ type HtmlButtonProps = React.DetailedHTMLProps<
   HTMLButtonElement
 >;
 
-export type ButtonProps = Pick<
-  HtmlButtonProps,
-  'children' | 'disabled' | 'type'
-> &
-  Typography & {
-    delay?: number;
-    size?: 'small3x' | 'small' | 'medium' | 'large';
-    theme?:
-      | 'white/purple600'
-      | 'white/bluish-gray800'
-      | 'purple600/0'
-      | 'bluish-gray700/0'
-      | 'bluish-gray300/0'
-      | 'bluish-gray500/0'
-      | 'bluish-gray400/0/bluish-gray200'
-      | 'bluish-gray700/0/bluish-gray200'
-      | 'bluish-gray400/bluish-gray10/bluish-gray200';
-    icon?: ReactNode;
-    iconDirection?: 'left' | 'right';
-    shape?: 'round' | 'default';
-    padding?: boolean;
-    focusOutline?: boolean;
-    className?: string;
-    onClick?: (event?: React.MouseEvent<HTMLButtonElement>) => void;
-    enterClick?: boolean;
-  };
+export interface ButtonProps
+  extends Pick<
+      HtmlButtonProps,
+      'children' | 'disabled' | 'type' | 'onClick' | 'className'
+    >,
+    Typography,
+    Pick<React.CSSProperties, 'width'> {
+  delay?: number;
+  size?: 'small3x' | 'small' | 'medium' | 'large';
+  theme?:
+    | 'white/purple600'
+    | 'white/bluish-gray800'
+    | 'purple600/0'
+    | 'bluish-gray700/0'
+    | 'bluish-gray300/0'
+    | 'bluish-gray500/0'
+    | 'bluish-gray400/0/bluish-gray200'
+    | 'bluish-gray700/0/bluish-gray200'
+    | 'bluish-gray400/bluish-gray10/bluish-gray200';
+  icon?: ReactNode;
+  iconDirection?: 'left' | 'right';
+  shape?: 'round' | 'default';
+  padding?: boolean;
+  focusOutline?: boolean;
+}
 
 export const Button = ({
   delay,
@@ -57,7 +55,7 @@ export const Button = ({
   fontWeight = 700,
   focusOutline = true,
   className,
-  enterClick = false,
+  width,
 }: ButtonProps) => {
   const [delayState, setDelayState] = useState<'before' | 'delaying' | 'after'>(
     'after',
@@ -87,20 +85,7 @@ export const Button = ({
     fontWeight,
   );
 
-  useEffect(() => {
-    if (enterClick && !isDisabled) {
-      const EVENT_TYPE = 'keydown';
-      const enterClickEventListener = ({ key }: KeyboardEvent) => {
-        if (key === 'Enter') {
-          onClick?.(undefined);
-        }
-      };
-
-      document.addEventListener(EVENT_TYPE, enterClickEventListener);
-      return () =>
-        document.removeEventListener(EVENT_TYPE, enterClickEventListener);
-    }
-  }, [enterClick, onClick, isDisabled]);
+  const style = useMemo(() => ({ width }), [width]);
 
   return (
     <button
@@ -118,6 +103,7 @@ export const Button = ({
       )}
       onClick={onClick}
       disabled={isDisabled}
+      style={style}
     >
       {delay && isDelayButton ? (
         <div

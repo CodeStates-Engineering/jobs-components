@@ -115,6 +115,8 @@ export const File = ({
           <Input.Wrap
             borderRadius={inputStyle?.borderRadius}
             className={styles['download-link-interaction']}
+            size={inputStyle?.size}
+            width={inputStyle?.width}
           >
             <a
               href={isDownloadActived ? savedFile?.url : undefined}
@@ -154,9 +156,8 @@ export const File = ({
             fontWeight={inputStyle?.fontWeight}
             disabled={!!disabled}
             theme="bluish-gray400/bluish-gray10/bluish-gray200"
-            onClick={() => {
-              inputRef.current?.click();
-            }}
+            onClick={inputRef.current?.click}
+            width={inputStyle?.width}
           >
             {children}
             {disabled ? null : FileInput}
