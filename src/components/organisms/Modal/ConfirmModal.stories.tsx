@@ -5,17 +5,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { ConfirmModal } from './ConfirmModal';
+import { DUMMY } from '../../../utils';
 import { Button } from '../../atoms';
-
-const DUMMY_TEXT = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur
-consectetur vulputate ultrices. Proin vestibulum velit et ornare lacinia.
-Sed consequat, enim quis mollis ultrices, sem diam pulvinar ligula,
-suscipit laoreet leo tellus et urna. Aliquam cursus justo vitae
-scelerisque egestas. Praesent hendrerit pharetra purus, at elementum
-tortor facilisis a. Ut placerat, ex eu iaculis scelerisque, odio ante
-rutrum lorem, id tincidunt enim augue sed felis. In ante metus, dignissim
-non est nec, ultrices pulvinar est. Fusce ac accumsan turpis, eget
-fermentum augue.`;
 
 const meta: Meta<typeof ConfirmModal> = {
   title: 'organisms/Modal/ConfirmModal',
@@ -46,7 +37,7 @@ export const Default: Story = {
           onClose={() => navigate('/')}
           confirmButtonProps={{ children: 'Confirm' }}
         >
-          {DUMMY_TEXT}
+          {DUMMY.COMMON.TEXT_MIDDLE}
         </ConfirmModal>
       </>
     );

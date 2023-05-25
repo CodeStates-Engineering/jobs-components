@@ -5,25 +5,11 @@ import { ChevronRight, MoreHorizontal } from 'react-feather';
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { DrawerModal } from '.';
+import { DUMMY } from '../../../utils';
 import { Button } from '../../atoms';
 import { Table } from '../../molecules';
 
-const COPYABLE_COLUMN = 3;
-const LONG_TEXT_COLUMN = 5;
-const LONG_TEXT_COPYABLE_COLUMN = 1;
-
-const ROW_COUNT = 30;
-const COLUMN_COUNT = 10;
-
-const DUMMY_TEXT = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur
-consectetur vulputate ultrices. Proin vestibulum velit et ornare lacinia.
-Sed consequat, enim quis mollis ultrices, sem diam pulvinar ligula,
-suscipit laoreet leo tellus et urna. Aliquam cursus justo vitae
-scelerisque egestas. Praesent hendrerit pharetra purus, at elementum
-tortor facilisis a. Ut placerat, ex eu iaculis scelerisque, odio ante
-rutrum lorem, id tincidunt enim augue sed felis. In ante metus, dignissim
-non est nec, ultrices pulvinar est. Fusce ac accumsan turpis, eget
-fermentum augue.`;
+const { TABLE_TITLE, TABLE_BODY, COMMON } = DUMMY;
 
 const meta: Meta<typeof DrawerModal> = {
   title: 'organisms/DrawerModal',
@@ -181,13 +167,13 @@ export const WithContents: Story = {
           <DrawerModal.Body>
             <Table fixedTitleCount={3}>
               <Table.Header>
-                {new Array(COLUMN_COUNT).fill(0).map((_, index) => (
+                {new Array(TABLE_BODY.COLUMN_COUNT).fill(0).map((_, index) => (
                   <Table.Title
                     key={`key-${index}`}
                     width={(() => {
                       switch (index) {
-                        case LONG_TEXT_COLUMN:
-                        case LONG_TEXT_COPYABLE_COLUMN:
+                        case TABLE_TITLE.LONG_TEXT_COLUMN:
+                        case TABLE_TITLE.LONG_TEXT_COPYABLE_COLUMN:
                           return 100;
                         default:
                       }
@@ -195,11 +181,11 @@ export const WithContents: Story = {
                   >
                     {(() => {
                       switch (index) {
-                        case COPYABLE_COLUMN:
+                        case TABLE_TITLE.COPYABLE_COLUMN:
                           return 'Copyable';
-                        case LONG_TEXT_COLUMN:
+                        case TABLE_TITLE.LONG_TEXT_COLUMN:
                           return 'Long text';
-                        case LONG_TEXT_COPYABLE_COLUMN:
+                        case TABLE_TITLE.LONG_TEXT_COPYABLE_COLUMN:
                           return 'Long text copyable';
                         default:
                           return `Title ${index}`;
@@ -209,33 +195,35 @@ export const WithContents: Story = {
                 ))}
               </Table.Header>
               <Table.Body>
-                {new Array(ROW_COUNT).fill(0).map((_, rowIndex) => (
+                {new Array(TABLE_BODY.ROW_COUNT).fill(0).map((_, rowIndex) => (
                   <Table.Row key={`row${rowIndex}`}>
-                    {new Array(COLUMN_COUNT).fill(0).map((_, cellIndex) => (
-                      <Table.Cell
-                        key={`Cell ${cellIndex}-${rowIndex}`}
-                        onCopy={(() => {
-                          switch (cellIndex) {
-                            case COPYABLE_COLUMN:
-                            case LONG_TEXT_COPYABLE_COLUMN:
-                              return (value) =>
-                                // eslint-disable-next-line no-alert
-                                window.alert(`${value} Copied!`);
-                            default:
-                          }
-                        })()}
-                      >
-                        {(() => {
-                          switch (cellIndex) {
-                            case LONG_TEXT_COLUMN:
-                            case LONG_TEXT_COPYABLE_COLUMN:
-                              return DUMMY_TEXT;
-                            default:
-                              return `Cell ${cellIndex}-${rowIndex}`;
-                          }
-                        })()}
-                      </Table.Cell>
-                    ))}
+                    {new Array(TABLE_BODY.COLUMN_COUNT)
+                      .fill(0)
+                      .map((_, cellIndex) => (
+                        <Table.Cell
+                          key={`Cell ${cellIndex}-${rowIndex}`}
+                          onCopy={(() => {
+                            switch (cellIndex) {
+                              case TABLE_TITLE.COPYABLE_COLUMN:
+                              case TABLE_TITLE.LONG_TEXT_COPYABLE_COLUMN:
+                                return (value) =>
+                                  // eslint-disable-next-line no-alert
+                                  window.alert(`${value} Copied!`);
+                              default:
+                            }
+                          })()}
+                        >
+                          {(() => {
+                            switch (cellIndex) {
+                              case TABLE_TITLE.LONG_TEXT_COLUMN:
+                              case TABLE_TITLE.LONG_TEXT_COPYABLE_COLUMN:
+                                return COMMON.TEXT_MIDDLE;
+                              default:
+                                return `Cell ${cellIndex}-${rowIndex}`;
+                            }
+                          })()}
+                        </Table.Cell>
+                      ))}
                   </Table.Row>
                 ))}
               </Table.Body>
