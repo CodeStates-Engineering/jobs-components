@@ -73,9 +73,21 @@ const TableMain = ({ className, children, fixedTitleCount }: TableProps) => {
     [fixedTitleCount, tableState, isLeftScrolled],
   );
 
+  const isReady = !(tableState.titles[0]?.width === undefined);
+
+  useEffect(() => {
+    if (isReady) {
+      setTableState((tableState) => ({
+        ...tableState,
+      }));
+    }
+  }, [isReady, setTableState]);
+
   return (
     <article
-      className={cleanClassName(`${styles.table} ${className}`)}
+      className={cleanClassName(
+        `${styles.table} ${isReady || styles.invisible} ${className}`,
+      )}
       onScroll={(e) => setIsLeftScrolled(e.currentTarget.scrollLeft > 0)}
     >
       <table>
@@ -262,18 +274,9 @@ const TableTitle = ({ children, width, className }: TableTitleProps) => {
 
 export type TableBodyProps = CommonProps;
 
-const TableBody = ({ children, className }: TableBodyProps) => {
-  const isReady = !(
-    useContext(TableContext).tableState.titles[0]?.width === undefined
-  );
-  return (
-    <tbody
-      className={cleanClassName(`${isReady || styles.invisible} ${className}`)}
-    >
-      {children}
-    </tbody>
-  );
-};
+const TableBody = ({ children, className }: TableBodyProps) => (
+  <tbody className={className}>{children}</tbody>
+);
 
 export type TableRowProps = CommonProps;
 
