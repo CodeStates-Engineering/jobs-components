@@ -77,9 +77,11 @@ const TableMain = ({ className, children, fixedTitleCount }: TableProps) => {
 
   useEffect(() => {
     if (isReady) {
-      setTableState((tableState) => ({
-        ...tableState,
-      }));
+      setTimeout(() =>
+        setTableState((tableState) => ({
+          ...tableState,
+        })),
+      );
     }
   }, [isReady, setTableState]);
 
@@ -342,7 +344,7 @@ const TableCell = ({ children, onCopy, className }: TableCellProps) => {
         } ${className}`,
       )}
     >
-      {
+      {width === undefined ? null : (
         <div
           style={{
             width,
@@ -385,7 +387,7 @@ const TableCell = ({ children, onCopy, className }: TableCellProps) => {
             </div>
           ) : null}
         </div>
-      }
+      )}
     </td>
   );
 };

@@ -156,7 +156,7 @@ export const File = ({
             fontWeight={inputStyle?.fontWeight}
             disabled={!!disabled}
             theme="bluish-gray400/bluish-gray10/bluish-gray200"
-            onClick={inputRef.current?.click}
+            onClick={() => inputRef.current?.click()}
             width={inputStyle?.width}
           >
             {children}
