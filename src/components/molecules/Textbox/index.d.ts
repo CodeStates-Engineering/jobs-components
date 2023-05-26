@@ -10,4 +10,4 @@ export interface TextboxProps<_InputType = Exclude<InputType, 'button'>> extends
     labelStyle?: Pick<LabelContainerProps, 'direction'> & Typography;
     inputStyle?: Pick<InputWrapProps, 'borderRadius' | 'width' | 'size'> & Typography;
 }
-export declare const Textbox: <T extends InputType = "text">({ value: originalValue, unit, onlyUpdatedByParent, onChange, type, placeholder, disabled, onFocus, id, onClick, ref, label, validation, validationSpace, className, onBlur, labelStyle, inputStyle, }: TextboxProps<T>) => JSX.Element;
+export declare const Textbox: <T extends "number" | "text" | "large-number" | "phone-number" | "business-number" | "password">({ value: originalValue, unit, onlyUpdatedByParent, onChange, type, placeholder, disabled, onFocus, id, onClick, ref, label, validation, validationSpace, className, onBlur, labelStyle, inputStyle, }: TextboxProps<T>) => JSX.Element;
