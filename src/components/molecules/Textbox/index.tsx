@@ -36,12 +36,12 @@ export interface TextboxProps<_InputType = Exclude<InputType, 'button'>>
     Typography;
 }
 
-export const Textbox = <T extends InputType = 'text'>({
+export const Textbox = <T extends Exclude<InputType, 'button'>>({
   value: originalValue,
   unit,
   onlyUpdatedByParent,
   onChange,
-  type,
+  type = 'text' as T,
   placeholder,
   disabled,
   onFocus,
