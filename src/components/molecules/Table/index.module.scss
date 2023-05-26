@@ -1,6 +1,7 @@
 @import '../../../styles/libs';
 
 .table {
+  @include fade-in(0.3s, 0.3s);
   overflow: auto;
 
   width: 100%;
