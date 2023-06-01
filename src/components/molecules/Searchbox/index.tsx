@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { Search } from 'react-feather';
 
 import styles from './index.module.scss';
-import { useComponentSelfState, useValidation } from '../../../hooks';
+import { useSubscribedState, useValidation } from '../../../hooks';
 import { cleanClassName, regex } from '../../../utils';
 import { FocusLayer, Options, Input, Label } from '../../atoms';
 
@@ -28,7 +28,6 @@ export interface SearchboxProps
     >,
     Pick<OptionsProps<string, false>, 'float' | 'optionStyle'> {
   selfFilter?: boolean;
-  onlyUpdatedByParent?: boolean;
   options?: string[];
   label?: string;
   validation?: Validation<SearchboxProps['value']>;
@@ -45,7 +44,6 @@ export const Searchbox = ({
   options: stringOptions,
   onChange,
   selfFilter = true,
-  onlyUpdatedByParent,
   disabled,
   placeholder,
   onFocus,
@@ -61,10 +59,7 @@ export const Searchbox = ({
   optionStyle,
 }: SearchboxProps) => {
   const [opened, setOpened] = useState(false);
-  const [inputText, setInputText] = useComponentSelfState(
-    value,
-    onlyUpdatedByParent,
-  );
+  const [inputText, setInputText] = useSubscribedState(value);
 
   const options = useMemo(() => {
     const options = stringOptions?.map((value) => ({

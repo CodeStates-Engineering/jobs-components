@@ -1,5 +1,5 @@
 import styles from './index.module.scss';
-import { useComponentSelfState, useValidation } from '../../../hooks';
+import { useSubscribedState, useValidation } from '../../../hooks';
 import { cleanClassName } from '../../../utils';
 import { Input, Label } from '../../atoms';
 
@@ -26,7 +26,6 @@ export interface TextboxProps<_InputType = Exclude<InputType, 'button'>>
     | 'className'
     | 'onBlur'
   > {
-  onlyUpdatedByParent?: boolean;
   label?: string;
   unit?: React.ReactNode;
   validation?: Validation<TextboxProps<_InputType>['value']>;
@@ -39,7 +38,7 @@ export interface TextboxProps<_InputType = Exclude<InputType, 'button'>>
 export const Textbox = <T extends Exclude<InputType, 'button'>>({
   value: originalValue,
   unit,
-  onlyUpdatedByParent,
+
   onChange,
   type = 'text' as T,
   placeholder,
@@ -56,10 +55,7 @@ export const Textbox = <T extends Exclude<InputType, 'button'>>({
   labelStyle,
   inputStyle,
 }: TextboxProps<T>) => {
-  const [value, setValue] = useComponentSelfState(
-    originalValue,
-    onlyUpdatedByParent,
-  );
+  const [value, setValue] = useSubscribedState(originalValue);
 
   const { validationMessage, checkValidation } = useValidation(
     value,

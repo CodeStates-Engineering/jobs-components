@@ -3,7 +3,7 @@ import { X } from 'react-feather';
 
 import styles from './index.module.scss';
 import {
-  useComponentSelfState,
+  useSubscribedState,
   useTypography,
   useValidation,
 } from '../../../hooks';
@@ -58,7 +58,7 @@ export const File = ({
 }: FileProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const [savedFile, setSavedFile] = useComponentSelfState(value, false, [
+  const [savedFile, setSavedFile] = useSubscribedState(value, false, [
     value?.name,
     value?.url,
   ]);

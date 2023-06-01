@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 
 import styles from './index.module.scss';
 import {
-  useComponentSelfState,
+  useSubscribedState,
   useTypography,
   useValidation,
 } from '../../../hooks';
@@ -22,7 +22,6 @@ export interface TextareaProps
       'placeholder' | 'id'
     >,
     Pick<InputWrapProps, 'onClick'> {
-  onlyUpdatedByParent?: boolean;
   onChange?: (value?: string) => void;
   value?: string;
   validation?: Validation<TextareaProps['value']>;
@@ -41,7 +40,6 @@ export interface TextareaProps
 export const Textarea = ({
   placeholder = '',
   value: originalValue,
-  onlyUpdatedByParent,
   onChange,
   disabled,
   validation,
@@ -53,9 +51,8 @@ export const Textarea = ({
   inputStyle,
   labelStyle,
 }: TextareaProps) => {
-  const [textareaValue, setTextareaValue] = useComponentSelfState(
+  const [textareaValue, setTextareaValue] = useSubscribedState(
     originalValue ?? '',
-    onlyUpdatedByParent,
   );
 
   const { fontSizeClassName, fontWeightClassName } = useTypography(

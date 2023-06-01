@@ -9,7 +9,7 @@ import { Calendar } from 'react-feather';
 
 import '../../../styles/dayPicker.scss';
 import styles from './index.module.scss';
-import { useComponentSelfState, useValidation } from '../../../hooks';
+import { useSubscribedState, useValidation } from '../../../hooks';
 import { cleanClassName } from '../../../utils';
 import { Input, Label, Dropdown, FocusLayer } from '../../atoms';
 
@@ -39,7 +39,6 @@ export interface DateSelectboxProps<_DateType = DateType>
     | 'onClick'
     | 'ref'
   > {
-  onlyUpdatedByParent?: boolean;
   label?: string;
   type?: _DateType;
   value?: DateValue<_DateType>;
@@ -54,7 +53,6 @@ export interface DateSelectboxProps<_DateType = DateType>
 export const DateSelectbox = <_DateType extends DateType>({
   value: originalValue,
   type = 'single',
-  onlyUpdatedByParent,
   onChange,
   placeholder,
   disabled,
@@ -74,9 +72,8 @@ export const DateSelectbox = <_DateType extends DateType>({
   const DATE_TIME_FORMAT = `${DATE_FORMAT} ${TIME_FORMAT}`;
   const MONTH_FORMAT = 'YYYY.MM';
   const [opened, setOpened] = useState(false);
-  const [value, setValue] = useComponentSelfState<DateValue | undefined>(
+  const [value, setValue] = useSubscribedState<DateValue | undefined>(
     originalValue,
-    onlyUpdatedByParent,
   );
 
   const reloadCalendar = () => {

@@ -7,8 +7,6 @@ const meta: Meta<typeof Switch> = {
   component: Switch,
   args: {
     label: 'Switch',
-    description: '[필수] Switch description',
-    essential: true,
     labelStyle: {
       fontSize: 'small',
       fontWeight: 500,

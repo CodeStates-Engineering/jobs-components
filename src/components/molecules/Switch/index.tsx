@@ -1,9 +1,7 @@
 import { useMemo } from 'react';
-import { Check } from 'react-feather';
 
 import styles from './index.module.scss';
-import { useComponentSelfState, useValidation } from '../../../hooks';
-import { cleanClassName } from '../../../utils';
+import { useSubscribedState } from '../../../hooks';
 import { Label } from '../../atoms';
 
 import type { Typography } from '../../../hooks';
@@ -14,7 +12,7 @@ export interface SwitchProps {
   onChange?: (checked: boolean) => void;
   disabled?: boolean;
   id?: string;
-  onlyUpdatedByParent?: boolean;
+
   label?: string;
   className?: string;
   labelStyle?: Typography & Pick<LabelContainerProps, 'direction'>;
@@ -28,14 +26,13 @@ export const Switch = ({
   value = false,
   onChange,
   disabled,
-  onlyUpdatedByParent,
   id,
   label,
   className,
   labelStyle,
   inputStyle,
 }: SwitchProps) => {
-  const [turned, setTurned] = useComponentSelfState(value, onlyUpdatedByParent);
+  const [turned, setTurned] = useSubscribedState(value);
 
   const style = useMemo(
     () => ({
