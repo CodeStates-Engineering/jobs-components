@@ -22,7 +22,7 @@ export type InputType =
   | 'password'
   | 'button';
 
-export interface InputProps<T = InputType>
+export interface InputProps<T extends InputType = 'text'>
   extends Pick<
       React.DetailedHTMLProps<
         React.InputHTMLAttributes<HTMLInputElement>,
