@@ -58,10 +58,7 @@ export const File = ({
 }: FileProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const [savedFile, setSavedFile] = useSubscribedState(value, false, [
-    value?.name,
-    value?.url,
-  ]);
+  const [savedFile, setSavedFile] = useSubscribedState(value);
 
   const { fontSizeClassName, fontWeightClassName } = useTypography(
     inputStyle?.fontSize,
