@@ -7,7 +7,6 @@ export interface CheckboxProps {
     name?: string;
     disabled?: boolean;
     id?: string;
-    onlyUpdatedByParent?: boolean;
     essential?: boolean;
     label?: string;
     description?: React.ReactNode;
@@ -18,4 +17,4 @@ export interface CheckboxProps {
         width?: CSSStyleDeclaration['width'];
     };
 }
-export declare const Checkbox: ({ value, onChange, disabled, onlyUpdatedByParent, id, essential, label, description, className, labelStyle, inputStyle, }: CheckboxProps) => JSX.Element;
+export declare const Checkbox: ({ value, onChange, disabled, id, essential, label, description, className, labelStyle, inputStyle, }: CheckboxProps) => JSX.Element;

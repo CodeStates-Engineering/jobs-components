@@ -2,7 +2,6 @@ import type { DetailedHTMLProps, TextareaHTMLAttributes } from 'react';
 import type { Validation, Typography } from '../../../hooks';
 import type { InputWrapProps, LabelContainerProps } from '../../atoms';
 export interface TextareaProps extends Pick<DetailedHTMLProps<TextareaHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement>, 'placeholder' | 'id'>, Pick<InputWrapProps, 'onClick'> {
-    onlyUpdatedByParent?: boolean;
     onChange?: (value?: string) => void;
     value?: string;
     validation?: Validation<TextareaProps['value']>;
@@ -16,4 +15,4 @@ export interface TextareaProps extends Pick<DetailedHTMLProps<TextareaHTMLAttrib
     } & Pick<InputWrapProps, 'borderRadius' | 'width'> & Typography;
     labelStyle?: Pick<LabelContainerProps, 'direction'> & Typography;
 }
-export declare const Textarea: ({ placeholder, value: originalValue, onlyUpdatedByParent, onChange, disabled, validation, id, label, validationSpace, className, onClick, inputStyle, labelStyle, }: TextareaProps) => JSX.Element;
+export declare const Textarea: ({ placeholder, value: originalValue, onChange, disabled, validation, id, label, validationSpace, className, onClick, inputStyle, labelStyle, }: TextareaProps) => JSX.Element;

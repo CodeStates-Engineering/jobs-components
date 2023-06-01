@@ -5,7 +5,6 @@ import type { InputProps, InputWrapProps, LabelContainerProps } from '../../atom
 type DateType = Exclude<DayPickerProps['mode'], 'default'>;
 type DateValue<_DateType = DateType> = _DateType extends 'multiple' ? Date[] : _DateType extends 'range' ? DateRange : Date;
 export interface DateSelectboxProps<_DateType = DateType> extends Pick<InputProps<'text'>, 'className' | 'placeholder' | 'disabled' | 'onFocus' | 'id' | 'onClick' | 'ref'> {
-    onlyUpdatedByParent?: boolean;
     label?: string;
     type?: _DateType;
     value?: DateValue<_DateType>;
@@ -15,5 +14,5 @@ export interface DateSelectboxProps<_DateType = DateType> extends Pick<InputProp
     inputStyle?: Typography & Pick<InputWrapProps, 'size' | 'borderRadius' | 'width'>;
     labelStyle?: Pick<LabelContainerProps, 'direction'> & Typography;
 }
-export declare const DateSelectbox: <_DateType extends DateType>({ value: originalValue, type, onlyUpdatedByParent, onChange, placeholder, disabled, onFocus, id, onClick, ref, label, validation, validationSpace, className, inputStyle, labelStyle, }: DateSelectboxProps<_DateType>) => JSX.Element;
+export declare const DateSelectbox: <_DateType extends DateType>({ value: originalValue, type, onChange, placeholder, disabled, onFocus, id, onClick, ref, label, validation, validationSpace, className, inputStyle, labelStyle, }: DateSelectboxProps<_DateType>) => JSX.Element;
 export {};
