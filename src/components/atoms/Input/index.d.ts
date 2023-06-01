@@ -1,7 +1,7 @@
 import type { Ref } from 'react';
 import type { Typography } from '../../../hooks';
 export type InputType = 'text' | 'number' | 'large-number' | 'phone-number' | 'business-number' | 'password' | 'button';
-export interface InputProps<T = InputType> extends Pick<React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, 'placeholder' | 'onFocus' | 'id' | 'onClick'>, Typography {
+export interface InputProps<T extends InputType = 'text'> extends Pick<React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, 'placeholder' | 'onFocus' | 'id' | 'onClick'>, Typography {
     type?: T;
     value?: T extends 'number' | 'large-number' ? number : string;
     disabled?: boolean | 'read-only';
