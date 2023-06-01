@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { ChevronDown } from 'react-feather';
 
 import styles from './index.module.scss';
-import { useComponentSelfState, useValidation } from '../../../hooks';
+import { useSubscribedState, useValidation } from '../../../hooks';
 import { cleanClassName } from '../../../utils';
 import { FocusLayer, Options, Input, Label } from '../../atoms';
 
@@ -24,7 +24,6 @@ export interface SelectboxProps<
     >,
     Pick<InputProps<'button'>, 'disabled' | 'placeholder' | 'id' | 'ref'>,
     Pick<InputWrapProps, 'onClick'> {
-  onlyUpdatedByParent?: boolean;
   label?: string;
   validation?: Validation<SelectboxProps<_ValidOptionValue>['value']>;
   validationSpace?: boolean;
@@ -42,7 +41,6 @@ export const Selectbox = <
   options,
   onChange,
   float,
-  onlyUpdatedByParent,
   disabled,
   placeholder,
   id,
@@ -59,10 +57,7 @@ export const Selectbox = <
 }: SelectboxProps<_ValidOptionValue, _Multiple>) => {
   const [opened, setOpened] = useState(false);
 
-  const [selectedValue, setSelectedValue] = useComponentSelfState(
-    value,
-    onlyUpdatedByParent,
-  );
+  const [selectedValue, setSelectedValue] = useSubscribedState(value);
 
   const selectedOption = options?.find(({ value }) => value === selectedValue);
 

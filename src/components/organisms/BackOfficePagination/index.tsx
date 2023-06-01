@@ -1,5 +1,5 @@
 import styles from './index.module.scss';
-import { useComponentSelfState } from '../../../hooks';
+import { useSubscribedState } from '../../../hooks';
 import { Pagination, Selectbox } from '../../molecules';
 
 import type { PaginationProps } from '../../molecules';
@@ -16,7 +16,7 @@ export const BackOfficePagination = ({
   itemPerPageOptions = [10, 20, 30, 40, 50],
   ...paginationProps
 }: BackOfficePaginationProps) => {
-  const [perPage, setPerPage] = useComponentSelfState(itemsPerPage);
+  const [perPage, setPerPage] = useSubscribedState(itemsPerPage);
   return (
     <div className={styles['back-office-pagination']}>
       <Pagination type="simple" {...paginationProps} itemsPerPage={perPage} />

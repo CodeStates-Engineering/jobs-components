@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { Check } from 'react-feather';
 
 import styles from './index.module.scss';
-import { useComponentSelfState, useValidation } from '../../../hooks';
+import { useSubscribedState, useValidation } from '../../../hooks';
 import { cleanClassName } from '../../../utils';
 import { Label } from '../../atoms';
 
@@ -15,7 +15,7 @@ export interface CheckboxProps {
   name?: string;
   disabled?: boolean;
   id?: string;
-  onlyUpdatedByParent?: boolean;
+
   essential?: boolean;
   label?: string;
   description?: React.ReactNode;
@@ -31,7 +31,6 @@ export const Checkbox = ({
   value = false,
   onChange,
   disabled,
-  onlyUpdatedByParent,
   id,
   essential,
   label,
@@ -40,10 +39,7 @@ export const Checkbox = ({
   labelStyle,
   inputStyle,
 }: CheckboxProps) => {
-  const [checked, setChecked] = useComponentSelfState(
-    value,
-    onlyUpdatedByParent,
-  );
+  const [checked, setChecked] = useSubscribedState(value);
 
   const size = inputStyle?.size ?? 'medium';
   const style = useMemo(

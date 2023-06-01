@@ -3,7 +3,7 @@ import type { Dispatch, SetStateAction } from 'react';
 import { ChevronDown } from 'react-feather';
 
 import styles from './index.module.scss';
-import { useComponentSelfState } from '../../../hooks';
+import { useSubscribedState } from '../../../hooks';
 import { cleanClassName } from '../../../utils';
 import { Hr } from '../../atoms';
 
@@ -18,15 +18,13 @@ const AccordionContext = createContext<
 
 export interface AccordionProps extends CommonProps {
   opened?: boolean;
-  onlyUpdatedByParent?: boolean;
 }
 const AccordionMain = ({
   children,
   className,
   opened = false,
-  onlyUpdatedByParent = false,
 }: AccordionProps) => {
-  const openState = useComponentSelfState(opened, onlyUpdatedByParent);
+  const openState = useSubscribedState(opened);
   return (
     <dl
       className={cleanClassName(
