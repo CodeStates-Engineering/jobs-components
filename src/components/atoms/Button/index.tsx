@@ -37,6 +37,7 @@ export interface ButtonProps
   shape?: 'round' | 'default';
   padding?: boolean;
   focusOutline?: boolean;
+  textAlign?: 'left' | 'center' | 'right';
 }
 
 export const Button = ({
@@ -56,6 +57,7 @@ export const Button = ({
   focusOutline = true,
   className,
   width,
+  textAlign = 'center',
 }: ButtonProps) => {
   const [delayState, setDelayState] = useState<'before' | 'delaying' | 'after'>(
     'after',
@@ -99,7 +101,9 @@ export const Button = ({
           styles[`icon-direction-${iconDirection}`]
         } ${styles[`children-type-${childrenType}`]} ${
           styles[theme.replaceAll('/', '_')]
-        } ${padding && styles.padding} ${className}`,
+        } ${padding && styles.padding} ${className}
+        ${childrenType !== 'icon' && styles[`text-align-${textAlign}`]}
+        `,
       )}
       onClick={onClick}
       disabled={isDisabled}

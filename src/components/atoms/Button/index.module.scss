@@ -167,6 +167,17 @@
   &.icon-direction-right {
     flex-direction: row;
   }
+
+  // * Text align
+  &.text-align-left {
+    justify-content: left;
+  }
+  &.text-align-center {
+    justify-content: center;
+  }
+  &.text-align-right {
+    justify-content: right;
+  }
 }
 
 .button-content {
