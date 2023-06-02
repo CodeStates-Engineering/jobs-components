@@ -10,6 +10,7 @@ export interface ButtonProps extends Pick<HtmlButtonProps, 'children' | 'disable
     shape?: 'round' | 'default';
     padding?: boolean;
     focusOutline?: boolean;
+    textAlign?: 'left' | 'center' | 'right';
 }
-export declare const Button: ({ delay, type, children, size, theme, onClick, disabled, shape, iconDirection, icon, padding, fontSize, fontWeight, focusOutline, className, width, }: ButtonProps) => JSX.Element;
+export declare const Button: ({ delay, type, children, size, theme, onClick, disabled, shape, iconDirection, icon, padding, fontSize, fontWeight, focusOutline, className, width, textAlign, }: ButtonProps) => JSX.Element;
 export {};
