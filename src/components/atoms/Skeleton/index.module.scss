@@ -4,10 +4,16 @@
   position: relative;
   overflow: hidden;
 
-  border-radius: 4px;
-
   background-color: $BLUISH-GRAY-100;
   @include fade-in;
+}
+
+@layer {
+  .skeleton {
+    width: 10em;
+    height: 2em;
+    border-radius: 4px;
+  }
 }
 
 .text-space {

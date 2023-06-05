@@ -100,7 +100,7 @@ export const Searchbox = ({
 
   return (
     <FocusLayer
-      onClick={() => setOpened(false)}
+      onBlur={() => setOpened(false)}
       focused={opened}
       className={cleanClassName(`${styles.searchbox} ${className}`)}
       bodyScroll

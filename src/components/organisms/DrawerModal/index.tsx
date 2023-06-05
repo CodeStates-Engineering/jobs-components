@@ -1,19 +1,21 @@
-import React, { createContext } from 'react';
+import React from 'react';
 
 import styles from './index.module.scss';
 import { useClosingState } from '../../../hooks';
 import { FocusLayer } from '../../atoms';
 
-const DrawerModalContext = createContext<(() => void) | undefined>(undefined);
+import type { FocusLayerProps } from '../../atoms';
 
 interface CommonProps {
   children?: React.ReactNode;
   className?: string;
 }
 
-export interface DrawerModalProps extends CommonProps {
+export interface DrawerModalProps
+  extends CommonProps,
+    Pick<FocusLayerProps, 'priority'> {
   opened?: boolean;
-  onClose?: () => void;
+  onClose?: FocusLayerProps['onBlur'];
   direction?: 'left' | 'right';
 }
 const DrawerModalMain = ({
@@ -22,33 +24,25 @@ const DrawerModalMain = ({
   opened = false,
   onClose,
   direction = 'right',
+  priority = 1,
 }: DrawerModalProps) => {
   const [openState] = useClosingState(opened, 250);
   const isClosing = openState === 'closing';
 
   return (
-    <FocusLayer
-      onClick={() => {
-        onClose?.();
-      }}
-      focused={opened}
-      priority={1}
-    >
+    <FocusLayer onBlur={onClose} focused={opened} priority={priority}>
       {openState ? (
         <article
           className={`${styles[`drawer-modal-container-${direction}`]}
           ${isClosing && styles.closing} ${className}`}
         >
-          <DrawerModalContext.Provider value={onClose}>
-            {children}
-          </DrawerModalContext.Provider>
+          {children}
         </article>
       ) : null}
     </FocusLayer>
   );
 };
 
-// TODO: Header 및 Footer 높낮이 유동
 export type DrawerModalHeaderProps = CommonProps;
 const DrawerModalHeader = ({ children, className }: DrawerModalHeaderProps) => (
   <header className={`${styles['drawer-modal-header']} ${className}`}>

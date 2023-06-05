@@ -5,7 +5,7 @@ import { cleanClassName } from '../../../utils';
 
 export interface FocusLayerProps {
   children?: React.ReactNode;
-  onClick?: React.MouseEventHandler<HTMLDivElement>;
+  onBlur?: React.MouseEventHandler<HTMLDivElement>;
   focused?: boolean;
   blur?: boolean;
   className?: string;
@@ -15,7 +15,7 @@ export interface FocusLayerProps {
 
 export const FocusLayer = ({
   children,
-  onClick,
+  onBlur,
   focused,
   blur,
   className,
@@ -50,7 +50,7 @@ export const FocusLayer = ({
       </div>
       {focusStatus ? (
         <div
-          onClick={onClick}
+          onClick={onBlur}
           className={cleanClassName(
             `${styles['background-layer']} ${
               isClosing && styles.closing

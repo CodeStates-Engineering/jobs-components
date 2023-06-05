@@ -34,6 +34,16 @@
   }
 }
 
+@layer default {
+  .focus-layer {
+    position: relative;
+    display: inline-block;
+
+    width: fit-content;
+    height: fit-content;
+  }
+}
+
 .focus-layer {
   &.priority-1 {
     z-index: 100;
@@ -44,7 +54,4 @@
   &.priority-3 {
     z-index: 34;
   }
-  position: relative;
-
-  height: fit-content;
 }

@@ -1,10 +1,10 @@
-import { Modal } from '.';
-import styles from './ConfirmModal.module.scss';
+import styles from './index.module.scss';
 import { cleanClassName } from '../../../utils';
 import { Button } from '../../atoms';
+import { Modal } from '../Modal';
 
-import type { ModalProps } from '.';
 import type { ButtonProps } from '../../atoms';
+import type { ModalProps } from '../Modal';
 
 export interface ConfirmModalProps extends ModalProps {
   confirmButtonProps?: ButtonProps;

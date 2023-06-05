@@ -2,11 +2,11 @@ import React from 'react';
 
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { PartnerAccordion } from './PartnerAccordion';
+import { PartnerAccordion } from '.';
 import { DUMMY } from '../../../utils';
 
 const meta: Meta<typeof PartnerAccordion> = {
-  title: 'molecules/Accordion/PartnerAccordion',
+  title: 'organisms/PartnerAccordion',
   component: PartnerAccordion,
   decorators: [
     (Story) => (

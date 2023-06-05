@@ -5,7 +5,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { DateSelectbox } from '.';
 
 const meta: Meta<typeof DateSelectbox> = {
-  title: 'molecules/DateSelectbox',
+  title: 'organisms/DateSelectbox',
   component: DateSelectbox,
   decorators: [
     (Story) => (

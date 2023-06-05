@@ -1,6 +1,6 @@
-import { Accordion } from '.';
-import styles from './PartnerAccordion.module.scss';
+import styles from './index.module.scss';
 import EmptyCompanyProfile from '../../../assets/svgs/empty-company-profile.svg';
+import { Accordion } from '../../molecules';
 
 export interface PartnerAccordionProps {
   title?: string;
