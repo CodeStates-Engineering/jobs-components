@@ -29,7 +29,7 @@ const ModalMain = ({
   opened,
   onClose,
   priority = 1,
-  blur,
+  blur = true,
 }: ModalProps) => (
   <FocusLayer focused={opened} onBlur={onClose} blur={blur} priority={priority}>
     {opened ? (
