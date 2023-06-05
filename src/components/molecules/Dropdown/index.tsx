@@ -2,17 +2,25 @@ import { useEffect, useState } from 'react';
 
 import styles from './index.module.scss';
 import { cleanClassName } from '../../../utils';
+import { FocusLayer } from '../../atoms';
 
-export interface DropdownProps {
+import type { FocusLayerProps } from '../../atoms';
+
+export interface DropdownProps
+  extends Pick<FocusLayerProps, 'blur' | 'priority'> {
   opened?: boolean;
   children?: React.ReactNode;
   className?: string;
+  onClose?: FocusLayerProps['onBlur'];
 }
 
 export const Dropdown = ({
   opened = false,
   children,
   className,
+  onClose,
+  blur,
+  priority,
 }: DropdownProps) => {
   const [openState, setOpenState] = useState<boolean | 'closing'>(opened);
   useEffect(
@@ -39,7 +47,11 @@ export const Dropdown = ({
   }, [openState]);
 
   return openState ? (
-    <div
+    <FocusLayer
+      blur={blur}
+      priority={priority}
+      focused={!!openState}
+      onBlur={onClose}
       className={cleanClassName(
         `${styles.dropdown} ${
           openState === 'closing' && styles.closing
@@ -47,7 +59,7 @@ export const Dropdown = ({
       )}
     >
       {children}
-    </div>
+    </FocusLayer>
   ) : (
     <></>
   );

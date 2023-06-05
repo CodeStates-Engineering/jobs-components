@@ -185,7 +185,7 @@ export const DateSelectbox = <_DateType extends DateType>({
       className={cleanClassName(`${styles['date-selectbox']} ${className}`)}
       bodyScroll
       focused={opened}
-      onClick={() => setOpened(false)}
+      onBlur={() => setOpened(false)}
     >
       <Input.Container
         validationMessage={validationMessage}

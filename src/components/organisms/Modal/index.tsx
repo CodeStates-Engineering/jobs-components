@@ -21,7 +21,7 @@ export interface ModalProps extends CommonProps {
   onClose?: () => void;
 }
 const ModalMain = ({ children, className, opened, onClose }: ModalProps) => (
-  <FocusLayer focused={opened} onClick={onClose} blur priority={1}>
+  <FocusLayer focused={opened} onBlur={onClose} blur priority={1}>
     {opened ? (
       <article
         className={cleanClassName(`${styles['modal-container']} ${className}`)}

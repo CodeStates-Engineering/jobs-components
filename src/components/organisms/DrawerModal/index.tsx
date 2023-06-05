@@ -27,13 +27,7 @@ const DrawerModalMain = ({
   const isClosing = openState === 'closing';
 
   return (
-    <FocusLayer
-      onClick={() => {
-        onClose?.();
-      }}
-      focused={opened}
-      priority={1}
-    >
+    <FocusLayer onBlur={() => onClose?.()} focused={opened} priority={1}>
       {openState ? (
         <article
           className={`${styles[`drawer-modal-container-${direction}`]}

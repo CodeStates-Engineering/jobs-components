@@ -69,7 +69,7 @@ export const Selectbox = <
 
   return (
     <FocusLayer
-      onClick={() => setOpened(false)}
+      onBlur={() => setOpened(false)}
       focused={opened}
       className={cleanClassName(`${styles.selectbox} ${className}`)}
       bodyScroll

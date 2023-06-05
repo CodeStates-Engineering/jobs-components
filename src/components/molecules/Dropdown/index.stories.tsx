@@ -5,13 +5,14 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Dropdown } from '.';
 
 const meta: Meta = {
-  title: 'atoms/Dropdown',
+  title: 'molecules/Dropdown',
   component: Dropdown,
   args: {
     opened: true,
     children: (
       <div
         style={{
+          position: 'relative',
           minWidth: '300px',
           height: '100px',
           padding: '10px',
@@ -19,17 +20,13 @@ const meta: Meta = {
           alignItems: 'center',
           justifyContent: 'center',
         }}
-      >
-        <p>Dropdown</p>
-      </div>
+      />
     ),
   },
   decorators: [
     (Story) => (
       <article
-        style={{
-          height: '150px',
-        }}
+        style={{ transform: 'scale(1)', height: '150px', width: '100%' }}
       >
         <Story />
       </article>
