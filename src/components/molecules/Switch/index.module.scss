@@ -1,6 +1,11 @@
 @import '../../../styles/libs';
 
 .switch-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.switch-content {
   position: relative;
   display: flex;
   align-items: center;

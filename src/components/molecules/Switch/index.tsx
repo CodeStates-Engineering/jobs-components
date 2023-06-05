@@ -55,25 +55,26 @@ export const Switch = ({
           {label}
         </Label>
       ) : null}
-      <div
-        className={`${styles['switch-container']} ${sizeClassName} ${turnedClassName}`}
-        style={style}
-      >
+      <div style={style} className={styles['switch-container']}>
         <div
-          className={`${styles['switch-ball']} ${sizeClassName} ${turnedClassName}`}
-        />
-        <input
-          id={id}
-          type="checkbox"
-          className={styles['switch-input']}
-          name={label}
-          checked={turned}
-          disabled={disabled}
-          onChange={({ target: { checked } }) => {
-            setTurned?.(checked);
-            onChange?.(checked);
-          }}
-        />
+          className={`${styles['switch-content']} ${sizeClassName} ${turnedClassName}`}
+        >
+          <div
+            className={`${styles['switch-ball']} ${sizeClassName} ${turnedClassName}`}
+          />
+          <input
+            id={id}
+            type="checkbox"
+            className={styles['switch-input']}
+            name={label}
+            checked={turned}
+            disabled={disabled}
+            onChange={({ target: { checked } }) => {
+              setTurned?.(checked);
+              onChange?.(checked);
+            }}
+          />
+        </div>
       </div>
     </Label.Container>
   );

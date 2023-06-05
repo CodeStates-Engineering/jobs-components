@@ -87,10 +87,11 @@ export const Checkbox = ({
           {label}
         </Label>
       ) : null}
-      <div className={styles['checkbox-container-wrap']} style={style}>
+      <div className={styles['checkbox-container-wrap']}>
+        <div className="checkbox-description-gap" style={style} />
         <div
           className={cleanClassName(
-            `${styles['checkbox-container']} ${styles[`size-${size}`]} ${
+            `${styles['checkbox-content']} ${styles[`size-${size}`]} ${
               isValid || styles.invalid
             }`,
           )}
@@ -115,6 +116,7 @@ export const Checkbox = ({
         </div>
         {description && <div className={styles.description}>{description}</div>}
       </div>
+      {/* </div> */}
     </Label.Container>
   );
 };
