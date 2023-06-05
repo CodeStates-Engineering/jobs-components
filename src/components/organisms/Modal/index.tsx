@@ -7,6 +7,7 @@ import { cleanClassName } from '../../../utils';
 import { Button, FocusLayer } from '../../atoms';
 import { TabMenu } from '../../molecules';
 
+import type { FocusLayerProps } from '../../atoms';
 import type { TabMenuProps } from '../../molecules';
 
 const ModalContext = createContext<(() => void) | undefined>(undefined);
@@ -16,12 +17,21 @@ interface CommonProps {
   className?: string;
 }
 
-export interface ModalProps extends CommonProps {
+export interface ModalProps
+  extends CommonProps,
+    Pick<FocusLayerProps, 'priority' | 'blur'> {
   opened?: boolean;
   onClose?: () => void;
 }
-const ModalMain = ({ children, className, opened, onClose }: ModalProps) => (
-  <FocusLayer focused={opened} onBlur={onClose} blur priority={1}>
+const ModalMain = ({
+  children,
+  className,
+  opened,
+  onClose,
+  priority = 1,
+  blur,
+}: ModalProps) => (
+  <FocusLayer focused={opened} onBlur={onClose} blur={blur} priority={priority}>
     {opened ? (
       <article
         className={cleanClassName(`${styles['modal-container']} ${className}`)}
@@ -43,7 +53,7 @@ export const ModalHeader = ({
   className,
   border = false,
 }: ModalHeaderProps) => {
-  const onClickClosingArea = useContext(ModalContext);
+  const handleClose = useContext(ModalContext);
   return (
     <header
       className={cleanClassName(
@@ -57,7 +67,7 @@ export const ModalHeader = ({
         icon={<X />}
         theme="bluish-gray700/0"
         size="small"
-        onClick={onClickClosingArea}
+        onClick={handleClose}
       />
     </header>
   );
@@ -72,7 +82,7 @@ const ModalTabMenuHeader = ({
   items,
   border = true,
 }: ModalTabMenuHeaderProps) => {
-  const onClickClosingArea = useContext(ModalContext);
+  const handleClose = useContext(ModalContext);
   return (
     <header
       className={cleanClassName(
@@ -92,7 +102,7 @@ const ModalTabMenuHeader = ({
         icon={<X />}
         theme="bluish-gray700/0"
         size="small"
-        onClick={onClickClosingArea}
+        onClick={handleClose}
       />
     </header>
   );
