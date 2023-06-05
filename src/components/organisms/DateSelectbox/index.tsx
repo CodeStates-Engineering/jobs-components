@@ -11,7 +11,8 @@ import '../../../styles/dayPicker.scss';
 import styles from './index.module.scss';
 import { useSubscribedState, useValidation } from '../../../hooks';
 import { cleanClassName } from '../../../utils';
-import { Input, Label, Dropdown, FocusLayer } from '../../atoms';
+import { Input, Label, FocusLayer } from '../../atoms';
+import { Dropdown } from '../../molecules';
 
 import 'react-day-picker/dist/style.css';
 import type { Validation, Typography } from '../../../hooks';

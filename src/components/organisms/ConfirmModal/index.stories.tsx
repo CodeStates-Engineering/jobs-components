@@ -4,12 +4,12 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { ConfirmModal } from './ConfirmModal';
+import { ConfirmModal } from '.';
 import { DUMMY } from '../../../utils';
 import { Button } from '../../atoms';
 
 const meta: Meta<typeof ConfirmModal> = {
-  title: 'organisms/Modal/ConfirmModal',
+  title: 'organisms/ConfirmModal',
   component: ConfirmModal,
 };
 
