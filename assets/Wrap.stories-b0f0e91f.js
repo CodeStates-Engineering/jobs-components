@@ -1,6 +1,0 @@
-import{j as s}from"./jsx-runtime-94f6e698.js";import{r as u}from"./index-8db94870.js";import{I as c}from"./index-fff92b81.js";import"./_commonjsHelpers-042e6b4d.js";import"./index-e3b5ba34.js";import"./index-64131664.js";import"./useTypography-0e7bc425.js";const y={title:"atoms/Input/Wrap",component:c.Wrap,args:{size:"large"},argTypes:{size:{options:["none","small","medium","large"],control:{type:"select",default:"large"}}}},e={},r={render:l=>s.jsx(s.Fragment,{children:["none","small","medium","large"].map(a=>u.createElement(c.Wrap,{...l,size:a,key:a}))})};var t,o,m;e.parameters={...e.parameters,docs:{...(t=e.parameters)==null?void 0:t.docs,source:{originalSource:"{}",...(m=(o=e.parameters)==null?void 0:o.docs)==null?void 0:m.source}}};var p,n,i;r.parameters={...r.parameters,docs:{...(p=r.parameters)==null?void 0:p.docs,source:{originalSource:`{
-  render: args => <>
-      {(['none', 'small', 'medium', 'large'] satisfies InputWrapProps['size'][]).map(size => <Input.Wrap {...args} size={size} key={size} />)}
-    </>
-}`,...(i=(n=r.parameters)==null?void 0:n.docs)==null?void 0:i.source}}};const E=["Default","Size"];export{e as Default,r as Size,E as __namedExportsOrder,y as default};
-//# sourceMappingURL=Wrap.stories-b0f0e91f.js.map
