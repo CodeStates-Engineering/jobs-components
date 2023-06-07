@@ -1,5 +1,5 @@
 /// <reference types="react" />
-import type { Typography } from '../../../hooks';
+import type { Typography, Validation } from '../../../hooks';
 import type { LabelContainerProps } from '../../atoms';
 export interface SwitchProps {
     value?: boolean;
@@ -7,6 +7,8 @@ export interface SwitchProps {
     disabled?: boolean;
     id?: string;
     label?: string;
+    validation?: Validation<SwitchProps['value']>;
+    validationSpace: boolean;
     className?: string;
     labelStyle?: Typography & Pick<LabelContainerProps, 'direction'>;
     inputStyle?: {
@@ -14,4 +16,4 @@ export interface SwitchProps {
         width?: CSSStyleDeclaration['width'];
     };
 }
-export declare const Switch: ({ value, onChange, disabled, id, label, className, labelStyle, inputStyle, }: SwitchProps) => JSX.Element;
+export declare const Switch: ({ value, onChange, disabled, id, label, validation, validationSpace, className, labelStyle, inputStyle, }: SwitchProps) => JSX.Element;
