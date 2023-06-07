@@ -15,6 +15,7 @@ export interface CheckboxProps {
     inputStyle?: {
         size?: 'small' | 'medium';
         width?: CSSStyleDeclaration['width'];
+        containerSize?: 'none' | 'small' | 'medium' | 'large';
     };
 }
 export declare const Checkbox: ({ value, onChange, disabled, id, essential, label, description, className, labelStyle, inputStyle, }: CheckboxProps) => JSX.Element;
