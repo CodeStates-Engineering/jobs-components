@@ -25,6 +25,8 @@
 }
 
 .title {
+  vertical-align: middle;
+
   border-right: 0 solid $BLUISH-GRAY-10;
   border-bottom: 1px solid $BLUISH-GRAY-200;
 
@@ -55,6 +57,8 @@
 }
 
 .cell {
+  vertical-align: middle;
+
   border-right: 0 solid $BLUISH-GRAY-10;
   border-bottom: 1px solid $BLUISH-GRAY-200;
 

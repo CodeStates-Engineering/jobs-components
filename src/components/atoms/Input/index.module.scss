@@ -47,7 +47,6 @@
 
 .input-interaction-wrap {
   position: relative;
-  z-index: 1;
 
   width: 100%;
 }
@@ -60,7 +59,6 @@
 
 .input-wrap {
   position: relative;
-  z-index: 1;
   display: flex;
   gap: 0.8em;
   align-items: center;
@@ -69,17 +67,17 @@
   box-sizing: border-box;
   width: 100%;
 
+  color: $BLUISH-GRAY-700;
+  font-size: $NORMAL;
+
+  transition: box-shadow 0.3s, background-color 0.3s;
+
   &.border-radius-4 {
     border-radius: 4px;
   }
   &.border-radius-8 {
     border-radius: 8px;
   }
-
-  color: $BLUISH-GRAY-700;
-  font-size: $NORMAL;
-
-  transition: box-shadow 0.3s, background-color 0.3s;
 
   @include border($BLUISH-GRAY-200, 1px);
 
@@ -139,7 +137,6 @@
 
 .validation-message {
   @include shake-horizontal(0.9s);
-  z-index: 0;
 
   padding-left: $SMALL3X;
 

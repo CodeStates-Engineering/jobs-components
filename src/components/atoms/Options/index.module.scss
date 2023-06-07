@@ -19,28 +19,23 @@
     cursor: default;
   }
 
+  &.opening {
+    @include fade-in(0.3s);
+  }
+  &.closing {
+    @include fade-out(0.1s);
+  }
+
   &.top {
     bottom: 100%;
 
     margin-bottom: 0.5rem;
-    &.opening {
-      @include fade-in-bottom;
-    }
-    &.closing {
-      @include fade-out-bottom;
-    }
   }
 
   &.bottom {
     top: 100%;
 
     margin-top: 0.5rem;
-    &.opening {
-      @include fade-in-top;
-    }
-    &.closing {
-      @include fade-out-top;
-    }
   }
 }
 

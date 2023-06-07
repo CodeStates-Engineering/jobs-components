@@ -3,7 +3,6 @@ import { createPortal } from 'react-dom';
 
 import styles from './index.module.scss';
 import { useClosingState } from '../../../hooks';
-import { Compatibility } from '../../../plugins';
 import { cleanClassName } from '../../../utils';
 
 export interface FocusLayerProps {
@@ -28,7 +27,7 @@ export const FocusLayer = ({
   const [focusStatus] = useClosingState(focused);
   const isClosing = focusStatus === 'closing';
 
-  Compatibility.useLayoutEffect(() => {
+  useEffect(() => {
     if (!bodyScroll) {
       const { classList } = document.body;
       if (focused) {
