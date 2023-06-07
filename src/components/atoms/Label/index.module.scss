@@ -2,20 +2,28 @@
 
 .label {
   display: inline-block;
-  @include font-size;
-  @include font-weight;
+
   color: $BLUISH-GRAY-700;
   white-space: pre;
+  @include font-size;
+  @include font-weight;
 }
 
 .label-container {
   display: flex;
   gap: 10px;
 
-  &.row {
+  &.row-start {
+    align-items: undefined;
+
+    margin-top: 0.5rem;
+  }
+
+  &.row-center {
     align-items: center;
     justify-content: space-between;
   }
+
   &.column {
     flex-direction: column;
     align-items: flex-start;

@@ -38,7 +38,7 @@ const LabelMain = ({
 export interface LabelContainerProps {
   children?: React.ReactNode;
   className?: string;
-  direction?: 'column' | 'row';
+  direction?: 'column' | 'row-start' | 'row-center';
 }
 
 const LabelContainer = ({
