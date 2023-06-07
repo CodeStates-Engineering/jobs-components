@@ -47,7 +47,9 @@ export interface DateSelectboxProps<_DateType = DateType>
   validation?: Validation<DateSelectboxProps['value']>;
   validationSpace?: boolean;
   inputStyle?: Typography &
-    Pick<InputWrapProps, 'size' | 'borderRadius' | 'width'>;
+    Pick<InputWrapProps, 'size' | 'borderRadius' | 'width'> & {
+      calendarX?: 'left' | 'right';
+    };
   labelStyle?: Pick<LabelContainerProps, 'direction'> & Typography;
 }
 
@@ -226,7 +228,12 @@ export const DateSelectbox = <_DateType extends DateType>({
             <Calendar size="1.2em" className={styles['calendar-icon']} />
           </Input.Wrap>
         </Label.Container>
-        <Dropdown opened={opened} className={styles.calendar}>
+        <Dropdown
+          opened={opened}
+          className={`${styles.calendar} ${
+            styles[inputStyle?.calendarX ?? 'right']
+          }`}
+        >
           <DayPicker
             {...dayPickerProps}
             className={styles['day-picker']}
