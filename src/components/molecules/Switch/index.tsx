@@ -63,7 +63,7 @@ export const Switch = ({
       <Label.Container
         direction={labelStyle?.direction}
         className={`${
-          styles[`size-${inputStyle?.containerSize ?? 'none'}`]
+          styles[`container-size-${inputStyle?.containerSize ?? 'none'}`]
         } ${className}`}
       >
         {label ? (

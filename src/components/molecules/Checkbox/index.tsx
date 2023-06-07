@@ -24,6 +24,7 @@ export interface CheckboxProps {
   inputStyle?: {
     size?: 'small' | 'medium';
     width?: CSSStyleDeclaration['width'];
+    containerSize?: 'none' | 'small' | 'medium' | 'large';
   };
 }
 
@@ -77,7 +78,12 @@ export const Checkbox = ({
   const isValid = !validationMessage;
 
   return (
-    <Label.Container direction={labelStyle?.direction} className={className}>
+    <Label.Container
+      direction={labelStyle?.direction}
+      className={`${
+        styles[`container-size-${inputStyle?.containerSize ?? 'none'}`]
+      } ${className}`}
+    >
       {label ? (
         <Label
           htmlFor={label}

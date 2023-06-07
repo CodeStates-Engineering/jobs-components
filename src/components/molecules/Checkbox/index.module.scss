@@ -1,5 +1,21 @@
 @import '../../../styles/libs';
 
+.container-size-none {
+  height: fit-content;
+}
+
+.container-size-small {
+  height: 32px;
+}
+
+.container-size-medium {
+  height: 40px;
+}
+
+.container-size-large {
+  height: 48px;
+}
+
 .checkbox-content {
   position: relative;
   display: flex;
