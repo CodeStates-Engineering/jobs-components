@@ -21,6 +21,7 @@ export interface SwitchProps {
   inputStyle?: {
     size?: 'small' | 'medium' | 'large';
     width?: CSSStyleDeclaration['width'];
+    containerSize?: 'none' | 'small' | 'medium' | 'large';
   };
 }
 
@@ -59,7 +60,12 @@ export const Switch = ({
       validationMessage={validationMessage}
       validationSpace={validationSpace}
     >
-      <Label.Container direction={labelStyle?.direction} className={className}>
+      <Label.Container
+        direction={labelStyle?.direction}
+        className={`${
+          styles[`size-${inputStyle?.containerSize ?? 'none'}`]
+        } ${className}`}
+      >
         {label ? (
           <Label
             htmlFor={label}

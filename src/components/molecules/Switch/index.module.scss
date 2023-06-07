@@ -1,5 +1,21 @@
 @import '../../../styles/libs';
 
+.size-none {
+  height: fit-content;
+}
+
+.size-small {
+  height: 32px;
+}
+
+.size-medium {
+  height: 40px;
+}
+
+.size-large {
+  height: 48px;
+}
+
 .switch-container {
   display: flex;
 }
