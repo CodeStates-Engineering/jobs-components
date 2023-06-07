@@ -14,7 +14,7 @@
   gap: 10px;
 
   &.row-start {
-    align-items: undefined;
+    justify-content: space-between;
 
     margin-top: 0.5rem;
   }
