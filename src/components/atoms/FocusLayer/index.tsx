@@ -13,7 +13,7 @@ export interface FocusLayerProps {
   blur?: boolean;
   className?: string;
   bodyScroll?: boolean;
-  priority: 1 | 2 | 3;
+  priority?: 1 | 2 | 3;
 }
 
 export const FocusLayer = ({
