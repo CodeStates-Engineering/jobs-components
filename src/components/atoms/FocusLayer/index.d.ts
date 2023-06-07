@@ -1,7 +1,7 @@
-import type { MouseEventHandler } from 'react';
+/// <reference types="react" />
 export interface FocusLayerProps {
     children?: React.ReactNode;
-    onBlur?: MouseEventHandler<HTMLDivElement>;
+    onBlur?: () => void;
     focused?: boolean;
     blur?: boolean;
     className?: string;
