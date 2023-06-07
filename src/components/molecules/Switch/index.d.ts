@@ -14,6 +14,7 @@ export interface SwitchProps {
     inputStyle?: {
         size?: 'small' | 'medium' | 'large';
         width?: CSSStyleDeclaration['width'];
+        containerSize?: 'none' | 'small' | 'medium' | 'large';
     };
 }
 export declare const Switch: ({ value, onChange, disabled, id, label, validation, validationSpace, className, labelStyle, inputStyle, }: SwitchProps) => JSX.Element;
