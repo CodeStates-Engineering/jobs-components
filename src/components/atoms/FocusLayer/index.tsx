@@ -1,3 +1,6 @@
+import type { MouseEventHandler } from 'react';
+import { createPortal } from 'react-dom';
+
 import styles from './index.module.scss';
 import { useClosingState } from '../../../hooks';
 import { Compatibility } from '../../../plugins';
@@ -5,12 +8,12 @@ import { cleanClassName } from '../../../utils';
 
 export interface FocusLayerProps {
   children?: React.ReactNode;
-  onBlur?: React.MouseEventHandler<HTMLDivElement>;
+  onBlur?: MouseEventHandler<HTMLDivElement>;
   focused?: boolean;
   blur?: boolean;
   className?: string;
   bodyScroll?: boolean;
-  priority?: 1 | 2 | 3;
+  priority: 1 | 2 | 3;
 }
 
 export const FocusLayer = ({
@@ -39,25 +42,26 @@ export const FocusLayer = ({
 
   return (
     <>
+      {focusStatus
+        ? createPortal(
+            <div
+              onClick={onBlur}
+              className={cleanClassName(
+                `${styles['background-layer']} ${isClosing && styles.closing} ${
+                  blur && styles.blur
+                } ${priorityClassName}`,
+              )}
+            />,
+            document.body,
+          )
+        : null}
       <div
         className={cleanClassName(
-          `${styles['focus-layer']} ${
-            focusStatus && priorityClassName
-          } ${className}`,
+          `${styles['focus-layer']} ${priorityClassName} ${className}`,
         )}
       >
         {children}
       </div>
-      {focusStatus ? (
-        <div
-          onClick={onBlur}
-          className={cleanClassName(
-            `${styles['background-layer']} ${
-              isClosing && styles.closing
-            } ${priorityClassName} ${blur && styles.blur}`,
-          )}
-        />
-      ) : null}
     </>
   );
 };
