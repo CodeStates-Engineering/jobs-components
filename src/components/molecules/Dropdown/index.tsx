@@ -6,8 +6,7 @@ import { FocusLayer } from '../../atoms';
 
 import type { FocusLayerProps } from '../../atoms';
 
-export interface DropdownProps
-  extends Pick<FocusLayerProps, 'blur' | 'priority'> {
+export interface DropdownProps {
   opened?: boolean;
   children?: React.ReactNode;
   className?: string;
@@ -19,8 +18,6 @@ export const Dropdown = ({
   children,
   className,
   onClose,
-  blur,
-  priority,
 }: DropdownProps) => {
   const [openState, setOpenState] = useState<boolean | 'closing'>(opened);
   useEffect(
@@ -48,8 +45,6 @@ export const Dropdown = ({
 
   return openState ? (
     <FocusLayer
-      blur={blur}
-      priority={priority}
       focused={!!openState}
       onBlur={onClose}
       className={cleanClassName(

@@ -1,4 +1,4 @@
-import type { MouseEventHandler } from 'react';
+import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 
 import styles from './index.module.scss';
@@ -8,7 +8,7 @@ import { cleanClassName } from '../../../utils';
 
 export interface FocusLayerProps {
   children?: React.ReactNode;
-  onBlur?: MouseEventHandler<HTMLDivElement>;
+  onBlur?: () => void;
   focused?: boolean;
   blur?: boolean;
   className?: string;
@@ -23,7 +23,7 @@ export const FocusLayer = ({
   blur,
   className,
   bodyScroll = false,
-  priority = 3,
+  priority,
 }: FocusLayerProps) => {
   const [focusStatus] = useClosingState(focused);
   const isClosing = focusStatus === 'closing';
@@ -38,30 +38,56 @@ export const FocusLayer = ({
     }
   }, [focused, bodyScroll]);
 
-  const priorityClassName = styles[`priority-${priority}`];
+  const isMouseOnFocusLayer = useRef<boolean>();
 
-  return (
-    <>
-      {focusStatus
-        ? createPortal(
-            <div
-              onClick={onBlur}
-              className={cleanClassName(
-                `${styles['background-layer']} ${isClosing && styles.closing} ${
-                  blur && styles.blur
-                } ${priorityClassName}`,
-              )}
-            />,
-            document.body,
-          )
-        : null}
-      <div
-        className={cleanClassName(
-          `${styles['focus-layer']} ${priorityClassName} ${className}`,
-        )}
-      >
-        {children}
-      </div>
-    </>
+  useEffect(() => {
+    if (onBlur) {
+      const handleBlur = () => {
+        if (isMouseOnFocusLayer.current === false) {
+          onBlur();
+        }
+      };
+
+      document.addEventListener('click', handleBlur);
+      return () => document.removeEventListener('click', handleBlur);
+    }
+  }, [onBlur, focusStatus]);
+
+  const childrenWrapProps = {
+    className: cleanClassName(
+      `${styles['focus-layer']} ${
+        priority && styles[`priority-${priority}`]
+      } ${className}`,
+    ),
+    children,
+  };
+
+  return priority ? (
+    createPortal(
+      <>
+        {focusStatus ? (
+          <div
+            onClick={onBlur}
+            className={cleanClassName(
+              `${styles['background-layer']} ${
+                styles[`priority-${priority}`]
+              } ${isClosing && styles.closing} ${blur && styles.blur}`,
+            )}
+          />
+        ) : null}
+        <div {...childrenWrapProps} />
+      </>,
+      document.body,
+    )
+  ) : (
+    <div
+      {...childrenWrapProps}
+      onMouseEnter={() => {
+        isMouseOnFocusLayer.current = true;
+      }}
+      onMouseLeave={() => {
+        isMouseOnFocusLayer.current = false;
+      }}
+    />
   );
 };

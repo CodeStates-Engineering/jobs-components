@@ -48,9 +48,13 @@
   align-items: center;
   justify-content: space-between;
 
-  padding: 0 24px;
-
   &.with-border {
     border-bottom: $BLUISH-GRAY-100 solid 1px;
+  }
+}
+
+@layer default {
+  .modal-header {
+    padding: 12px 24px;
   }
 }
