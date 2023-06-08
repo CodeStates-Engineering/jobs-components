@@ -61,10 +61,14 @@ export const FocusLayer = ({
     children,
   };
 
+  const commonClassName = `${styles['focus-layer']} ${
+    priority && styles[`priority-${priority}`]
+  } ${className}`;
+
   return priority ? (
     createPortal(
-      <>
-        {focusStatus ? (
+      focusStatus ? (
+        <>
           <div
             onClick={onBlur}
             className={cleanClassName(
@@ -72,22 +76,31 @@ export const FocusLayer = ({
                 styles[`priority-${priority}`]
               } ${isClosing && styles.closing} ${blur && styles.blur}`,
             )}
+          />
+          <div
+            className={cleanClassName(
+              `${styles['focus-layer']} ${
+                styles[`priority-${priority}`]
+              } ${className}`,
+            )}
           >
-            <div {...childrenWrapProps} />
+            {children}
           </div>
-        ) : null}
-      </>,
+        </>
+      ) : null,
       document.body,
     )
   ) : (
     <div
-      {...childrenWrapProps}
       onMouseEnter={() => {
         isMouseOnFocusLayer.current = true;
       }}
       onMouseLeave={() => {
         isMouseOnFocusLayer.current = false;
       }}
-    />
+      className={cleanClassName(`${styles['focus-layer']} ${className}`)}
+    >
+      {children}
+    </div>
   );
 };
