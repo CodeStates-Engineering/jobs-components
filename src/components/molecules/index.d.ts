@@ -12,3 +12,4 @@ export * from './Table';
 export * from './Tag';
 export * from './Switch';
 export * from './Dropdown';
+export * from './InfoCard';
