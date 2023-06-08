@@ -52,19 +52,6 @@ export const FocusLayer = ({
     }
   }, [onBlur, focusStatus]);
 
-  const childrenWrapProps = {
-    className: cleanClassName(
-      `${styles['focus-layer']} ${
-        priority && styles[`priority-${priority}`]
-      } ${className}`,
-    ),
-    children,
-  };
-
-  const commonClassName = `${styles['focus-layer']} ${
-    priority && styles[`priority-${priority}`]
-  } ${className}`;
-
   return priority ? (
     createPortal(
       focusStatus ? (
