@@ -65,16 +65,18 @@ export const FocusLayer = ({
     createPortal(
       <>
         {focusStatus ? (
-          <div
-            onClick={onBlur}
-            className={cleanClassName(
-              `${styles['background-layer']} ${
-                styles[`priority-${priority}`]
-              } ${isClosing && styles.closing} ${blur && styles.blur}`,
-            )}
-          />
+          <>
+            <div
+              onClick={onBlur}
+              className={cleanClassName(
+                `${styles['background-layer']} ${
+                  styles[`priority-${priority}`]
+                } ${isClosing && styles.closing} ${blur && styles.blur}`,
+              )}
+            />
+            <div {...childrenWrapProps} />
+          </>
         ) : null}
-        <div {...childrenWrapProps} />
       </>,
       document.body,
     )
