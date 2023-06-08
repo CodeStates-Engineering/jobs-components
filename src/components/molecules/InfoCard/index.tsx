@@ -1,5 +1,8 @@
+import nodeToString from 'react-node-to-string';
+
 import styles from './index.module.scss';
 import { cleanClassName } from '../../../utils';
+import { Button } from '../../atoms';
 
 export interface InfoCardProps {
   icon?: React.ReactNode;
@@ -10,6 +13,7 @@ export interface InfoCardProps {
   };
   children?: React.ReactNode;
   className?: string;
+  onBodyCopy?: (value?: string) => void;
 }
 
 export const InfoCard = ({
@@ -19,6 +23,7 @@ export const InfoCard = ({
   table,
   children,
   className,
+  onBodyCopy,
 }: InfoCardProps) => (
   <article className={cleanClassName(`${styles['info-card']} ${className}`)}>
     <header className={styles.header}>
@@ -36,6 +41,22 @@ export const InfoCard = ({
         ))}
       </dl>
     ) : null}
-    <section className={styles.body}>{children}</section>
+    <section className={styles.body}>
+      {children}
+      {onBodyCopy ? (
+        <Button
+          className={styles['copy-button']}
+          size="small"
+          fontSize="small"
+          onClick={() => {
+            const childrenString = nodeToString(children);
+            navigator.clipboard.writeText(childrenString);
+            onBodyCopy(childrenString);
+          }}
+        >
+          복사하기
+        </Button>
+      ) : null}
+    </section>
   </article>
 );
