@@ -8,5 +8,6 @@ export interface InfoCardProps {
     };
     children?: React.ReactNode;
     className?: string;
+    onBodyCopy?: (value?: string) => void;
 }
-export declare const InfoCard: ({ icon, title, date, table, children, className, }: InfoCardProps) => JSX.Element;
+export declare const InfoCard: ({ icon, title, date, table, children, className, onBodyCopy, }: InfoCardProps) => JSX.Element;
