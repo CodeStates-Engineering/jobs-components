@@ -347,11 +347,14 @@ const TableCell = ({
             isOverflow ? styles.overflow : styles['not-overflow']
           }`}
           onMouseEnter={({ currentTarget }) => {
-            if (currentTarget.scrollWidth > currentTarget.clientWidth) {
-              if (onCopy) {
-                setIsHovered(true);
-              }
-            } else {
+            const isOverflow =
+              currentTarget.scrollWidth > currentTarget.clientWidth;
+
+            if (isOverflow || onCopy) {
+              setIsHovered(true);
+            }
+
+            if (!isOverflow) {
               setOverflow(false);
             }
           }}
