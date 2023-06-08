@@ -4,7 +4,6 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import { Table } from '.';
 import { DUMMY } from '../../../utils';
-import { Selectbox } from '../Selectbox';
 
 const { TABLE_TITLE, TABLE_BODY, COMMON } = DUMMY;
 
