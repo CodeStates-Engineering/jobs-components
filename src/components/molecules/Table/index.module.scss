@@ -95,7 +95,7 @@
 
   text-overflow: ellipsis;
   white-space: nowrap;
-  &:has(.hovered-cell-content) {
+  &:has(.hovered-cell-content-wrap) {
     overflow: unset;
   }
 }
@@ -106,12 +106,13 @@
   visibility: hidden;
 }
 
-.hovered-cell-content {
+.hovered-cell-content-wrap {
   position: absolute;
   top: 7px;
   left: 8px;
   z-index: 3;
   display: flex;
+  overflow: hidden;
 
   width: fit-content;
   padding: 0px 7px;
@@ -123,7 +124,12 @@
   white-space: pre;
 
   transition: background-color 0.3s, border 0.3s;
+
   @include fade-in(0.2s);
+
+  &.has-style {
+    white-space: pre-wrap;
+  }
 }
 
 .dragging > div {
@@ -146,10 +152,17 @@
   }
 }
 
+.hovered-cell-content {
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 .copy-button-wrap {
   display: flex;
   align-items: center;
   justify-content: center;
 
-  margin-left: 0.5em;
+  margin-left: 5px;
 }

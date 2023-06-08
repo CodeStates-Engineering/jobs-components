@@ -278,9 +278,15 @@ const TableRow = ({ children, className }: TableRowProps) => {
 
 export interface TableCellProps extends CommonProps {
   onCopy?: (value: string) => void;
+  hoverStyle?: Pick<React.CSSProperties, 'maxHeight' | 'maxWidth'>;
 }
 
-const TableCell = ({ children, onCopy, className }: TableCellProps) => {
+const TableCell = ({
+  children,
+  onCopy,
+  className,
+  hoverStyle,
+}: TableCellProps) => {
   const {
     tableState: { titles, hoveredOrder, draggingOrder, dropOrder },
     fixedTitleCount,
@@ -352,12 +358,18 @@ const TableCell = ({ children, onCopy, className }: TableCellProps) => {
             children
           )}
           {isHovered ? (
-            <div className={styles['hovered-cell-content']}>
-              {children}
+            <div
+              className={cleanClassName(
+                `${styles['hovered-cell-content-wrap']} ${
+                  hoverStyle && styles['has-style']
+                }`,
+              )}
+              style={hoverStyle}
+            >
+              <div className={styles['hovered-cell-content']}>{children}</div>
               {onCopy ? (
                 <div className={styles['copy-button-wrap']}>
                   <Button
-                    className={styles['copy-button']}
                     size="small3x"
                     shape="round"
                     theme="bluish-gray700/0"

@@ -4,6 +4,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import { Table } from '.';
 import { DUMMY } from '../../../utils';
+import { Selectbox } from '../Selectbox';
 
 const { TABLE_TITLE, TABLE_BODY, COMMON } = DUMMY;
 
@@ -55,6 +56,10 @@ const meta: Meta<typeof Table> = {
                 .fill(0)
                 .map((_, cellIndex) => (
                   <Table.Cell
+                    hoverStyle={{
+                      maxHeight: 200,
+                      maxWidth: 300,
+                    }}
                     key={`Cell ${cellIndex}-${rowIndex}`}
                     onCopy={(() => {
                       switch (cellIndex) {
@@ -73,7 +78,15 @@ const meta: Meta<typeof Table> = {
                         case TABLE_TITLE.LONG_TEXT_COPYABLE_COLUMN:
                           return COMMON.TEXT_MIDDLE;
                         default:
-                          return `Cell ${cellIndex}-${rowIndex}`;
+                          return (
+                            <Selectbox
+                              options={[
+                                { label: '1', value: '1' },
+                                { label: '2', value: '2' },
+                                { label: '3', value: '3' },
+                              ]}
+                            />
+                          );
                       }
                     })()}
                   </Table.Cell>
