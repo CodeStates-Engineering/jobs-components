@@ -316,6 +316,8 @@ const TableCell = ({
     [children, setTableState],
   );
 
+  const [isOverflow, setOverflow] = useState(true);
+
   return (
     <td
       ref={ref}
@@ -341,13 +343,16 @@ const TableCell = ({
           style={{
             width,
           }}
-          className={styles['cell-content-container']}
+          className={`${styles['cell-content-container']} ${
+            isOverflow ? styles.overflow : styles['not-overflow']
+          }`}
           onMouseEnter={({ currentTarget }) => {
-            if (
-              currentTarget.scrollWidth > currentTarget.clientWidth ||
-              onCopy
-            ) {
-              setIsHovered(true);
+            if (currentTarget.scrollWidth > currentTarget.clientWidth) {
+              if (onCopy) {
+                setIsHovered(true);
+              }
+            } else {
+              setOverflow(false);
             }
           }}
           onMouseLeave={() => setIsHovered(false)}

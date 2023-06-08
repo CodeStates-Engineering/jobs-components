@@ -78,15 +78,7 @@ const meta: Meta<typeof Table> = {
                         case TABLE_TITLE.LONG_TEXT_COPYABLE_COLUMN:
                           return COMMON.TEXT_MIDDLE;
                         default:
-                          return (
-                            <Selectbox
-                              options={[
-                                { label: '1', value: '1' },
-                                { label: '2', value: '2' },
-                                { label: '3', value: '3' },
-                              ]}
-                            />
-                          );
+                          return `Cell ${cellIndex}-${rowIndex}`;
                       }
                     })()}
                   </Table.Cell>

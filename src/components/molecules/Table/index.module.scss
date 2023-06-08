@@ -88,13 +88,21 @@
 
 .cell-content-container {
   position: relative;
-  overflow: hidden;
+
+  &.overflow {
+    overflow: hidden;
+  }
+
+  &.not-overflow {
+    overflow: visible;
+  }
 
   box-sizing: border-box;
   padding: 8px 16px;
 
   text-overflow: ellipsis;
   white-space: nowrap;
+
   &:has(.hovered-cell-content-wrap) {
     overflow: unset;
   }
