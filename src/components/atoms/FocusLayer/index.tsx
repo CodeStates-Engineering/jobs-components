@@ -66,7 +66,7 @@ export const FocusLayer = ({
           />
           <div
             className={cleanClassName(
-              `${styles['focus-layer']} ${
+              `${styles['focus-layer']} ${styles.global} ${
                 styles[`priority-${priority}`]
               } ${className}`,
             )}

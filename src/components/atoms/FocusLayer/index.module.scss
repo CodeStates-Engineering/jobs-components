@@ -47,6 +47,9 @@
 }
 
 .focus-layer {
+  &.global {
+    position: fixed;
+  }
   &.priority-1 {
     z-index: 100;
   }
