@@ -52,6 +52,10 @@ export const FocusLayer = ({
     }
   }, [onBlur, focusStatus]);
 
+  if (typeof window === 'undefined') {
+    return null;
+  }
+
   return priority ? (
     createPortal(
       focusStatus ? (
