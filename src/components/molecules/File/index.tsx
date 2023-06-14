@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { X } from 'react-feather';
+import { X, Paperclip } from 'react-feather';
 
 import styles from './index.module.scss';
 import {
@@ -40,6 +40,18 @@ export interface FileProps extends Pick<ButtonProps, 'className'> {
     Typography;
   labelStyle?: Pick<LabelContainerProps, 'direction'> & Typography;
 }
+
+const getIconSizeBy = (size: 'small' | 'medium' | 'large' | undefined) => {
+  switch (size) {
+    case 'small':
+      return 16;
+    case 'medium':
+    case 'large':
+      return 18;
+    default:
+      return undefined;
+  }
+};
 
 export const File = ({
   children,
@@ -109,43 +121,46 @@ export const File = ({
           </Label>
         ) : null}
         {savedFile ? (
-          <Input.Wrap
-            borderRadius={inputStyle?.borderRadius}
-            className={styles['download-link-interaction']}
-            size={inputStyle?.size}
-            width={inputStyle?.width}
-          >
-            <a
-              href={isDownloadActive ? savedFile?.url : undefined}
-              className={cleanClassName(
-                `${styles['download-link']} ${styles[fontSizeClassName]} ${
-                  styles[fontWeightClassName]
-                } ${isDownloadActive ? styles.actived : styles.disabled}
-                `,
-              )}
-              download={download}
+          <>
+            <Input.Wrap
+              borderRadius={inputStyle?.borderRadius}
+              className={styles['download-link-interaction']}
+              size={inputStyle?.size}
+              width={inputStyle?.width}
             >
-              {savedFile?.name}
-            </a>
-            {disabled ? (
-              FileInput
-            ) : (
-              <Button
-                icon={<X size="1em" />}
-                size="small"
-                shape="round"
-                theme="bluish-gray700/0"
-                onClick={() => {
-                  setSavedFile?.(undefined);
-                  onChange?.(undefined);
-                  const { current } = inputRef;
-                  if (current) {
-                    current.value = '';
-                  }
-                }}
-              />
-            )}
-          </Input.Wrap>
+              <Paperclip size={getIconSizeBy(inputStyle?.size)} />
+              <a
+                href={isDownloadActive ? savedFile?.url : undefined}
+                className={cleanClassName(
+                  `${styles['download-link']} ${styles[fontSizeClassName]} ${
+                    styles[fontWeightClassName]
+                  } ${isDownloadActive ? styles.actived : styles.disabled}
+                `,
+                )}
+                download={download}
+              >
+                {savedFile?.name}
+              </a>
+              {disabled ? (
+                FileInput
+              ) : (
+                <Button
+                  icon={<X size="1em" />}
+                  size="small"
+                  shape="round"
+                  theme="bluish-gray700/0"
+                  onClick={() => {
+                    setSavedFile?.(undefined);
+                    onChange?.(undefined);
+                    const { current } = inputRef;
+                    if (current) {
+                      current.value = '';
+                    }
+                  }}
+                />
+              )}
+            </Input.Wrap>
+          </>
         ) : (
           <Button
             size={inputStyle?.size}
