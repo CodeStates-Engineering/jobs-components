@@ -115,7 +115,8 @@
 
     &:has(input[type='button']) {
       &,
-      > * {
+      > input,
+      textarea {
         cursor: pointer;
       }
     }
@@ -125,7 +126,8 @@
     background-color: $BLUISH-GRAY-10;
     @include border($BLUISH-GRAY-200, 1px);
     color: $BLUISH-GRAY-400;
-    > * {
+    > input,
+    textarea {
       cursor: not-allowed;
     }
   }
