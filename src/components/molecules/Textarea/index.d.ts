@@ -14,5 +14,7 @@ export interface TextareaProps extends Pick<DetailedHTMLProps<TextareaHTMLAttrib
         height?: React.CSSProperties['height'];
     } & Pick<InputWrapProps, 'borderRadius' | 'width'> & Typography;
     labelStyle?: Pick<LabelContainerProps, 'direction'> & Typography;
+    floatingActionName?: string;
+    onFloatingActionClick?: () => void;
 }
-export declare const Textarea: ({ placeholder, value: originalValue, onChange, disabled, validation, id, label, validationSpace, className, onClick, inputStyle, labelStyle, }: TextareaProps) => JSX.Element;
+export declare const Textarea: ({ placeholder, value: originalValue, onChange, disabled, validation, id, label, validationSpace, className, onClick, inputStyle, labelStyle, floatingActionName, onFloatingActionClick, }: TextareaProps) => JSX.Element;

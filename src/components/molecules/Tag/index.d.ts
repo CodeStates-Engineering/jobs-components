@@ -5,6 +5,7 @@ interface TagProps {
     className?: string;
     children?: ReactNode;
     onClose?: (e?: MouseEvent<HTMLButtonElement>) => void;
+    onClick?: () => void;
 }
-export declare const Tag: ({ color, size, className, children, onClose, }: TagProps) => JSX.Element | null;
+export declare const Tag: ({ color, size, className, children, onClose, onClick, }: TagProps) => JSX.Element | null;
 export {};
