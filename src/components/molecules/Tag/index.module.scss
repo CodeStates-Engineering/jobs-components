@@ -84,3 +84,7 @@
 .bluish-gray50 {
   @include theme($BLUISH_GRAY-600, $BLUISH_GRAY-50, $BLUISH_GRAY-100);
 }
+
+.clickable {
+  cursor: pointer;
+}

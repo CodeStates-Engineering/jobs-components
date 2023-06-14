@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { X } from 'react-feather';
 
 import styles from './index.module.scss';
+import { cleanClassName } from '../../../utils';
 import { Button } from '../../atoms/Button';
 
 interface TagProps {
@@ -17,6 +18,7 @@ interface TagProps {
   className?: string;
   children?: ReactNode;
   onClose?: (e?: MouseEvent<HTMLButtonElement>) => void;
+  onClick?: () => void;
 }
 
 export const Tag = ({
@@ -25,23 +27,29 @@ export const Tag = ({
   className,
   children,
   onClose = undefined,
+  onClick,
 }: TagProps) => {
   const [display, setDisplay] = useState(true);
 
   return display ? (
     <div
-      className={`${styles['tag-container']} ${
-        styles[color.replaceAll('/', '_')]
-      } ${className}`}
+      className={cleanClassName(
+        `${styles['tag-container']} ${styles[color.replaceAll('/', '_')]} ${
+          onClick && styles.clickable
+        } ${className}`,
+      )}
+      onClick={() => onClick?.()}
     >
       <span
-        className={`${styles['tag-content']} ${styles[`size-${size}`]} ${
-          onClose && styles.close
-        }`}
+        className={cleanClassName(
+          `${styles['tag-content']} ${styles[`size-${size}`]} ${
+            onClose && styles.close
+          }`,
+        )}
       >
         {children}
       </span>
-      {onClose ? (
+      {onClose && (
         <Button
           size="small3x"
           className={`${styles['close-button']} ${styles[`close-${size}`]}`}
@@ -53,7 +61,7 @@ export const Tag = ({
           }}
           icon={<X size="13px" className={styles['close-icon']} />}
         />
-      ) : null}
+      )}
     </div>
   ) : null;
 };
