@@ -32,6 +32,11 @@
 
     cursor: not-allowed;
   }
+  &.read-only {
+    color: $BLUISH-GRAY-700;
+
+    cursor: pointer;
+  }
   @include font-size;
   @include font-weight;
 }

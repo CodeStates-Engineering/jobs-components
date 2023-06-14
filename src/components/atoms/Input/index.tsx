@@ -33,6 +33,7 @@ export interface InputProps<T extends InputType = 'text'>
     Typography {
   type?: T;
   value?: T extends 'number' | 'large-number' ? number : string;
+  // TODO: 'read-only' props 속성 분리
   disabled?: boolean | 'read-only';
   onChange?: (value: InputProps<T>['value']) => void;
   ref?: Ref<HTMLInputElement>;

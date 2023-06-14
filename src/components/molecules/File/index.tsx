@@ -39,6 +39,7 @@ export interface FileProps extends Pick<ButtonProps, 'className'> {
   } & Pick<InputWrapProps, 'borderRadius' | 'width'> &
     Typography;
   labelStyle?: Pick<LabelContainerProps, 'direction'> & Typography;
+  readonly?: boolean;
 }
 
 export const File = ({
@@ -55,6 +56,7 @@ export const File = ({
   id,
   labelStyle,
   inputStyle,
+  readonly = false,
 }: FileProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -65,7 +67,8 @@ export const File = ({
     inputStyle?.fontWeight,
   );
 
-  const isDownloadActived = disabled !== true;
+  const isDownloadActive = !disabled;
+  const fileDeleteEnabled = !disabled && !readonly;
 
   const { validationMessage, checkValidation } = useValidation(
     value,
@@ -116,19 +119,19 @@ export const File = ({
             width={inputStyle?.width}
           >
             <a
-              href={isDownloadActived ? savedFile?.url : undefined}
+              href={isDownloadActive ? savedFile?.url : undefined}
               className={cleanClassName(
                 `${styles['download-link']} ${styles[fontSizeClassName]} ${
                   styles[fontWeightClassName]
-                } ${isDownloadActived ? styles.actived : styles.disabled}`,
+                } ${isDownloadActive ? styles.actived : styles.disabled} ${
+                  readonly && styles['read-only']
+                }`,
               )}
               download={download}
             >
               {savedFile?.name}
             </a>
-            {disabled ? (
-              FileInput
-            ) : (
+            {fileDeleteEnabled ? (
               <Button
                 icon={<X size="1em" />}
                 size="small"
@@ -143,6 +146,8 @@ export const File = ({
                   }
                 }}
               />
+            ) : (
+              FileInput
             )}
           </Input.Wrap>
         ) : (
