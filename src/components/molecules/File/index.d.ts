@@ -20,6 +20,7 @@ export interface FileProps extends Pick<ButtonProps, 'className'> {
         size?: 'small' | 'medium' | 'large';
     } & Pick<InputWrapProps, 'borderRadius' | 'width'> & Typography;
     labelStyle?: Pick<LabelContainerProps, 'direction'> & Typography;
+    readonly?: boolean;
 }
-export declare const File: ({ children, value, onChange, className, download, disabled, accept, validation, validationSpace, label, id, labelStyle, inputStyle, }: FileProps) => JSX.Element;
+export declare const File: ({ children, value, onChange, className, download, disabled, accept, validation, validationSpace, label, id, labelStyle, inputStyle, readonly, }: FileProps) => JSX.Element;
 export {};
