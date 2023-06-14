@@ -9,6 +9,7 @@ import {
 } from '../../../hooks';
 import { cleanClassName } from '../../../utils';
 import { Input, Label } from '../../atoms';
+import { Tag } from '../Tag';
 
 import type { Validation, Typography } from '../../../hooks';
 import type { InputWrapProps, LabelContainerProps } from '../../atoms';
@@ -35,6 +36,8 @@ export interface TextareaProps
   } & Pick<InputWrapProps, 'borderRadius' | 'width'> &
     Typography;
   labelStyle?: Pick<LabelContainerProps, 'direction'> & Typography;
+  floatingActionName?: string;
+  onFloatingActionClick?: () => void;
 }
 
 export const Textarea = ({
@@ -50,6 +53,8 @@ export const Textarea = ({
   onClick,
   inputStyle,
   labelStyle,
+  floatingActionName,
+  onFloatingActionClick,
 }: TextareaProps) => {
   const [textareaValue, setTextareaValue] = useSubscribedState(
     originalValue ?? '',
@@ -95,6 +100,14 @@ export const Textarea = ({
           width={inputStyle?.width}
           borderRadius={inputStyle?.borderRadius}
         >
+          {floatingActionName && (
+            <div className={styles['floating-action-container']}>
+              <Tag color="purple50" onClick={onFloatingActionClick}>
+                {floatingActionName}
+              </Tag>
+            </div>
+          )}
+
           <textarea
             id={id}
             name={label}

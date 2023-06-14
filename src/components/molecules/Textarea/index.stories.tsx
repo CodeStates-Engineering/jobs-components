@@ -26,6 +26,7 @@ const meta: Meta<typeof Textarea> = {
       borderRadius: '8',
       height: '300px',
     },
+    floatingActionName: 'test',
   },
 };
 

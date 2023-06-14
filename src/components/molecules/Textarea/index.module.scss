@@ -10,6 +10,7 @@
   @include font-weight;
   box-sizing: border-box;
   width: 100%;
+  min-height: 6rem;
   padding: 18px;
   border: none;
 
@@ -33,4 +34,10 @@
       cursor: default;
     }
   }
+}
+
+.floating-action-container {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
 }
