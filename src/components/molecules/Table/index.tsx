@@ -17,6 +17,8 @@ import styles from './index.module.scss';
 import { cleanClassName } from '../../../utils';
 import { Button } from '../../atoms';
 
+type CSSWidth = React.CSSProperties['width'];
+
 interface TitleData {
   order: {
     origin: number;
@@ -37,6 +39,7 @@ interface TableContextValue {
   setTableState: Dispatch<SetStateAction<TableState>>;
   fixedTitleCount: number;
   isLeftScrolled: boolean;
+  isLoading: boolean;
 }
 
 const TableContext = createContext<TableContextValue>({
@@ -46,6 +49,7 @@ const TableContext = createContext<TableContextValue>({
   setTableState: () => undefined,
   fixedTitleCount: 0,
   isLeftScrolled: false,
+  isLoading: false,
 });
 
 interface CommonProps {
@@ -63,15 +67,17 @@ const TableMain = ({ className, children, fixedTitleCount }: TableProps) => {
   });
   const [isLeftScrolled, setIsLeftScrolled] = useState(false);
 
-  const tableContextValue: TableContextValue = useMemo(
-    () => ({
+  const tableContextValue: TableContextValue = useMemo(() => {
+    const isLoading = !tableState.titles.find(({ width }) => !!width);
+
+    return {
       tableState,
       setTableState,
       fixedTitleCount,
       isLeftScrolled,
-    }),
-    [fixedTitleCount, tableState, isLeftScrolled],
-  );
+      isLoading,
+    };
+  }, [fixedTitleCount, tableState, isLeftScrolled]);
 
   return (
     <article
@@ -122,12 +128,17 @@ const TableHeader = ({ children, className }: TableHeaderProps) => {
 };
 
 export interface TableTitleProps extends CommonProps {
-  width?: React.CSSProperties['width'];
+  width?: CSSWidth;
 }
 
 const TableTitle = ({ children, width, className }: TableTitleProps) => {
-  const { tableState, setTableState, fixedTitleCount, isLeftScrolled } =
-    useContext(TableContext);
+  const {
+    tableState,
+    setTableState,
+    fixedTitleCount,
+    isLeftScrolled,
+    isLoading,
+  } = useContext(TableContext);
 
   const { titles } = tableState;
 
@@ -137,13 +148,14 @@ const TableTitle = ({ children, width, className }: TableTitleProps) => {
     const { current: element } = ref;
     if (element) {
       const { offsetWidth, cellIndex } = element;
-      setTableState((prevState) => {
-        prevState.titles[cellIndex].width = offsetWidth;
-
-        return { ...prevState };
-      });
+      if (width || !isLoading) {
+        setTableState((prevState) => {
+          prevState.titles[cellIndex].width = offsetWidth;
+          return { ...prevState };
+        });
+      }
     }
-  }, [ref, setTableState, width]);
+  }, [ref, setTableState, width, isLoading]);
 
   const currentOrder = ref.current?.cellIndex ?? -1;
 
@@ -292,6 +304,7 @@ const TableCell = ({
     fixedTitleCount,
     isLeftScrolled,
     setTableState,
+    isLoading,
   } = useContext(TableContext);
 
   const ref = useRef<HTMLTableCellElement>(null);
@@ -338,7 +351,7 @@ const TableCell = ({
         } ${className}`,
       )}
     >
-      {width === undefined ? null : (
+      {isLoading ? null : (
         <div
           style={{
             width,
