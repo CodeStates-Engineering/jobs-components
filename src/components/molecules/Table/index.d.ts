@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+type CSSWidth = React.CSSProperties['width'];
 interface CommonProps {
     className?: string;
     children?: ReactNode;
@@ -8,7 +9,7 @@ export interface TableProps extends CommonProps {
 }
 export type TableHeaderProps = CommonProps;
 export interface TableTitleProps extends CommonProps {
-    width?: React.CSSProperties['width'];
+    width?: CSSWidth;
 }
 export type TableBodyProps = CommonProps;
 export type TableRowProps = CommonProps;
