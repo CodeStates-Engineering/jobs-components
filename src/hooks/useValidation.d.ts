@@ -1,8 +1,8 @@
-export type Validation<_Value> = ((value: _Value) => string | undefined) | undefined;
-export declare const useValidation: <_Value>(value: _Value, validation: Validation<_Value>, storeKey?: string) => {
+export type Validation<TValue> = ((value: TValue) => string | undefined) | undefined;
+export declare const useValidation: <TValue>(value: TValue, validation: Validation<TValue>, storeKey?: string) => {
     validationMessage?: undefined;
     checkValidation?: undefined;
 } | {
     validationMessage: string | undefined;
-    checkValidation: (value: _Value) => void;
+    checkValidation: (value: TValue) => void;
 };
