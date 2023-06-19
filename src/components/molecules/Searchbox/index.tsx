@@ -36,6 +36,7 @@ export interface SearchboxProps
   inputStyle?: Pick<InputWrapProps, 'size' | 'width' | 'borderRadius'> &
     Typography;
   labelStyle?: Pick<LabelContainerProps, 'direction'> & Typography;
+  hasSearchIcon?: boolean;
 }
 
 export const Searchbox = ({
@@ -57,6 +58,7 @@ export const Searchbox = ({
   inputStyle,
   labelStyle,
   optionStyle,
+  hasSearchIcon = true,
 }: SearchboxProps) => {
   const [opened, setOpened] = useState(false);
   const [inputText, setInputText] = useSubscribedState(value);
@@ -140,7 +142,7 @@ export const Searchbox = ({
               disabled={disabled}
               placeholder={placeholder}
             />
-            <Search />
+            {hasSearchIcon ? <Search /> : null}
           </Input.Wrap>
         </Label.Container>
         <Options

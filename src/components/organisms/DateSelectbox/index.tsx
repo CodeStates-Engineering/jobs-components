@@ -23,13 +23,14 @@ import type {
 } from '../../atoms';
 
 type DateType = Exclude<DayPickerProps['mode'], 'default'>;
-type DateValue<_DateType = DateType> = _DateType extends 'multiple'
+
+type DateValue<TDateType extends DateType> = TDateType extends 'multiple'
   ? Date[]
-  : _DateType extends 'range'
+  : TDateType extends 'range'
   ? DateRange
   : Date;
 
-export interface DateSelectboxProps<_DateType = DateType>
+export interface DateSelectboxProps<TDateType extends DateType = 'single'>
   extends Pick<
     InputProps<'text'>,
     | 'className'
@@ -41,10 +42,10 @@ export interface DateSelectboxProps<_DateType = DateType>
     | 'ref'
   > {
   label?: string;
-  type?: _DateType;
-  value?: DateValue<_DateType>;
-  onChange?: (value?: DateValue<_DateType>) => void;
-  validation?: Validation<DateSelectboxProps['value']>;
+  type?: TDateType;
+  value?: DateValue<TDateType>;
+  onChange?: (value?: DateValue<TDateType>) => void;
+  validation?: Validation<DateSelectboxProps<TDateType>['value']>;
   validationSpace?: boolean;
   inputStyle?: Typography &
     Pick<InputWrapProps, 'size' | 'borderRadius' | 'width'> & {
@@ -53,8 +54,8 @@ export interface DateSelectboxProps<_DateType = DateType>
   labelStyle?: Pick<LabelContainerProps, 'direction'> & Typography;
 }
 
-export const DateSelectbox = <_DateType extends DateType>({
-  value: originalValue,
+export const DateSelectbox = <TDateType extends DateType = 'single'>({
+  value,
   type = 'single',
   onChange,
   placeholder,
@@ -69,15 +70,13 @@ export const DateSelectbox = <_DateType extends DateType>({
   className,
   inputStyle,
   labelStyle,
-}: DateSelectboxProps<_DateType>) => {
+}: DateSelectboxProps<TDateType>) => {
   const DATE_FORMAT = 'YYYY.MM.DD';
   const TIME_FORMAT = 'HH:mm';
   const DATE_TIME_FORMAT = `${DATE_FORMAT} ${TIME_FORMAT}`;
   const MONTH_FORMAT = 'YYYY.MM';
   const [opened, setOpened] = useState(false);
-  const [value, setValue] = useSubscribedState<DateValue | undefined>(
-    originalValue,
-  );
+  const [dateValue, setDateValue] = useSubscribedState(value);
 
   const reloadCalendar = () => {
     setOpened(false);
@@ -87,7 +86,7 @@ export const DateSelectbox = <_DateType extends DateType>({
   const [inputValue, setInputValue] = useState('');
 
   const { validationMessage, checkValidation } = useValidation(
-    value,
+    dateValue,
     validation,
     label || id,
   );
@@ -96,9 +95,9 @@ export const DateSelectbox = <_DateType extends DateType>({
     dayPickerProps: DayPickerProps;
     inputProps?: InputProps<'text'>;
   } => {
-    const handleChange = (date?: DateValue) => {
-      setValue?.(date);
-      (onChange as ((date?: DateValue) => void) | undefined)?.(date);
+    const handleChange = (date?: DateValue<TDateType>) => {
+      setDateValue?.(date);
+      onChange?.(date);
       checkValidation?.(date);
     };
 
@@ -108,9 +107,9 @@ export const DateSelectbox = <_DateType extends DateType>({
         return {
           dayPickerProps: {
             mode: type,
-            selected: value as Date[] | undefined,
-            onSelect: (value?: Date[]) => {
-              handleChange(value);
+            selected: dateValue as Date[] | undefined,
+            onSelect: (value) => {
+              setDateValue(value as DateValue<TDateType>);
             },
           },
         };
@@ -120,9 +119,9 @@ export const DateSelectbox = <_DateType extends DateType>({
         return {
           dayPickerProps: {
             mode: type,
-            selected: value as DateRange | undefined,
+            selected: dateValue as DateRange | undefined,
             onSelect: (value?: DateRange) => {
-              handleChange(value);
+              handleChange(value as DateValue<TDateType>);
             },
           },
         };
@@ -130,7 +129,7 @@ export const DateSelectbox = <_DateType extends DateType>({
 
       case 'single':
       default: {
-        const selectedDate = value as Date | undefined;
+        const selectedDate = dateValue as Date | undefined;
         return {
           inputProps: {
             value:
@@ -141,7 +140,7 @@ export const DateSelectbox = <_DateType extends DateType>({
                 setInputValue(value);
                 const date = new Date(value);
                 if (isDate(date) && !isNaN(Number(date))) {
-                  handleChange(date);
+                  handleChange(date as DateValue<TDateType>);
                   if (
                     !isNaN(Number(selectedDate)) &&
                     days(date).format(MONTH_FORMAT) !==
@@ -173,7 +172,11 @@ export const DateSelectbox = <_DateType extends DateType>({
                   }`
                 : '';
               setInputValue(dateString);
-              handleChange(value ? new Date(dateString) : undefined);
+              handleChange(
+                (value
+                  ? new Date(dateString)
+                  : undefined) as DateValue<TDateType>,
+              );
               setOpened(false);
             },
             defaultMonth: selectedDate,

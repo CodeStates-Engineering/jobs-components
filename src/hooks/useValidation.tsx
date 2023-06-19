@@ -7,13 +7,13 @@ import {
 
 import { ValidationContext } from '../utils';
 
-export type Validation<_Value> =
-  | ((value: _Value) => string | undefined)
+export type Validation<TValue> =
+  | ((value: TValue) => string | undefined)
   | undefined;
 
-export const useValidation = <_Value,>(
-  value: _Value,
-  validation: Validation<_Value>,
+export const useValidation = <TValue,>(
+  value: TValue,
+  validation: Validation<TValue>,
   storeKey?: string,
 ) => {
   if (!validation) {
@@ -25,7 +25,7 @@ export const useValidation = <_Value,>(
   >();
 
   const checkValidation = createCallback(
-    (value: _Value) => setValidationMessage(validation(value)),
+    (value: TValue) => setValidationMessage(validation(value)),
     [validation],
   );
 
