@@ -124,6 +124,7 @@ export const Searchbox = ({
           <Input.Wrap
             onClick={onClick}
             size={inputStyle?.size}
+            width={inputStyle?.width}
             borderRadius={inputStyle?.borderRadius}
           >
             <Input
