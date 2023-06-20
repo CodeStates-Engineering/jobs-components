@@ -4,17 +4,22 @@
   @include fade-in(0.3s, 0.3s);
   overflow: auto;
 
-  width: 100%;
-  height: 100%;
-
   background-color: $WHITE;
 
   text-align: left;
   > table {
     position: relative;
 
-    width: 100%;
+    width: fit-content;
+    min-width: 100%;
     border-collapse: separate;
+  }
+}
+
+@layer default {
+  .table {
+    width: 100%;
+    height: 100%;
   }
 }
 
