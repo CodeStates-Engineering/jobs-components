@@ -1,4 +1,4 @@
-import { isNumber } from 'lodash-es';
+import { isNumber, debounce } from 'lodash-es';
 
 import {
   useRef,
@@ -58,14 +58,35 @@ interface CommonProps {
 }
 
 export interface TableProps extends CommonProps {
-  fixedTitleCount: number;
+  fixedTitleCount?: number;
 }
 
-const TableMain = ({ className, children, fixedTitleCount }: TableProps) => {
+const TableMain = ({
+  className,
+  children,
+  fixedTitleCount = 0,
+}: TableProps) => {
   const [tableState, setTableState] = useState<TableState>({
     titles: [],
   });
   const [isLeftScrolled, setIsLeftScrolled] = useState(false);
+
+  useEffect(() => {
+    const debouncedResizeEvent = debounce(() => {
+      setTableState((prevState) => {
+        prevState.titles.forEach((title) => {
+          title.width = undefined;
+        });
+
+        return {
+          ...prevState,
+        };
+      });
+    }, 300);
+
+    window.addEventListener('resize', debouncedResizeEvent);
+    return () => window.removeEventListener('resize', debouncedResizeEvent);
+  }, []);
 
   const tableContextValue: TableContextValue = useMemo(() => {
     const isLoading = !tableState.titles.find(({ width }) => !!width);
