@@ -246,7 +246,6 @@ const TableTitle = ({ children, width, className }: TableTitleProps) => {
     <th
       style={{
         left,
-        width,
       }}
       className={cleanClassName(
         `${styles.title} ${isFixed && styles.fixed} ${
@@ -282,7 +281,14 @@ const TableTitle = ({ children, width, className }: TableTitleProps) => {
       }
       onDrop={handleDrop}
     >
-      <div className={styles['title-content']}>{children}</div>
+      <div
+        style={{
+          width,
+        }}
+        className={styles['title-content']}
+      >
+        {children}
+      </div>
     </th>
   );
 };
