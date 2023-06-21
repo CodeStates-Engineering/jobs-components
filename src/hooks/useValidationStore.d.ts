@@ -5,5 +5,6 @@ export declare const useValidationStore: () => {
     validateAll: () => {
         isValid: boolean;
         invalidKeys: string[];
+        scrollToFirstInvalid: (() => void) | undefined;
     };
 };

@@ -7,6 +7,7 @@ export declare const createValidationStore: () => {
     validateAll: () => {
         isValid: boolean;
         invalidKeys: string[];
+        scrollToFirstInvalid: (() => void) | undefined;
     };
 };
 export type ValidationStore = ReturnType<typeof createValidationStore>;
