@@ -16,17 +16,38 @@ export const createValidationStore = () => {
       </ValidationContext.Provider>
     ),
     validateAll: () => {
-      const result = {
-        isValid: true,
-        invalidKeys: [] as string[],
-      };
+      let isValid = true;
+      const invalidKeys: string[] = [];
+
       data.forEach((validation, key) => {
         if (validation()) {
-          result.isValid = false;
-          result.invalidKeys.push(key);
+          isValid = false;
+          invalidKeys.push(key);
         }
       });
-      return result;
+
+      const scrollToFirstInvalid =
+        invalidKeys.length > 0
+          ? () => {
+              const [firstInvalidKey] = invalidKeys;
+
+              const [firstInvalidElement] =
+                document.getElementsByName(firstInvalidKey);
+
+              if (firstInvalidElement) {
+                firstInvalidElement.scrollIntoView({
+                  behavior: 'smooth',
+                  block: 'start',
+                });
+              }
+            }
+          : undefined;
+
+      return {
+        isValid,
+        invalidKeys,
+        scrollToFirstInvalid,
+      };
     },
   };
 };
