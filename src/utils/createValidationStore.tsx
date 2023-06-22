@@ -37,7 +37,7 @@ export const createValidationStore = () => {
               if (firstInvalidElement) {
                 firstInvalidElement.scrollIntoView({
                   behavior: 'smooth',
-                  block: 'start',
+                  block: 'center',
                 });
               }
             }
