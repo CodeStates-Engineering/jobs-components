@@ -62,7 +62,7 @@ export const Selectbox = <
   const selectedOption = options?.find(({ value }) => value === selectedValue);
 
   const { validationMessage, checkValidation } = useValidation(
-    value,
+    selectedValue,
     validation,
     label || id,
   );
