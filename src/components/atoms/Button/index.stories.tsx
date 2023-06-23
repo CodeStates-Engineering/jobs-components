@@ -1,6 +1,5 @@
 import { omit } from 'lodash-es';
 
-import React from 'react';
 import { AlertOctagon } from 'react-feather';
 
 import type { Meta, StoryObj } from '@storybook/react';
@@ -23,13 +22,6 @@ const meta: Meta<typeof Button> = {
       control: {
         type: 'text',
       },
-    },
-    enterClick: {
-      control: {
-        type: 'boolean',
-        default: false,
-      },
-      description: '엔터키로 버튼을 클릭할 수 있다.',
     },
     delay: {
       control: {
