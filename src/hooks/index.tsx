@@ -5,3 +5,4 @@ export * from './useValidation';
 export * from './useValidationStore';
 export * from './useTypography';
 export * from './useClosingState';
+export * from './useTypographyClassName';

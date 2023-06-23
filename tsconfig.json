@@ -22,8 +22,12 @@
     "types": ["./src/types.d.ts"],
     "allowSyntheticDefaultImports": true,
     "paths": {
+      "@components/*": ["components/*"],
+      "@utils": ["utils"],
       "@hooks": ["hooks"],
-      "@utils": ["utils"]
+      "@contexts": ["contexts"],
+      "@constants": ["constants"],
+      "@styles": ["styles"]
     }
   },
   "files": ["./src/index.tsx"],
