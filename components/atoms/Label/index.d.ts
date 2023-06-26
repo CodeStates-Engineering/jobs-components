@@ -1,0 +1,13 @@
+import type { DetailedHTMLProps, LabelHTMLAttributes } from 'react';
+import type { Typography } from '../../../hooks';
+export type LabelProps = Pick<DetailedHTMLProps<LabelHTMLAttributes<HTMLLabelElement>, HTMLLabelElement>, 'children' | 'htmlFor' | 'className'> & Typography & {
+    space?: 'none' | 'small' | 'medium' | 'large';
+};
+export interface LabelContainerProps {
+    children?: React.ReactNode;
+    className?: string;
+    direction?: 'column' | 'row';
+}
+export declare const Label: (({ children, htmlFor, className, fontSize, space, fontWeight, }: LabelProps) => JSX.Element) & {
+    Container: ({ children, className, direction, }: LabelContainerProps) => JSX.Element;
+};
