@@ -15,7 +15,7 @@ import styles from './index.module.scss';
 export type { InputWrapProps } from './InputWrap';
 
 export interface InputProps<T extends InputType = 'text'>
-  extends OptionalPick<
+  extends Pick<
       HTMLTagProps<'input'>,
       | 'placeholder'
       | 'onFocus'

@@ -32,7 +32,7 @@ type DateValue<TDateType extends DateType> = TDateType extends 'multiple'
   : Date;
 
 export interface DateSelectboxProps<TDateType extends DateType = 'single'>
-  extends OptionalPick<
+  extends Pick<
     InputProps<'text'>,
     | 'className'
     | 'placeholder'

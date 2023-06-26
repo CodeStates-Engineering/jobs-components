@@ -14,6 +14,7 @@ export default defineConfig({
     tsconfigPaths(),
     dts({
       insertTypesEntry: true,
+      tsConfigFilePath: './tsconfig.json',
     }),
     viteStaticCopy({
       targets: [
@@ -58,6 +59,16 @@ export default defineConfig({
           'react-dom': 'ReactDOM',
         },
       },
+    },
+  },
+  resolve: {
+    alias: {
+      '@components': path.resolve(__dirname, 'src/components'),
+      '@utils': path.resolve(__dirname, 'src/utils'),
+      '@hooks': path.resolve(__dirname, 'src/hooks'),
+      '@context': path.resolve(__dirname, 'src/context'),
+      '@constants': path.resolve(__dirname, 'src/constants'),
+      '@styles': path.resolve(__dirname, 'src/styles'),
     },
   },
 });

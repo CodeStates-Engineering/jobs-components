@@ -14,7 +14,7 @@ import styles from './index.module.scss';
 type TextboxType = Exclude<InputType, 'button'>;
 
 export interface TextboxProps<T extends TextboxType = 'text'>
-  extends OptionalPick<
+  extends Pick<
     InputProps<T>,
     | 'value'
     | 'onChange'
@@ -33,7 +33,7 @@ export interface TextboxProps<T extends TextboxType = 'text'>
   validation?: Validation<TextboxProps<T>['value']>;
   labelStyle?: Pick<LabelContainerProps, 'direction'> &
     UseTypographyClassNameParams;
-  inputStyle?: OptionalPick<InputWrapProps, 'borderRadius' | 'width' | 'size'> &
+  inputStyle?: Pick<InputWrapProps, 'borderRadius' | 'width' | 'size'> &
     UseTypographyClassNameParams;
 }
 

@@ -21,6 +21,8 @@
     "noFallthroughCasesInSwitch": true,
     "types": ["./src/types.d.ts"],
     "allowSyntheticDefaultImports": true,
+
+    //* 수정할때 꼭 vite.config.ts에도 같이 수정해줘야함
     "paths": {
       "@components/*": ["components/*"],
       "@utils": ["utils"],
