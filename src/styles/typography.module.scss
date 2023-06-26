@@ -1,31 +1,31 @@
-@use './libs/vars' as fontSize;
+@use 'libs' as libs;
 
 .font-size-large4x {
-  font-size: fontSize.$LARGE4X;
+  font-size: libs.$LARGE4X;
 }
 .font-size-large3x {
-  font-size: fontSize.$LARGE3X;
+  font-size: libs.$LARGE3X;
 }
 .font-size-large2x {
-  font-size: fontSize.$LARGE2X;
+  font-size: libs.$LARGE2X;
 }
 .font-size-large {
-  font-size: fontSize.$LARGE;
+  font-size: libs.$LARGE;
 }
 .font-size-medium {
-  font-size: fontSize.$MEDIUM;
+  font-size: libs.$MEDIUM;
 }
 .font-size-normal {
-  font-size: fontSize.$NORMAL;
+  font-size: libs.$NORMAL;
 }
 .font-size-small {
-  font-size: fontSize.$SMALL;
+  font-size: libs.$SMALL;
 }
 .font-size-small2x {
-  font-size: fontSize.$SMALL2X;
+  font-size: libs.$SMALL2X;
 }
 .font-size-small3x {
-  font-size: fontSize.$SMALL3X;
+  font-size: libs.$SMALL3X;
 }
 
 .font-weight-700 {

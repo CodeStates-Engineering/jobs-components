@@ -1,15 +1,15 @@
-import styles from './index.module.scss';
-import { useSubscribedState, useValidation } from '../../../hooks';
-import { cleanClassName } from '../../../utils';
-import { Input, Label } from '../../atoms';
-
-import type { Validation, Typography } from '../../../hooks';
+import { Input, Label } from '@components/atoms';
 import type {
   InputProps,
   InputType,
   InputWrapProps,
   LabelContainerProps,
-} from '../../atoms';
+} from '@components/atoms';
+import { useSubscribedState, useValidation } from '@hooks';
+import type { Validation, UseTypographyClassNameParams } from '@hooks';
+import { getLabelSpace } from '@utils';
+
+import styles from './index.module.scss';
 
 type TextboxType = Exclude<InputType, 'button'>;
 
@@ -31,10 +31,10 @@ export interface TextboxProps<T extends TextboxType = 'text'>
   label?: string;
   unit?: React.ReactNode;
   validation?: Validation<TextboxProps<T>['value']>;
-  validationSpace?: boolean;
-  labelStyle?: Pick<LabelContainerProps, 'direction'> & Typography;
+  labelStyle?: Pick<LabelContainerProps, 'direction'> &
+    UseTypographyClassNameParams;
   inputStyle?: Pick<InputWrapProps, 'borderRadius' | 'width' | 'size'> &
-    Typography;
+    UseTypographyClassNameParams;
 }
 
 export const Textbox = <T extends TextboxType = 'text'>({
@@ -50,7 +50,6 @@ export const Textbox = <T extends TextboxType = 'text'>({
   ref,
   label,
   validation,
-  validationSpace,
   className,
   onBlur,
   labelStyle,
@@ -65,52 +64,48 @@ export const Textbox = <T extends TextboxType = 'text'>({
   );
 
   return (
-    <Input.Container
-      validationMessage={validationMessage}
-      validationSpace={validationSpace}
-      className={cleanClassName(`${styles.textbox} ${className}`)}
-    >
-      <Label.Container direction={labelStyle?.direction}>
-        {label ? (
-          <Label
-            fontSize={labelStyle?.fontSize}
-            fontWeight={labelStyle?.fontWeight}
-            htmlFor={label}
-          >
-            {label}
-          </Label>
-        ) : null}
-        <Input.Wrap
-          size={inputStyle?.size}
-          borderRadius={inputStyle?.borderRadius}
-          width={inputStyle?.width}
+    <Label.Container direction={labelStyle?.direction} className={className}>
+      {label ? (
+        <Label
+          fontSize={labelStyle?.fontSize}
+          fontWeight={labelStyle?.fontWeight}
+          space={getLabelSpace(labelStyle?.direction, inputStyle?.size)}
+          htmlFor={label}
         >
-          <Input
-            fontSize={inputStyle?.fontSize}
-            fontWeight={inputStyle?.fontWeight}
-            onClick={onClick}
-            onBlur={onBlur}
-            ref={ref}
-            name={label}
-            disabled={disabled}
-            placeholder={placeholder}
-            onFocus={onFocus}
-            value={value}
-            id={id}
-            onChange={(value) => {
-              setValue?.(value);
-              checkValidation?.(value);
-              onChange?.(value);
-            }}
-            type={type}
-          />
-          {typeof unit === 'string' ? (
-            <div className={styles.unit}>{unit}</div>
-          ) : (
-            unit
-          )}
-        </Input.Wrap>
-      </Label.Container>
-    </Input.Container>
+          {label}
+        </Label>
+      ) : null}
+      <Input.Wrap
+        validationMessage={validationMessage}
+        size={inputStyle?.size}
+        borderRadius={inputStyle?.borderRadius}
+        width={inputStyle?.width}
+      >
+        <Input
+          fontSize={inputStyle?.fontSize}
+          fontWeight={inputStyle?.fontWeight}
+          onClick={onClick}
+          onBlur={onBlur}
+          ref={ref}
+          name={label}
+          disabled={disabled}
+          placeholder={placeholder}
+          onFocus={onFocus}
+          value={value}
+          id={id}
+          onChange={(value) => {
+            setValue?.(value);
+            checkValidation?.(value);
+            onChange?.(value);
+          }}
+          type={type}
+        />
+        {typeof unit === 'string' ? (
+          <div className={styles.unit}>{unit}</div>
+        ) : (
+          unit
+        )}
+      </Input.Wrap>
+    </Label.Container>
   );
 };

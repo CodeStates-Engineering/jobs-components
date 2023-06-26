@@ -26,7 +26,12 @@ export const InputWrap = ({
   );
 
   return (
-    <div className={cleanClassName(`${styles['input-wrap']} ${className}`)}>
+    <div
+      style={{
+        width,
+      }}
+      className={cleanClassName(`${styles['input-wrap']} ${className}`)}
+    >
       <div
         className={cleanClassName(
           `${styles['input-interaction']} ${
@@ -35,9 +40,6 @@ export const InputWrap = ({
             size !== 'none' && styles[`size-${size}`]
           }`,
         )}
-        style={{
-          width,
-        }}
         onClick={onClick}
       >
         {children}

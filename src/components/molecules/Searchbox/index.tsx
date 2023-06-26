@@ -1,18 +1,18 @@
 import { useMemo, useState } from 'react';
 import { Search } from 'react-feather';
 
-import styles from './index.module.scss';
-import { useSubscribedState, useValidation } from '../../../hooks';
-import { cleanClassName, regex } from '../../../utils';
-import { FocusLayer, Options, Input, Label } from '../../atoms';
-
-import type { Validation, Typography } from '../../../hooks';
+import { FocusLayer, Options, Input, Label } from '@components/atoms';
 import type {
   InputProps,
   InputWrapProps,
   OptionsProps,
   LabelContainerProps,
-} from '../../atoms';
+} from '@components/atoms';
+import { useSubscribedState, useValidation } from '@hooks';
+import type { Validation, UseTypographyClassNameParams } from '@hooks';
+import { cleanClassName, regex, getLabelSpace } from '@utils';
+
+import styles from './index.module.scss';
 
 export interface SearchboxProps
   extends Pick<
@@ -31,11 +31,11 @@ export interface SearchboxProps
   options?: string[];
   label?: string;
   validation?: Validation<SearchboxProps['value']>;
-  validationSpace?: boolean;
   className?: string;
   inputStyle?: Pick<InputWrapProps, 'size' | 'width' | 'borderRadius'> &
-    Typography;
-  labelStyle?: Pick<LabelContainerProps, 'direction'> & Typography;
+    UseTypographyClassNameParams;
+  labelStyle?: Pick<LabelContainerProps, 'direction'> &
+    UseTypographyClassNameParams;
   hasSearchIcon?: boolean;
 }
 
@@ -53,7 +53,6 @@ export const Searchbox = ({
   ref,
   label,
   validation,
-  validationSpace,
   className,
   inputStyle,
   labelStyle,
@@ -107,57 +106,54 @@ export const Searchbox = ({
       className={cleanClassName(`${styles.searchbox} ${className}`)}
       bodyScroll
     >
-      <Input.Container
-        validationMessage={validationMessage}
-        validationSpace={validationSpace}
-      >
-        <Label.Container direction={labelStyle?.direction}>
-          {label ? (
-            <Label
-              fontSize={labelStyle?.fontSize}
-              fontWeight={labelStyle?.fontWeight}
-              htmlFor={label}
-            >
-              {label}
-            </Label>
-          ) : null}
-          <Input.Wrap
-            onClick={onClick}
-            size={inputStyle?.size}
-            width={inputStyle?.width}
-            borderRadius={inputStyle?.borderRadius}
+      <Label.Container direction={labelStyle?.direction}>
+        {label ? (
+          <Label
+            fontSize={labelStyle?.fontSize}
+            fontWeight={labelStyle?.fontWeight}
+            space={getLabelSpace(labelStyle?.direction, inputStyle?.size)}
+            htmlFor={label}
           >
-            <Input
-              name={label}
-              ref={ref}
-              onChange={(value) => {
-                setOpened(true);
-                handleChange(value);
-              }}
-              fontSize={inputStyle?.fontSize}
-              fontWeight={inputStyle?.fontWeight}
-              onClick={() => setOpened(true)}
-              onFocus={onFocus}
-              id={id}
-              value={inputText}
-              disabled={disabled}
-              placeholder={placeholder}
-            />
-            {hasSearchIcon ? <Search /> : null}
-          </Input.Wrap>
-        </Label.Container>
-        <Options
-          optionStyle={optionStyle}
-          opened={opened}
-          options={options}
-          value={inputText}
-          onChange={(value) => {
-            setOpened(false);
-            handleChange(value);
-          }}
-          float={float}
-        />
-      </Input.Container>
+            {label}
+          </Label>
+        ) : null}
+        <Input.Wrap
+          validationMessage={validationMessage}
+          onClick={onClick}
+          size={inputStyle?.size}
+          width={inputStyle?.width}
+          borderRadius={inputStyle?.borderRadius}
+        >
+          <Input
+            name={label}
+            ref={ref}
+            onChange={(value) => {
+              setOpened(true);
+              handleChange(value);
+            }}
+            fontSize={inputStyle?.fontSize}
+            fontWeight={inputStyle?.fontWeight}
+            onClick={() => setOpened(true)}
+            onFocus={onFocus}
+            id={id}
+            value={inputText}
+            disabled={disabled}
+            placeholder={placeholder}
+          />
+          {hasSearchIcon ? <Search /> : null}
+        </Input.Wrap>
+      </Label.Container>
+      <Options
+        optionStyle={optionStyle}
+        opened={opened}
+        options={options}
+        value={inputText}
+        onChange={(value) => {
+          setOpened(false);
+          handleChange(value);
+        }}
+        float={float}
+      />
     </FocusLayer>
   );
 };

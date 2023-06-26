@@ -27,7 +27,7 @@
       "@hooks": ["hooks"],
       "@contexts": ["contexts"],
       "@constants": ["constants"],
-      "@styles": ["styles"]
+      "@styles/*": ["styles/*"]
     }
   },
   "files": ["./src/index.tsx"],

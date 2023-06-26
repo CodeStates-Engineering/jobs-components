@@ -1,31 +1,12 @@
-@import '../../../styles/libs';
-
-.textbox {
-  width: 100%;
-  height: fit-content;
-
-  &.label-row,
-  &.label-column {
-    display: flex;
-    gap: 10px;
-  }
-
-  &.label-row {
-    align-items: center;
-  }
-  &.label-column {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-}
+@use 'src/styles/libs' as libs;
 
 .unit {
   padding: 0 0.5em;
   border-radius: 3px;
 
-  background-color: $GRAY-800;
+  background-color: libs.$GRAY-800;
 
-  color: $WHITE;
+  color: libs.$WHITE;
   font-size: 0.9rem;
   white-space: nowrap;
 }

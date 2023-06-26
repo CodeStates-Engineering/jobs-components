@@ -10,13 +10,16 @@ export type LabelProps = Pick<
   DetailedHTMLProps<LabelHTMLAttributes<HTMLLabelElement>, HTMLLabelElement>,
   'children' | 'htmlFor' | 'className'
 > &
-  Typography;
+  Typography & {
+    space?: 'none' | 'small' | 'medium' | 'large';
+  };
 
 const LabelMain = ({
   children,
   htmlFor,
   className,
   fontSize = 'small',
+  space = 'none',
   fontWeight = 500,
 }: LabelProps) => {
   const { fontSizeClassName, fontWeightClassName } = useTypography(
@@ -27,7 +30,9 @@ const LabelMain = ({
     <label
       htmlFor={htmlFor}
       className={cleanClassName(
-        `${styles.label} ${styles[fontSizeClassName]} ${styles[fontWeightClassName]} ${className}`,
+        `${styles.label} ${styles[`space-${space}`]} ${
+          styles[fontSizeClassName]
+        } ${styles[fontWeightClassName]} ${className}`,
       )}
     >
       {children}
@@ -38,7 +43,7 @@ const LabelMain = ({
 export interface LabelContainerProps {
   children?: React.ReactNode;
   className?: string;
-  direction?: 'column' | 'row-start' | 'row-center';
+  direction?: 'column' | 'row';
 }
 
 const LabelContainer = ({
