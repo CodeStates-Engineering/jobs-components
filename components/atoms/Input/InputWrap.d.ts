@@ -1,6 +1,5 @@
-/// <reference types="./src/types.d.ts" />
 /// <reference types="react" />
-export interface InputWrapProps extends Pick<HTMLTagProps<'div'>, 'children' | 'className'> {
+export interface InputWrapProps extends Pick<React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, 'children' | 'className'> {
     onClick?: React.HTMLAttributes<HTMLDivElement>['onClick'];
     size?: 'none' | 'small' | 'medium' | 'large';
     borderRadius?: '4' | '8';
