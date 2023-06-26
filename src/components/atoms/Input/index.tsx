@@ -15,8 +15,11 @@ import styles from './index.module.scss';
 export type { InputWrapProps } from './InputWrap';
 
 export interface InputProps<T extends InputType = 'text'>
-  extends OptionalPick<
-      HTMLTagProps<'input'>,
+  extends Pick<
+      React.DetailedHTMLProps<
+        React.InputHTMLAttributes<HTMLInputElement>,
+        HTMLInputElement
+      >,
       | 'placeholder'
       | 'onFocus'
       | 'id'

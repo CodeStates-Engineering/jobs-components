@@ -4,7 +4,13 @@ import { cleanClassName } from '@utils';
 import styles from './InputWrap.module.scss';
 
 export interface InputWrapProps
-  extends Pick<HTMLTagProps<'div'>, 'children' | 'className'> {
+  extends Pick<
+    React.DetailedHTMLProps<
+      React.InputHTMLAttributes<HTMLInputElement>,
+      HTMLInputElement
+    >,
+    'children' | 'className'
+  > {
   onClick?: React.HTMLAttributes<HTMLDivElement>['onClick'];
   size?: 'none' | 'small' | 'medium' | 'large';
   borderRadius?: '4' | '8';

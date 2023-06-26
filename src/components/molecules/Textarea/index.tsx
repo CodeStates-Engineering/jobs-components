@@ -16,14 +16,14 @@ import { Tag } from '../Tag';
 import type { InputWrapProps, LabelContainerProps } from '../../atoms';
 
 export interface TextareaProps
-  extends OptionalPick<
+  extends Pick<
       DetailedHTMLProps<
         TextareaHTMLAttributes<HTMLTextAreaElement>,
         HTMLTextAreaElement
       >,
       'placeholder' | 'id'
     >,
-    OptionalPick<InputWrapProps, 'onClick'> {
+    Pick<InputWrapProps, 'onClick'> {
   onChange?: (value?: string) => void;
   value?: string;
   validation?: Validation<TextareaProps['value']>;
@@ -33,9 +33,9 @@ export interface TextareaProps
   inputStyle?: {
     resize?: boolean;
     height?: React.CSSProperties['height'];
-  } & OptionalPick<InputWrapProps, 'borderRadius' | 'width'> &
+  } & Pick<InputWrapProps, 'borderRadius' | 'width'> &
     UseTypographyClassNameParams;
-  labelStyle?: OptionalPick<LabelContainerProps, 'direction'> &
+  labelStyle?: Pick<LabelContainerProps, 'direction'> &
     UseTypographyClassNameParams;
   floatingActionName?: string;
   onFloatingActionClick?: () => void;
