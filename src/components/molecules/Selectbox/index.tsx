@@ -18,12 +18,15 @@ import styles from './index.module.scss';
 export interface SelectboxProps<
   _ValidOptionValue = ValidOptionValue,
   _Multiple = boolean,
-> extends Pick<
+> extends OptionalPick<
       OptionsProps<_ValidOptionValue, _Multiple>,
       'options' | 'float' | 'onChange' | 'value' | 'multiple' | 'optionStyle'
     >,
-    Pick<InputProps<'button'>, 'disabled' | 'placeholder' | 'id' | 'ref'>,
-    Pick<InputWrapProps, 'onClick'> {
+    OptionalPick<
+      InputProps<'button'>,
+      'disabled' | 'placeholder' | 'id' | 'ref'
+    >,
+    OptionalPick<InputWrapProps, 'onClick'> {
   label?: string;
   validation?: Validation<SelectboxProps<_ValidOptionValue>['value']>;
 

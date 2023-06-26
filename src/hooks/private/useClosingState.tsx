@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { Compatibility } from '../plugins';
+import { Compatibility } from '../../plugins';
 
 export const useClosingState = (opened = false, closingDuration = 300) => {
   const state = useState<boolean | 'closing'>(opened);

@@ -1,6 +1,6 @@
+import { useValidationMessageDynamicHeight } from '@hooks';
 import { cleanClassName } from '@utils';
 
-import { useValidationMessageDynamicHeight } from './(hooks)/useValidationMessageDynamicHeight';
 import styles from './InputWrap.module.scss';
 
 export interface InputWrapProps

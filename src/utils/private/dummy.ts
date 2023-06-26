@@ -1,3 +1,6 @@
+/**
+ * @deprecated constants 디렉토리를 이용해주세요.
+ */
 export const DUMMY = {
   TABLE_TITLE: {
     COPYABLE_COLUMN: 3,

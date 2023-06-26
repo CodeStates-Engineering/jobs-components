@@ -1,16 +1,16 @@
 import type { Ref } from 'react';
 import { forwardRef } from 'react';
 
-import { useTypographyClassName } from '@hooks';
-import type { UseTypographyClassNameParams } from '@hooks';
+import {
+  useTypographyClassName,
+  useFormatedValue,
+  useConvertChangeHandlerParam,
+} from '@hooks';
+import type { UseTypographyClassNameParams, InputType } from '@hooks';
 import { cleanClassName } from '@utils';
 
-import { useConvertChangeHandlerParam } from './(hooks)/useConvertChangeHandlerParam';
-import { useFormatedValue } from './(hooks)/useFormatedValue';
 import { InputWrap } from './InputWrap';
 import styles from './index.module.scss';
-
-import type { InputType } from './(hooks)/useFormatedValue';
 
 export type { InputWrapProps } from './InputWrap';
 
