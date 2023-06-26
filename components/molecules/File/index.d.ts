@@ -1,3 +1,4 @@
+/// <reference types="./src/types.d.ts" />
 /// <reference types="react" />
 import type { Validation, Typography } from '../../../hooks';
 import type { ButtonProps, InputProps, InputWrapProps, LabelContainerProps } from '../../atoms';
@@ -5,7 +6,7 @@ interface SavedFile {
     name: string;
     url: string;
 }
-export interface FileProps extends Pick<ButtonProps, 'className'> {
+export interface FileProps extends OptionalPick<ButtonProps, 'className'> {
     children?: React.ReactNode;
     value?: SavedFile;
     onChange?: (file?: File) => void;
@@ -18,7 +19,7 @@ export interface FileProps extends Pick<ButtonProps, 'className'> {
     inputStyle?: {
         size?: 'small' | 'medium' | 'large';
     } & Pick<InputWrapProps, 'borderRadius' | 'width'> & Typography;
-    labelStyle?: Pick<LabelContainerProps, 'direction'> & Typography;
+    labelStyle?: OptionalPick<LabelContainerProps, 'direction'> & Typography;
 }
 export declare const File: ({ children, value, onChange, className, download, disabled, accept, validation, label, id, labelStyle, inputStyle, }: FileProps) => JSX.Element;
 export {};

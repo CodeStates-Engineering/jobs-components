@@ -1,7 +1,8 @@
+/// <reference types="./src/types.d.ts" />
 /// <reference types="react" />
 import type { InputProps, OptionsProps, ValidOptionValue, InputWrapProps, LabelContainerProps } from '@components/atoms';
 import type { Validation, Typography } from '@hooks';
-export interface SelectboxProps<_ValidOptionValue = ValidOptionValue, _Multiple = boolean> extends Pick<OptionsProps<_ValidOptionValue, _Multiple>, 'options' | 'float' | 'onChange' | 'value' | 'multiple' | 'optionStyle'>, Pick<InputProps<'button'>, 'disabled' | 'placeholder' | 'id' | 'ref'>, Pick<InputWrapProps, 'onClick'> {
+export interface SelectboxProps<_ValidOptionValue = ValidOptionValue, _Multiple = boolean> extends OptionalPick<OptionsProps<_ValidOptionValue, _Multiple>, 'options' | 'float' | 'onChange' | 'value' | 'multiple' | 'optionStyle'>, OptionalPick<InputProps<'button'>, 'disabled' | 'placeholder' | 'id' | 'ref'>, OptionalPick<InputWrapProps, 'onClick'> {
     label?: string;
     validation?: Validation<SelectboxProps<_ValidOptionValue>['value']>;
     className?: string;

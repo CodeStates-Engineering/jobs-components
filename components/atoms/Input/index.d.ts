@@ -1,7 +1,6 @@
 /// <reference types="./src/types.d.ts" />
 import type { Ref } from 'react';
-import type { UseTypographyClassNameParams } from '@hooks';
-import type { InputType } from './(hooks)/useFormatedValue';
+import type { UseTypographyClassNameParams, InputType } from '@hooks';
 export type { InputWrapProps } from './InputWrap';
 export interface InputProps<T extends InputType = 'text'> extends OptionalPick<HTMLTagProps<'input'>, 'placeholder' | 'onFocus' | 'id' | 'onClick' | 'onBlur' | 'ref' | 'name' | 'className'>, UseTypographyClassNameParams {
     type?: T;
