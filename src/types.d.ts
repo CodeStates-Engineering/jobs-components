@@ -54,5 +54,3 @@ type HTMLTagProps<T extends HTMLTags> = T extends 'dl'
       HTMLInputElement
     >
   : HTMLElementProps;
-
-type OptionalPick<T, K extends keyof T> = Omit<T, Exclude<keyof T, K>>;
