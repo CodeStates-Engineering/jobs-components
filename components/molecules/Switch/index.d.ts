@@ -1,6 +1,6 @@
 /// <reference types="react" />
-import type { LabelContainerProps } from '@components/atoms';
-import type { Typography } from '@hooks';
+import type { LabelContainerProps } from '../../atoms';
+import type { Typography } from '../../../hooks';
 export interface SwitchProps {
     value?: boolean;
     onChange?: (checked: boolean) => void;
