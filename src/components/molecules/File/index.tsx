@@ -23,7 +23,7 @@ interface SavedFile {
   url: string;
 }
 
-export interface FileProps extends Pick<ButtonProps, 'className'> {
+export interface FileProps extends OptionalPick<ButtonProps, 'className'> {
   children?: React.ReactNode;
   value?: SavedFile;
   onChange?: (file?: File) => void;
@@ -37,7 +37,7 @@ export interface FileProps extends Pick<ButtonProps, 'className'> {
     size?: 'small' | 'medium' | 'large';
   } & Pick<InputWrapProps, 'borderRadius' | 'width'> &
     Typography;
-  labelStyle?: Pick<LabelContainerProps, 'direction'> & Typography;
+  labelStyle?: OptionalPick<LabelContainerProps, 'direction'> & Typography;
 }
 
 const getIconSizeBy = (size: 'small' | 'medium' | 'large' | undefined) => {

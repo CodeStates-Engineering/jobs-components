@@ -1,11 +1,15 @@
 import { createContext } from 'react';
 
-type ValidationStoreData = Map<string, () => string | undefined>;
+import type{ ValidationStoreData} from '@contexts/ValidationContext';
+
 
 export const ValidationContext = createContext<ValidationStoreData | null>(
   null,
 );
 
+/**
+ * @deprecated Use `validationObserver` instead.
+ */
 export const createValidationStore = () => {
   const data: ValidationStoreData = new Map();
   return {

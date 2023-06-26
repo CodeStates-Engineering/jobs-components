@@ -1,6 +1,6 @@
 import { cleanClassName } from '@utils';
 
-import styles from '../styles/typography.module.scss';
+import styles from '../../styles/typography.module.scss';
 
 type FontSize =
   | 'large4x'

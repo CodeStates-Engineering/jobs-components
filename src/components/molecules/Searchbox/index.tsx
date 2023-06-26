@@ -15,7 +15,7 @@ import { cleanClassName, regex, getLabelSpace } from '@utils';
 import styles from './index.module.scss';
 
 export interface SearchboxProps
-  extends Pick<
+  extends OptionalPick<
       InputProps<'text'>,
       | 'value'
       | 'onChange'
@@ -26,15 +26,15 @@ export interface SearchboxProps
       | 'id'
       | 'ref'
     >,
-    Pick<OptionsProps<string, false>, 'float' | 'optionStyle'> {
+    OptionalPick<OptionsProps<string, false>, 'float' | 'optionStyle'> {
   selfFilter?: boolean;
   options?: string[];
   label?: string;
   validation?: Validation<SearchboxProps['value']>;
   className?: string;
-  inputStyle?: Pick<InputWrapProps, 'size' | 'width' | 'borderRadius'> &
+  inputStyle?: OptionalPick<InputWrapProps, 'size' | 'width' | 'borderRadius'> &
     UseTypographyClassNameParams;
-  labelStyle?: Pick<LabelContainerProps, 'direction'> &
+  labelStyle?: OptionalPick<LabelContainerProps, 'direction'> &
     UseTypographyClassNameParams;
   hasSearchIcon?: boolean;
 }

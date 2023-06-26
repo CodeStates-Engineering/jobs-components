@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { SIZE, HIDDEN } from '@constants';
+import { STORY_META } from '@constants';
 
 import { Input } from '.';
 
@@ -34,14 +34,14 @@ const meta: Meta<StroyProps> = {
   },
 
   argTypes: {
-    ref: HIDDEN,
-    onChange: HIDDEN,
+    ref: STORY_META.HIDDEN,
+    onChange: STORY_META.HIDDEN,
 
     type: GROUPS.INPUT,
     disabled: GROUPS.INPUT,
 
     size: {
-      ...SIZE,
+      ...STORY_META.SIZE,
       ...GROUPS.WRAP,
     },
     borderRadius: {

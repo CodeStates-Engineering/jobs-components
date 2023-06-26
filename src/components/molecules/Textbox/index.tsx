@@ -14,7 +14,7 @@ import styles from './index.module.scss';
 type TextboxType = Exclude<InputType, 'button'>;
 
 export interface TextboxProps<T extends TextboxType = 'text'>
-  extends Pick<
+  extends OptionalPick<
     InputProps<T>,
     | 'value'
     | 'onChange'
