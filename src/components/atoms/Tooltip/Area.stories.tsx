@@ -1,14 +1,10 @@
-import React from 'react';
-
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { Tooltip } from '.';
 
-const { Area } = Tooltip;
-
-const meta: Meta<typeof Area> = {
+const meta: Meta<typeof Tooltip.Area> = {
   title: 'atoms/Tooltip/Area',
-  component: Area,
+  component: Tooltip.Area,
   args: {
     children: 'Tooltip area',
   },
@@ -24,6 +20,6 @@ const meta: Meta<typeof Area> = {
 
 export default meta;
 
-type Story = StoryObj<typeof Area>;
+type Story = StoryObj<typeof Tooltip.Area>;
 
 export const Default: Story = {};

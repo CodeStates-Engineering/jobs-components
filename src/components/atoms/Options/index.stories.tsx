@@ -1,4 +1,4 @@
-import React, { useState as createState } from 'react';
+import { useState as createState } from 'react';
 
 import type { Meta, StoryObj } from '@storybook/react';
 
