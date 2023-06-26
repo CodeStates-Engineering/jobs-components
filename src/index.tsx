@@ -13,7 +13,7 @@ export * from './components/organisms';
 export * from './utils';
 
 //* Hooks 함수
-export * from './hooks';
+export * from './hooks/private';
 
 //* Plugin
 export * from './plugins';

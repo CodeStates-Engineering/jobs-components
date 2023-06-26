@@ -1,9 +1,6 @@
 import { useMemo } from 'react';
 
-/**
- * @deprecated useTypographyClassName를 사용해주세요.
- */
-export type FontSize =
+type FontSize =
   | 'large4x'
   | 'large3x'
   | 'large2x'
@@ -14,13 +11,10 @@ export type FontSize =
   | 'small2x'
   | 'small3x';
 
-/**
- * @deprecated useTypographyClassName를 사용해주세요.
- */
-export type FontWeight = 700 | 500 | 400;
+type FontWeight = 700 | 500 | 400;
 
 /**
- * @deprecated useTypographyClassName를 사용해주세요.
+ * @deprecated UseTypographyClassNameParams를 사용해주세요.
  */
 export interface Typography {
   fontSize?: FontSize;
