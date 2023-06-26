@@ -15,7 +15,7 @@ import type { InputType } from './(hooks)/useFormatedValue';
 export type { InputWrapProps } from './InputWrap';
 
 export interface InputProps<T extends InputType = 'text'>
-  extends Pick<
+  extends OptionalPick<
       HTMLTagProps<'input'>,
       | 'placeholder'
       | 'onFocus'
