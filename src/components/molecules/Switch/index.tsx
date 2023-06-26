@@ -1,21 +1,17 @@
-import { useMemo } from 'react';
+import { Label } from '@components/atoms';
+import type { LabelContainerProps } from '@components/atoms';
+import { useSubscribedState } from '@hooks';
+import type { Typography } from '@hooks';
+import { getLabelSpace } from '@utils';
 
 import styles from './index.module.scss';
-import { useSubscribedState, useValidation } from '../../../hooks';
-import { Input, Label } from '../../atoms';
-
-import type { Typography, Validation } from '../../../hooks';
-import type { LabelContainerProps } from '../../atoms';
 
 export interface SwitchProps {
   value?: boolean;
   onChange?: (checked: boolean) => void;
   disabled?: boolean;
   id?: string;
-
   label?: string;
-  validation?: Validation<SwitchProps['value']>;
-  validationSpace: boolean;
   className?: string;
   labelStyle?: Typography & Pick<LabelContainerProps, 'direction'>;
   inputStyle?: {
@@ -31,73 +27,60 @@ export const Switch = ({
   disabled,
   id,
   label,
-  validation,
-  validationSpace,
   className,
   labelStyle,
   inputStyle,
 }: SwitchProps) => {
   const [turned, setTurned] = useSubscribedState(value);
 
-  const style = useMemo(
-    () => ({
-      width: inputStyle?.width,
-    }),
-    [inputStyle?.width],
-  );
-
   const sizeClassName = styles[`size-${inputStyle?.size ?? 'medium'}`];
   const turnedClassName = turned ? styles.on : styles.off;
 
-  const { validationMessage, checkValidation } = useValidation(
-    value,
-    validation,
-    label || id,
+  const labelSpace = getLabelSpace(
+    labelStyle?.direction,
+    inputStyle?.containerSize,
   );
 
   return (
-    <Input.Container
-      validationMessage={validationMessage}
-      validationSpace={validationSpace}
-    >
-      <Label.Container
-        direction={labelStyle?.direction}
-        className={`${
-          styles[`container-size-${inputStyle?.containerSize ?? 'none'}`]
-        } ${className}`}
+    <Label.Container direction={labelStyle?.direction} className={className}>
+      {label ? (
+        <Label
+          htmlFor={label}
+          fontSize={labelStyle?.fontSize}
+          fontWeight={labelStyle?.fontWeight}
+          space={labelSpace}
+        >
+          {label}
+        </Label>
+      ) : null}
+      <div
+        style={{
+          width: inputStyle?.width,
+        }}
+        className={`${styles['switch-container']} ${
+          styles[`container-size-${inputStyle?.containerSize ?? labelSpace}`]
+        }`}
       >
-        {label ? (
-          <Label
-            htmlFor={label}
-            fontSize={labelStyle?.fontSize}
-            fontWeight={labelStyle?.fontWeight}
-          >
-            {label}
-          </Label>
-        ) : null}
-        <div style={style} className={styles['switch-container']}>
+        <div
+          className={`${styles['switch-content']} ${sizeClassName} ${turnedClassName}`}
+        >
           <div
-            className={`${styles['switch-content']} ${sizeClassName} ${turnedClassName}`}
-          >
-            <div
-              className={`${styles['switch-ball']} ${sizeClassName} ${turnedClassName}`}
-            />
-            <input
-              id={id}
-              type="checkbox"
-              className={styles['switch-input']}
-              name={label}
-              checked={turned}
-              disabled={disabled}
-              onChange={({ target: { checked } }) => {
-                setTurned?.(checked);
-                onChange?.(checked);
-                checkValidation?.(checked);
-              }}
-            />
-          </div>
+            className={`${styles['switch-ball']} ${sizeClassName} ${turnedClassName}`}
+          />
+          <input
+            id={id}
+            type="checkbox"
+            className={styles['switch-input']}
+            name={label}
+            checked={turned}
+            disabled={disabled}
+            onChange={({ target: { checked } }) => {
+              setTurned?.(checked);
+              onChange?.(checked);
+            }}
+          />
         </div>
-      </Label.Container>
-    </Input.Container>
+      </div>
+    </Label.Container>
   );
 };

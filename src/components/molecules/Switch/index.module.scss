@@ -1,23 +1,28 @@
-@import '../../../styles/libs';
-
-.container-size-none {
-  height: fit-content;
-}
-
-.container-size-small {
-  height: 32px;
-}
-
-.container-size-medium {
-  height: 40px;
-}
-
-.container-size-large {
-  height: 48px;
-}
+@use 'src/styles/libs' as libs;
 
 .switch-container {
   display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &.container-size-none {
+    height: fit-content;
+  }
+
+  &.container-size-small {
+    align-items: center;
+    justify-content: center;
+
+    height: 32px;
+  }
+
+  &.container-size-medium {
+    height: 40px;
+  }
+
+  &.container-size-large {
+    height: 48px;
+  }
 }
 
 .switch-content {
@@ -33,11 +38,11 @@
   transition: background-color 0.3s;
 
   &.off {
-    background-color: $BLUISH-GRAY-300;
+    background-color: libs.$BLUISH-GRAY-300;
   }
 
   &.on {
-    background-color: $PURPLE-500;
+    background-color: libs.$PURPLE-500;
   }
 
   &.size-small {

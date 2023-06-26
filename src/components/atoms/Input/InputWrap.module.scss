@@ -1,0 +1,105 @@
+@use 'src/styles/libs' as libs;
+
+.input-wrap {
+  position: relative;
+}
+
+@mixin size($paddingX, $height) {
+  height: $height;
+  padding: 0 $paddingX;
+}
+
+.input-interaction {
+  position: relative;
+  display: flex;
+  gap: 0.8em;
+  align-items: center;
+  justify-content: start;
+
+  box-sizing: border-box;
+  width: 100%;
+
+  color: libs.$BLUISH-GRAY-700;
+  font-size: libs.$NORMAL;
+
+  transition: box-shadow 0.3s, background-color 0.3s;
+
+  &.border-radius-4 {
+    border-radius: 4px;
+  }
+  &.border-radius-8 {
+    border-radius: 8px;
+  }
+
+  @include libs.border(libs.$BLUISH-GRAY-200, 1px);
+
+  //*Size
+  &.size-none {
+    @include size(0, fit-content);
+  }
+
+  &.size-small {
+    @include size(14px, 32px);
+  }
+
+  &.size-medium {
+    @include size(16px, 40px);
+  }
+
+  &.size-large {
+    @include size(18px, 48px);
+  }
+
+  //* Type
+  &:not(&:has(:disabled)) {
+    background-color: libs.$WHITE;
+    &:hover {
+      @include libs.border(libs.$BLUE-300, 2px);
+    }
+
+    &:has(:focus) {
+      @include libs.border(libs.$BLUE-500, 2px);
+
+      &.error {
+        @include libs.border(libs.$PEACH-500, 2px);
+      }
+    }
+
+    &:has(input[type='button']) {
+      &,
+      > input,
+      textarea {
+        cursor: pointer;
+      }
+    }
+  }
+
+  &:has(:disabled) {
+    background-color: libs.$BLUISH-GRAY-10;
+    @include libs.border(libs.$BLUISH-GRAY-200, 1px);
+    color: libs.$BLUISH-GRAY-400;
+    > input,
+    textarea {
+      cursor: not-allowed;
+    }
+  }
+
+  &.error {
+    @include libs.border(libs.$PEACH-500, 2px);
+  }
+}
+
+.validation-message-wrap {
+  height: 0;
+
+  transition: height 0.3s;
+}
+
+.validation-message {
+  @include libs.shake-horizontal(0.9s);
+  margin-left: 0.5em;
+  padding-top: 6px;
+
+  color: libs.$PEACH-500;
+  font-size: libs.$SMALL;
+}

@@ -1,9 +1,8 @@
-import React from 'react';
-
 import type { Meta, StoryObj } from '@storybook/react';
 
+import { DUMMY } from '@utils';
+
 import { Table } from '.';
-import { DUMMY } from '../../../utils';
 
 const { TABLE_TITLE, TABLE_BODY, COMMON } = DUMMY;
 

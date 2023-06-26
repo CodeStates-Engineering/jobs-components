@@ -7,20 +7,21 @@ import { DayPicker } from 'react-day-picker';
 import type { DayPickerProps, DateRange } from 'react-day-picker';
 import { Calendar } from 'react-feather';
 
-import '../../../styles/dayPicker.scss';
-import styles from './index.module.scss';
-import { useSubscribedState, useValidation } from '../../../hooks';
-import { cleanClassName } from '../../../utils';
-import { Input, Label, FocusLayer } from '../../atoms';
-import { Dropdown } from '../../molecules';
-
-import 'react-day-picker/dist/style.css';
-import type { Validation, Typography } from '../../../hooks';
+import '@styles/dayPicker.scss';
+import { Input, Label, FocusLayer } from '@components/atoms';
 import type {
   InputProps,
   InputWrapProps,
   LabelContainerProps,
-} from '../../atoms';
+} from '@components/atoms';
+import { Dropdown } from '@components/molecules';
+import { useSubscribedState, useValidation } from '@hooks';
+import type { Validation, Typography } from '@hooks';
+import { cleanClassName } from '@utils';
+
+import styles from './index.module.scss';
+
+import 'react-day-picker/dist/style.css';
 
 type DateType = Exclude<DayPickerProps['mode'], 'default'>;
 
@@ -46,13 +47,17 @@ export interface DateSelectboxProps<TDateType extends DateType = 'single'>
   value?: DateValue<TDateType>;
   onChange?: (value?: DateValue<TDateType>) => void;
   validation?: Validation<DateSelectboxProps<TDateType>['value']>;
-  validationSpace?: boolean;
   inputStyle?: Typography &
     Pick<InputWrapProps, 'size' | 'borderRadius' | 'width'> & {
       calendarX?: 'left' | 'right';
     };
   labelStyle?: Pick<LabelContainerProps, 'direction'> & Typography;
 }
+
+const DATE_FORMAT = 'YYYY.MM.DD';
+const TIME_FORMAT = 'HH:mm';
+const DATE_TIME_FORMAT = `${DATE_FORMAT} ${TIME_FORMAT}`;
+const MONTH_FORMAT = 'YYYY.MM';
 
 export const DateSelectbox = <TDateType extends DateType = 'single'>({
   value,
@@ -66,15 +71,10 @@ export const DateSelectbox = <TDateType extends DateType = 'single'>({
   ref,
   label,
   validation,
-  validationSpace,
   className,
   inputStyle,
   labelStyle,
 }: DateSelectboxProps<TDateType>) => {
-  const DATE_FORMAT = 'YYYY.MM.DD';
-  const TIME_FORMAT = 'HH:mm';
-  const DATE_TIME_FORMAT = `${DATE_FORMAT} ${TIME_FORMAT}`;
-  const MONTH_FORMAT = 'YYYY.MM';
   const [opened, setOpened] = useState(false);
   const [dateValue, setDateValue] = useSubscribedState(value);
 
@@ -193,60 +193,56 @@ export const DateSelectbox = <TDateType extends DateType = 'single'>({
       focused={opened}
       onBlur={() => setOpened(false)}
     >
-      <Input.Container
-        validationMessage={validationMessage}
-        validationSpace={validationSpace}
-      >
-        <Label.Container direction={labelStyle?.direction}>
-          {label ? (
-            <Label
-              htmlFor={label}
-              fontSize={labelStyle?.fontSize}
-              fontWeight={labelStyle?.fontWeight}
-            >
-              {label}
-            </Label>
-          ) : null}
-          <Input.Wrap
-            size={inputStyle?.size}
-            borderRadius={inputStyle?.borderRadius}
-            width={inputStyle?.width}
+      <Label.Container direction={labelStyle?.direction}>
+        {label ? (
+          <Label
+            htmlFor={label}
+            fontSize={labelStyle?.fontSize}
+            fontWeight={labelStyle?.fontWeight}
           >
-            <Input
-              {...inputProps}
-              onClick={onClick}
-              ref={ref}
-              name={label}
-              disabled={disabled}
-              placeholder={placeholder}
-              fontSize={inputStyle?.fontSize}
-              fontWeight={inputStyle?.fontWeight}
-              onFocus={(e) => {
-                onFocus?.(e);
-                setOpened(true);
-              }}
-              id={id}
-              type="text"
-            />
-            <Calendar size="1.2em" className={styles['calendar-icon']} />
-          </Input.Wrap>
-        </Label.Container>
-        <Dropdown
-          opened={opened}
-          className={`${styles.calendar} ${
-            styles[inputStyle?.calendarX ?? 'right']
-          }`}
+            {label}
+          </Label>
+        ) : null}
+        <Input.Wrap
+          validationMessage={validationMessage}
+          size={inputStyle?.size}
+          borderRadius={inputStyle?.borderRadius}
+          width={inputStyle?.width}
         >
-          <DayPicker
-            {...dayPickerProps}
-            className={styles['day-picker']}
-            locale={ko}
-            formatters={{
-              formatCaption: (month) => `${days(month).format('YYYY MM월')}`,
+          <Input
+            {...inputProps}
+            onClick={onClick}
+            ref={ref}
+            name={label}
+            disabled={disabled}
+            placeholder={placeholder}
+            fontSize={inputStyle?.fontSize}
+            fontWeight={inputStyle?.fontWeight}
+            onFocus={(e) => {
+              onFocus?.(e);
+              setOpened(true);
             }}
+            id={id}
+            type="text"
           />
-        </Dropdown>
-      </Input.Container>
+          <Calendar size="1.2em" className={styles['calendar-icon']} />
+        </Input.Wrap>
+      </Label.Container>
+      <Dropdown
+        opened={opened}
+        className={`${styles.calendar} ${
+          styles[inputStyle?.calendarX ?? 'right']
+        }`}
+      >
+        <DayPicker
+          {...dayPickerProps}
+          className={styles['day-picker']}
+          locale={ko}
+          formatters={{
+            formatCaption: (month) => `${days(month).format('YYYY MM월')}`,
+          }}
+        />
+      </Dropdown>
     </FocusLayer>
   );
 };

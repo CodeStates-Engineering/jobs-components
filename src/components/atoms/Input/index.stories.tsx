@@ -1,81 +1,94 @@
-import React from 'react';
-
 import type { Meta, StoryObj } from '@storybook/react';
+
+import { SIZE, HIDDEN } from '@constants';
 
 import { Input } from '.';
 
-import type { InputType } from './index';
+import type { InputProps, InputWrapProps } from './index';
 
-const meta: Meta<typeof Input> = {
+type StroyProps = InputProps &
+  Pick<InputWrapProps, 'borderRadius' | 'size' | 'validationMessage' | 'width'>;
+
+const GROUPS = {
+  INPUT: {
+    table: {
+      category: 'Input',
+    },
+  },
+  WRAP: {
+    table: {
+      category: 'Input.Wrap',
+    },
+  },
+};
+
+const meta: Meta<StroyProps> = {
   title: 'atoms/Input',
   component: Input,
   args: {
     placeholder: 'placeholder',
+    type: 'text',
     value: '',
+    size: 'large',
+    width: '250px',
   },
+
   argTypes: {
+    ref: HIDDEN,
+    onChange: HIDDEN,
+
+    type: GROUPS.INPUT,
+    disabled: GROUPS.INPUT,
+
+    size: {
+      ...SIZE,
+      ...GROUPS.WRAP,
+    },
+    borderRadius: {
+      ...GROUPS.WRAP,
+      options: ['4', '8'],
+      control: 'radio',
+    },
+
+    width: {
+      ...GROUPS.WRAP,
+      control: 'text',
+    },
+
+    fontSize: GROUPS.INPUT,
+    fontWeight: GROUPS.INPUT,
     value: {
+      ...GROUPS.INPUT,
+      control: {
+        type: 'text',
+      },
+    },
+    placeholder: {
+      ...GROUPS.INPUT,
+    },
+
+    validationMessage: {
+      ...GROUPS.WRAP,
       control: {
         type: 'text',
       },
     },
   },
-  decorators: [
-    (Story) => (
-      <article
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '1rem',
-        }}
-      >
-        <Story />
-      </article>
-    ),
-  ],
 };
 
 export default meta;
 
-type Story = StoryObj<typeof Input>;
+type Story = StoryObj<StroyProps>;
 
-export const Default: Story = {};
-
-export const Type: Story = {
-  render: (args) => (
-    <>
-      {(
-        [
-          {
-            type: 'text',
-            value: 'text',
-          },
-          {
-            type: 'number',
-            value: 1234567890,
-          },
-          {
-            type: 'large-number',
-            value: 1234567890,
-          },
-          {
-            type: 'phone-number',
-            value: '01012345678',
-          },
-          {
-            type: 'business-number',
-            value: '1234567890',
-          },
-        ] satisfies {
-          type: InputType;
-          value: string | number;
-        }[]
-      ).map(({ type, value }) => (
-        <label key={type}>
-          {type}
-          <Input {...args} type={type} value={value} />
-        </label>
-      ))}
-    </>
+export const Default: Story = {
+  render: ({ size, borderRadius, width, validationMessage, ...args }) => (
+    <Input.Wrap
+      size={size}
+      borderRadius={borderRadius}
+      width={width}
+      validationMessage={validationMessage}
+    >
+      <Input {...args} />
+    </Input.Wrap>
   ),
 };

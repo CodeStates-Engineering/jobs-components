@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import React from 'react';
+
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import type { Meta, StoryObj } from '@storybook/react';

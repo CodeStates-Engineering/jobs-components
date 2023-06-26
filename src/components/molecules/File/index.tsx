@@ -31,7 +31,6 @@ export interface FileProps extends Pick<ButtonProps, 'className'> {
   disabled?: InputProps['disabled'];
   accept?: string;
   validation?: Validation<FileProps['value']>;
-  validationSpace?: boolean;
   label?: string;
   id?: string;
   inputStyle?: {
@@ -62,7 +61,6 @@ export const File = ({
   disabled = false,
   accept,
   validation,
-  validationSpace,
   label,
   id,
   labelStyle,
@@ -105,78 +103,73 @@ export const File = ({
   );
 
   return (
-    <Input.Container
-      validationMessage={validationMessage}
-      validationSpace={validationSpace}
-      className={className}
-    >
-      <Label.Container direction={labelStyle?.direction}>
-        {label ? (
-          <Label
-            htmlFor={label}
-            fontSize={labelStyle?.fontSize}
-            fontWeight={labelStyle?.fontWeight}
-          >
-            {label}
-          </Label>
-        ) : null}
-        {savedFile ? (
-          <>
-            <Input.Wrap
-              borderRadius={inputStyle?.borderRadius}
-              className={styles['download-link-interaction']}
-              size={inputStyle?.size}
-              width={inputStyle?.width}
-            >
-              <Paperclip size={getIconSizeBy(inputStyle?.size)} />
-              <a
-                href={isDownloadActive ? savedFile?.url : undefined}
-                className={cleanClassName(
-                  `${styles['download-link']} ${styles[fontSizeClassName]} ${
-                    styles[fontWeightClassName]
-                  } ${isDownloadActive ? styles.actived : styles.disabled}
-                `,
-                )}
-                download={download}
-              >
-                {savedFile?.name}
-              </a>
-              {disabled ? (
-                FileInput
-              ) : (
-                <Button
-                  icon={<X size="1em" />}
-                  size="small"
-                  shape="round"
-                  theme="bluish-gray700/0"
-                  onClick={() => {
-                    setSavedFile?.(undefined);
-                    onChange?.(undefined);
-                    const { current } = inputRef;
-                    if (current) {
-                      current.value = '';
-                    }
-                  }}
-                />
-              )}
-            </Input.Wrap>
-          </>
-        ) : (
-          <Button
+    <Label.Container direction={labelStyle?.direction} className={className}>
+      {label ? (
+        <Label
+          htmlFor={label}
+          fontSize={labelStyle?.fontSize}
+          fontWeight={labelStyle?.fontWeight}
+        >
+          {label}
+        </Label>
+      ) : null}
+      {savedFile ? (
+        <>
+          <Input.Wrap
+            validationMessage={validationMessage}
+            borderRadius={inputStyle?.borderRadius}
+            className={styles['download-link-interaction']}
             size={inputStyle?.size}
-            className={styles['upload-button']}
-            fontSize={inputStyle?.fontSize}
-            fontWeight={inputStyle?.fontWeight}
-            disabled={!!disabled}
-            theme="bluish-gray400/bluish-gray10/bluish-gray200"
-            onClick={() => inputRef.current?.click()}
             width={inputStyle?.width}
           >
-            {children}
-            {disabled ? null : FileInput}
-          </Button>
-        )}
-      </Label.Container>
-    </Input.Container>
+            <Paperclip size={getIconSizeBy(inputStyle?.size)} />
+            <a
+              href={isDownloadActive ? savedFile?.url : undefined}
+              className={cleanClassName(
+                `${styles['download-link']} ${styles[fontSizeClassName]} ${
+                  styles[fontWeightClassName]
+                } ${isDownloadActive ? styles.actived : styles.disabled}
+                `,
+              )}
+              download={download}
+            >
+              {savedFile?.name}
+            </a>
+            {disabled ? (
+              FileInput
+            ) : (
+              <Button
+                icon={<X size="1em" />}
+                size="small"
+                shape="round"
+                theme="bluish-gray700/0"
+                onClick={() => {
+                  setSavedFile?.(undefined);
+                  onChange?.(undefined);
+                  const { current } = inputRef;
+                  if (current) {
+                    current.value = '';
+                  }
+                }}
+              />
+            )}
+          </Input.Wrap>
+        </>
+      ) : (
+        <Button
+          size={inputStyle?.size}
+          className={styles['upload-button']}
+          fontSize={inputStyle?.fontSize}
+          fontWeight={inputStyle?.fontWeight}
+          disabled={!!disabled}
+          theme="bluish-gray400/bluish-gray10/bluish-gray200"
+          onClick={() => inputRef.current?.click()}
+          width={inputStyle?.width}
+        >
+          {children}
+          {disabled ? null : FileInput}
+        </Button>
+      )}
+    </Label.Container>
   );
 };

@@ -4,12 +4,14 @@ import generatePackageJson from 'rollup-plugin-generate-package-json';
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
+import tsconfigPaths from 'vite-tsconfig-paths';
 
 import react from '@vitejs/plugin-react-swc';
 
 export default defineConfig({
   plugins: [
     react(),
+    tsconfigPaths(),
     dts({
       insertTypesEntry: true,
     }),

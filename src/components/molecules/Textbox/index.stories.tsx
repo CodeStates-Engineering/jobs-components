@@ -1,4 +1,3 @@
-import React from 'react';
 import { AlertOctagon } from 'react-feather';
 
 import type { Meta, StoryObj } from '@storybook/react';

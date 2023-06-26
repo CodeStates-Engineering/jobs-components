@@ -7,20 +7,35 @@
   white-space: pre;
   @include font-size;
   @include font-weight;
+
+  &.space-small {
+    display: flex;
+    align-items: center;
+
+    height: 32px;
+  }
+
+  &.space-medium {
+    display: flex;
+    align-items: center;
+
+    height: 40px;
+  }
+
+  &.space-large {
+    display: flex;
+    align-items: center;
+
+    height: 48px;
+  }
 }
 
 .label-container {
   display: flex;
   gap: 10px;
 
-  &.row-start {
-    justify-content: space-between;
-
-    margin-top: 0.5rem;
-  }
-
-  &.row-center {
-    align-items: center;
+  &.row {
+    align-items: flex-start;
     justify-content: space-between;
   }
 

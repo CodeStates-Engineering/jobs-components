@@ -1,4 +1,4 @@
-@import '../../../styles/libs';
+@use 'src/styles/libs' as libs;
 
 .textarea {
   width: 100%;
@@ -6,8 +6,8 @@
 }
 
 .textarea-content {
-  @include font-size;
-  @include font-weight;
+  @include libs.font-size;
+  @include libs.font-weight;
   box-sizing: border-box;
   width: 100%;
   min-height: 6rem;
@@ -23,13 +23,13 @@
   }
 
   &::placeholder {
-    color: $BLUISH-GRAY-300;
+    color: libs.$BLUISH-GRAY-300;
   }
 
   &:disabled {
     resize: none;
     &.read-only {
-      color: $BLUISH-GRAY-700;
+      color: libs.$BLUISH-GRAY-700;
 
       cursor: default;
     }
