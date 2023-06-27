@@ -12,12 +12,11 @@ import { Input, Label, FocusLayer } from '@components/atoms';
 import type {
   InputProps,
   InputWrapProps,
-  LabelContainerProps,
+  LabelWithInputProps,
 } from '@components/atoms';
 import { Dropdown } from '@components/molecules';
-import { useSubscribedState, useValidation } from '@hooks';
-import type { Validation, Typography } from '@hooks';
-import { cleanClassName } from '@utils';
+import { useSubscribedState, useValidationMessage } from '@hooks';
+import type { ValidateHandler, UseTypographyClassNameParams } from '@hooks';
 
 import styles from './index.module.scss';
 
@@ -33,25 +32,25 @@ type DateValue<TDateType extends DateType> = TDateType extends 'multiple'
 
 export interface DateSelectboxProps<TDateType extends DateType = 'single'>
   extends Pick<
-    InputProps<'text'>,
-    | 'className'
-    | 'placeholder'
-    | 'disabled'
-    | 'onFocus'
-    | 'id'
-    | 'onClick'
-    | 'ref'
-  > {
+      InputProps<'text'>,
+      | 'className'
+      | 'placeholder'
+      | 'disabled'
+      | 'onFocus'
+      | 'id'
+      | 'onClick'
+      | 'ref'
+    >,
+    Omit<LabelWithInputProps, 'children'> {
   label?: string;
   type?: TDateType;
   value?: DateValue<TDateType>;
   onChange?: (value?: DateValue<TDateType>) => void;
-  validation?: Validation<DateSelectboxProps<TDateType>['value']>;
-  inputStyle?: Typography &
+  validation?: ValidateHandler<DateSelectboxProps<TDateType>['value']>;
+  inputStyle?: UseTypographyClassNameParams &
     Pick<InputWrapProps, 'size' | 'borderRadius' | 'width'> & {
       calendarX?: 'left' | 'right';
     };
-  labelStyle?: Pick<LabelContainerProps, 'direction'> & Typography;
 }
 
 const DATE_FORMAT = 'YYYY.MM.DD';
@@ -85,11 +84,11 @@ export const DateSelectbox = <TDateType extends DateType = 'single'>({
 
   const [inputValue, setInputValue] = useState('');
 
-  const { validationMessage, checkValidation } = useValidation(
-    dateValue,
-    validation,
-    label || id,
-  );
+  const { validationMessage, validateValue } = useValidationMessage({
+    key: label,
+    value: dateValue,
+    validateHandler: validation,
+  });
 
   const { dayPickerProps, inputProps } = ((): {
     dayPickerProps: DayPickerProps;
@@ -98,7 +97,7 @@ export const DateSelectbox = <TDateType extends DateType = 'single'>({
     const handleChange = (date?: DateValue<TDateType>) => {
       setDateValue?.(date);
       onChange?.(date);
-      checkValidation?.(date);
+      validateValue(date);
     };
 
     // TODO: 추후 다른 타입에 대한 처리 추가
@@ -187,22 +186,18 @@ export const DateSelectbox = <TDateType extends DateType = 'single'>({
   })();
 
   return (
-    <FocusLayer
-      className={cleanClassName(`${styles['date-selectbox']} ${className}`)}
-      bodyScroll
-      focused={opened}
-      onBlur={() => setOpened(false)}
+    <Label.WithInput
+      className={className}
+      label={label}
+      inputStyle={inputStyle}
+      labelStyle={labelStyle}
     >
-      <Label.Container direction={labelStyle?.direction}>
-        {label ? (
-          <Label
-            htmlFor={label}
-            fontSize={labelStyle?.fontSize}
-            fontWeight={labelStyle?.fontWeight}
-          >
-            {label}
-          </Label>
-        ) : null}
+      <FocusLayer
+        className={styles['date-selectbox']}
+        bodyScroll
+        focused={opened}
+        onBlur={() => setOpened(false)}
+      >
         <Input.Wrap
           validationMessage={validationMessage}
           size={inputStyle?.size}
@@ -227,22 +222,22 @@ export const DateSelectbox = <TDateType extends DateType = 'single'>({
           />
           <Calendar size="1.2em" className={styles['calendar-icon']} />
         </Input.Wrap>
-      </Label.Container>
-      <Dropdown
-        opened={opened}
-        className={`${styles.calendar} ${
-          styles[inputStyle?.calendarX ?? 'right']
-        }`}
-      >
-        <DayPicker
-          {...dayPickerProps}
-          className={styles['day-picker']}
-          locale={ko}
-          formatters={{
-            formatCaption: (month) => `${days(month).format('YYYY MM월')}`,
-          }}
-        />
-      </Dropdown>
-    </FocusLayer>
+        <Dropdown
+          opened={opened}
+          className={`${styles.calendar} ${
+            styles[inputStyle?.calendarX ?? 'right']
+          }`}
+        >
+          <DayPicker
+            {...dayPickerProps}
+            className={styles['day-picker']}
+            locale={ko}
+            formatters={{
+              formatCaption: (month) => `${days(month).format('YYYY MM월')}`,
+            }}
+          />
+        </Dropdown>
+      </FocusLayer>
+    </Label.WithInput>
   );
 };

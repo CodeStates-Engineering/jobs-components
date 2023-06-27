@@ -5,8 +5,6 @@
 
   color: $BLUISH-GRAY-700;
   white-space: pre;
-  @include font-size;
-  @include font-weight;
 
   &.space-small {
     display: flex;

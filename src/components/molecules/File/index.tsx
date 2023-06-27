@@ -1,43 +1,39 @@
 import { useRef } from 'react';
 import { X, Paperclip } from 'react-feather';
 
-import styles from './index.module.scss';
-import {
-  useSubscribedState,
-  useTypography,
-  useValidation,
-} from '../../../hooks';
-import { cleanClassName } from '../../../utils';
-import { Button, Label, Input } from '../../atoms';
-
-import type { Validation, Typography } from '../../../hooks';
+import { Button, Label, Input } from '@components/atoms';
 import type {
-  ButtonProps,
   InputProps,
   InputWrapProps,
-  LabelContainerProps,
-} from '../../atoms';
+  LabelWithInputProps,
+} from '@components/atoms';
+import {
+  useSubscribedState,
+  useTypographyClassName,
+  useValidationMessage,
+} from '@hooks';
+import type { ValidateHandler, UseTypographyClassNameParams } from '@hooks';
+import { cleanClassName } from '@utils';
+
+import styles from './index.module.scss';
 
 interface SavedFile {
   name: string;
   url: string;
 }
 
-export interface FileProps extends Pick<ButtonProps, 'className'> {
-  children?: React.ReactNode;
+export interface FileProps extends LabelWithInputProps {
   value?: SavedFile;
   onChange?: (file?: File) => void;
   download?: boolean;
   disabled?: InputProps['disabled'];
   accept?: string;
-  validation?: Validation<FileProps['value']>;
-  label?: string;
+  validation?: ValidateHandler<FileProps['value']>;
   id?: string;
   inputStyle?: {
     size?: 'small' | 'medium' | 'large';
   } & Pick<InputWrapProps, 'borderRadius' | 'width'> &
-    Typography;
-  labelStyle?: Pick<LabelContainerProps, 'direction'> & Typography;
+    UseTypographyClassNameParams;
 }
 
 const getIconSizeBy = (size: 'small' | 'medium' | 'large' | undefined) => {
@@ -70,22 +66,23 @@ export const File = ({
 
   const [savedFile, setSavedFile] = useSubscribedState(value);
 
-  const { fontSizeClassName, fontWeightClassName } = useTypography(
-    inputStyle?.fontSize,
-    inputStyle?.fontWeight,
-  );
+  const { typographyClassName } = useTypographyClassName({
+    fontSize: inputStyle?.fontSize,
+    fontWeight: inputStyle?.fontWeight,
+  });
 
   const isDownloadActive = disabled !== true;
 
-  const { validationMessage, checkValidation } = useValidation(
-    value,
-    validation,
-    label || id,
-  );
+  const { validationMessage, validateValue } = useValidationMessage({
+    key: label,
+    value: savedFile,
+    validateHandler: validation,
+  });
 
   const FileInput = (
     <input
       type="file"
+      id={id}
       className={styles['file-input']}
       ref={inputRef}
       accept={accept}
@@ -95,7 +92,7 @@ export const File = ({
         if (file) {
           const savedFile = { name: file.name, url: URL.createObjectURL(file) };
           onChange?.(file);
-          checkValidation?.(savedFile);
+          validateValue(savedFile);
           setSavedFile?.(savedFile);
         }
       }}
@@ -103,22 +100,17 @@ export const File = ({
   );
 
   return (
-    <Label.Container direction={labelStyle?.direction} className={className}>
-      {label ? (
-        <Label
-          htmlFor={label}
-          fontSize={labelStyle?.fontSize}
-          fontWeight={labelStyle?.fontWeight}
-        >
-          {label}
-        </Label>
-      ) : null}
+    <Label.WithInput
+      className={className}
+      label={label}
+      inputStyle={inputStyle}
+      labelStyle={labelStyle}
+    >
       {savedFile ? (
         <>
           <Input.Wrap
             validationMessage={validationMessage}
             borderRadius={inputStyle?.borderRadius}
-            className={styles['download-link-interaction']}
             size={inputStyle?.size}
             width={inputStyle?.width}
           >
@@ -126,9 +118,9 @@ export const File = ({
             <a
               href={isDownloadActive ? savedFile?.url : undefined}
               className={cleanClassName(
-                `${styles['download-link']} ${styles[fontSizeClassName]} ${
-                  styles[fontWeightClassName]
-                } ${isDownloadActive ? styles.actived : styles.disabled}
+                `${styles['download-link']} ${typographyClassName} ${
+                  isDownloadActive ? styles.actived : styles.disabled
+                }
                 `,
               )}
               download={download}
@@ -140,7 +132,7 @@ export const File = ({
             ) : (
               <Button
                 icon={<X size="1em" />}
-                size="small"
+                size="small3x"
                 shape="round"
                 theme="bluish-gray700/0"
                 onClick={() => {
@@ -170,6 +162,6 @@ export const File = ({
           {disabled ? null : FileInput}
         </Button>
       )}
-    </Label.Container>
+    </Label.WithInput>
   );
 };

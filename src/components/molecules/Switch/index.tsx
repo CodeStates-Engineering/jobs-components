@@ -1,19 +1,14 @@
 import { Label } from '@components/atoms';
-import type { LabelContainerProps } from '@components/atoms';
+import type { LabelWithInputProps } from '@components/atoms';
 import { useSubscribedState } from '@hooks';
-import type { Typography } from '@hooks';
-import { getLabelSpace } from '@utils';
 
 import styles from './index.module.scss';
 
-export interface SwitchProps {
+export interface SwitchProps extends LabelWithInputProps {
   value?: boolean;
   onChange?: (checked: boolean) => void;
   disabled?: boolean;
   id?: string;
-  label?: string;
-  className?: string;
-  labelStyle?: Typography & Pick<LabelContainerProps, 'direction'>;
   inputStyle?: {
     size?: 'small' | 'medium' | 'large';
     width?: CSSStyleDeclaration['width'];
@@ -36,29 +31,27 @@ export const Switch = ({
   const sizeClassName = styles[`size-${inputStyle?.size ?? 'medium'}`];
   const turnedClassName = turned ? styles.on : styles.off;
 
-  const labelSpace = getLabelSpace(
-    labelStyle?.direction,
-    inputStyle?.containerSize,
-  );
-
   return (
-    <Label.Container direction={labelStyle?.direction} className={className}>
-      {label ? (
-        <Label
-          htmlFor={label}
-          fontSize={labelStyle?.fontSize}
-          fontWeight={labelStyle?.fontWeight}
-          space={labelSpace}
-        >
-          {label}
-        </Label>
-      ) : null}
+    <Label.WithInput
+      inputStyle={{
+        size: inputStyle?.containerSize,
+      }}
+      label={label}
+      labelStyle={labelStyle}
+      className={className}
+    >
       <div
         style={{
           width: inputStyle?.width,
         }}
         className={`${styles['switch-container']} ${
-          styles[`container-size-${inputStyle?.containerSize ?? labelSpace}`]
+          styles[
+            `container-size-${
+              inputStyle?.containerSize ?? labelStyle?.direction === 'row'
+                ? inputStyle?.containerSize ?? 'large'
+                : 'none'
+            }`
+          ]
         }`}
       >
         <div
@@ -81,6 +74,6 @@ export const Switch = ({
           />
         </div>
       </div>
-    </Label.Container>
+    </Label.WithInput>
   );
 };

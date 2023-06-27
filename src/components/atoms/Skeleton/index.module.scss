@@ -18,8 +18,6 @@
 
 .text-space {
   visibility: hidden;
-  @include font-size;
-  @include font-weight;
 }
 
 @layer default {

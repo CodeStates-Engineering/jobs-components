@@ -7,6 +7,6 @@ export type ValidationContextValue = Map<string, () => string | undefined>;
  */
 export type ValidationStoreData = ValidationContextValue;
 
-export const ValidationContext = createContext<ValidationStoreData | null>(
+export const ValidationContext = createContext<ValidationContextValue | null>(
   null,
 );

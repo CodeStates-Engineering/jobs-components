@@ -8,8 +8,6 @@
 }
 
 .link {
-  @include font-size;
-  @include font-weight;
   display: inline;
 
   &:not(span) {

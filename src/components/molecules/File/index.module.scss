@@ -8,13 +8,6 @@
   display: none;
 }
 
-.download-link-interaction {
-  display: flex;
-  justify-content: space-between;
-
-  background-color: $BLUISH-GRAY-10 !important;
-}
-
 .download-link {
   flex: 1;
   overflow: hidden;
@@ -32,6 +25,4 @@
 
     cursor: not-allowed;
   }
-  @include font-size;
-  @include font-weight;
 }

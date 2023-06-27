@@ -6,12 +6,12 @@ import type {
   OptionsProps,
   ValidOptionValue,
   InputWrapProps,
-  LabelContainerProps,
+  LabelWithInputProps,
 } from '@components/atoms';
 import { FocusLayer, Options, Input, Label } from '@components/atoms';
-import type { Validation, Typography } from '@hooks';
-import { useSubscribedState, useValidation } from '@hooks';
-import { cleanClassName, getLabelSpace } from '@utils';
+import type { ValidateHandler, UseTypographyClassNameParams } from '@hooks';
+import { useSubscribedState, useValidationMessage } from '@hooks';
+import { cleanClassName } from '@utils';
 
 import styles from './index.module.scss';
 
@@ -23,14 +23,11 @@ export interface SelectboxProps<
       'options' | 'float' | 'onChange' | 'value' | 'multiple' | 'optionStyle'
     >,
     Pick<InputProps<'button'>, 'disabled' | 'placeholder' | 'id' | 'ref'>,
-    Pick<InputWrapProps, 'onClick'> {
-  label?: string;
-  validation?: Validation<SelectboxProps<_ValidOptionValue>['value']>;
-
-  className?: string;
+    Pick<InputWrapProps, 'onClick'>,
+    Omit<LabelWithInputProps, 'children'> {
+  validation?: ValidateHandler<SelectboxProps<_ValidOptionValue>['value']>;
   inputStyle?: Pick<InputWrapProps, 'borderRadius' | 'size' | 'width'> &
-    Typography;
-  labelStyle?: Pick<LabelContainerProps, 'direction'> & Typography;
+    UseTypographyClassNameParams;
 }
 
 export const Selectbox = <
@@ -48,7 +45,6 @@ export const Selectbox = <
   onClick,
   label,
   validation,
-
   className,
   inputStyle,
   labelStyle,
@@ -61,30 +57,25 @@ export const Selectbox = <
 
   const selectedOption = options?.find(({ value }) => value === selectedValue);
 
-  const { validationMessage, checkValidation } = useValidation(
-    selectedValue,
-    validation,
-    label || id,
-  );
+  const { validationMessage, validateValue } = useValidationMessage({
+    key: label,
+    validateHandler: validation,
+    value: selectedValue,
+  });
 
   return (
-    <FocusLayer
-      onBlur={() => setOpened(false)}
-      focused={opened}
-      className={cleanClassName(`${styles.selectbox} ${className}`)}
-      bodyScroll
+    <Label.WithInput
+      label={label}
+      inputStyle={inputStyle}
+      labelStyle={labelStyle}
+      className={className}
     >
-      <Label.Container direction={labelStyle?.direction}>
-        {label ? (
-          <Label
-            htmlFor={label}
-            space={getLabelSpace(labelStyle?.direction, inputStyle?.size)}
-            fontSize={labelStyle?.fontSize}
-            fontWeight={labelStyle?.fontWeight}
-          >
-            {label}
-          </Label>
-        ) : null}
+      <FocusLayer
+        onBlur={() => setOpened(false)}
+        focused={opened}
+        className={styles.selectbox}
+        bodyScroll
+      >
         <Input.Wrap
           validationMessage={validationMessage}
           size={inputStyle?.size}
@@ -112,22 +103,22 @@ export const Selectbox = <
             )}
           />
         </Input.Wrap>
-      </Label.Container>
-      <Options
-        opened={opened}
-        options={options}
-        multiple={multiple}
-        value={selectedValue}
-        float={float}
-        className={styles['select-box-default-width']}
-        optionStyle={optionStyle}
-        onChange={(value) => {
-          setSelectedValue?.(value);
-          checkValidation?.(value);
-          onChange?.(value);
-          setOpened(false);
-        }}
-      />
-    </FocusLayer>
+        <Options
+          opened={opened}
+          options={options}
+          multiple={multiple}
+          value={selectedValue}
+          float={float}
+          className={styles['select-box-default-width']}
+          optionStyle={optionStyle}
+          onChange={(value) => {
+            setSelectedValue?.(value);
+            validateValue(value);
+            onChange?.(value);
+            setOpened(false);
+          }}
+        />
+      </FocusLayer>
+    </Label.WithInput>
   );
 };

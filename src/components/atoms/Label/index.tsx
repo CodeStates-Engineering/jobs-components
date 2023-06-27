@@ -1,18 +1,24 @@
 import type { DetailedHTMLProps, LabelHTMLAttributes } from 'react';
 
+import { useTypographyClassName } from '@hooks';
+import type { UseTypographyClassNameParams } from '@hooks';
+import { cleanClassName } from '@utils';
+
 import styles from './index.module.scss';
-import { useTypography } from '../../../hooks';
-import { cleanClassName } from '../../../utils';
 
-import type { Typography } from '../../../hooks';
+import type { InputWrapProps } from '../Input';
 
-export type LabelProps = Pick<
-  DetailedHTMLProps<LabelHTMLAttributes<HTMLLabelElement>, HTMLLabelElement>,
-  'children' | 'htmlFor' | 'className'
-> &
-  Typography & {
-    space?: 'none' | 'small' | 'medium' | 'large';
-  };
+export interface LabelProps
+  extends Pick<
+      DetailedHTMLProps<
+        LabelHTMLAttributes<HTMLLabelElement>,
+        HTMLLabelElement
+      >,
+      'children' | 'htmlFor' | 'className'
+    >,
+    UseTypographyClassNameParams {
+  space?: 'none' | 'small' | 'medium' | 'large';
+}
 
 const LabelMain = ({
   children,
@@ -22,17 +28,17 @@ const LabelMain = ({
   space = 'none',
   fontWeight = 500,
 }: LabelProps) => {
-  const { fontSizeClassName, fontWeightClassName } = useTypography(
+  const { typographyClassName } = useTypographyClassName({
     fontSize,
     fontWeight,
-  );
+  });
   return (
     <label
       htmlFor={htmlFor}
       className={cleanClassName(
-        `${styles.label} ${styles[`space-${space}`]} ${
-          styles[fontSizeClassName]
-        } ${styles[fontWeightClassName]} ${className}`,
+        `${styles.label} ${
+          styles[`space-${space}`]
+        } ${typographyClassName} ${className}`,
       )}
     >
       {children}
@@ -60,6 +66,40 @@ const LabelContainer = ({
   </div>
 );
 
+export interface LabelWithInputProps {
+  className?: string;
+  label?: string;
+  labelStyle?: Pick<LabelContainerProps, 'direction'> &
+    UseTypographyClassNameParams;
+  inputStyle?: Pick<InputWrapProps, 'size'>;
+  children?: React.ReactNode;
+}
+
+const LabelWithInput = ({
+  className,
+  label,
+  labelStyle,
+  inputStyle,
+  children,
+}: LabelWithInputProps) => (
+  <LabelContainer direction={labelStyle?.direction} className={className}>
+    {label ? (
+      <LabelMain
+        fontSize={labelStyle?.fontSize}
+        fontWeight={labelStyle?.fontWeight}
+        space={
+          labelStyle?.direction === 'row' ? inputStyle?.size ?? 'large' : 'none'
+        }
+        htmlFor={label}
+      >
+        {label}
+      </LabelMain>
+    ) : null}
+    {children}
+  </LabelContainer>
+);
+
 export const Label = Object.assign(LabelMain, {
   Container: LabelContainer,
+  WithInput: LabelWithInput,
 });
