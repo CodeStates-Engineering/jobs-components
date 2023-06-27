@@ -1,6 +1,6 @@
 /// <reference types="react" />
-import type { Typography } from '../../../hooks';
 import type { LabelContainerProps } from '../../atoms';
+import type { UseTypographyClassNameParams } from '../../../hooks';
 export interface CheckboxProps {
     value?: boolean;
     onChange?: (checked: boolean) => void;
@@ -11,7 +11,7 @@ export interface CheckboxProps {
     label?: string;
     description?: React.ReactNode;
     className?: string;
-    labelStyle?: Typography & Pick<LabelContainerProps, 'direction'>;
+    labelStyle?: UseTypographyClassNameParams & Pick<LabelContainerProps, 'direction'>;
     inputStyle?: {
         size?: 'small' | 'medium';
         width?: CSSStyleDeclaration['width'];

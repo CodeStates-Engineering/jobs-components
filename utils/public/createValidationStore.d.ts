@@ -1,5 +1,4 @@
 /// <reference types="react" />
-export declare const ValidationContext: import("react").Context<import("@contexts/ValidationContext").ValidationContextValue | null>;
 /**
  * @deprecated Use `validationObserver` instead.
  */

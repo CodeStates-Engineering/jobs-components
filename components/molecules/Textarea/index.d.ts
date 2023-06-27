@@ -1,18 +1,16 @@
 import type { DetailedHTMLProps, TextareaHTMLAttributes } from 'react';
-import type { Validation, UseTypographyClassNameParams } from '../../../hooks';
-import type { InputWrapProps, LabelContainerProps } from '../../atoms';
-export interface TextareaProps extends Pick<DetailedHTMLProps<TextareaHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement>, 'placeholder' | 'id'>, Pick<InputWrapProps, 'onClick'> {
+import type { InputWrapProps, LabelWithInputProps } from '../../atoms';
+import type { UseTypographyClassNameParams, ValidateHandler } from '../../../hooks';
+export interface TextareaProps extends Pick<DetailedHTMLProps<TextareaHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement>, 'placeholder' | 'id'>, Omit<LabelWithInputProps, 'inputStyle'> {
     onChange?: (value?: string) => void;
+    onClick?: InputWrapProps['onClick'];
     value?: string;
-    validation?: Validation<TextareaProps['value']>;
-    label?: string;
-    className?: string;
+    validation?: ValidateHandler<TextareaProps['value']>;
     disabled?: boolean | 'read-only';
     inputStyle?: {
         resize?: boolean;
         height?: React.CSSProperties['height'];
     } & Pick<InputWrapProps, 'borderRadius' | 'width'> & UseTypographyClassNameParams;
-    labelStyle?: Pick<LabelContainerProps, 'direction'> & UseTypographyClassNameParams;
     floatingActionName?: string;
     onFloatingActionClick?: () => void;
 }

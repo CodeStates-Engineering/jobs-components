@@ -1,2 +1,0 @@
-import{r}from"./index-8db94870.js";import{V as u}from"./createValidationStore-9cc55e44.js";const l=(a,t,s)=>{if(!t)return{};const[c,n]=r.useState(),i=r.useCallback(e=>n(t(e)),[t]);if(s){const e=r.useContext(u);e&&r.useEffect(()=>(e.set(s,()=>{const o=t(a);return n(o),o}),()=>{e.delete(s)}),[t,a,s])}return{validationMessage:c,checkValidation:i}};export{l as u};
-//# sourceMappingURL=useValidation-758ab0b6.js.map

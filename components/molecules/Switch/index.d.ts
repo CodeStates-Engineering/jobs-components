@@ -1,14 +1,10 @@
 /// <reference types="react" />
-import type { LabelContainerProps } from '../../atoms';
-import type { Typography } from '../../../hooks';
-export interface SwitchProps {
+import type { LabelWithInputProps } from '../../atoms';
+export interface SwitchProps extends LabelWithInputProps {
     value?: boolean;
     onChange?: (checked: boolean) => void;
     disabled?: boolean;
     id?: string;
-    label?: string;
-    className?: string;
-    labelStyle?: Typography & Pick<LabelContainerProps, 'direction'>;
     inputStyle?: {
         size?: 'small' | 'medium' | 'large';
         width?: CSSStyleDeclaration['width'];

@@ -1,5 +1,5 @@
 /// <reference types="react" />
-import type { Typography } from '../../../hooks';
+import type { UseTypographyClassNameParams } from '../../../hooks';
 export type ValidOptionValue = string | number;
 export interface OptionsProps<OptionValue = ValidOptionValue, Multiple = boolean> {
     opened?: boolean;
@@ -13,6 +13,6 @@ export interface OptionsProps<OptionValue = ValidOptionValue, Multiple = boolean
     onKeyDown?: (event: KeyboardEvent) => void;
     float?: 'top' | 'bottom';
     className?: string;
-    optionStyle?: Typography & Pick<React.CSSProperties, 'width' | 'maxHeight'>;
+    optionStyle?: UseTypographyClassNameParams & Pick<React.CSSProperties, 'width' | 'maxHeight'>;
 }
 export declare const Options: <OptionValue extends ValidOptionValue, Multiple extends boolean = false>({ opened, options, multiple, value: selectedValue, onChange, onKeyDown, float, className, optionStyle, }: OptionsProps<OptionValue, Multiple>) => JSX.Element;

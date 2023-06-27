@@ -1,11 +1,11 @@
 /// <reference types="react" />
 import type { InputProps, InputType, InputWrapProps, LabelContainerProps } from '../../atoms';
-import type { Validation, UseTypographyClassNameParams } from '../../../hooks';
+import type { ValidateHandler, UseTypographyClassNameParams } from '../../../hooks';
 type TextboxType = Exclude<InputType, 'button'>;
 export interface TextboxProps<T extends TextboxType = 'text'> extends Pick<InputProps<T>, 'value' | 'onChange' | 'type' | 'placeholder' | 'disabled' | 'onFocus' | 'ref' | 'id' | 'onClick' | 'className' | 'onBlur'> {
     label?: string;
     unit?: React.ReactNode;
-    validation?: Validation<TextboxProps<T>['value']>;
+    validation?: ValidateHandler<TextboxProps<T>['value']>;
     labelStyle?: Pick<LabelContainerProps, 'direction'> & UseTypographyClassNameParams;
     inputStyle?: Pick<InputWrapProps, 'borderRadius' | 'width' | 'size'> & UseTypographyClassNameParams;
 }

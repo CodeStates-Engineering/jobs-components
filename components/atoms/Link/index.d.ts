@@ -1,5 +1,5 @@
 import type { AnchorHTMLAttributes, MouseEventHandler, TouchEventHandler } from 'react';
-import type { Typography } from '../../../hooks';
+import type { UseTypographyClassNameParams } from '../../../hooks';
 import type { CompatibleLinkProps } from '../../../plugins';
 type LinkTypeElement = HTMLAnchorElement | HTMLButtonElement | HTMLSpanElement;
 export type LinkProps = Omit<CompatibleLinkProps, 'className' | 'children' | 'to'> & {
@@ -13,6 +13,6 @@ export type LinkProps = Omit<CompatibleLinkProps, 'className' | 'children' | 'to
     children?: React.ReactNode;
     to?: string;
     target?: AnchorHTMLAttributes<HTMLAnchorElement>['target'];
-} & Typography;
+} & UseTypographyClassNameParams;
 export declare const Link: ({ color, hoverType, fontSize, fontWeight, to, replace, type, className, children, target, ...restProps }: LinkProps) => JSX.Element;
 export {};
