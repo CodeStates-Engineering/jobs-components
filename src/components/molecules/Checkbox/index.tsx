@@ -1,13 +1,12 @@
-import { useMemo } from 'react';
 import { Check } from 'react-feather';
 
-import styles from './index.module.scss';
-import { useSubscribedState, useValidation } from '../../../hooks';
-import { cleanClassName } from '../../../utils';
-import { Label } from '../../atoms';
+import { Label } from '@components/atoms';
+import type { LabelContainerProps } from '@components/atoms';
+import { useSubscribedState, useValidationMessage } from '@hooks';
+import type { UseTypographyClassNameParams } from '@hooks';
+import { cleanClassName } from '@utils';
 
-import type { Typography } from '../../../hooks';
-import type { LabelContainerProps } from '../../atoms';
+import styles from './index.module.scss';
 
 export interface CheckboxProps {
   value?: boolean;
@@ -20,13 +19,17 @@ export interface CheckboxProps {
   label?: string;
   description?: React.ReactNode;
   className?: string;
-  labelStyle?: Typography & Pick<LabelContainerProps, 'direction'>;
+  labelStyle?: UseTypographyClassNameParams &
+    Pick<LabelContainerProps, 'direction'>;
   inputStyle?: {
     size?: 'small' | 'medium';
     width?: CSSStyleDeclaration['width'];
     containerSize?: 'none' | 'small' | 'medium' | 'large';
   };
 }
+
+const validateEssential = (checked: boolean) =>
+  checked ? undefined : 'invalid';
 
 export const Checkbox = ({
   value = false,
@@ -43,12 +46,6 @@ export const Checkbox = ({
   const [checked, setChecked] = useSubscribedState(value);
 
   const size = inputStyle?.size ?? 'medium';
-  const style = useMemo(
-    () => ({
-      width: inputStyle?.width,
-    }),
-    [inputStyle?.width],
-  );
 
   const checkIconSize = {
     small: {
@@ -61,19 +58,11 @@ export const Checkbox = ({
     },
   }[size];
 
-  const essentialValidation = useMemo(
-    () =>
-      essential
-        ? (checked: boolean) => (checked ? undefined : 'invalid')
-        : undefined,
-    [essential],
-  );
-
-  const { validationMessage, checkValidation } = useValidation(
-    checked,
-    essentialValidation,
-    label || id,
-  );
+  const { validationMessage, validateValue } = useValidationMessage({
+    key: label,
+    validateHandler: essential ? validateEssential : undefined,
+    value: checked,
+  });
 
   const isValid = !validationMessage;
 
@@ -94,7 +83,12 @@ export const Checkbox = ({
         </Label>
       ) : null}
       <div className={styles['checkbox-container-wrap']}>
-        <div className="checkbox-description-gap" style={style} />
+        <div
+          className="checkbox-description-gap"
+          style={{
+            width: inputStyle?.width,
+          }}
+        />
         <div
           className={cleanClassName(
             `${styles['checkbox-content']} ${styles[`size-${size}`]} ${
@@ -115,7 +109,7 @@ export const Checkbox = ({
             disabled={disabled}
             onChange={({ target: { checked } }) => {
               setChecked?.(checked);
-              checkValidation?.(checked);
+              validateValue(checked);
               onChange?.(checked);
             }}
           />

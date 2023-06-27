@@ -5,9 +5,8 @@ import type {
   InputWrapProps,
   LabelContainerProps,
 } from '@components/atoms';
-import { useSubscribedState, useValidation } from '@hooks';
-import type { Validation, UseTypographyClassNameParams } from '@hooks';
-import { getLabelSpace } from '@utils';
+import { useSubscribedState, useValidationMessage } from '@hooks';
+import type { ValidateHandler, UseTypographyClassNameParams } from '@hooks';
 
 import styles from './index.module.scss';
 
@@ -30,7 +29,7 @@ export interface TextboxProps<T extends TextboxType = 'text'>
   > {
   label?: string;
   unit?: React.ReactNode;
-  validation?: Validation<TextboxProps<T>['value']>;
+  validation?: ValidateHandler<TextboxProps<T>['value']>;
   labelStyle?: Pick<LabelContainerProps, 'direction'> &
     UseTypographyClassNameParams;
   inputStyle?: Pick<InputWrapProps, 'borderRadius' | 'width' | 'size'> &
@@ -57,24 +56,19 @@ export const Textbox = <T extends TextboxType = 'text'>({
 }: TextboxProps<T>) => {
   const [value, setValue] = useSubscribedState(originalValue);
 
-  const { validationMessage, checkValidation } = useValidation(
+  const { validationMessage, validateValue } = useValidationMessage({
+    validateHandler: validation,
+    key: label,
     value,
-    validation,
-    label || id,
-  );
+  });
 
   return (
-    <Label.Container direction={labelStyle?.direction} className={className}>
-      {label ? (
-        <Label
-          fontSize={labelStyle?.fontSize}
-          fontWeight={labelStyle?.fontWeight}
-          space={getLabelSpace(labelStyle?.direction, inputStyle?.size)}
-          htmlFor={label}
-        >
-          {label}
-        </Label>
-      ) : null}
+    <Label.WithInput
+      className={className}
+      inputStyle={inputStyle}
+      labelStyle={labelStyle}
+      label={label}
+    >
       <Input.Wrap
         validationMessage={validationMessage}
         size={inputStyle?.size}
@@ -95,7 +89,7 @@ export const Textbox = <T extends TextboxType = 'text'>({
           id={id}
           onChange={(value) => {
             setValue?.(value);
-            checkValidation?.(value);
+            validateValue(value);
             onChange?.(value);
           }}
           type={type}
@@ -106,6 +100,6 @@ export const Textbox = <T extends TextboxType = 'text'>({
           unit
         )}
       </Input.Wrap>
-    </Label.Container>
+    </Label.WithInput>
   );
 };

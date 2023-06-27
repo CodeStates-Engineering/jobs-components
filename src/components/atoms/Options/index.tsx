@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { Check } from 'react-feather';
 
-import styles from './index.module.scss';
-import { useTypography } from '../../../hooks';
-import { cleanClassName } from '../../../utils';
+import { useTypographyClassName } from '@hooks';
+import type { UseTypographyClassNameParams } from '@hooks';
+import { cleanClassName } from '@utils';
 
-import type { Typography } from '../../../hooks';
+import styles from './index.module.scss';
 
 export type ValidOptionValue = string | number;
 
@@ -26,7 +26,8 @@ export interface OptionsProps<
   onKeyDown?: (event: KeyboardEvent) => void;
   float?: 'top' | 'bottom';
   className?: string;
-  optionStyle?: Typography & Pick<React.CSSProperties, 'width' | 'maxHeight'>;
+  optionStyle?: UseTypographyClassNameParams &
+    Pick<React.CSSProperties, 'width' | 'maxHeight'>;
 }
 
 export const Options = <
@@ -127,10 +128,10 @@ export const Options = <
     }
   }, [openState, options, onKeyDown]);
 
-  const { fontSizeClassName, fontWeightClassName } = useTypography(
-    optionStyle?.fontSize,
-    optionStyle?.fontWeight,
-  );
+  const { typographyClassName } = useTypographyClassName({
+    fontSize: optionStyle?.fontSize,
+    fontWeight: optionStyle?.fontWeight,
+  });
 
   return openState && options?.length ? (
     <section
@@ -167,11 +168,9 @@ export const Options = <
                   optionRefs.current[index] = element;
                 }}
                 className={cleanClassName(
-                  `${styles['option-item']} ${styles[fontSizeClassName]} ${
-                    styles[fontWeightClassName]
-                  } ${isHovered && styles.hovered} ${
-                    isSelected && styles.selected
-                  }`,
+                  `${styles['option-item']} ${typographyClassName} ${
+                    isHovered && styles.hovered
+                  } ${isSelected && styles.selected}`,
                 )}
                 onClick={() => {
                   if (multiple) {

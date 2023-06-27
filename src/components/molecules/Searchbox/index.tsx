@@ -6,13 +6,11 @@ import type {
   InputProps,
   InputWrapProps,
   OptionsProps,
-  LabelContainerProps,
+  LabelWithInputProps,
 } from '@components/atoms';
-import { useSubscribedState, useValidation } from '@hooks';
-import type { Validation, UseTypographyClassNameParams } from '@hooks';
-import { cleanClassName, regex, getLabelSpace } from '@utils';
-
-import styles from './index.module.scss';
+import { useSubscribedState, useValidationMessage } from '@hooks';
+import type { ValidateHandler, UseTypographyClassNameParams } from '@hooks';
+import { regex } from '@utils';
 
 export interface SearchboxProps
   extends Pick<
@@ -26,15 +24,12 @@ export interface SearchboxProps
       | 'id'
       | 'ref'
     >,
-    Pick<OptionsProps<string, false>, 'float' | 'optionStyle'> {
+    Pick<OptionsProps<string, false>, 'float' | 'optionStyle'>,
+    Omit<LabelWithInputProps, 'children'> {
   selfFilter?: boolean;
   options?: string[];
-  label?: string;
-  validation?: Validation<SearchboxProps['value']>;
-  className?: string;
+  validation?: ValidateHandler<SearchboxProps['value']>;
   inputStyle?: Pick<InputWrapProps, 'size' | 'width' | 'borderRadius'> &
-    UseTypographyClassNameParams;
-  labelStyle?: Pick<LabelContainerProps, 'direction'> &
     UseTypographyClassNameParams;
   hasSearchIcon?: boolean;
 }
@@ -87,36 +82,26 @@ export const Searchbox = ({
     });
   }, [selfFilter, inputText, stringOptions]);
 
-  const { validationMessage, checkValidation } = useValidation(
-    inputText,
-    validation,
-    label || id,
-  );
+  const { validationMessage, validateValue } = useValidationMessage({
+    key: label,
+    validateHandler: validation,
+    value,
+  });
 
   const handleChange = (value?: string) => {
     setInputText?.(value);
     onChange?.(value);
-    checkValidation?.(value);
+    validateValue(value);
   };
 
   return (
-    <FocusLayer
-      onBlur={() => setOpened(false)}
-      focused={opened}
-      className={cleanClassName(`${styles.searchbox} ${className}`)}
-      bodyScroll
+    <Label.WithInput
+      className={className}
+      inputStyle={inputStyle}
+      labelStyle={labelStyle}
+      label={label}
     >
-      <Label.Container direction={labelStyle?.direction}>
-        {label ? (
-          <Label
-            fontSize={labelStyle?.fontSize}
-            fontWeight={labelStyle?.fontWeight}
-            space={getLabelSpace(labelStyle?.direction, inputStyle?.size)}
-            htmlFor={label}
-          >
-            {label}
-          </Label>
-        ) : null}
+      <FocusLayer onBlur={() => setOpened(false)} focused={opened} bodyScroll>
         <Input.Wrap
           validationMessage={validationMessage}
           onClick={onClick}
@@ -142,18 +127,18 @@ export const Searchbox = ({
           />
           {hasSearchIcon ? <Search /> : null}
         </Input.Wrap>
-      </Label.Container>
-      <Options
-        optionStyle={optionStyle}
-        opened={opened}
-        options={options}
-        value={inputText}
-        onChange={(value) => {
-          setOpened(false);
-          handleChange(value);
-        }}
-        float={float}
-      />
-    </FocusLayer>
+        <Options
+          optionStyle={optionStyle}
+          opened={opened}
+          options={options}
+          value={inputText}
+          onChange={(value) => {
+            setOpened(false);
+            handleChange(value);
+          }}
+          float={float}
+        />
+      </FocusLayer>
+    </Label.WithInput>
   );
 };

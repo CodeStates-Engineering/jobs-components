@@ -1,13 +1,12 @@
 import { useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
 
-import { useTypography } from '@hooks';
+import { useTypographyClassName } from '@hooks';
+import type { UseTypographyClassNameParams } from '@hooks';
+import { Compatibility } from '@plugins';
+import { cleanClassName } from '@utils';
 
 import styles from './index.module.scss';
-import { Compatibility } from '../../../plugins';
-import { cleanClassName } from '../../../utils';
-
-import type { Typography } from '../../../hooks';
 
 type HtmlButtonProps = React.DetailedHTMLProps<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
@@ -19,7 +18,7 @@ export interface ButtonProps
       HtmlButtonProps,
       'children' | 'disabled' | 'type' | 'onClick' | 'className'
     >,
-    Typography,
+    UseTypographyClassNameParams,
     Pick<React.CSSProperties, 'width'> {
   delay?: number;
   size?: 'small3x' | 'small' | 'medium' | 'large';
@@ -83,10 +82,10 @@ export const Button = ({
   const isDelayButton = delayState === 'before' || isDelaying;
   const isDisabled = disabled || isDelayButton;
 
-  const { fontSizeClassName, fontWeightClassName } = useTypography(
+  const { typographyClassName } = useTypographyClassName({
     fontSize,
     fontWeight,
-  );
+  });
 
   const style = useMemo(() => ({ width }), [width]);
 
@@ -94,11 +93,11 @@ export const Button = ({
     <button
       type={type}
       className={cleanClassName(
-        `${isDelayButton ? styles['delayed-button'] : styles.button} ${
-          styles[fontSizeClassName]
-        } ${styles[fontWeightClassName]} ${
-          focusOutline && styles['focus-outline']
-        } ${styles[`shape-${shape}`]} ${styles[`size-${size}`]} ${
+        `${
+          isDelayButton ? styles['delayed-button'] : styles.button
+        } ${typographyClassName} ${focusOutline && styles['focus-outline']} ${
+          styles[`shape-${shape}`]
+        } ${styles[`size-${size}`]} ${
           styles[`icon-direction-${iconDirection}`]
         } ${styles[`children-type-${childrenType}`]} ${
           styles[theme.replaceAll('/', '_')]

@@ -1,19 +1,17 @@
 import type { DetailedHTMLProps, TextareaHTMLAttributes } from 'react';
-import { useMemo } from 'react';
 
+import { Input, Label } from '@components/atoms';
+import type { InputWrapProps, LabelWithInputProps } from '@components/atoms';
 import {
   useSubscribedState,
   useTypographyClassName,
-  useValidation,
+  useValidationMessage,
 } from '@hooks';
-import type { Validation, UseTypographyClassNameParams } from '@hooks';
+import type { UseTypographyClassNameParams, ValidateHandler } from '@hooks';
+import { cleanClassName } from '@utils';
 
 import styles from './index.module.scss';
-import { cleanClassName } from '../../../utils';
-import { Input, Label } from '../../atoms';
 import { Tag } from '../Tag';
-
-import type { InputWrapProps, LabelContainerProps } from '../../atoms';
 
 export interface TextareaProps
   extends Pick<
@@ -23,19 +21,16 @@ export interface TextareaProps
       >,
       'placeholder' | 'id'
     >,
-    Pick<InputWrapProps, 'onClick'> {
+    Omit<LabelWithInputProps, 'inputStyle'> {
   onChange?: (value?: string) => void;
+  onClick?: InputWrapProps['onClick'];
   value?: string;
-  validation?: Validation<TextareaProps['value']>;
-  label?: string;
-  className?: string;
+  validation?: ValidateHandler<TextareaProps['value']>;
   disabled?: boolean | 'read-only';
   inputStyle?: {
     resize?: boolean;
     height?: React.CSSProperties['height'];
   } & Pick<InputWrapProps, 'borderRadius' | 'width'> &
-    UseTypographyClassNameParams;
-  labelStyle?: Pick<LabelContainerProps, 'direction'> &
     UseTypographyClassNameParams;
   floatingActionName?: string;
   onFloatingActionClick?: () => void;
@@ -65,18 +60,11 @@ export const Textarea = ({
     fontWeight: inputStyle?.fontWeight,
   });
 
-  const { validationMessage, checkValidation } = useValidation(
-    textareaValue,
-    validation,
-    label,
-  );
-
-  const style = useMemo(
-    () => ({
-      height: inputStyle?.height,
-    }),
-    [inputStyle?.height],
-  );
+  const { validationMessage, validateValue } = useValidationMessage({
+    key: label,
+    validateHandler: validation,
+    value: textareaValue,
+  });
 
   return (
     <Label.Container direction={labelStyle?.direction} className={className}>
@@ -109,11 +97,13 @@ export const Textarea = ({
           name={label}
           value={textareaValue}
           placeholder={placeholder}
-          style={style}
+          style={{
+            height: inputStyle?.height,
+          }}
           onChange={({ target: { value } }) => {
             setTextareaValue?.(value);
             onChange?.(value);
-            checkValidation?.(value);
+            validateValue(value);
           }}
           disabled={!!disabled}
           className={cleanClassName(

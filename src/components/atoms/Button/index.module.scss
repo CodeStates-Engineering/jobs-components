@@ -105,9 +105,6 @@
     cursor: not-allowed;
   }
 
-  @include font-size;
-  @include font-weight;
-
   //* Size
   &.padding {
     &.children-type-text {

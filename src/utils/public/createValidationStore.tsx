@@ -1,12 +1,6 @@
-import { createContext } from 'react';
 
 import type{ ValidationStoreData} from '@contexts/ValidationContext';
-
-
-export const ValidationContext = createContext<ValidationStoreData | null>(
-  null,
-);
-
+import {ValidationContext} from '@contexts/ValidationContext';
 /**
  * @deprecated Use `validationObserver` instead.
  */

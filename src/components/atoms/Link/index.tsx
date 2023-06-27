@@ -4,13 +4,13 @@ import type {
   TouchEventHandler,
 } from 'react';
 
-import styles from './index.module.scss';
-import { useTypography } from '../../../hooks';
-import { Compatibility } from '../../../plugins';
-import { cleanClassName } from '../../../utils';
+import { useTypographyClassName } from '@hooks';
+import type { UseTypographyClassNameParams } from '@hooks';
+import { Compatibility } from '@plugins';
+import type { CompatibleLinkProps } from '@plugins';
+import { cleanClassName } from '@utils';
 
-import type { Typography } from '../../../hooks';
-import type { CompatibleLinkProps } from '../../../plugins';
+import styles from './index.module.scss';
 
 type LinkTypeElement = HTMLAnchorElement | HTMLButtonElement | HTMLSpanElement;
 
@@ -34,7 +34,7 @@ export type LinkProps = Omit<
   children?: React.ReactNode;
   to?: string;
   target?: AnchorHTMLAttributes<HTMLAnchorElement>['target'];
-} & Typography;
+} & UseTypographyClassNameParams;
 
 export const Link = ({
   color = 'puple-550',
@@ -49,10 +49,10 @@ export const Link = ({
   target,
   ...restProps
 }: LinkProps) => {
-  const { fontSizeClassName, fontWeightClassName } = useTypography(
+  const { typographyClassName } = useTypographyClassName({
     fontSize,
     fontWeight,
-  );
+  });
 
   const commonProps = {
     ...restProps,
@@ -60,9 +60,7 @@ export const Link = ({
     className: cleanClassName(
       `${styles.link} ${styles[`color-${color}`]} ${
         hoverType !== 'none' && styles[`hover-type-${hoverType}`]
-      } ${styles[fontSizeClassName]} ${
-        styles[fontWeightClassName]
-      } ${className}`,
+      } ${typographyClassName} ${className}`,
     ),
   };
 
