@@ -4,16 +4,20 @@
   border: 1px solid $borderColor;
 }
 
+@layer default {
+  .tag-container {
+    width: fit-content;
+    height: fit-content;
+    border-radius: 4px;
+
+    font-weight: 600;
+    white-space: pre;
+  }
+}
+
 .tag-container {
   display: flex;
   align-items: center;
-
-  width: fit-content;
-  height: fit-content;
-  border-radius: 4px;
-
-  font-weight: 600;
-  white-space: pre;
 }
 
 .tag-content {
