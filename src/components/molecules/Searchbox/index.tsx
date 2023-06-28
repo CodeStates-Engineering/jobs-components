@@ -9,7 +9,11 @@ import type {
   LabelWithInputProps,
 } from '@components/atoms';
 import { useSubscribedState, useValidationMessage } from '@hooks';
-import type { ValidateHandler, UseTypographyClassNameParams } from '@hooks';
+import type {
+  ValidateHandler,
+  UseTypographyClassNameParams,
+  ValidationTrigger,
+} from '@hooks';
 import { regex } from '@utils';
 
 export interface SearchboxProps
@@ -32,6 +36,7 @@ export interface SearchboxProps
   inputStyle?: Pick<InputWrapProps, 'size' | 'width' | 'borderRadius'> &
     UseTypographyClassNameParams;
   hasSearchIcon?: boolean;
+  validationTrigger?: ValidationTrigger;
 }
 
 export const Searchbox = ({
@@ -53,6 +58,7 @@ export const Searchbox = ({
   labelStyle,
   optionStyle,
   hasSearchIcon = true,
+  validationTrigger,
 }: SearchboxProps) => {
   const [opened, setOpened] = useState(false);
   const [inputText, setInputText] = useSubscribedState(value);
@@ -82,16 +88,18 @@ export const Searchbox = ({
     });
   }, [selfFilter, inputText, stringOptions]);
 
-  const { validationMessage, validateValue } = useValidationMessage({
-    key: label,
-    validateHandler: validation,
-    value,
-  });
+  const { validationMessage, validateOnChange, validateOnBlur } =
+    useValidationMessage({
+      key: label,
+      validateHandler: validation,
+      value,
+      validationTrigger,
+    });
 
   const handleChange = (value?: string) => {
     setInputText?.(value);
     onChange?.(value);
-    validateValue(value);
+    validateOnChange?.(value);
   };
 
   return (
@@ -124,6 +132,7 @@ export const Searchbox = ({
             value={inputText}
             disabled={disabled}
             placeholder={placeholder}
+            onBlur={validateOnBlur}
           />
           {hasSearchIcon ? <Search /> : null}
         </Input.Wrap>

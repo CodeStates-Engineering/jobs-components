@@ -23,8 +23,8 @@ export const useValidate = () => {
         invalidElementIds: [],
       };
 
-      validationContext?.forEach((validateValue, id) => {
-        if (validateValue()) {
+      validationContext?.forEach((validateOnChange, id) => {
+        if (validateOnChange()) {
           validateResult.isValid = false;
           validateResult.invalidElementIds.push(id);
         }

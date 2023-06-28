@@ -7,7 +7,11 @@ import {
   useTypographyClassName,
   useValidationMessage,
 } from '@hooks';
-import type { UseTypographyClassNameParams, ValidateHandler } from '@hooks';
+import type {
+  UseTypographyClassNameParams,
+  ValidateHandler,
+  ValidationTrigger,
+} from '@hooks';
 import { cleanClassName } from '@utils';
 
 import styles from './index.module.scss';
@@ -34,6 +38,7 @@ export interface TextareaProps
     UseTypographyClassNameParams;
   floatingActionName?: string;
   onFloatingActionClick?: () => void;
+  validationTrigger?: ValidationTrigger;
 }
 
 export const Textarea = ({
@@ -50,6 +55,7 @@ export const Textarea = ({
   labelStyle,
   floatingActionName,
   onFloatingActionClick,
+  validationTrigger,
 }: TextareaProps) => {
   const [textareaValue, setTextareaValue] = useSubscribedState(
     originalValue ?? '',
@@ -60,11 +66,13 @@ export const Textarea = ({
     fontWeight: inputStyle?.fontWeight,
   });
 
-  const { validationMessage, validateValue } = useValidationMessage({
-    key: label,
-    validateHandler: validation,
-    value: textareaValue,
-  });
+  const { validationMessage, validateOnChange, validateOnBlur } =
+    useValidationMessage({
+      key: label,
+      validateHandler: validation,
+      value: textareaValue,
+      validationTrigger,
+    });
 
   return (
     <Label.Container direction={labelStyle?.direction} className={className}>
@@ -103,7 +111,7 @@ export const Textarea = ({
           onChange={({ target: { value } }) => {
             setTextareaValue?.(value);
             onChange?.(value);
-            validateValue(value);
+            validateOnChange?.(value);
           }}
           disabled={!!disabled}
           className={cleanClassName(
@@ -113,6 +121,7 @@ export const Textarea = ({
               disabled === 'read-only' && [styles['read-only']]
             } ${styles['full-size']}`,
           )}
+          onBlur={validateOnBlur}
         />
       </Input.Wrap>
     </Label.Container>

@@ -16,7 +16,11 @@ import type {
 } from '@components/atoms';
 import { Dropdown } from '@components/molecules';
 import { useSubscribedState, useValidationMessage } from '@hooks';
-import type { ValidateHandler, UseTypographyClassNameParams } from '@hooks';
+import type {
+  ValidateHandler,
+  UseTypographyClassNameParams,
+  ValidationTrigger,
+} from '@hooks';
 
 import styles from './index.module.scss';
 
@@ -51,6 +55,7 @@ export interface DateSelectboxProps<TDateType extends DateType = 'single'>
     Pick<InputWrapProps, 'size' | 'borderRadius' | 'width'> & {
       calendarX?: 'left' | 'right';
     };
+  validationTrigger?: ValidationTrigger;
 }
 
 const DATE_FORMAT = 'YYYY.MM.DD';
@@ -73,6 +78,7 @@ export const DateSelectbox = <TDateType extends DateType = 'single'>({
   className,
   inputStyle,
   labelStyle,
+  validationTrigger,
 }: DateSelectboxProps<TDateType>) => {
   const [opened, setOpened] = useState(false);
   const [dateValue, setDateValue] = useSubscribedState(value);
@@ -84,11 +90,13 @@ export const DateSelectbox = <TDateType extends DateType = 'single'>({
 
   const [inputValue, setInputValue] = useState('');
 
-  const { validationMessage, validateValue } = useValidationMessage({
-    key: label,
-    value: dateValue,
-    validateHandler: validation,
-  });
+  const { validationMessage, validateOnBlur, validateOnChange } =
+    useValidationMessage({
+      validationTrigger,
+      key: label,
+      value: dateValue,
+      validateHandler: validation,
+    });
 
   const { dayPickerProps, inputProps } = ((): {
     dayPickerProps: DayPickerProps;
@@ -97,7 +105,7 @@ export const DateSelectbox = <TDateType extends DateType = 'single'>({
     const handleChange = (date?: DateValue<TDateType>) => {
       setDateValue?.(date);
       onChange?.(date);
-      validateValue(date);
+      validateOnChange?.(date);
     };
 
     // TODO: 추후 다른 타입에 대한 처리 추가
@@ -217,6 +225,7 @@ export const DateSelectbox = <TDateType extends DateType = 'single'>({
               onFocus?.(e);
               setOpened(true);
             }}
+            onBlur={validateOnBlur}
             id={id}
             type="text"
           />

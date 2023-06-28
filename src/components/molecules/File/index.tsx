@@ -73,10 +73,11 @@ export const File = ({
 
   const isDownloadActive = disabled !== true;
 
-  const { validationMessage, validateValue } = useValidationMessage({
+  const { validationMessage, validateOnChange } = useValidationMessage({
     key: label,
     value: savedFile,
     validateHandler: validation,
+    validationTrigger: 'onChange',
   });
 
   const FileInput = (
@@ -92,7 +93,7 @@ export const File = ({
         if (file) {
           const savedFile = { name: file.name, url: URL.createObjectURL(file) };
           onChange?.(file);
-          validateValue(savedFile);
+          validateOnChange?.(savedFile);
           setSavedFile?.(savedFile);
         }
       }}
