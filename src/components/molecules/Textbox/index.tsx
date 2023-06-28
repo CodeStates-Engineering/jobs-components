@@ -6,7 +6,11 @@ import type {
   LabelContainerProps,
 } from '@components/atoms';
 import { useSubscribedState, useValidationMessage } from '@hooks';
-import type { ValidateHandler, UseTypographyClassNameParams } from '@hooks';
+import type {
+  ValidateHandler,
+  UseTypographyClassNameParams,
+  ValidationTrigger,
+} from '@hooks';
 
 import styles from './index.module.scss';
 
@@ -34,6 +38,7 @@ export interface TextboxProps<T extends TextboxType = 'text'>
     UseTypographyClassNameParams;
   inputStyle?: Pick<InputWrapProps, 'borderRadius' | 'width' | 'size'> &
     UseTypographyClassNameParams;
+  validationTrigger?: ValidationTrigger;
 }
 
 export const Textbox = <T extends TextboxType = 'text'>({
@@ -53,14 +58,17 @@ export const Textbox = <T extends TextboxType = 'text'>({
   onBlur,
   labelStyle,
   inputStyle,
+  validationTrigger,
 }: TextboxProps<T>) => {
   const [value, setValue] = useSubscribedState(originalValue);
 
-  const { validationMessage, validateValue } = useValidationMessage({
-    validateHandler: validation,
-    key: label,
-    value,
-  });
+  const { validationMessage, validateOnChange, validateOnBlur } =
+    useValidationMessage({
+      validateHandler: validation,
+      key: label,
+      value,
+      validationTrigger,
+    });
 
   return (
     <Label.WithInput
@@ -79,7 +87,10 @@ export const Textbox = <T extends TextboxType = 'text'>({
           fontSize={inputStyle?.fontSize}
           fontWeight={inputStyle?.fontWeight}
           onClick={onClick}
-          onBlur={onBlur}
+          onBlur={(e) => {
+            validateOnBlur?.();
+            onBlur?.(e);
+          }}
           ref={ref}
           name={label}
           disabled={disabled}
@@ -89,7 +100,7 @@ export const Textbox = <T extends TextboxType = 'text'>({
           id={id}
           onChange={(value) => {
             setValue?.(value);
-            validateValue(value);
+            validateOnChange?.(value);
             onChange?.(value);
           }}
           type={type}

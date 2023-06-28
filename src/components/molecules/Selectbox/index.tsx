@@ -9,7 +9,11 @@ import type {
   LabelWithInputProps,
 } from '@components/atoms';
 import { FocusLayer, Options, Input, Label } from '@components/atoms';
-import type { ValidateHandler, UseTypographyClassNameParams } from '@hooks';
+import type {
+  ValidateHandler,
+  UseTypographyClassNameParams,
+  ValidationTrigger,
+} from '@hooks';
 import { useSubscribedState, useValidationMessage } from '@hooks';
 import { cleanClassName } from '@utils';
 
@@ -28,6 +32,7 @@ export interface SelectboxProps<
   validation?: ValidateHandler<SelectboxProps<_ValidOptionValue>['value']>;
   inputStyle?: Pick<InputWrapProps, 'borderRadius' | 'size' | 'width'> &
     UseTypographyClassNameParams;
+  validationTrigger?: ValidationTrigger;
 }
 
 export const Selectbox = <
@@ -50,6 +55,7 @@ export const Selectbox = <
   labelStyle,
   multiple,
   optionStyle,
+  validationTrigger,
 }: SelectboxProps<_ValidOptionValue, _Multiple>) => {
   const [opened, setOpened] = useState(false);
 
@@ -57,11 +63,13 @@ export const Selectbox = <
 
   const selectedOption = options?.find(({ value }) => value === selectedValue);
 
-  const { validationMessage, validateValue } = useValidationMessage({
-    key: label,
-    validateHandler: validation,
-    value: selectedValue,
-  });
+  const { validationMessage, validateOnChange, validateOnBlur } =
+    useValidationMessage({
+      key: label,
+      validateHandler: validation,
+      value: selectedValue,
+      validationTrigger,
+    });
 
   return (
     <Label.WithInput
@@ -96,6 +104,7 @@ export const Selectbox = <
             placeholder={placeholder}
             fontSize={inputStyle?.fontSize}
             fontWeight={inputStyle?.fontWeight}
+            onBlur={validateOnBlur}
           />
           <ChevronDown
             className={cleanClassName(
@@ -113,7 +122,7 @@ export const Selectbox = <
           optionStyle={optionStyle}
           onChange={(value) => {
             setSelectedValue?.(value);
-            validateValue(value);
+            validateOnChange?.(value);
             onChange?.(value);
             setOpened(false);
           }}

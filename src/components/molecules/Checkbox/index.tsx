@@ -3,7 +3,7 @@ import { Check } from 'react-feather';
 import { Label } from '@components/atoms';
 import type { LabelContainerProps } from '@components/atoms';
 import { useSubscribedState, useValidationMessage } from '@hooks';
-import type { UseTypographyClassNameParams } from '@hooks';
+import type { UseTypographyClassNameParams, ValidationTrigger } from '@hooks';
 import { cleanClassName } from '@utils';
 
 import styles from './index.module.scss';
@@ -14,7 +14,6 @@ export interface CheckboxProps {
   name?: string;
   disabled?: boolean;
   id?: string;
-
   essential?: boolean;
   label?: string;
   description?: React.ReactNode;
@@ -26,6 +25,7 @@ export interface CheckboxProps {
     width?: CSSStyleDeclaration['width'];
     containerSize?: 'none' | 'small' | 'medium' | 'large';
   };
+  validationTrigger?: ValidationTrigger;
 }
 
 const validateEssential = (checked: boolean) =>
@@ -42,6 +42,7 @@ export const Checkbox = ({
   className,
   labelStyle,
   inputStyle,
+  validationTrigger,
 }: CheckboxProps) => {
   const [checked, setChecked] = useSubscribedState(value);
 
@@ -58,11 +59,13 @@ export const Checkbox = ({
     },
   }[size];
 
-  const { validationMessage, validateValue } = useValidationMessage({
-    key: label,
-    validateHandler: essential ? validateEssential : undefined,
-    value: checked,
-  });
+  const { validationMessage, validateOnChange, validateOnBlur } =
+    useValidationMessage({
+      key: label,
+      validateHandler: essential ? validateEssential : undefined,
+      value: checked,
+      validationTrigger,
+    });
 
   const isValid = !validationMessage;
 
@@ -109,9 +112,10 @@ export const Checkbox = ({
             disabled={disabled}
             onChange={({ target: { checked } }) => {
               setChecked?.(checked);
-              validateValue(checked);
+              validateOnChange?.(checked);
               onChange?.(checked);
             }}
+            onBlur={validateOnBlur}
           />
         </div>
         {description && <div className={styles.description}>{description}</div>}
