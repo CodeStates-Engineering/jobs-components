@@ -1,6 +1,6 @@
 /// <reference types="react" />
 import type { LabelContainerProps } from '../../atoms';
-import type { UseTypographyClassNameParams } from '../../../hooks';
+import type { UseTypographyClassNameParams, ValidationTrigger } from '../../../hooks';
 export interface CheckboxProps {
     value?: boolean;
     onChange?: (checked: boolean) => void;
@@ -17,5 +17,6 @@ export interface CheckboxProps {
         width?: CSSStyleDeclaration['width'];
         containerSize?: 'none' | 'small' | 'medium' | 'large';
     };
+    validationTrigger?: ValidationTrigger;
 }
-export declare const Checkbox: ({ value, onChange, disabled, id, essential, label, description, className, labelStyle, inputStyle, }: CheckboxProps) => JSX.Element;
+export declare const Checkbox: ({ value, onChange, disabled, id, essential, label, description, className, labelStyle, inputStyle, validationTrigger, }: CheckboxProps) => JSX.Element;

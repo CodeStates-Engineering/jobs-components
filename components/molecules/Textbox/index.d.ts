@@ -1,6 +1,6 @@
 /// <reference types="react" />
 import type { InputProps, InputType, InputWrapProps, LabelContainerProps } from '../../atoms';
-import type { ValidateHandler, UseTypographyClassNameParams } from '../../../hooks';
+import type { ValidateHandler, UseTypographyClassNameParams, ValidationTrigger } from '../../../hooks';
 type TextboxType = Exclude<InputType, 'button'>;
 export interface TextboxProps<T extends TextboxType = 'text'> extends Pick<InputProps<T>, 'value' | 'onChange' | 'type' | 'placeholder' | 'disabled' | 'onFocus' | 'ref' | 'id' | 'onClick' | 'className' | 'onBlur'> {
     label?: string;
@@ -8,6 +8,7 @@ export interface TextboxProps<T extends TextboxType = 'text'> extends Pick<Input
     validation?: ValidateHandler<TextboxProps<T>['value']>;
     labelStyle?: Pick<LabelContainerProps, 'direction'> & UseTypographyClassNameParams;
     inputStyle?: Pick<InputWrapProps, 'borderRadius' | 'width' | 'size'> & UseTypographyClassNameParams;
+    validationTrigger?: ValidationTrigger;
 }
-export declare const Textbox: <T extends TextboxType = "text">({ value: originalValue, unit, onChange, type, placeholder, disabled, onFocus, id, onClick, ref, label, validation, className, onBlur, labelStyle, inputStyle, }: TextboxProps<T>) => JSX.Element;
+export declare const Textbox: <T extends TextboxType = "text">({ value: originalValue, unit, onChange, type, placeholder, disabled, onFocus, id, onClick, ref, label, validation, className, onBlur, labelStyle, inputStyle, validationTrigger, }: TextboxProps<T>) => JSX.Element;
 export {};
