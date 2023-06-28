@@ -1,8 +1,4 @@
-@import '../../../styles/libs';
-
-.date-selectbox {
-  width: 100%;
-}
+@use 'src/styles/libs' as libs;
 
 .calendar {
   &.right {
@@ -17,18 +13,18 @@
 }
 
 .calendar-icon {
-  color: $BLUISH-GRAY-700;
+  color: libs.$BLUISH-GRAY-700;
 }
 
 .day-picker {
-  color: $BLUISH-GRAY-700;
+  color: libs.$BLUISH-GRAY-700;
 
   table > tbody > tr > td {
     > button {
       border-radius: 8px;
 
       font-weight: 500;
-      font-size: $SMALL2X;
+      font-size: libs.$SMALL2X;
 
       transition: background-color 0.3s, color 0.3s, font-weight 0.3s;
     }
@@ -37,9 +33,9 @@
     > button:focus:not([disabled]) {
       border: none;
 
-      background-color: $PURPLE-600;
+      background-color: libs.$PURPLE-600;
 
-      color: $WHITE;
+      color: libs.$WHITE;
     }
   }
 }

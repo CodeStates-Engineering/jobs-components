@@ -15,9 +15,6 @@ import type {
   ValidationTrigger,
 } from '@hooks';
 import { useSubscribedState, useValidationMessage } from '@hooks';
-import { cleanClassName } from '@utils';
-
-import styles from './index.module.scss';
 
 export interface SelectboxProps<
   _ValidOptionValue = ValidOptionValue,
@@ -78,12 +75,7 @@ export const Selectbox = <
       labelStyle={labelStyle}
       className={className}
     >
-      <FocusLayer
-        onBlur={() => setOpened(false)}
-        focused={opened}
-        className={styles.selectbox}
-        bodyScroll
-      >
+      <FocusLayer onBlur={() => setOpened(false)} focused={opened} bodyScroll>
         <Input.Wrap
           validationMessage={validationMessage}
           size={inputStyle?.size}
@@ -106,11 +98,7 @@ export const Selectbox = <
             fontWeight={inputStyle?.fontWeight}
             onBlur={validateOnBlur}
           />
-          <ChevronDown
-            className={cleanClassName(
-              `${styles.arrow} ${opened && styles['opened-arrow']}`,
-            )}
-          />
+          <ChevronDown />
         </Input.Wrap>
         <Options
           opened={opened}
@@ -118,7 +106,6 @@ export const Selectbox = <
           multiple={multiple}
           value={selectedValue}
           float={float}
-          className={styles['select-box-default-width']}
           optionStyle={optionStyle}
           onChange={(value) => {
             setSelectedValue?.(value);

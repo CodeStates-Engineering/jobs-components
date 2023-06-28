@@ -200,12 +200,7 @@ export const DateSelectbox = <TDateType extends DateType = 'single'>({
       inputStyle={inputStyle}
       labelStyle={labelStyle}
     >
-      <FocusLayer
-        className={styles['date-selectbox']}
-        bodyScroll
-        focused={opened}
-        onBlur={() => setOpened(false)}
-      >
+      <FocusLayer bodyScroll focused={opened} onBlur={() => setOpened(false)}>
         <Input.Wrap
           validationMessage={validationMessage}
           size={inputStyle?.size}
