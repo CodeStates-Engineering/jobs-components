@@ -33,6 +33,7 @@ const meta: Meta<typeof DateSelectbox> = {
       borderRadius: '8',
       size: 'large',
     },
+    description: '테스트',
   },
 };
 

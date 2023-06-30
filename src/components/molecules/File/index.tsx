@@ -34,6 +34,7 @@ export interface FileProps extends LabelWithInputProps {
     size?: 'small' | 'medium' | 'large';
   } & Pick<InputWrapProps, 'borderRadius' | 'width'> &
     UseTypographyClassNameParams;
+  description?: InputWrapProps['description'];
 }
 
 const getIconSizeBy = (size: 'small' | 'medium' | 'large' | undefined) => {
@@ -61,6 +62,7 @@ export const File = ({
   id,
   labelStyle,
   inputStyle,
+  description,
 }: FileProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -114,6 +116,7 @@ export const File = ({
             borderRadius={inputStyle?.borderRadius}
             size={inputStyle?.size}
             width={inputStyle?.width}
+            description={description}
           >
             <Paperclip size={getIconSizeBy(inputStyle?.size)} />
             <a
@@ -149,19 +152,22 @@ export const File = ({
           </Input.Wrap>
         </>
       ) : (
-        <Button
-          size={inputStyle?.size}
-          className={styles['upload-button']}
-          fontSize={inputStyle?.fontSize}
-          fontWeight={inputStyle?.fontWeight}
-          disabled={!!disabled}
-          theme="bluish-gray400/bluish-gray10/bluish-gray200"
-          onClick={() => inputRef.current?.click()}
-          width={inputStyle?.width}
-        >
-          {children}
-          {disabled ? null : FileInput}
-        </Button>
+        <>
+          <Button
+            size={inputStyle?.size}
+            className={styles['upload-button']}
+            fontSize={inputStyle?.fontSize}
+            fontWeight={inputStyle?.fontWeight}
+            disabled={!!disabled}
+            theme="bluish-gray400/bluish-gray10/bluish-gray200"
+            onClick={() => inputRef.current?.click()}
+            width={inputStyle?.width}
+          >
+            {children}
+            {disabled ? null : FileInput}
+          </Button>
+          <p className={styles.description}>{description}</p>
+        </>
       )}
     </Label.WithInput>
   );

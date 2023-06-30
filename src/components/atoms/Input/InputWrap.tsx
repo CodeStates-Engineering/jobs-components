@@ -16,6 +16,7 @@ export interface InputWrapProps
   borderRadius?: '4' | '8';
   width?: React.CSSProperties['width'];
   validationMessage?: string | null;
+  description?: string | null;
 }
 
 export const InputWrap = ({
@@ -26,9 +27,10 @@ export const InputWrap = ({
   borderRadius = '8',
   width,
   validationMessage,
+  description,
 }: InputWrapProps) => {
   const { messageRef, wrapHeightStyle } = useValidationMessageDynamicHeight(
-    !!validationMessage,
+    !!validationMessage || !!description,
   );
 
   return (
@@ -51,11 +53,18 @@ export const InputWrap = ({
         {children}
       </div>
       <div
-        className={styles['validation-message-wrap']}
+        className={`${styles['description-wrap']} ${
+          validationMessage && styles['validation-message-wrap']
+        }`}
         style={wrapHeightStyle}
       >
-        <p ref={messageRef} className={styles['validation-message']}>
-          {validationMessage}
+        <p
+          ref={messageRef}
+          className={`${styles.description} ${
+            validationMessage && styles['validation-message']
+          }`}
+        >
+          {validationMessage || description}
         </p>
       </div>
     </div>

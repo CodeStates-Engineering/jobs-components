@@ -34,6 +34,7 @@ const meta: Meta<typeof File> = {
       borderRadius: '8',
       size: 'large',
     },
+    description: '테스트',
   },
 };
 

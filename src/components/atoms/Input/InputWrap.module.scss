@@ -89,17 +89,27 @@
   }
 }
 
-.validation-message-wrap {
-  height: 0;
+.description-wrap {
+  height: fit-content;
 
-  transition: height 0.3s;
+  &.validation-message-wrap {
+    height: 0;
+
+    transition: height 0.3s;
+  }
 }
 
-.validation-message {
-  @include libs.shake-horizontal(0.9s);
+.description {
   margin-left: 0.5em;
   padding-top: 6px;
 
-  color: libs.$PEACH-500;
-  font-size: libs.$SMALL;
+  color: libs.$BLUISH-GRAY-500;
+  font-size: libs.$SMALL2X;
+
+  &.validation-message {
+    @include libs.shake-horizontal(0.9s);
+
+    color: libs.$PEACH-500;
+    font-size: libs.$SMALL;
+  }
 }

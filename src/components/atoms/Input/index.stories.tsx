@@ -7,7 +7,10 @@ import { Input } from '.';
 import type { InputProps, InputWrapProps } from './index';
 
 type StroyProps = InputProps &
-  Pick<InputWrapProps, 'borderRadius' | 'size' | 'validationMessage' | 'width'>;
+  Pick<
+    InputWrapProps,
+    'borderRadius' | 'size' | 'validationMessage' | 'width' | 'description'
+  >;
 
 const GROUPS = {
   INPUT: {
@@ -50,6 +53,11 @@ const meta: Meta<StroyProps> = {
       control: 'radio',
     },
 
+    description: {
+      ...GROUPS.WRAP,
+      control: 'text',
+    },
+
     width: {
       ...GROUPS.WRAP,
       control: 'text',
@@ -81,12 +89,20 @@ export default meta;
 type Story = StoryObj<StroyProps>;
 
 export const Default: Story = {
-  render: ({ size, borderRadius, width, validationMessage, ...args }) => (
+  render: ({
+    size,
+    borderRadius,
+    width,
+    validationMessage,
+    description,
+    ...args
+  }) => (
     <Input.Wrap
       size={size}
       borderRadius={borderRadius}
       width={width}
       validationMessage={validationMessage}
+      description={description}
     >
       <Input {...args} />
     </Input.Wrap>

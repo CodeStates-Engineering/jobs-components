@@ -1,4 +1,4 @@
-@import '../../../styles/libs';
+@use 'src/styles/libs' as libs;
 
 .upload-button {
   width: 100%;
@@ -12,17 +12,25 @@
   flex: 1;
   overflow: hidden;
 
-  color: $BLUISH-GRAY-700;
+  color: libs.$BLUISH-GRAY-700;
   text-overflow: ellipsis;
   white-space: nowrap;
   &.actived {
     &:hover {
-      color: $PURPLE-600;
+      color: libs.$PURPLE-600;
     }
   }
   &.disabled {
-    color: $BLUISH-GRAY-400;
+    color: libs.$BLUISH-GRAY-400;
 
     cursor: not-allowed;
   }
+}
+
+.description {
+  margin-left: 0.5em;
+  padding-top: 6px;
+
+  color: libs.$BLUISH-GRAY-500;
+  font-size: libs.$SMALL2X;
 }

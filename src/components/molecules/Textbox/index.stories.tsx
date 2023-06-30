@@ -41,6 +41,7 @@ const meta: Meta<typeof Textbox> = {
         return 'Value is required';
       }
     },
+    description: '테스트',
   },
 };
 

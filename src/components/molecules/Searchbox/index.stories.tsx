@@ -46,6 +46,8 @@ const meta: Meta<typeof Searchbox> = {
       borderRadius: '8',
       size: 'large',
     },
+    description: '테스트',
+
     validation: (value?: string) => {
       if (!value) {
         return 'Value is required';

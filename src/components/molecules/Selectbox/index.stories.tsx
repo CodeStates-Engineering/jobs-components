@@ -54,6 +54,7 @@ const meta: Meta<typeof Selectbox> = {
       borderRadius: '8',
       size: 'large',
     },
+    description: '테스트',
   },
 };
 

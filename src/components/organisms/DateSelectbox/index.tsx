@@ -56,6 +56,7 @@ export interface DateSelectboxProps<TDateType extends DateType = 'single'>
       calendarX?: 'left' | 'right';
     };
   validationTrigger?: ValidationTrigger;
+  description?: InputWrapProps['description'];
 }
 
 const DATE_FORMAT = 'YYYY.MM.DD';
@@ -79,6 +80,7 @@ export const DateSelectbox = <TDateType extends DateType = 'single'>({
   inputStyle,
   labelStyle,
   validationTrigger,
+  description,
 }: DateSelectboxProps<TDateType>) => {
   const [opened, setOpened] = useState(false);
   const [dateValue, setDateValue] = useSubscribedState(value);
@@ -206,6 +208,7 @@ export const DateSelectbox = <TDateType extends DateType = 'single'>({
           size={inputStyle?.size}
           borderRadius={inputStyle?.borderRadius}
           width={inputStyle?.width}
+          description={description}
         >
           <Input
             {...inputProps}

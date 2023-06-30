@@ -37,6 +37,7 @@ export interface SearchboxProps
     UseTypographyClassNameParams;
   hasSearchIcon?: boolean;
   validationTrigger?: ValidationTrigger;
+  description?: InputWrapProps['description'];
 }
 
 export const Searchbox = ({
@@ -59,6 +60,7 @@ export const Searchbox = ({
   optionStyle,
   hasSearchIcon = true,
   validationTrigger,
+  description,
 }: SearchboxProps) => {
   const [opened, setOpened] = useState(false);
   const [inputText, setInputText] = useSubscribedState(value);
@@ -116,6 +118,7 @@ export const Searchbox = ({
           size={inputStyle?.size}
           width={inputStyle?.width}
           borderRadius={inputStyle?.borderRadius}
+          description={description}
         >
           <Input
             name={label}

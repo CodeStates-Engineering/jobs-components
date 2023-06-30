@@ -39,6 +39,7 @@ export interface TextareaProps
   floatingActionName?: string;
   onFloatingActionClick?: () => void;
   validationTrigger?: ValidationTrigger;
+  description?: InputWrapProps['description'];
 }
 
 export const Textarea = ({
@@ -56,6 +57,7 @@ export const Textarea = ({
   floatingActionName,
   onFloatingActionClick,
   validationTrigger,
+  description,
 }: TextareaProps) => {
   const [textareaValue, setTextareaValue] = useSubscribedState(
     originalValue ?? '',
@@ -91,6 +93,7 @@ export const Textarea = ({
         onClick={onClick}
         width={inputStyle?.width}
         borderRadius={inputStyle?.borderRadius}
+        description={description}
       >
         {floatingActionName && (
           <div className={styles['floating-action-container']}>

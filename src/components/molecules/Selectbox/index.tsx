@@ -30,6 +30,7 @@ export interface SelectboxProps<
   inputStyle?: Pick<InputWrapProps, 'borderRadius' | 'size' | 'width'> &
     UseTypographyClassNameParams;
   validationTrigger?: ValidationTrigger;
+  description?: InputWrapProps['description'];
 }
 
 export const Selectbox = <
@@ -53,6 +54,7 @@ export const Selectbox = <
   multiple,
   optionStyle,
   validationTrigger,
+  description,
 }: SelectboxProps<_ValidOptionValue, _Multiple>) => {
   const [opened, setOpened] = useState(false);
 
@@ -85,6 +87,7 @@ export const Selectbox = <
             setOpened(!opened);
             onClick?.(e);
           }}
+          description={description}
         >
           <Input
             id={id}

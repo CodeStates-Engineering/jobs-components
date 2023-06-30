@@ -39,6 +39,7 @@ export interface TextboxProps<T extends TextboxType = 'text'>
   inputStyle?: Pick<InputWrapProps, 'borderRadius' | 'width' | 'size'> &
     UseTypographyClassNameParams;
   validationTrigger?: ValidationTrigger;
+  description?: InputWrapProps['description'];
 }
 
 export const Textbox = <T extends TextboxType = 'text'>({
@@ -59,6 +60,7 @@ export const Textbox = <T extends TextboxType = 'text'>({
   labelStyle,
   inputStyle,
   validationTrigger,
+  description,
 }: TextboxProps<T>) => {
   const [value, setValue] = useSubscribedState(originalValue);
 
@@ -82,6 +84,7 @@ export const Textbox = <T extends TextboxType = 'text'>({
         size={inputStyle?.size}
         borderRadius={inputStyle?.borderRadius}
         width={inputStyle?.width}
+        description={description}
       >
         <Input
           fontSize={inputStyle?.fontSize}
