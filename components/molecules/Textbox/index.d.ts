@@ -9,6 +9,7 @@ export interface TextboxProps<T extends TextboxType = 'text'> extends Pick<Input
     labelStyle?: Pick<LabelContainerProps, 'direction'> & UseTypographyClassNameParams;
     inputStyle?: Pick<InputWrapProps, 'borderRadius' | 'width' | 'size'> & UseTypographyClassNameParams;
     validationTrigger?: ValidationTrigger;
+    description?: InputWrapProps['description'];
 }
-export declare const Textbox: <T extends TextboxType = "text">({ value: originalValue, unit, onChange, type, placeholder, disabled, onFocus, id, onClick, ref, label, validation, className, onBlur, labelStyle, inputStyle, validationTrigger, }: TextboxProps<T>) => JSX.Element;
+export declare const Textbox: <T extends TextboxType = "text">({ value: originalValue, unit, onChange, type, placeholder, disabled, onFocus, id, onClick, ref, label, validation, className, onBlur, labelStyle, inputStyle, validationTrigger, description, }: TextboxProps<T>) => JSX.Element;
 export {};

@@ -14,6 +14,7 @@ export interface DateSelectboxProps<TDateType extends DateType = 'single'> exten
         calendarX?: 'left' | 'right';
     };
     validationTrigger?: ValidationTrigger;
+    description?: InputWrapProps['description'];
 }
-export declare const DateSelectbox: <TDateType extends DateType = "single">({ value, type, onChange, placeholder, disabled, onFocus, id, onClick, ref, label, validation, className, inputStyle, labelStyle, validationTrigger, }: DateSelectboxProps<TDateType>) => JSX.Element;
+export declare const DateSelectbox: <TDateType extends DateType = "single">({ value, type, onChange, placeholder, disabled, onFocus, id, onClick, ref, label, validation, className, inputStyle, labelStyle, validationTrigger, description, }: DateSelectboxProps<TDateType>) => JSX.Element;
 export {};

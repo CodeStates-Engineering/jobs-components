@@ -9,6 +9,6 @@ export interface InputProps<T extends InputType = 'text'> extends Pick<React.Det
     ref?: Ref<HTMLInputElement>;
 }
 export declare const Input: (<T extends InputType = "text">(props: InputProps<T>) => JSX.Element | null) & {
-    Wrap: ({ children, onClick, size, className, borderRadius, width, validationMessage, }: import("./InputWrap").InputWrapProps) => JSX.Element;
+    Wrap: ({ children, onClick, size, className, borderRadius, width, validationMessage, description, }: import("./InputWrap").InputWrapProps) => JSX.Element;
 };
 export type { InputType };

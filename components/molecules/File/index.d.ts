@@ -16,6 +16,7 @@ export interface FileProps extends LabelWithInputProps {
     inputStyle?: {
         size?: 'small' | 'medium' | 'large';
     } & Pick<InputWrapProps, 'borderRadius' | 'width'> & UseTypographyClassNameParams;
+    description?: InputWrapProps['description'];
 }
-export declare const File: ({ children, value, onChange, className, download, disabled, accept, validation, label, id, labelStyle, inputStyle, }: FileProps) => JSX.Element;
+export declare const File: ({ children, value, onChange, className, download, disabled, accept, validation, label, id, labelStyle, inputStyle, description, }: FileProps) => JSX.Element;
 export {};
