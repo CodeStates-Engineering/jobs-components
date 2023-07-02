@@ -16,11 +16,7 @@ import type {
 } from '@components/atoms';
 import { Dropdown } from '@components/molecules';
 import { useSubscribedState, useValidationMessage } from '@hooks';
-import type {
-  ValidateHandler,
-  UseTypographyClassNameParams,
-  ValidationTrigger,
-} from '@hooks';
+import type { ValidateHandler, UseTypographyClassNameParams } from '@hooks';
 
 import styles from './index.module.scss';
 
@@ -55,7 +51,6 @@ export interface DateSelectboxProps<TDateType extends DateType = 'single'>
     Pick<InputWrapProps, 'size' | 'borderRadius' | 'width'> & {
       calendarX?: 'left' | 'right';
     };
-  validationTrigger?: ValidationTrigger;
   description?: InputWrapProps['description'];
 }
 
@@ -79,7 +74,6 @@ export const DateSelectbox = <TDateType extends DateType = 'single'>({
   className,
   inputStyle,
   labelStyle,
-  validationTrigger,
   description,
 }: DateSelectboxProps<TDateType>) => {
   const [opened, setOpened] = useState(false);
@@ -92,13 +86,12 @@ export const DateSelectbox = <TDateType extends DateType = 'single'>({
 
   const [inputValue, setInputValue] = useState('');
 
-  const { validationMessage, validateOnBlur, validateOnChange } =
-    useValidationMessage({
-      validationTrigger,
-      key: label,
-      value: dateValue,
-      validateHandler: validation,
-    });
+  const { validationMessage, validateOnChange } = useValidationMessage({
+    validationTrigger: 'onChange',
+    key: label,
+    value: dateValue,
+    validateHandler: validation,
+  });
 
   const { dayPickerProps, inputProps } = ((): {
     dayPickerProps: DayPickerProps;
@@ -223,7 +216,6 @@ export const DateSelectbox = <TDateType extends DateType = 'single'>({
               onFocus?.(e);
               setOpened(true);
             }}
-            onBlur={validateOnBlur}
             id={id}
             type="text"
           />
