@@ -1,0 +1,91 @@
+@use 'src/styles/libs' as libs;
+@use './TableTitle.module.scss' as title;
+
+.cell {
+  vertical-align: middle;
+
+  border-right: 0 solid libs.$BLUISH-GRAY-10;
+  border-bottom: 1px solid libs.$BLUISH-GRAY-200;
+
+  background-color: libs.$WHITE;
+
+  transition: background-color 0.3s, box-shadow 0.3s;
+  &.hovered {
+    background-color: libs.$BLUISH-GRAY-10;
+  }
+  &:hover {
+    z-index: 6;
+  }
+}
+
+@include title.fixed;
+@include title.dragAndDrop;
+
+.cell-content-container {
+  position: relative;
+
+  &.overflow {
+    overflow: hidden;
+  }
+
+  &.not-overflow {
+    overflow: visible;
+  }
+
+  box-sizing: border-box;
+  padding: 8px 16px;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  &:has(.hovered-cell-content-wrap) {
+    overflow: unset;
+  }
+}
+
+.hidden {
+  overflow: hidden;
+
+  visibility: hidden;
+}
+
+.hovered-cell-content-wrap {
+  position: absolute;
+  top: 7px;
+  left: 8px;
+  z-index: 3;
+  display: flex;
+  overflow: hidden;
+
+  width: fit-content;
+  padding: 0px 7px;
+  border: 1px solid libs.$BLUISH-GRAY-200;
+  border-radius: 4px;
+
+  background-color: libs.$WHITE;
+
+  white-space: pre;
+
+  transition: background-color 0.3s, border 0.3s;
+
+  @include libs.fade-in(0.2s);
+
+  &.has-style {
+    white-space: pre-wrap;
+  }
+}
+
+.copy-button-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-left: 5px;
+}
+
+.hovered-cell-content {
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
