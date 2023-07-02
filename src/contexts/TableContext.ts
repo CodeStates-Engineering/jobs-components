@@ -21,6 +21,7 @@ export interface TableContextValue {
   fixedTitleCount: number;
   isLeftScrolled: boolean;
   isLoading: boolean;
+  saveId?: string;
 }
 
 export const TableContext = createContext<TableContextValue>({

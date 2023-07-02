@@ -20,13 +20,19 @@ export type { TableRowProps } from './TableRow';
 export type { TableCellProps } from './TableCell';
 export type { TableBodyProps } from './TableBody';
 export interface TableProps {
+  saveId?: string;
   fixedTitleCount?: number;
   className?: string;
   children?: ReactNode;
 }
 
 export const Table = Object.assign(
-  ({ className, children, fixedTitleCount = 0 }: TableProps) => {
+  ({
+    className,
+    children,
+    fixedTitleCount = 0,
+    saveId = 'test hyeokjae',
+  }: TableProps) => {
     const [tableState, setTableState] = useState<TableState>({
       titles: [],
     });
@@ -52,14 +58,19 @@ export const Table = Object.assign(
     const tableContextValue: TableContextValue = useMemo(() => {
       const isLoading = !tableState.titles.find(({ width }) => !!width);
 
+      if (saveId && !isLoading) {
+        window.localStorage.setItem(saveId, JSON.stringify(tableState));
+      }
+
       return {
         tableState,
         setTableState,
         fixedTitleCount,
         isLeftScrolled,
         isLoading,
+        saveId,
       };
-    }, [fixedTitleCount, tableState, isLeftScrolled]);
+    }, [tableState, saveId, fixedTitleCount, isLeftScrolled]);
 
     return (
       <article

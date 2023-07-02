@@ -16,23 +16,32 @@ export const TableHeader = ({ children, className }: TableHeaderProps) => {
   const {
     setTableState,
     tableState: { titles },
+    saveId,
   } = useContext(TableContext);
   useEffect(() => {
+    const savedTableTitles: typeof titles | undefined = saveId
+      ? (JSON.parse(window.localStorage.getItem(saveId) || '') ?? undefined)
+          ?.titles
+      : undefined;
+
     setTableState((prevState) => ({
       ...prevState,
       titles: Array.from(
         {
           length: titleCount,
         },
-        (_, index) => ({
-          order: {
-            origin: index,
-            current: index,
-          },
-        }),
+        (_, index) => {
+          const savedTableTitle = savedTableTitles?.[index].order;
+          return {
+            order: savedTableTitle || {
+              origin: index,
+              current: index,
+            },
+          };
+        },
       ),
     }));
-  }, [titleCount, setTableState]);
+  }, [titleCount, setTableState, saveId]);
 
   const childrenArray = Children.toArray(children);
 
