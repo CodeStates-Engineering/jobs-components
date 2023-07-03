@@ -1,0 +1,10 @@
+@use 'src/styles/libs' as libs;
+
+.row {
+  background-color: libs.$WHITE;
+  &:hover {
+    > .cell {
+      background-color: libs.$BLUISH-GRAY-10;
+    }
+  }
+}

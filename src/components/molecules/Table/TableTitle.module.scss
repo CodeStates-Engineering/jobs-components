@@ -1,0 +1,65 @@
+@use 'src/styles/libs' as libs;
+
+.title {
+  vertical-align: middle;
+
+  border-right: 0 solid libs.$BLUISH-GRAY-10;
+  border-bottom: 1px solid libs.$BLUISH-GRAY-200;
+
+  background-color: libs.$WHITE;
+
+  cursor: move;
+
+  transition: background-color 0.3s, box-shadow 0.3s;
+  &.hovered {
+    background-color: libs.$BLUISH-GRAY-10;
+  }
+}
+
+@mixin fixed {
+  .fixed {
+    position: sticky;
+    z-index: 4;
+    &.shadow {
+      box-shadow: 4px 0px 4px rgba(0, 0, 0, 0.08);
+    }
+  }
+}
+@include fixed;
+
+.title-content {
+  box-sizing: border-box;
+  padding: 6px 16px;
+
+  white-space: pre;
+
+  transition: width 0.3s;
+}
+
+@mixin dragAndDrop {
+  .drop-left,
+  .drop-right {
+    transition: border-width 0.3s;
+  }
+
+  .drop-right {
+    border-right: 20px libs.$BLUISH-GRAY-10 solid;
+  }
+
+  .drop-left {
+    border-left: 20px libs.$BLUISH-GRAY-10 solid;
+  }
+
+  .restoring > div {
+    opacity: 1;
+
+    transition: opacity 0.3s;
+  }
+
+  .dragging > div {
+    opacity: 0.3;
+
+    transition: opacity 0.3s;
+  }
+}
+@include dragAndDrop;

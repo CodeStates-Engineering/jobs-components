@@ -39,7 +39,7 @@ const meta: Meta<typeof Table> = {
                   case TABLE_TITLE.LONG_TEXT_COLUMN:
                     return 'Long text';
                   case TABLE_TITLE.LONG_TEXT_COPYABLE_COLUMN:
-                    return 'Long text copyable';
+                    return 'Long text\ncopyable';
                   default:
                     return `Title ${index}`;
                 }

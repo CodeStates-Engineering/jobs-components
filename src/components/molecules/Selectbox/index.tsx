@@ -9,11 +9,7 @@ import type {
   LabelWithInputProps,
 } from '@components/atoms';
 import { FocusLayer, Options, Input, Label } from '@components/atoms';
-import type {
-  ValidateHandler,
-  UseTypographyClassNameParams,
-  ValidationTrigger,
-} from '@hooks';
+import type { ValidateHandler, UseTypographyClassNameParams } from '@hooks';
 import { useSubscribedState, useValidationMessage } from '@hooks';
 
 export interface SelectboxProps<
@@ -29,7 +25,6 @@ export interface SelectboxProps<
   validation?: ValidateHandler<SelectboxProps<_ValidOptionValue>['value']>;
   inputStyle?: Pick<InputWrapProps, 'borderRadius' | 'size' | 'width'> &
     UseTypographyClassNameParams;
-  validationTrigger?: ValidationTrigger;
   description?: InputWrapProps['description'];
 }
 
@@ -53,7 +48,6 @@ export const Selectbox = <
   labelStyle,
   multiple,
   optionStyle,
-  validationTrigger,
   description,
 }: SelectboxProps<_ValidOptionValue, _Multiple>) => {
   const [opened, setOpened] = useState(false);
@@ -62,13 +56,12 @@ export const Selectbox = <
 
   const selectedOption = options?.find(({ value }) => value === selectedValue);
 
-  const { validationMessage, validateOnChange, validateOnBlur } =
-    useValidationMessage({
-      key: label,
-      validateHandler: validation,
-      value: selectedValue,
-      validationTrigger,
-    });
+  const { validationMessage, validateOnChange } = useValidationMessage({
+    key: label,
+    validateHandler: validation,
+    value: selectedValue,
+    validationTrigger: 'onChange',
+  });
 
   return (
     <Label.WithInput
@@ -99,7 +92,6 @@ export const Selectbox = <
             placeholder={placeholder}
             fontSize={inputStyle?.fontSize}
             fontWeight={inputStyle?.fontWeight}
-            onBlur={validateOnBlur}
           />
           <ChevronDown />
         </Input.Wrap>

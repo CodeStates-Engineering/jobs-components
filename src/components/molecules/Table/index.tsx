@@ -1,447 +1,95 @@
-import { isNumber, debounce } from 'lodash-es';
+import { debounce } from 'lodash-es';
 
-import {
-  useRef,
-  useContext,
-  useMemo,
-  useState,
-  useEffect,
-  createContext,
-  Children,
-} from 'react';
-import type { ReactNode, Dispatch, SetStateAction } from 'react';
-import { Copy } from 'react-feather';
-import nodeToString from 'react-node-to-string';
+import { useMemo, useState, useEffect } from 'react';
+import type { ReactNode } from 'react';
 
+import { TableContext } from '@contexts/TableContext';
+import type { TableState, TableContextValue } from '@contexts/TableContext';
+import { cleanClassName } from '@utils';
+
+import { TableBody } from './TableBody';
+import { TableCell } from './TableCell';
+import { TableHeader } from './TableHeader';
+import { TableRow } from './TableRow';
+import { TableTitle } from './TableTitle';
 import styles from './index.module.scss';
-import { cleanClassName } from '../../../utils';
-import { Button } from '../../atoms';
 
-type CSSWidth = React.CSSProperties['width'];
-
-interface TitleData {
-  order: {
-    origin: number;
-    current: number;
-  };
-  width?: number;
-}
-
-interface TableState {
-  titles: TitleData[];
-  draggingOrder?: number;
-  dropOrder?: number;
-  hoveredOrder?: number;
-}
-
-interface TableContextValue {
-  tableState: TableState;
-  setTableState: Dispatch<SetStateAction<TableState>>;
-  fixedTitleCount: number;
-  isLeftScrolled: boolean;
-  isLoading: boolean;
-}
-
-const TableContext = createContext<TableContextValue>({
-  tableState: {
-    titles: [],
-  },
-  setTableState: () => undefined,
-  fixedTitleCount: 0,
-  isLeftScrolled: false,
-  isLoading: false,
-});
-
-interface CommonProps {
+export type { TableHeaderProps } from './TableHeader';
+export type { TableTitleProps } from './TableTitle';
+export type { TableRowProps } from './TableRow';
+export type { TableCellProps } from './TableCell';
+export type { TableBodyProps } from './TableBody';
+export interface TableProps {
+  saveId?: string;
+  fixedTitleCount?: number;
   className?: string;
   children?: ReactNode;
 }
 
-export interface TableProps extends CommonProps {
-  fixedTitleCount?: number;
-}
+export const Table = Object.assign(
+  ({
+    className,
+    children,
+    fixedTitleCount = 0,
+    saveId = 'test hyeokjae',
+  }: TableProps) => {
+    const [tableState, setTableState] = useState<TableState>({
+      titles: [],
+    });
+    const [isLeftScrolled, setIsLeftScrolled] = useState(false);
 
-const TableMain = ({
-  className,
-  children,
-  fixedTitleCount = 0,
-}: TableProps) => {
-  const [tableState, setTableState] = useState<TableState>({
-    titles: [],
-  });
-  const [isLeftScrolled, setIsLeftScrolled] = useState(false);
-
-  useEffect(() => {
-    const debouncedResizeEvent = debounce(() => {
-      setTableState((prevState) => {
-        prevState.titles.forEach((title) => {
-          title.width = undefined;
-        });
-
-        return {
-          ...prevState,
-        };
-      });
-    }, 300);
-
-    window.addEventListener('resize', debouncedResizeEvent);
-    return () => window.removeEventListener('resize', debouncedResizeEvent);
-  }, []);
-
-  const tableContextValue: TableContextValue = useMemo(() => {
-    const isLoading = !tableState.titles.find(({ width }) => !!width);
-
-    return {
-      tableState,
-      setTableState,
-      fixedTitleCount,
-      isLeftScrolled,
-      isLoading,
-    };
-  }, [fixedTitleCount, tableState, isLeftScrolled]);
-
-  return (
-    <article
-      className={cleanClassName(`${styles.table} ${className}`)}
-      onScroll={(e) => setIsLeftScrolled(e.currentTarget.scrollLeft > 0)}
-    >
-      <table>
-        <TableContext.Provider value={tableContextValue}>
-          {children}
-        </TableContext.Provider>
-      </table>
-    </article>
-  );
-};
-
-export type TableHeaderProps = CommonProps;
-
-const TableHeader = ({ children, className }: TableHeaderProps) => {
-  const titleCount = Children.count(children);
-  const {
-    setTableState,
-    tableState: { titles },
-  } = useContext(TableContext);
-  useEffect(() => {
-    setTableState((prevState) => ({
-      ...prevState,
-      titles: Array.from(
-        {
-          length: titleCount,
-        },
-        (_, index) => ({
-          order: {
-            origin: index,
-            current: index,
-          },
-        }),
-      ),
-    }));
-  }, [titleCount, setTableState]);
-
-  const childrenArray = Children.toArray(children);
-
-  return (
-    <thead className={cleanClassName(`${styles.header} ${className}`)}>
-      <tr>{titles.map(({ order: { origin } }) => childrenArray[origin])}</tr>
-    </thead>
-  );
-};
-
-export interface TableTitleProps extends CommonProps {
-  width?: CSSWidth;
-}
-
-const TableTitle = ({ children, width, className }: TableTitleProps) => {
-  const {
-    tableState,
-    setTableState,
-    fixedTitleCount,
-    isLeftScrolled,
-    isLoading,
-  } = useContext(TableContext);
-
-  const { titles } = tableState;
-
-  const ref = useRef<HTMLTableCellElement>(null);
-
-  useEffect(() => {
-    const { current: element } = ref;
-    if (element) {
-      const { offsetWidth, cellIndex } = element;
-      if (width || !isLoading) {
+    useEffect(() => {
+      const debouncedResizeEvent = debounce(() => {
         setTableState((prevState) => {
-          prevState.titles[cellIndex].width = offsetWidth;
-          return { ...prevState };
+          prevState.titles.forEach((title) => {
+            title.width = undefined;
+          });
+
+          return {
+            ...prevState,
+          };
         });
+      }, 300);
+
+      window.addEventListener('resize', debouncedResizeEvent);
+      return () => window.removeEventListener('resize', debouncedResizeEvent);
+    }, []);
+
+    const tableContextValue: TableContextValue = useMemo(() => {
+      const isLoading = !tableState.titles.find(({ width }) => !!width);
+
+      if (saveId && !isLoading) {
+        window.localStorage.setItem(saveId, JSON.stringify(tableState));
       }
-    }
-  }, [ref, setTableState, width, isLoading]);
 
-  const currentOrder = ref.current?.cellIndex ?? -1;
-
-  const { draggingOrder, hoveredOrder, dropOrder } = tableState;
-
-  const setHoveredOrder = (hoveredOrder?: number) => {
-    if (draggingOrder === undefined) {
-      setTableState((prevState) => ({
-        ...prevState,
-        hoveredOrder,
-      }));
-    }
-  };
-
-  const handleDrop = () => {
-    if (isNumber(draggingOrder) && currentOrder >= 0) {
-      let sortedTitles = [...titles];
-
-      const [draggingTitle] = sortedTitles.splice(draggingOrder, 1);
-
-      sortedTitles = sortedTitles.sort(
-        (a, b) => a.order.current - b.order.current,
-      );
-
-      const { order } = titles[currentOrder];
-
-      sortedTitles = [
-        ...sortedTitles.slice(0, order.current),
-        draggingTitle,
-        ...sortedTitles.slice(order.current),
-      ];
-
-      sortedTitles.forEach((title, newOrder) => {
-        title.order.current = newOrder;
-      });
-
-      const newTableState = {
-        ...tableState,
-        titles: sortedTitles,
-        dropOrder: undefined,
-        draggingOrder: undefined,
-        hoveredOrder: undefined,
+      return {
+        tableState,
+        setTableState,
+        fixedTitleCount,
+        isLeftScrolled,
+        isLoading,
+        saveId,
       };
+    }, [tableState, saveId, fixedTitleCount, isLeftScrolled]);
 
-      setTableState(newTableState);
-
-      setTimeout(() =>
-        setTableState({
-          ...newTableState,
-          hoveredOrder: currentOrder,
-        }),
-      );
-    }
-  };
-
-  let left = 0;
-  for (let i = 0; i < currentOrder; i += 1) {
-    left += titles[i]?.width ?? 0;
-  }
-
-  const isDropTarget = dropOrder === currentOrder;
-  const isDragging = draggingOrder === currentOrder;
-  const isFixed = currentOrder < fixedTitleCount;
-  const isLastFixed = currentOrder === fixedTitleCount - 1;
-  const isHovered = hoveredOrder === currentOrder;
-  return (
-    <th
-      style={{
-        left,
-      }}
-      className={cleanClassName(
-        `${styles.title} ${isFixed && styles.fixed} ${
-          isLastFixed && isLeftScrolled && styles.shadow
-        } ${isHovered && styles.hovered} ${
-          isDropTarget &&
-          (isDragging ||
-            ((draggingOrder ?? 0) > dropOrder
-              ? styles['drop-left']
-              : styles['drop-right']))
-        } ${isDragging && (isDropTarget ? styles.restoring : styles.dragging)} 
-
-        } ${
-          isDragging && (isDropTarget ? styles.restoring : styles.dragging)
-        } ${className}`,
-      )}
-      ref={ref}
-      draggable
-      onMouseEnter={() => setHoveredOrder(currentOrder)}
-      onMouseLeave={() => setHoveredOrder()}
-      onDragOver={(e) => e.preventDefault()}
-      onDragStart={() =>
-        setTableState((prevState) => ({
-          ...prevState,
-          draggingOrder: currentOrder,
-        }))
-      }
-      onDragEnter={() =>
-        setTableState((prevState) => ({
-          ...prevState,
-          dropOrder: currentOrder,
-        }))
-      }
-      onDrop={handleDrop}
-    >
-      <div
-        style={{
-          width,
-        }}
-        className={styles['title-content']}
+    return (
+      <article
+        className={cleanClassName(`${styles.table} ${className}`)}
+        onScroll={(e) => setIsLeftScrolled(e.currentTarget.scrollLeft > 0)}
       >
-        {children}
-      </div>
-    </th>
-  );
-};
-
-export type TableBodyProps = CommonProps;
-
-const TableBody = ({ children, className }: TableBodyProps) => (
-  <tbody className={className}>{children}</tbody>
+        <table>
+          <TableContext.Provider value={tableContextValue}>
+            {children}
+          </TableContext.Provider>
+        </table>
+      </article>
+    );
+  },
+  {
+    Header: TableHeader,
+    Title: TableTitle,
+    Body: TableBody,
+    Row: TableRow,
+    Cell: TableCell,
+  },
 );
-
-export type TableRowProps = CommonProps;
-
-const TableRow = ({ children, className }: TableRowProps) => {
-  const {
-    tableState: { titles },
-  } = useContext(TableContext);
-
-  const childrenArray = Children.toArray(children);
-
-  return (
-    <tr className={cleanClassName(`${styles.row} ${className}`)}>
-      {titles.map(({ order: { origin } }) => childrenArray[origin])}
-    </tr>
-  );
-};
-
-export interface TableCellProps extends CommonProps {
-  onCopy?: (value: string) => void;
-  hoverStyle?: Pick<React.CSSProperties, 'maxHeight' | 'maxWidth'>;
-}
-
-const TableCell = ({
-  children,
-  onCopy,
-  className,
-  hoverStyle,
-}: TableCellProps) => {
-  const {
-    tableState: { titles, hoveredOrder, draggingOrder, dropOrder },
-    fixedTitleCount,
-    isLeftScrolled,
-    setTableState,
-    isLoading,
-  } = useContext(TableContext);
-
-  const ref = useRef<HTMLTableCellElement>(null);
-  const currentOrder = ref.current?.cellIndex ?? -1;
-
-  const { width } = titles[currentOrder ?? 0] ?? {};
-  let left = 0;
-  for (let i = 0; i < currentOrder; i += 1) {
-    left += titles[i]?.width ?? 0;
-  }
-
-  const [isHovered, setIsHovered] = useState(false);
-
-  const isDropTarget = dropOrder === currentOrder;
-  const isDragging = draggingOrder === currentOrder;
-  const isFixed = currentOrder < fixedTitleCount;
-  const isLastFixed = currentOrder === fixedTitleCount - 1;
-  const isTitleHovered = hoveredOrder === currentOrder;
-
-  useEffect(
-    () => setTableState((tableState) => ({ ...tableState })),
-    [children, setTableState],
-  );
-
-  const [isOverflow, setOverflow] = useState(true);
-
-  return (
-    <td
-      ref={ref}
-      style={{
-        left,
-      }}
-      className={cleanClassName(
-        `${styles.cell} ${isFixed && styles.fixed} ${
-          isLastFixed && isLeftScrolled && styles.shadow
-        } ${isTitleHovered && styles.hovered} ${
-          isDropTarget &&
-          (isDragging ||
-            ((draggingOrder ?? 0) > dropOrder
-              ? styles['drop-left']
-              : styles['drop-right']))
-        } ${
-          isDragging && (isDropTarget ? styles.restoring : styles.dragging)
-        } ${className}`,
-      )}
-    >
-      {isLoading ? null : (
-        <div
-          style={{
-            width,
-          }}
-          className={`${styles['cell-content-container']} ${
-            isOverflow ? styles.overflow : styles['not-overflow']
-          }`}
-          onMouseEnter={({ currentTarget }) => {
-            const isOverflow =
-              currentTarget.scrollWidth > currentTarget.clientWidth;
-
-            if (isOverflow || onCopy) {
-              setIsHovered(true);
-            }
-
-            if (!isOverflow) {
-              setOverflow(false);
-            }
-          }}
-          onMouseLeave={() => setIsHovered(false)}
-        >
-          {isHovered ? (
-            <div className={styles.hidden}>{children}</div>
-          ) : (
-            children
-          )}
-          {isHovered ? (
-            <div
-              className={cleanClassName(
-                `${styles['hovered-cell-content-wrap']} ${
-                  hoverStyle && styles['has-style']
-                }`,
-              )}
-              style={hoverStyle}
-            >
-              <div className={styles['hovered-cell-content']}>{children}</div>
-              {onCopy ? (
-                <div className={styles['copy-button-wrap']}>
-                  <Button
-                    size="small3x"
-                    shape="round"
-                    theme="bluish-gray700/0"
-                    icon={<Copy size={14} />}
-                    onClick={() => {
-                      const childrenString = nodeToString(children);
-                      navigator.clipboard.writeText(childrenString);
-                      onCopy?.(childrenString);
-                    }}
-                  />
-                </div>
-              ) : null}
-            </div>
-          ) : null}
-        </div>
-      )}
-    </td>
-  );
-};
-
-export const Table = Object.assign(TableMain, {
-  Header: TableHeader,
-  Title: TableTitle,
-  Body: TableBody,
-  Row: TableRow,
-  Cell: TableCell,
-});
