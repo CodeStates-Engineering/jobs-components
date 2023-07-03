@@ -1,27 +1,19 @@
 import type { ReactNode } from 'react';
-type CSSWidth = React.CSSProperties['width'];
-interface CommonProps {
+export type { TableHeaderProps } from './TableHeader';
+export type { TableTitleProps } from './TableTitle';
+export type { TableRowProps } from './TableRow';
+export type { TableCellProps } from './TableCell';
+export type { TableBodyProps } from './TableBody';
+export interface TableProps {
+    saveId?: string;
+    fixedTitleCount?: number;
     className?: string;
     children?: ReactNode;
 }
-export interface TableProps extends CommonProps {
-    fixedTitleCount?: number;
-}
-export type TableHeaderProps = CommonProps;
-export interface TableTitleProps extends CommonProps {
-    width?: CSSWidth;
-}
-export type TableBodyProps = CommonProps;
-export type TableRowProps = CommonProps;
-export interface TableCellProps extends CommonProps {
-    onCopy?: (value: string) => void;
-    hoverStyle?: Pick<React.CSSProperties, 'maxHeight' | 'maxWidth'>;
-}
-export declare const Table: (({ className, children, fixedTitleCount, }: TableProps) => JSX.Element) & {
-    Header: ({ children, className }: TableHeaderProps) => JSX.Element;
-    Title: ({ children, width, className }: TableTitleProps) => JSX.Element;
-    Body: ({ children, className }: TableBodyProps) => JSX.Element;
-    Row: ({ children, className }: TableRowProps) => JSX.Element;
-    Cell: ({ children, onCopy, className, hoverStyle, }: TableCellProps) => JSX.Element;
+export declare const Table: (({ className, children, fixedTitleCount, saveId, }: TableProps) => JSX.Element) & {
+    Header: ({ children, className }: import("./TableHeader").TableHeaderProps) => JSX.Element;
+    Title: ({ children, width, className, draggable, }: import("./TableTitle").TableTitleProps) => JSX.Element;
+    Body: ({ children, className }: import("./TableBody").TableBodyProps) => JSX.Element;
+    Row: ({ children, className }: import("./TableRow").TableRowProps) => JSX.Element;
+    Cell: ({ children, onCopy, className, hoverStyle, }: import("./TableCell").TableCellProps) => JSX.Element;
 };
-export {};
