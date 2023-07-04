@@ -1,24 +1,26 @@
-/// <reference types="react" />
-interface TitleData {
-    order: {
-        origin: number;
-        current: number;
-    };
+import type { ComponentType } from 'react';
+export interface ColunmData {
+    originalIndex: number;
     width?: number;
+    maxWidth?: React.CSSProperties['maxWidth'];
 }
-export interface TableState {
-    titles: TitleData[];
-    draggingOrder?: number;
-    dropOrder?: number;
-    hoveredOrder?: number;
-}
-export interface TableContextValue {
-    tableState: TableState;
-    setTableState: React.Dispatch<React.SetStateAction<TableState>>;
-    fixedTitleCount: number;
-    isLeftScrolled: boolean;
+type ColunmDataListState = [
+    ColunmData[],
+    React.Dispatch<React.SetStateAction<ColunmData[]>>
+];
+type NumberState = [number, React.Dispatch<React.SetStateAction<number>>];
+type BooleanState = [boolean, React.Dispatch<React.SetStateAction<boolean>>];
+interface TableContextValue {
+    colunmDataListState: ColunmDataListState;
+    draggingColunmIndexState: NumberState;
+    hoveredColunmIndexState: NumberState;
+    dropTargetColunmIndexState: NumberState;
+    fixedColunmCount: number;
+    isHorizontalScrolledState: BooleanState;
     isLoading: boolean;
-    saveId?: string;
+    storageKey?: string;
 }
-export declare const TableContext: import("react").Context<TableContextValue>;
+export type TableObserverProps = Partial<Pick<TableContextValue, 'fixedColunmCount' | 'storageKey'>>;
+export declare const tableDataObserver: <T extends Partial<Pick<TableContextValue, "fixedColunmCount" | "storageKey">>>(TableComponent: ComponentType<T>) => (props: T) => JSX.Element;
+export declare const useTableData: () => TableContextValue;
 export {};

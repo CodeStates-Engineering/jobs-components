@@ -1,8 +1,7 @@
 import type { ReactNode } from 'react';
 export interface TableTitleProps {
-    width?: React.CSSProperties['width'];
-    draggable?: boolean;
     className?: string;
     children?: ReactNode;
+    maxWidth?: React.CSSProperties['maxWidth'];
 }
-export declare const TableTitle: ({ children, width, className, draggable, }: TableTitleProps) => JSX.Element;
+export declare const TableTitle: ({ children, className, maxWidth, }: TableTitleProps) => JSX.Element;
