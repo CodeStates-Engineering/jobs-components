@@ -1,5 +1,5 @@
 import type { ReactNode, MouseEvent } from 'react';
-interface TagProps {
+export interface TagProps extends Pick<React.CSSProperties, 'width'> {
     color?: 'green50' | 'purple50' | 'blue50' | 'peach50' | 'orange50' | 'bluish-gray50';
     size?: '14' | '18' | '26';
     className?: string;
@@ -7,5 +7,4 @@ interface TagProps {
     onClose?: (e?: MouseEvent<HTMLButtonElement>) => void;
     onClick?: () => void;
 }
-export declare const Tag: ({ color, size, className, children, onClose, onClick, }: TagProps) => JSX.Element | null;
-export {};
+export declare const Tag: ({ color, size, width, className, children, onClose, onClick, }: TagProps) => JSX.Element | null;
