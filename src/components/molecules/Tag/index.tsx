@@ -1,12 +1,12 @@
 import type { ReactNode, MouseEvent } from 'react';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { X } from 'react-feather';
 
 import styles from './index.module.scss';
 import { cleanClassName } from '../../../utils';
 import { Button } from '../../atoms/Button';
 
-interface TagProps {
+export interface TagProps extends Pick<React.CSSProperties, 'width'> {
   color?:
     | 'green50'
     | 'purple50'
@@ -24,12 +24,14 @@ interface TagProps {
 export const Tag = ({
   color = 'green50',
   size = '18',
+  width,
   className,
   children,
   onClose = undefined,
   onClick,
 }: TagProps) => {
   const [display, setDisplay] = useState(true);
+  const style = useMemo(() => ({ width }), [width]);
 
   return display ? (
     <div
@@ -38,6 +40,7 @@ export const Tag = ({
           onClick && styles.clickable
         } ${className}`,
       )}
+      style={style}
       onClick={() => onClick?.()}
     >
       <span

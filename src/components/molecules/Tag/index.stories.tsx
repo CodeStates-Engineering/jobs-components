@@ -9,6 +9,7 @@ const meta: Meta<typeof Tag> = {
     (Story) => (
       <article
         style={{
+          width: '100%',
           display: 'flex',
           gap: '10px',
           flexWrap: 'wrap',
@@ -19,6 +20,14 @@ const meta: Meta<typeof Tag> = {
       </article>
     ),
   ],
+  argTypes: {
+    width: {
+      description: '컴포넌트의 가로 크기를 설정합니다.',
+      control: {
+        type: 'text',
+      },
+    },
+  },
 };
 
 export default meta;

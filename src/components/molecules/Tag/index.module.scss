@@ -18,13 +18,10 @@
 .tag-container {
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .tag-content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
   &.size-14 {
     padding: 3px 8px 1px 8px;
 
