@@ -165,12 +165,12 @@ export const WithContents: Story = {
             <Header />
           </DrawerModal.Header>
           <DrawerModal.Body>
-            <Table fixedTitleCount={3}>
+            <Table fixedColunmCount={3}>
               <Table.Header>
                 {new Array(TABLE_BODY.COLUMN_COUNT).fill(0).map((_, index) => (
                   <Table.Title
                     key={`key-${index}`}
-                    width={(() => {
+                    maxWidth={(() => {
                       switch (index) {
                         case TABLE_TITLE.LONG_TEXT_COLUMN:
                         case TABLE_TITLE.LONG_TEXT_COPYABLE_COLUMN:
