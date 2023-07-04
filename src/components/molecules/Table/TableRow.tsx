@@ -1,6 +1,6 @@
-import { useContext, Children } from 'react';
+import { Children } from 'react';
 
-import { TableContext } from '@contexts/TableContext';
+import { useTableData } from '@contexts/TableContext';
 import { cleanClassName } from '@utils';
 
 import styles from './TableRow.module.scss';
@@ -12,14 +12,14 @@ export interface TableRowProps {
 
 export const TableRow = ({ children, className }: TableRowProps) => {
   const {
-    tableState: { titles },
-  } = useContext(TableContext);
+    colunmDataListState: [colunmDataList],
+  } = useTableData();
 
   const childrenArray = Children.toArray(children);
 
   return (
     <tr className={cleanClassName(`${styles.row} ${className}`)}>
-      {titles.map(({ order: { origin } }) => childrenArray[origin])}
+      {colunmDataList.map(({ originalIndex }) => childrenArray[originalIndex])}
     </tr>
   );
 };

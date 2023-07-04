@@ -2,8 +2,11 @@
 
 .row {
   background-color: libs.$WHITE;
+
+  transition: background-color 0.3s;
   &:hover {
-    > .cell {
+    background-color: libs.$BLUISH-GRAY-10;
+    > td {
       background-color: libs.$BLUISH-GRAY-10;
     }
   }

@@ -1,10 +1,8 @@
-import { debounce } from 'lodash-es';
-
-import { useMemo, useState, useEffect } from 'react';
 import type { ReactNode } from 'react';
+import { useEffect } from 'react';
 
-import { TableContext } from '@contexts/TableContext';
-import type { TableState, TableContextValue } from '@contexts/TableContext';
+import { tableDataObserver, useTableData } from '@contexts/TableContext';
+import type { TableObserverProps } from '@contexts/TableContext';
 import { cleanClassName } from '@utils';
 
 import { TableBody } from './TableBody';
@@ -19,72 +17,44 @@ export type { TableTitleProps } from './TableTitle';
 export type { TableRowProps } from './TableRow';
 export type { TableCellProps } from './TableCell';
 export type { TableBodyProps } from './TableBody';
-export interface TableProps {
-  saveId?: string;
-  fixedTitleCount?: number;
+
+export interface TableProps
+  extends Partial<Pick<TableObserverProps, 'fixedColunmCount' | 'storageKey'>> {
   className?: string;
   children?: ReactNode;
 }
 
 export const Table = Object.assign(
-  ({
-    className,
-    children,
-    fixedTitleCount = 0,
-    saveId = 'test hyeokjae',
-  }: TableProps) => {
-    const [tableState, setTableState] = useState<TableState>({
-      titles: [],
-    });
-    const [isLeftScrolled, setIsLeftScrolled] = useState(false);
+  tableDataObserver(({ className, children, storageKey }: TableProps) => {
+    const {
+      colunmDataListState: [colunmDataList],
+      isHorizontalScrolledState: [, setIsHorizontalScrolled],
+    } = useTableData();
 
     useEffect(() => {
-      const debouncedResizeEvent = debounce(() => {
-        setTableState((prevState) => {
-          prevState.titles.forEach((title) => {
-            title.width = undefined;
-          });
+      if (storageKey) {
+        const colunmIndexList = colunmDataList.map(
+          ({ originalIndex }) => originalIndex,
+        );
 
-          return {
-            ...prevState,
-          };
-        });
-      }, 300);
-
-      window.addEventListener('resize', debouncedResizeEvent);
-      return () => window.removeEventListener('resize', debouncedResizeEvent);
-    }, []);
-
-    const tableContextValue: TableContextValue = useMemo(() => {
-      const isLoading = !tableState.titles.find(({ width }) => !!width);
-
-      if (saveId && !isLoading) {
-        window.localStorage.setItem(saveId, JSON.stringify(tableState));
+        window.localStorage.setItem(
+          storageKey,
+          JSON.stringify(colunmIndexList),
+        );
       }
-
-      return {
-        tableState,
-        setTableState,
-        fixedTitleCount,
-        isLeftScrolled,
-        isLoading,
-        saveId,
-      };
-    }, [tableState, saveId, fixedTitleCount, isLeftScrolled]);
+    }, [storageKey, colunmDataList]);
 
     return (
       <article
         className={cleanClassName(`${styles.table} ${className}`)}
-        onScroll={(e) => setIsLeftScrolled(e.currentTarget.scrollLeft > 0)}
+        onScroll={(e) =>
+          setIsHorizontalScrolled(e.currentTarget.scrollLeft > 0)
+        }
       >
-        <table>
-          <TableContext.Provider value={tableContextValue}>
-            {children}
-          </TableContext.Provider>
-        </table>
+        <table>{children}</table>
       </article>
     );
-  },
+  }),
   {
     Header: TableHeader,
     Title: TableTitle,

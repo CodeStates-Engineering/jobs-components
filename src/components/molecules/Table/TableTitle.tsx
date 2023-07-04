@@ -1,35 +1,34 @@
-import { isNumber } from 'lodash-es';
-
-import { useRef, useContext, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 import type { ReactNode } from 'react';
 
-import { TableContext } from '@contexts/TableContext';
+import { INITIAL } from '@constants';
+import { useTableData } from '@contexts/TableContext';
 import { cleanClassName } from '@utils';
 
 import styles from './TableTitle.module.scss';
 
 export interface TableTitleProps {
-  width?: React.CSSProperties['width'];
-  draggable?: boolean;
   className?: string;
   children?: ReactNode;
+  maxWidth?: React.CSSProperties['maxWidth'];
 }
 
 export const TableTitle = ({
   children,
-  width,
   className,
-  draggable = true,
+  maxWidth,
 }: TableTitleProps) => {
   const {
-    tableState,
-    setTableState,
-    fixedTitleCount,
-    isLeftScrolled,
-    isLoading,
-  } = useContext(TableContext);
-
-  const { titles } = tableState;
+    colunmDataListState: [colunmDataList, setColunmDataList],
+    hoveredColunmIndexState: [hoveredColunmIndex, setHoveredColunmIndex],
+    draggingColunmIndexState: [draggingColunmIndex, setDraggingColunmIndex],
+    dropTargetColunmIndexState: [
+      dropTargetColunmIndex,
+      setDropTargetColunmIndex,
+    ],
+    fixedColunmCount,
+    isHorizontalScrolledState: [isHorizontalScrolled],
+  } = useTableData();
 
   const ref = useRef<HTMLTableCellElement>(null);
 
@@ -37,79 +36,56 @@ export const TableTitle = ({
     const { current: element } = ref;
     if (element) {
       const { offsetWidth, cellIndex } = element;
-      if (width || !isLoading) {
-        setTableState((prevState) => {
-          prevState.titles[cellIndex].width = offsetWidth;
-          return { ...prevState };
-        });
-      }
+      setColunmDataList((prevState) => {
+        const newColunmDataList = [...prevState];
+        const colunmData = newColunmDataList[cellIndex];
+        if (colunmData) {
+          colunmData.width = offsetWidth;
+          colunmData.maxWidth = maxWidth;
+        }
+
+        return newColunmDataList;
+      });
     }
-  }, [ref, setTableState, width, isLoading]);
+  }, [setColunmDataList, maxWidth]);
 
-  const currentOrder = ref.current?.cellIndex ?? -1;
+  const currentIndex = ref.current?.cellIndex ?? INITIAL.INDEX;
 
-  const { draggingOrder, hoveredOrder, dropOrder } = tableState;
-
-  const setHoveredOrder = (hoveredOrder?: number) => {
-    if (draggingOrder === undefined) {
-      setTableState((prevState) => ({
-        ...prevState,
-        hoveredOrder,
-      }));
-    }
-  };
+  const isFixed = currentIndex < fixedColunmCount;
 
   const handleDrop = () => {
-    if (isNumber(draggingOrder) && currentOrder >= 0) {
-      let sortedTitles = [...titles];
+    if (
+      draggingColunmIndex !== INITIAL.INDEX &&
+      currentIndex !== INITIAL.INDEX
+    ) {
+      if (!isFixed) {
+        const [draggingColunmData] = colunmDataList.splice(
+          draggingColunmIndex ?? INITIAL.INDEX,
+          1,
+        );
 
-      const [draggingTitle] = sortedTitles.splice(draggingOrder ?? -1, 1);
-
-      sortedTitles = sortedTitles.sort(
-        (a, b) => a.order.current - b.order.current,
-      );
-
-      const { order } = titles[currentOrder];
-
-      sortedTitles = [
-        ...sortedTitles.slice(0, order.current),
-        draggingTitle,
-        ...sortedTitles.slice(order.current),
-      ];
-
-      sortedTitles.forEach((title, newOrder) => {
-        title.order.current = newOrder;
-      });
-
-      const newTableState = {
-        ...tableState,
-        titles: sortedTitles,
-        dropOrder: undefined,
-        draggingOrder: undefined,
-        hoveredOrder: undefined,
-      };
-
-      setTableState(newTableState);
-
-      setTimeout(() =>
-        setTableState({
-          ...newTableState,
-          hoveredOrder: currentOrder,
-        }),
-      );
+        const newColunmDataList = [
+          ...colunmDataList.slice(0, currentIndex),
+          draggingColunmData,
+          ...colunmDataList.slice(currentIndex),
+        ];
+        setColunmDataList(newColunmDataList);
+      }
+      setDraggingColunmIndex(INITIAL.INDEX);
+      setDropTargetColunmIndex(INITIAL.INDEX);
+      setTimeout(() => setHoveredColunmIndex(dropTargetColunmIndex), 33);
     }
   };
 
   let left = 0;
-  for (let i = 0; i < currentOrder; i += 1) {
-    left += titles[i]?.width ?? 0;
+  for (let i = 0; i < currentIndex; i += 1) {
+    left += colunmDataList[i]?.width ?? 0;
   }
 
-  const isDropTarget = dropOrder === currentOrder;
-  const isDragging = draggingOrder === currentOrder;
-  const isFixed = currentOrder < fixedTitleCount;
-  const isLastFixed = currentOrder === fixedTitleCount - 1;
-  const isHovered = hoveredOrder === currentOrder;
+  const isDropTarget = !isFixed && dropTargetColunmIndex === currentIndex;
+  const isDragging = !isFixed && draggingColunmIndex === currentIndex;
+  const isLastFixed = currentIndex === fixedColunmCount - 1;
+  const isHovered = hoveredColunmIndex === currentIndex;
   return (
     <th
       style={{
@@ -117,11 +93,11 @@ export const TableTitle = ({
       }}
       className={cleanClassName(
         `${styles.title} ${isFixed && styles.fixed} ${
-          isLastFixed && isLeftScrolled && styles.shadow
+          isLastFixed && isHorizontalScrolled && styles.shadow
         } ${isHovered && styles.hovered} ${
           isDropTarget &&
           (isDragging ||
-            ((draggingOrder ?? 0) > dropOrder
+            ((draggingColunmIndex ?? 0) > dropTargetColunmIndex
               ? styles['drop-left']
               : styles['drop-right']))
         } ${isDragging && (isDropTarget ? styles.restoring : styles.dragging)} 
@@ -131,29 +107,23 @@ export const TableTitle = ({
           } ${className}`,
       )}
       ref={ref}
-      draggable={draggable}
-      onMouseEnter={() => setHoveredOrder(currentOrder)}
-      onMouseLeave={() => setHoveredOrder()}
+      draggable={!isFixed}
+      onMouseEnter={() =>
+        setHoveredColunmIndex(
+          draggingColunmIndex === INITIAL.INDEX ? currentIndex : INITIAL.INDEX,
+        )
+      }
+      onMouseLeave={() => setHoveredColunmIndex(INITIAL.INDEX)}
       onDragOver={(e) => e.preventDefault()}
-      onDragStart={() =>
-        setTableState((prevState) => ({
-          ...prevState,
-          draggingOrder: currentOrder,
-        }))
-      }
-      onDragEnter={() =>
-        setTableState((prevState) => ({
-          ...prevState,
-          dropOrder: currentOrder,
-        }))
-      }
+      onDragStart={() => setDraggingColunmIndex(currentIndex)}
+      onDragEnter={() => setDropTargetColunmIndex(currentIndex)}
       onDrop={handleDrop}
     >
       <div
-        style={{
-          width,
-        }}
         className={styles['title-content']}
+        style={{
+          maxWidth,
+        }}
       >
         {children}
       </div>

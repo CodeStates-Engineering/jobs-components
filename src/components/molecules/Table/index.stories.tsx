@@ -1,44 +1,52 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { DUMMY } from '@utils';
+import { DUMMY } from '@constants';
 
 import { Table } from '.';
 
-const { TABLE_TITLE, TABLE_BODY, COMMON } = DUMMY;
+const ROW_COUNT = 10;
+const COLUMN_COUNT = 10;
+
+const COLUMN_INDEX = {
+  CAPYABLE: 4,
+  LONG_TEXT: 2,
+  LONG_TEXT_COPYABLE: 5,
+};
 
 const meta: Meta<typeof Table> = {
   title: 'molecules/Table',
   component: Table,
   argTypes: {
-    fixedTitleCount: {
+    fixedColunmCount: {
       control: 'number',
       description: '고정된 타이틀의 개수',
     },
   },
   args: {
-    fixedTitleCount: 3,
+    storageKey: 'test key',
+    fixedColunmCount: 3,
     children: (
       <>
         <Table.Header>
-          {new Array(TABLE_BODY.COLUMN_COUNT).fill(0).map((_, index) => (
+          {new Array(COLUMN_COUNT).fill(0).map((_, index) => (
             <Table.Title
               key={`key-${index}`}
-              width={(() => {
-                switch (index) {
-                  case TABLE_TITLE.LONG_TEXT_COLUMN:
-                  case TABLE_TITLE.LONG_TEXT_COPYABLE_COLUMN:
-                    return 100;
-                  default:
-                }
-              })()}
+              maxWidth={
+                [
+                  COLUMN_INDEX.LONG_TEXT,
+                  COLUMN_INDEX.LONG_TEXT_COPYABLE,
+                ].includes(index)
+                  ? '150px'
+                  : undefined
+              }
             >
               {(() => {
                 switch (index) {
-                  case TABLE_TITLE.COPYABLE_COLUMN:
+                  case COLUMN_INDEX.CAPYABLE:
                     return 'Copyable';
-                  case TABLE_TITLE.LONG_TEXT_COLUMN:
+                  case COLUMN_INDEX.LONG_TEXT:
                     return 'Long text';
-                  case TABLE_TITLE.LONG_TEXT_COPYABLE_COLUMN:
+                  case COLUMN_INDEX.LONG_TEXT_COPYABLE:
                     return 'Long text\ncopyable';
                   default:
                     return `Title ${index}`;
@@ -48,39 +56,37 @@ const meta: Meta<typeof Table> = {
           ))}
         </Table.Header>
         <Table.Body>
-          {new Array(TABLE_BODY.ROW_COUNT).fill(0).map((_, rowIndex) => (
+          {new Array(ROW_COUNT).fill(0).map((_, rowIndex) => (
             <Table.Row key={`row${rowIndex}`}>
-              {new Array(TABLE_BODY.COLUMN_COUNT)
-                .fill(0)
-                .map((_, cellIndex) => (
-                  <Table.Cell
-                    hoverStyle={{
-                      maxHeight: 200,
-                      maxWidth: 300,
-                    }}
-                    key={`Cell ${cellIndex}-${rowIndex}`}
-                    onCopy={(() => {
-                      switch (cellIndex) {
-                        case TABLE_TITLE.COPYABLE_COLUMN:
-                        case TABLE_TITLE.LONG_TEXT_COPYABLE_COLUMN:
-                          return (value) =>
-                            // eslint-disable-next-line no-alert
-                            window.alert(`${value} Copied!`);
-                        default:
-                      }
-                    })()}
-                  >
-                    {(() => {
-                      switch (cellIndex) {
-                        case TABLE_TITLE.LONG_TEXT_COLUMN:
-                        case TABLE_TITLE.LONG_TEXT_COPYABLE_COLUMN:
-                          return COMMON.TEXT_MIDDLE;
-                        default:
-                          return `Cell ${cellIndex}-${rowIndex}`;
-                      }
-                    })()}
-                  </Table.Cell>
-                ))}
+              {new Array(COLUMN_COUNT).fill(0).map((_, cellIndex) => (
+                <Table.Cell
+                  hoverStyle={{
+                    maxHeight: 200,
+                    maxWidth: 300,
+                  }}
+                  key={`Cell ${cellIndex}-${rowIndex}`}
+                  onCopy={(() => {
+                    switch (cellIndex) {
+                      case COLUMN_INDEX.CAPYABLE:
+                      case COLUMN_INDEX.LONG_TEXT_COPYABLE:
+                        return (value) =>
+                          // eslint-disable-next-line no-alert
+                          window.alert(`${value} Copied!`);
+                      default:
+                    }
+                  })()}
+                >
+                  {(() => {
+                    switch (cellIndex) {
+                      case COLUMN_INDEX.LONG_TEXT:
+                      case COLUMN_INDEX.LONG_TEXT_COPYABLE:
+                        return DUMMY.LONG_TEXT;
+                      default:
+                        return `Cell ${cellIndex}-${rowIndex}`;
+                    }
+                  })()}
+                </Table.Cell>
+              ))}
             </Table.Row>
           ))}
         </Table.Body>
