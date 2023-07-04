@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Copy } from 'react-feather';
 import nodeToString from 'react-node-to-string';
 
@@ -23,7 +23,7 @@ export const TableCell = ({
   hoverStyle,
 }: TableCellProps) => {
   const {
-    colunmDataListState: [colunmDataList],
+    colunmDataListState: [colunmDataList, setColunmDataList],
     hoveredColunmIndexState: [hoveredColunmIndex],
     draggingColunmIndexState: [draggingColunmIndex],
     dropTargetColunmIndexState: [dropTargetColunmIndex],
@@ -50,6 +50,10 @@ export const TableCell = ({
   const isLastFixed = currentIndex === fixedColunmCount - 1;
   const isTitleHovered = hoveredColunmIndex === currentIndex;
   const [isOverflow, setOverflow] = useState(true);
+
+  useEffect(() => {
+    setColunmDataList((colunmDataList) => [...colunmDataList]);
+  }, [children, setColunmDataList]);
 
   return (
     <td
