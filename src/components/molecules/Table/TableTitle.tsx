@@ -1,3 +1,5 @@
+import { debounce } from 'lodash-es';
+
 import { useRef, useEffect } from 'react';
 import type { ReactNode } from 'react';
 
@@ -35,17 +37,25 @@ export const TableTitle = ({
   useEffect(() => {
     const { current: element } = ref;
     if (element) {
-      const { offsetWidth, cellIndex } = element;
-      setColunmDataList((prevState) => {
-        const newColunmDataList = [...prevState];
-        const colunmData = newColunmDataList[cellIndex];
-        if (colunmData) {
-          colunmData.width = offsetWidth;
-          colunmData.maxWidth = maxWidth;
-        }
+      const resizeEvent = debounce(() => {
+        const { offsetWidth, cellIndex } = element;
+        setColunmDataList((prevState) => {
+          const newColunmDataList = [...prevState];
+          const colunmData = newColunmDataList[cellIndex];
 
-        return newColunmDataList;
-      });
+          if (colunmData) {
+            colunmData.width = offsetWidth;
+            colunmData.maxWidth = maxWidth;
+          }
+
+          return newColunmDataList;
+        });
+      }, 33);
+
+      resizeEvent();
+
+      window.document.addEventListener('resize', resizeEvent);
+      return () => window.document.removeEventListener('resize', resizeEvent);
     }
   }, [setColunmDataList, maxWidth]);
 
