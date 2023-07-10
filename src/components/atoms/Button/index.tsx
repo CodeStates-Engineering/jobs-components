@@ -1,7 +1,10 @@
 import { useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
 
-import { useTypographyClassName } from '@hooks';
+import {
+  useTypographyClassName,
+  useValidationMessageDynamicHeight,
+} from '@hooks';
 import type { UseTypographyClassNameParams } from '@hooks';
 import { Compatibility } from '@plugins';
 import { cleanClassName } from '@utils';
@@ -38,6 +41,7 @@ export interface ButtonProps
   padding?: boolean;
   focusOutline?: boolean;
   textAlign?: 'left' | 'center' | 'right';
+  validationMessage?: string | null;
 }
 
 export const Button = ({
@@ -58,9 +62,13 @@ export const Button = ({
   className,
   width,
   textAlign = 'center',
+  validationMessage,
 }: ButtonProps) => {
   const [delayState, setDelayState] = useState<'before' | 'delaying' | 'after'>(
     'after',
+  );
+  const { messageRef, wrapHeightStyle } = useValidationMessageDynamicHeight(
+    !!validationMessage,
   );
 
   const childrenType = useMemo(() => {
@@ -90,37 +98,53 @@ export const Button = ({
   const style = useMemo(() => ({ width }), [width]);
 
   return (
-    <button
-      type={type}
-      className={cleanClassName(
-        `${
-          isDelayButton ? styles['delayed-button'] : styles.button
-        } ${typographyClassName} ${focusOutline && styles['focus-outline']} ${
-          styles[`shape-${shape}`]
-        } ${styles[`size-${size}`]} ${
-          styles[`icon-direction-${iconDirection}`]
-        } ${styles[`children-type-${childrenType}`]} ${
-          styles[theme.replaceAll('/', '_')]
-        } ${padding && styles.padding} ${className}
+    <>
+      <button
+        type={type}
+        className={cleanClassName(
+          `${
+            isDelayButton ? styles['delayed-button'] : styles.button
+          } ${typographyClassName} ${focusOutline && styles['focus-outline']} ${
+            styles[`shape-${shape}`]
+          } ${styles[`size-${size}`]} ${
+            styles[`icon-direction-${iconDirection}`]
+          } ${styles[`children-type-${childrenType}`]} ${
+            styles[theme.replaceAll('/', '_')]
+          } ${padding && styles.padding} ${className}
         ${childrenType !== 'icon' && styles[`text-align-${textAlign}`]}
+        ${validationMessage && styles.error}
         `,
-      )}
-      onClick={onClick}
-      disabled={isDisabled}
-      style={style}
-    >
-      {delay && isDelayButton ? (
-        <div
-          className={`${styles['delay-bar']} ${isDelaying && styles.delaying}`}
-          style={{ transition: `transform ${delay / 1000}s linear` }}
-        />
-      ) : null}
-      {children && <div className={styles['button-content']}>{children}</div>}
-      {icon ? (
-        <div className={`${styles['button-content']} ${styles.icon}`}>
-          {icon}
-        </div>
-      ) : null}
-    </button>
+        )}
+        onClick={onClick}
+        disabled={isDisabled}
+        style={style}
+      >
+        {delay && isDelayButton ? (
+          <div
+            className={`${styles['delay-bar']} ${
+              isDelaying && styles.delaying
+            }`}
+            style={{ transition: `transform ${delay / 1000}s linear` }}
+          />
+        ) : null}
+        {children && <div className={styles['button-content']}>{children}</div>}
+        {icon ? (
+          <div className={`${styles['button-content']} ${styles.icon}`}>
+            {icon}
+          </div>
+        ) : null}
+      </button>
+      <div
+        className={`${validationMessage && styles['validation-message-wrap']}`}
+        style={wrapHeightStyle}
+      >
+        <p
+          ref={messageRef}
+          className={`${validationMessage && styles['validation-message']}`}
+        >
+          {validationMessage}
+        </p>
+      </div>
+    </>
   );
 };

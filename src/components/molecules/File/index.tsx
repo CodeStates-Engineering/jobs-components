@@ -162,11 +162,14 @@ export const File = ({
             theme="bluish-gray400/bluish-gray10/bluish-gray200"
             onClick={() => inputRef.current?.click()}
             width={inputStyle?.width}
+            validationMessage={validationMessage}
           >
             {children}
             {disabled ? null : FileInput}
           </Button>
-          <p className={styles.description}>{description}</p>
+          {!validationMessage && (
+            <p className={styles.description}>{description}</p>
+          )}
         </>
       )}
     </Label.WithInput>

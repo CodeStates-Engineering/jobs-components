@@ -175,6 +175,11 @@
   &.text-align-right {
     justify-content: right;
   }
+
+  // * Error
+  &.error {
+    @include border($PEACH-500, 2px);
+  }
 }
 
 .button-content {
@@ -204,6 +209,19 @@
   &.delaying {
     transform: translateX(100%);
   }
+}
+
+.validation-message-wrap {
+  height: 0;
+
+  transition: height 0.3s;
+}
+
+.validation-message {
+  @include shake-horizontal(0.9s);
+
+  color: $PEACH-500;
+  font-size: $SMALL;
 }
 
 //* Theme
