@@ -23,8 +23,7 @@ const meta: Meta<typeof Table> = {
     },
   },
   args: {
-    storageKey: 'test key',
-    fixedColumnCount: 3,
+    fixedColumnCount: 0,
     children: (
       <>
         <Table.Header>
