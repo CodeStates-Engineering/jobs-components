@@ -5,7 +5,7 @@ export type { TableTitleProps } from './TableTitle';
 export type { TableRowProps } from './TableRow';
 export type { TableCellProps } from './TableCell';
 export type { TableBodyProps } from './TableBody';
-export interface TableProps extends Partial<Pick<TableObserverProps, 'fixedColunmCount' | 'storageKey'>> {
+export interface TableProps extends Partial<Pick<TableObserverProps, 'fixedColumnCount' | 'storageKey'>> {
     className?: string;
     children?: ReactNode;
 }
