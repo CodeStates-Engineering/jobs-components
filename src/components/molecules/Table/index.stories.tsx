@@ -17,14 +17,14 @@ const meta: Meta<typeof Table> = {
   title: 'molecules/Table',
   component: Table,
   argTypes: {
-    fixedColunmCount: {
+    fixedColumnCount: {
       control: 'number',
       description: '고정된 타이틀의 개수',
     },
   },
   args: {
     storageKey: 'test key',
-    fixedColunmCount: 3,
+    fixedColumnCount: 3,
     children: (
       <>
         <Table.Header>

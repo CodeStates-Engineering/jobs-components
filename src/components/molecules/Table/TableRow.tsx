@@ -12,14 +12,14 @@ export interface TableRowProps {
 
 export const TableRow = ({ children, className }: TableRowProps) => {
   const {
-    colunmDataListState: [colunmDataList],
+    columnDataListState: [columnDataList],
   } = useTableData();
 
   const childrenArray = Children.toArray(children);
 
   return (
     <tr className={cleanClassName(`${styles.row} ${className}`)}>
-      {colunmDataList.map(({ originalIndex }) => childrenArray[originalIndex])}
+      {columnDataList.map(({ originalIndex }) => childrenArray[originalIndex])}
     </tr>
   );
 };

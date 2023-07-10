@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { Copy } from 'react-feather';
 import nodeToString from 'react-node-to-string';
 
@@ -23,37 +23,31 @@ export const TableCell = ({
   hoverStyle,
 }: TableCellProps) => {
   const {
-    colunmDataListState: [colunmDataList, setColunmDataList],
-    hoveredColunmIndexState: [hoveredColunmIndex],
-    draggingColunmIndexState: [draggingColunmIndex],
-    dropTargetColunmIndexState: [dropTargetColunmIndex],
+    columnDataListState: [columnDataList],
+    hoveredColumnIndexState: [hoveredColumnIndex],
+    draggingColumnIndexState: [draggingColumnIndex],
+    dropTargetColumnIndexState: [dropTargetColumnIndex],
     isHorizontalScrolledState: [isHorizontalScrolled],
-    fixedColunmCount,
-    isLoading,
+    fixedColumnCount,
   } = useTableData();
 
   const ref = useRef<HTMLTableCellElement>(null);
   const currentIndex = ref.current?.cellIndex ?? INITIAL.INDEX;
 
-  const { maxWidth } = colunmDataList[currentIndex ?? 0] ?? {};
+  const { maxWidth } = columnDataList[currentIndex ?? 0] ?? {};
 
-  let left = 0;
-  for (let i = 0; i < currentIndex; i += 1) {
-    left += colunmDataList[i]?.width ?? 0;
-  }
+  const left = columnDataList
+    .slice(0, currentIndex)
+    .reduce((acc, curr) => acc + (curr?.width ?? 0), 0);
 
   const [isHovered, setIsHovered] = useState(false);
 
-  const isFixed = currentIndex < fixedColunmCount;
-  const isDropTarget = !isFixed && dropTargetColunmIndex === currentIndex;
-  const isDragging = !isFixed && draggingColunmIndex === currentIndex;
-  const isLastFixed = currentIndex === fixedColunmCount - 1;
-  const isTitleHovered = hoveredColunmIndex === currentIndex;
+  const isFixed = currentIndex < fixedColumnCount;
+  const isDropTarget = !isFixed && dropTargetColumnIndex === currentIndex;
+  const isDragging = !isFixed && draggingColumnIndex === currentIndex;
+  const isLastFixed = currentIndex === fixedColumnCount - 1;
+  const isTitleHovered = hoveredColumnIndex === currentIndex;
   const [isOverflow, setOverflow] = useState(true);
-
-  useEffect(() => {
-    setColunmDataList((colunmDataList) => [...colunmDataList]);
-  }, [children, setColunmDataList]);
 
   return (
     <td
@@ -67,7 +61,7 @@ export const TableCell = ({
         } ${isTitleHovered && styles.hovered} ${
           isDropTarget &&
           (isDragging ||
-            ((draggingColunmIndex ?? 0) > dropTargetColunmIndex
+            ((draggingColumnIndex ?? 0) > dropTargetColumnIndex
               ? styles['drop-left']
               : styles['drop-right']))
         } ${
@@ -83,17 +77,15 @@ export const TableCell = ({
           isOverflow ? styles.overflow : styles['not-overflow']
         }`}
         onMouseEnter={({ currentTarget }) => {
-          if (!isLoading) {
-            const isOverflow =
-              currentTarget.scrollWidth > currentTarget.clientWidth;
+          const isOverflow =
+            currentTarget.scrollWidth > currentTarget.clientWidth;
 
-            if (isOverflow || onCopy) {
-              setIsHovered(true);
-            }
+          if (isOverflow || onCopy) {
+            setIsHovered(true);
+          }
 
-            if (!isOverflow) {
-              setOverflow(false);
-            }
+          if (!isOverflow) {
+            setOverflow(false);
           }
         }}
         onMouseLeave={() => setIsHovered(false)}

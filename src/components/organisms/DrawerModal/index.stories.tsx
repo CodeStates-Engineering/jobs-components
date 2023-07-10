@@ -165,7 +165,7 @@ export const WithContents: Story = {
             <Header />
           </DrawerModal.Header>
           <DrawerModal.Body>
-            <Table fixedColunmCount={3}>
+            <Table fixedColumnCount={3}>
               <Table.Header>
                 {new Array(TABLE_BODY.COLUMN_COUNT).fill(0).map((_, index) => (
                   <Table.Title

@@ -1,5 +1,3 @@
-import { debounce } from 'lodash-es';
-
 import { useRef, useEffect } from 'react';
 import type { ReactNode } from 'react';
 
@@ -9,10 +7,11 @@ import { cleanClassName } from '@utils';
 
 import styles from './TableTitle.module.scss';
 
+type MaxWidth = React.CSSProperties['maxWidth'];
 export interface TableTitleProps {
   className?: string;
   children?: ReactNode;
-  maxWidth?: React.CSSProperties['maxWidth'];
+  maxWidth?: MaxWidth;
 }
 
 export const TableTitle = ({
@@ -21,81 +20,87 @@ export const TableTitle = ({
   maxWidth,
 }: TableTitleProps) => {
   const {
-    colunmDataListState: [colunmDataList, setColunmDataList],
-    hoveredColunmIndexState: [hoveredColunmIndex, setHoveredColunmIndex],
-    draggingColunmIndexState: [draggingColunmIndex, setDraggingColunmIndex],
-    dropTargetColunmIndexState: [
-      dropTargetColunmIndex,
-      setDropTargetColunmIndex,
+    columnDataListState: [columnDataList, setColumnDataList],
+    hoveredColumnIndexState: [hoveredColumnIndex, setHoveredColumnIndex],
+    draggingColumnIndexState: [draggingColumnIndex, setDraggingColumnIndex],
+    dropTargetColumnIndexState: [
+      dropTargetColumnIndex,
+      setDropTargetColumnIndex,
     ],
-    fixedColunmCount,
+    fixedColumnCount,
     isHorizontalScrolledState: [isHorizontalScrolled],
   } = useTableData();
 
   const ref = useRef<HTMLTableCellElement>(null);
 
   useEffect(() => {
-    const { current: element } = ref;
-    if (element) {
-      const resizeEvent = debounce(() => {
-        const { offsetWidth, cellIndex } = element;
-        setColunmDataList((prevState) => {
-          const newColunmDataList = [...prevState];
-          const colunmData = newColunmDataList[cellIndex];
-
-          if (colunmData) {
-            colunmData.width = offsetWidth;
-            colunmData.maxWidth = maxWidth;
+    const currentIndex = ref.current?.cellIndex ?? INITIAL.INDEX;
+    if (currentIndex !== INITIAL.INDEX && ref.current) {
+      const isTrackingRequired = currentIndex < fixedColumnCount - 1;
+      const updateColumnWidth = (maxWidth: MaxWidth, width?: number) => {
+        setColumnDataList((prevColumnDataList) => {
+          const newColumnDataList = [...prevColumnDataList];
+          const columnData = newColumnDataList[currentIndex];
+          if (columnData) {
+            columnData.width = width;
+            columnData.maxWidth = maxWidth;
           }
 
-          return newColunmDataList;
+          return newColumnDataList;
         });
-      }, 33);
+      };
 
-      resizeEvent();
+      if (isTrackingRequired) {
+        const observer = new ResizeObserver(([entry]) => {
+          updateColumnWidth(maxWidth, entry.contentRect.width);
+        });
 
-      window.document.addEventListener('resize', resizeEvent);
-      return () => window.document.removeEventListener('resize', resizeEvent);
+        observer.observe(ref.current);
+
+        return () => observer.disconnect();
+      }
+
+      updateColumnWidth(maxWidth);
     }
-  }, [setColunmDataList, maxWidth]);
+  }, [fixedColumnCount, maxWidth, setColumnDataList]);
 
   const currentIndex = ref.current?.cellIndex ?? INITIAL.INDEX;
 
-  const isFixed = currentIndex < fixedColunmCount;
+  const isFixed = currentIndex < fixedColumnCount;
 
   const handleDrop = () => {
     if (
-      draggingColunmIndex !== INITIAL.INDEX &&
+      draggingColumnIndex !== INITIAL.INDEX &&
       currentIndex !== INITIAL.INDEX
     ) {
       if (!isFixed) {
-        const [draggingColunmData] = colunmDataList.splice(
-          draggingColunmIndex ?? INITIAL.INDEX,
+        const [draggingColumnData] = columnDataList.splice(
+          draggingColumnIndex ?? INITIAL.INDEX,
           1,
         );
 
-        const newColunmDataList = [
-          ...colunmDataList.slice(0, currentIndex),
-          draggingColunmData,
-          ...colunmDataList.slice(currentIndex),
+        const newColumnDataList = [
+          ...columnDataList.slice(0, currentIndex),
+          draggingColumnData,
+          ...columnDataList.slice(currentIndex),
         ];
-        setColunmDataList(newColunmDataList);
+        setColumnDataList(newColumnDataList);
       }
-      setDraggingColunmIndex(INITIAL.INDEX);
-      setDropTargetColunmIndex(INITIAL.INDEX);
-      setTimeout(() => setHoveredColunmIndex(dropTargetColunmIndex), 33);
+      setDraggingColumnIndex(INITIAL.INDEX);
+      setDropTargetColumnIndex(INITIAL.INDEX);
+      setTimeout(() => setHoveredColumnIndex(dropTargetColumnIndex), 33);
     }
   };
 
-  let left = 0;
-  for (let i = 0; i < currentIndex; i += 1) {
-    left += colunmDataList[i]?.width ?? 0;
-  }
+  const left = columnDataList
+    .slice(0, currentIndex)
+    .reduce((acc, curr) => acc + (curr?.width ?? 0), 0);
 
-  const isDropTarget = !isFixed && dropTargetColunmIndex === currentIndex;
-  const isDragging = !isFixed && draggingColunmIndex === currentIndex;
-  const isLastFixed = currentIndex === fixedColunmCount - 1;
-  const isHovered = hoveredColunmIndex === currentIndex;
+  const isDropTarget = !isFixed && dropTargetColumnIndex === currentIndex;
+  const isDragging = !isFixed && draggingColumnIndex === currentIndex;
+  const isLastFixed = currentIndex === fixedColumnCount - 1;
+  const isHovered = hoveredColumnIndex === currentIndex;
+
   return (
     <th
       style={{
@@ -107,7 +112,7 @@ export const TableTitle = ({
         } ${isHovered && styles.hovered} ${
           isDropTarget &&
           (isDragging ||
-            ((draggingColunmIndex ?? 0) > dropTargetColunmIndex
+            ((draggingColumnIndex ?? 0) > dropTargetColumnIndex
               ? styles['drop-left']
               : styles['drop-right']))
         } ${isDragging && (isDropTarget ? styles.restoring : styles.dragging)} 
@@ -119,14 +124,14 @@ export const TableTitle = ({
       ref={ref}
       draggable={!isFixed}
       onMouseEnter={() =>
-        setHoveredColunmIndex(
-          draggingColunmIndex === INITIAL.INDEX ? currentIndex : INITIAL.INDEX,
+        setHoveredColumnIndex(
+          draggingColumnIndex === INITIAL.INDEX ? currentIndex : INITIAL.INDEX,
         )
       }
-      onMouseLeave={() => setHoveredColunmIndex(INITIAL.INDEX)}
+      onMouseLeave={() => setHoveredColumnIndex(INITIAL.INDEX)}
       onDragOver={(e) => e.preventDefault()}
-      onDragStart={() => setDraggingColunmIndex(currentIndex)}
-      onDragEnter={() => setDropTargetColunmIndex(currentIndex)}
+      onDragStart={() => setDraggingColumnIndex(currentIndex)}
+      onDragEnter={() => setDropTargetColumnIndex(currentIndex)}
       onDrop={handleDrop}
     >
       <div

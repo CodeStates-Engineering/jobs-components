@@ -13,35 +13,35 @@ export interface TableHeaderProps {
 
 export const TableHeader = ({ children, className }: TableHeaderProps) => {
   const {
-    colunmDataListState: [colunmDataList, setColunmDataList],
+    columnDataListState: [columnDataList, setColumnDataList],
     storageKey,
   } = useTableData();
   const titleCount = Children.count(children);
 
   useEffect(() => {
-    const savedColunmIndexList: number[] | undefined =
+    const savedColumnIndexList: number[] | undefined =
       (storageKey &&
         JSON.parse(window.localStorage.getItem(storageKey) || '')) ??
       undefined;
 
-    const initialColunmDataList = Array.from(
+    const initialColumnDataList = Array.from(
       {
         length: titleCount,
       },
       (_, index) => ({
-        originalIndex: savedColunmIndexList?.[index] ?? index,
+        originalIndex: savedColumnIndexList?.[index] ?? index,
       }),
     );
 
-    setColunmDataList(initialColunmDataList);
-  }, [setColunmDataList, storageKey, titleCount]);
+    setColumnDataList(initialColumnDataList);
+  }, [setColumnDataList, storageKey, titleCount]);
 
   const childrenArray = Children.toArray(children);
 
   return (
     <thead className={cleanClassName(`${styles.header} ${className}`)}>
       <tr>
-        {colunmDataList.map(
+        {columnDataList.map(
           ({ originalIndex }) => childrenArray[originalIndex],
         )}
       </tr>

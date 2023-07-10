@@ -19,7 +19,7 @@ export type { TableCellProps } from './TableCell';
 export type { TableBodyProps } from './TableBody';
 
 export interface TableProps
-  extends Partial<Pick<TableObserverProps, 'fixedColunmCount' | 'storageKey'>> {
+  extends Partial<Pick<TableObserverProps, 'fixedColumnCount' | 'storageKey'>> {
   className?: string;
   children?: ReactNode;
 }
@@ -27,22 +27,22 @@ export interface TableProps
 export const Table = Object.assign(
   tableDataObserver(({ className, children, storageKey }: TableProps) => {
     const {
-      colunmDataListState: [colunmDataList],
+      columnDataListState: [columnDataList],
       isHorizontalScrolledState: [, setIsHorizontalScrolled],
     } = useTableData();
 
     useEffect(() => {
       if (storageKey) {
-        const colunmIndexList = colunmDataList.map(
+        const columnIndexList = columnDataList.map(
           ({ originalIndex }) => originalIndex,
         );
 
         window.localStorage.setItem(
           storageKey,
-          JSON.stringify(colunmIndexList),
+          JSON.stringify(columnIndexList),
         );
       }
-    }, [storageKey, colunmDataList]);
+    }, [storageKey, columnDataList]);
 
     return (
       <article
