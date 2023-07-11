@@ -78,8 +78,8 @@ export const Theme: Story = {
           'bluish-gray400/0/bluish-gray200',
           'bluish-gray300/0',
         ] satisfies ButtonProps['theme'][]
-      ).map((theme) => (
-        <Button {...{ ...args, theme }}>{theme}</Button>
+      ).map((theme, key) => (
+        <Button {...{ ...args, theme, key }}>{theme}</Button>
       ))}
     </>
   ),
@@ -101,10 +101,8 @@ export const Size: Story = {
   render: (args) => (
     <>
       {(['small', 'medium', 'large'] satisfies ButtonProps['size'][]).map(
-        (size) => (
-          <Button {...{ ...args, size }} key={size}>
-            {size}
-          </Button>
+        (size, key) => (
+          <Button {...{ ...args, size, key }}>{size}</Button>
         ),
       )}
     </>
@@ -154,8 +152,8 @@ export const Delay: Story = {
           'purple600/0',
           'bluish-gray700/0',
         ] satisfies ButtonProps['theme'][]
-      ).map((theme) => (
-        <Button {...{ ...args, theme }} />
+      ).map((theme, key) => (
+        <Button {...{ ...args, theme, key }} />
       ))}
     </>
   ),

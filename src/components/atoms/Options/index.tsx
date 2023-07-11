@@ -28,6 +28,7 @@ export interface OptionsProps<
   className?: string;
   optionStyle?: UseTypographyClassNameParams &
     Pick<React.CSSProperties, 'width' | 'maxHeight'>;
+  cancelable?: boolean;
 }
 
 export const Options = <
@@ -43,6 +44,7 @@ export const Options = <
   float = 'bottom',
   className,
   optionStyle,
+  cancelable = true,
 }: OptionsProps<OptionValue, Multiple>) => {
   const [openState, setOpenState] = useState<boolean | 'closing' | 'opening'>(
     opened,
@@ -176,21 +178,30 @@ export const Options = <
                   if (multiple) {
                     const selectedValues = (selectedValue ??
                       []) as OptionValue[];
+
                     const handleChange = onChange as
                       | ((values: OptionValue[]) => void)
                       | undefined;
-                    handleChange?.(
-                      isSelected
-                        ? selectedValues.filter(
-                            (selectedValue) => selectedValue !== value,
-                          )
-                        : [...selectedValues, value],
-                    );
+
+                    let newValues = selectedValues;
+
+                    if (!isSelected) {
+                      newValues = [...selectedValues, value];
+                    } else if (cancelable) {
+                      newValues = selectedValues.filter(
+                        (selectedValue) => selectedValue !== value,
+                      );
+                    }
+
+                    handleChange?.(newValues);
                   } else {
                     const handleChange = onChange as
                       | ((value?: OptionValue) => void)
                       | undefined;
-                    handleChange?.(isSelected ? undefined : value);
+
+                    handleChange?.(
+                      isSelected && cancelable ? undefined : value,
+                    );
                   }
                 }}
                 onMouseEnter={() => {

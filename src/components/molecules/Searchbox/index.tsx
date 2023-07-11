@@ -148,6 +148,7 @@ export const Searchbox = ({
             setOpened(false);
             handleChange(value);
           }}
+          cancelable={false}
           float={float}
         />
       </FocusLayer>
