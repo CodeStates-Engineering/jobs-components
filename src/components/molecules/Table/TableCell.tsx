@@ -29,6 +29,7 @@ export const TableCell = ({
     dropTargetColumnIndexState: [dropTargetColumnIndex],
     isHorizontalScrolledState: [isHorizontalScrolled],
     fixedColumnCount,
+    isReady,
   } = useTableData();
 
   const ref = useRef<HTMLTableCellElement>(null);
@@ -48,6 +49,24 @@ export const TableCell = ({
   const isLastFixed = currentIndex === fixedColumnCount - 1;
   const isTitleHovered = hoveredColumnIndex === currentIndex;
   const [isOverflow, setOverflow] = useState(true);
+
+  const mouseEventHandler = isReady
+    ? {
+        onMouseEnter: (({ currentTarget }) => {
+          const isOverflow =
+            currentTarget.scrollWidth > currentTarget.clientWidth;
+
+          if (isOverflow || onCopy) {
+            setIsHovered(true);
+          }
+
+          if (!isOverflow) {
+            setOverflow(false);
+          }
+        }) satisfies React.MouseEventHandler<HTMLDivElement>,
+        onMouseLeave: () => setIsHovered(false),
+      }
+    : {};
 
   return (
     <td
@@ -70,25 +89,13 @@ export const TableCell = ({
       )}
     >
       <div
+        {...mouseEventHandler}
         style={{
           maxWidth,
         }}
         className={`${styles['cell-content-container']} ${
           isOverflow ? styles.overflow : styles['not-overflow']
         }`}
-        onMouseEnter={({ currentTarget }) => {
-          const isOverflow =
-            currentTarget.scrollWidth > currentTarget.clientWidth;
-
-          if (isOverflow || onCopy) {
-            setIsHovered(true);
-          }
-
-          if (!isOverflow) {
-            setOverflow(false);
-          }
-        }}
-        onMouseLeave={() => setIsHovered(false)}
       >
         {isHovered ? <div className={styles.hidden}>{children}</div> : children}
         {isHovered ? (

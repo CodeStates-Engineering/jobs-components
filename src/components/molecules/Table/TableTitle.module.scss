@@ -22,13 +22,17 @@
 @mixin fixed {
   .fixed {
     position: sticky;
-    z-index: 4;
 
     &.shadow {
       box-shadow: 4px 0px 4px rgba(0, 0, 0, 0.08);
     }
   }
 }
+
+.fixed {
+  z-index: 7;
+}
+
 @include fixed;
 
 .title-content {

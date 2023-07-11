@@ -4,7 +4,7 @@ import { DUMMY } from '@constants';
 
 import { Table } from '.';
 
-const ROW_COUNT = 10;
+const ROW_COUNT = 20;
 const COLUMN_COUNT = 10;
 
 const COLUMN_INDEX = {
@@ -23,7 +23,7 @@ const meta: Meta<typeof Table> = {
     },
   },
   args: {
-    fixedColumnCount: 0,
+    fixedColumnCount: 2,
     children: (
       <>
         <Table.Header>

@@ -29,6 +29,7 @@ export const Table = Object.assign(
     const {
       columnDataListState: [columnDataList],
       isHorizontalScrolledState: [, setIsHorizontalScrolled],
+      isReady,
     } = useTableData();
 
     useEffect(() => {
@@ -46,7 +47,11 @@ export const Table = Object.assign(
 
     return (
       <article
-        className={cleanClassName(`${styles.table} ${className}`)}
+        className={cleanClassName(
+          `${styles.table} ${
+            isReady ? styles.ready : styles.hidden
+          } ${className}`,
+        )}
         onScroll={(e) =>
           setIsHorizontalScrolled(e.currentTarget.scrollLeft > 0)
         }

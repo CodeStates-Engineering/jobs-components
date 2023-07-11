@@ -1,3 +1,5 @@
+import { debounce } from 'lodash-es';
+
 import type { ComponentType } from 'react';
 import { createContext, useState, useMemo, useContext } from 'react';
 
@@ -25,7 +27,7 @@ interface TableContextValue {
   dropTargetColumnIndexState: NumberState;
   fixedColumnCount: number;
   isHorizontalScrolledState: BooleanState;
-
+  isReady: boolean;
   storageKey?: string;
 }
 
@@ -45,6 +47,19 @@ export const tableDataObserver =
     const draggingColumnIndexState = useState<number>(INITIAL.INDEX);
     const hoveredColumnIndexState = useState<number>(INITIAL.INDEX);
     const dropTargetColumnIndexState = useState<number>(INITIAL.INDEX);
+    const [isReady, setIsReady] = useState<boolean>(false);
+
+    const ready = useMemo(
+      () =>
+        debounce(() => {
+          setIsReady(true);
+        }, 100),
+      [],
+    );
+
+    if (!isReady) {
+      ready();
+    }
 
     const isHorizontalScrolledState = useState(false);
 
@@ -57,6 +72,7 @@ export const tableDataObserver =
         fixedColumnCount,
         isHorizontalScrolledState,
         storageKey,
+        isReady,
       }),
       [
         columnDataListState,
@@ -66,6 +82,7 @@ export const tableDataObserver =
         hoveredColumnIndexState,
         isHorizontalScrolledState,
         storageKey,
+        isReady,
       ],
     );
 

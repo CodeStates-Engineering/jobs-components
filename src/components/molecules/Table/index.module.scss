@@ -1,7 +1,14 @@
 @use 'src/styles/libs' as libs;
 
 .table {
-  @include libs.fade-in(0.3s, 0.3s);
+  &.hidden {
+    visibility: hidden;
+  }
+
+  &.ready {
+    @include libs.fade-in(0.3s);
+  }
+
   overflow: auto;
 
   background-color: libs.$WHITE;
