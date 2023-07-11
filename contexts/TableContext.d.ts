@@ -17,6 +17,7 @@ interface TableContextValue {
     dropTargetColumnIndexState: NumberState;
     fixedColumnCount: number;
     isHorizontalScrolledState: BooleanState;
+    isReady: boolean;
     storageKey?: string;
 }
 export type TableObserverProps = Partial<Pick<TableContextValue, 'fixedColumnCount' | 'storageKey'>>;
