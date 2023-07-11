@@ -1,6 +1,5 @@
-
-import type{ ValidationStoreData} from '@contexts/ValidationContext';
-import {ValidationContext} from '@contexts/ValidationContext';
+import type { ValidationStoreData } from '@contexts/ValidationContext';
+import { ValidationContext } from '@contexts/ValidationContext';
 /**
  * @deprecated Use `validationObserver` instead.
  */
