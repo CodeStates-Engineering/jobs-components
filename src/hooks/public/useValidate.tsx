@@ -50,6 +50,7 @@ export const useValidate = () => {
 
   return {
     ...data,
+    validationMap: validationContext,
     validate,
   };
 };
@@ -59,11 +60,9 @@ export const validationObserver = <T extends object>(
 ) => {
   const validationStore: ValidationContextValue = new Map();
   // eslint-disable-next-line react/function-component-definition
-  return (props: T) =>
-    (
-      <ValidationContext.Provider value={validationStore}>
-        <Component {...props} />
-      </ValidationContext.Provider>
-    );
+  return (props: T) => (
+    <ValidationContext.Provider value={validationStore}>
+      <Component {...props} />
+    </ValidationContext.Provider>
+  );
 };
-
