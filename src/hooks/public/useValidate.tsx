@@ -59,7 +59,7 @@ export const validationObserver = <T extends object>(
 ) => {
   const validationStore: ValidationContextValue = new Map();
   // eslint-disable-next-line react/function-component-definition
-  return () => (props: T) =>
+  return (props: T) =>
     (
       <ValidationContext.Provider value={validationStore}>
         <Component {...props} />
