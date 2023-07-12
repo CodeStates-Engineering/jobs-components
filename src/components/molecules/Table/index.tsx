@@ -1,5 +1,4 @@
 import type { ReactNode } from 'react';
-import { useEffect } from 'react';
 
 import { tableDataObserver, useTableData } from '@contexts/TableContext';
 import type { TableObserverProps } from '@contexts/TableContext';
@@ -25,25 +24,11 @@ export interface TableProps
 }
 
 export const Table = Object.assign(
-  tableDataObserver(({ className, children, storageKey }: TableProps) => {
+  tableDataObserver(({ className, children }: TableProps) => {
     const {
-      columnDataListState: [columnDataList],
       isHorizontalScrolledState: [, setIsHorizontalScrolled],
       isReady,
     } = useTableData();
-
-    useEffect(() => {
-      if (storageKey) {
-        const columnIndexList = columnDataList.map(
-          ({ originalIndex }) => originalIndex,
-        );
-
-        window.localStorage.setItem(
-          storageKey,
-          JSON.stringify(columnIndexList),
-        );
-      }
-    }, [storageKey, columnDataList]);
 
     return (
       <article

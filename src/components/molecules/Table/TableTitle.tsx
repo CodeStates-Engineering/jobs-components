@@ -29,6 +29,7 @@ export const TableTitle = ({
     ],
     fixedColumnCount,
     isHorizontalScrolledState: [isHorizontalScrolled],
+    storageKey,
   } = useTableData();
 
   const ref = useRef<HTMLTableCellElement>(null);
@@ -85,9 +86,21 @@ export const TableTitle = ({
           ...columnDataList.slice(currentIndex),
         ];
         setColumnDataList(newColumnDataList);
+
+        if (storageKey) {
+          const columnIndexList = newColumnDataList.map(
+            ({ originalIndex }) => originalIndex,
+          );
+
+          window.localStorage.setItem(
+            storageKey,
+            JSON.stringify(columnIndexList),
+          );
+        }
       }
       setDraggingColumnIndex(INITIAL.INDEX);
       setDropTargetColumnIndex(INITIAL.INDEX);
+
       setTimeout(() => setHoveredColumnIndex(dropTargetColumnIndex), 33);
     }
   };

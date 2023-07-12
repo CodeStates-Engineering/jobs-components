@@ -24,6 +24,7 @@ const meta: Meta<typeof Table> = {
   },
   args: {
     fixedColumnCount: 2,
+    storageKey: 'table-test',
     children: (
       <>
         <Table.Header>

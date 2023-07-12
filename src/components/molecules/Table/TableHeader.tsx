@@ -19,19 +19,33 @@ export const TableHeader = ({ children, className }: TableHeaderProps) => {
   const titleCount = Children.count(children);
 
   useEffect(() => {
-    const savedColumnIndexList: number[] | undefined =
-      (storageKey &&
-        JSON.parse(window.localStorage.getItem(storageKey) || '')) ??
-      undefined;
-
     const initialColumnDataList = Array.from(
       {
         length: titleCount,
       },
-      (_, index) => ({
-        originalIndex: savedColumnIndexList?.[index] ?? index,
+      (_, originalIndex) => ({
+        originalIndex,
       }),
     );
+
+    if (storageKey) {
+      const savedColumnIndexListString =
+        window.localStorage.getItem(storageKey);
+
+      if (savedColumnIndexListString) {
+        const savedColumnIndexList: number[] | undefined = JSON.parse(
+          savedColumnIndexListString,
+        );
+
+        if (savedColumnIndexList?.length !== titleCount) {
+          window.localStorage.removeItem(storageKey);
+        } else {
+          initialColumnDataList.forEach((columnData, originalIndex) => {
+            columnData.originalIndex = savedColumnIndexList[originalIndex];
+          });
+        }
+      }
+    }
 
     setColumnDataList(initialColumnDataList);
   }, [setColumnDataList, storageKey, titleCount]);
