@@ -1,13 +1,13 @@
 /// <reference types="react" />
-import type { ValidationContextValue } from '@contexts/ValidationContext';
+interface ValidateResult {
+    isValid: boolean;
+    invalidElementIds: string[];
+}
 interface ValidateOptions {
     scrollToFirstInvalid?: boolean;
 }
 export declare const useValidate: () => {
-    validationMap: ValidationContextValue | null;
-    validate: ({ scrollToFirstInvalid }: ValidateOptions) => void;
-    isValid?: boolean | undefined;
-    invalidElementIds?: string[] | undefined;
+    validate: ({ scrollToFirstInvalid }: ValidateOptions) => ValidateResult;
 };
 export declare const validationObserver: <T extends object>(Component: (props: T) => JSX.Element | null) => (props: T) => JSX.Element;
 export {};
