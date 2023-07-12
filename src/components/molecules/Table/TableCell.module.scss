@@ -13,6 +13,9 @@
   &.hovered {
     background-color: libs.$BLUISH-GRAY-10;
   }
+  &:hover {
+    z-index: 5;
+  }
 }
 
 .fixed {

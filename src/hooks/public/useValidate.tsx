@@ -1,4 +1,4 @@
-import { useContext, useState, useCallback } from 'react';
+import { useContext, useCallback } from 'react';
 
 import { ValidationContext } from '@contexts/ValidationContext';
 import type { ValidationContextValue } from '@contexts/ValidationContext';
@@ -14,7 +14,6 @@ interface ValidateOptions {
 
 export const useValidate = () => {
   const validationContext = useContext(ValidationContext);
-  const [data, setData] = useState<ValidateResult>();
 
   const validate = useCallback(
     ({ scrollToFirstInvalid }: ValidateOptions) => {
@@ -43,14 +42,12 @@ export const useValidate = () => {
         });
       }
 
-      setData(validateResult);
+      return validateResult;
     },
     [validationContext],
   );
 
   return {
-    ...data,
-    validationMap: validationContext,
     validate,
   };
 };
