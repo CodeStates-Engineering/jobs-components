@@ -11,6 +11,7 @@ import {
   useSubscribedState,
   useTypographyClassName,
   useValidationMessage,
+  useValidationMessageDynamicHeight,
 } from '@hooks';
 import type { ValidateHandler, UseTypographyClassNameParams } from '@hooks';
 import { cleanClassName } from '@utils';
@@ -82,24 +83,8 @@ export const File = ({
     validationTrigger: 'onChange',
   });
 
-  const FileInput = (
-    <input
-      type="file"
-      id={id}
-      className={styles['file-input']}
-      ref={inputRef}
-      accept={accept}
-      disabled={!!disabled}
-      onChange={({ target: { files } }) => {
-        const file = files?.[0];
-        if (file) {
-          const savedFile = { name: file.name, url: URL.createObjectURL(file) };
-          onChange?.(file);
-          validateOnChange?.(savedFile);
-          setSavedFile?.(savedFile);
-        }
-      }}
-    />
+  const { messageRef, wrapHeightStyle } = useValidationMessageDynamicHeight(
+    !!validationMessage || !!description,
   );
 
   return (
@@ -109,6 +94,26 @@ export const File = ({
       inputStyle={inputStyle}
       labelStyle={labelStyle}
     >
+      <input
+        type="file"
+        id={id}
+        className={styles['file-input']}
+        ref={inputRef}
+        accept={accept}
+        disabled={!!disabled}
+        onChange={({ target: { files } }) => {
+          const file = files?.[0];
+          if (file) {
+            const savedFile = {
+              name: file.name,
+              url: URL.createObjectURL(file),
+            };
+            onChange?.(file);
+            validateOnChange?.(savedFile);
+            setSavedFile?.(savedFile);
+          }
+        }}
+      />
       {savedFile ? (
         <>
           <Input.Wrap
@@ -131,9 +136,7 @@ export const File = ({
             >
               {savedFile?.name}
             </a>
-            {disabled ? (
-              FileInput
-            ) : (
+            {
               <Button
                 icon={<X size="1em" />}
                 size="small3x"
@@ -148,11 +151,16 @@ export const File = ({
                   }
                 }}
               />
-            )}
+            }
           </Input.Wrap>
         </>
       ) : (
-        <>
+        <div
+          className={styles['upload-button-wrap']}
+          style={{
+            width: inputStyle?.width,
+          }}
+        >
           <Button
             size={inputStyle?.size}
             className={styles['upload-button']}
@@ -162,15 +170,25 @@ export const File = ({
             theme="bluish-gray400/bluish-gray10/bluish-gray200"
             onClick={() => inputRef.current?.click()}
             width={inputStyle?.width}
-            validationMessage={validationMessage}
           >
             {children}
-            {disabled ? null : FileInput}
           </Button>
-          {!validationMessage && (
-            <p className={styles.description}>{description}</p>
-          )}
-        </>
+          <div
+            className={`${styles['description-wrap']} ${
+              validationMessage && styles['validation-message-wrap']
+            }`}
+            style={wrapHeightStyle}
+          >
+            <p
+              ref={messageRef}
+              className={`${styles.description} ${
+                validationMessage && styles['validation-message']
+              }`}
+            >
+              {validationMessage || description}
+            </p>
+          </div>
+        </div>
       )}
     </Label.WithInput>
   );

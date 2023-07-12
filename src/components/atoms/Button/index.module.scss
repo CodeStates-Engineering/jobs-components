@@ -1,4 +1,4 @@
-@import '../../../styles/libs';
+@use 'src/styles/libs' as libs;
 
 @mixin default-theme(
   $textColor: transparent,
@@ -8,7 +8,7 @@
   background-color: $backgroundColor;
 
   color: $textColor;
-  @include border($border, 1px);
+  @include libs.border($border, 1px);
 
   &.delayed-button {
     &:disabled {
@@ -37,7 +37,7 @@
     background-color: $backgroundColor;
 
     color: $textColor;
-    @include border($border, 1px);
+    @include libs.border($border, 1px);
   }
 
   &.delayed-button > .delay-bar {
@@ -54,7 +54,7 @@
     background-color: $backgroundColor;
 
     color: $textColor;
-    @include border($border, 1px);
+    @include libs.border($border, 1px);
   }
 }
 
@@ -67,22 +67,7 @@
     background-color: $backgroundColor;
 
     color: $textColor;
-    @include border($border, 1px);
-  }
-}
-
-@mixin focus-theme(
-  $textColor: transparent,
-  $backgroundColor: transparent,
-  $border: transparent
-) {
-  &:not(:disabled):focus {
-    background-color: $backgroundColor;
-
-    color: $textColor;
-    &.focus-outline {
-      @include border($border, 2px);
-    }
+    @include libs.border($border, 1px);
   }
 }
 
@@ -175,11 +160,6 @@
   &.text-align-right {
     justify-content: right;
   }
-
-  // * Error
-  &.error {
-    @include border($PEACH-500, 2px);
-  }
 }
 
 .button-content {
@@ -211,88 +191,114 @@
   }
 }
 
-.validation-message-wrap {
-  height: 0;
-
-  transition: height 0.3s;
-}
-
-.validation-message {
-  @include shake-horizontal(0.9s);
-
-  color: $PEACH-500;
-  font-size: $SMALL;
-}
-
 //* Theme
 .white_purple600 {
-  @include default-theme($WHITE, $PURPLE-600);
-  @include disable-theme($PURPLE-10, $PURPLE-300);
-  @include hover-theme($WHITE, $PURPLE-550);
-  //@include focus-theme($WHITE, $PURPLE-600, $BLUE-500);
-  @include active-theme($WHITE, $PURPLE-700);
+  @include default-theme(libs.$WHITE, libs.$PURPLE-600);
+  @include disable-theme(libs.$PURPLE-10, libs.$PURPLE-300);
+  @include hover-theme(libs.$WHITE, libs.$PURPLE-550);
+  @include active-theme(libs.$WHITE, libs.$PURPLE-700);
 }
 
 .white_bluish-gray800 {
-  @include default-theme($WHITE, $BLUISH-GRAY-800);
-  @include disable-theme($BLUISH-GRAY-10, $BLUISH-GRAY-300);
-  @include hover-theme($WHITE, $BLUISH-GRAY-700);
-  //@include focus-theme($WHITE, $BLUISH-GRAY-800, $BLUE-500);
-  @include active-theme($WHITE, $BLUISH-GRAY-900);
+  @include default-theme(libs.$WHITE, libs.$BLUISH-GRAY-800);
+  @include disable-theme(libs.$BLUISH-GRAY-10, libs.$BLUISH-GRAY-300);
+  @include hover-theme(libs.$WHITE, libs.$BLUISH-GRAY-700);
+  @include active-theme(libs.$WHITE, libs.$BLUISH-GRAY-900);
 }
 
 .purple600_0 {
-  @include default-theme($PURPLE-600, transparent);
-  @include disable-theme($PURPLE-300, transparent);
-  @include hover-theme($PURPLE-600, $BLUISH-GRAY-10);
-  //@include focus-theme($PURPLE-600, $BLUISH-GRAY-100);
-  @include active-theme($PURPLE-600, transparent, $BLUE-500);
+  @include default-theme(libs.$PURPLE-600, transparent);
+  @include disable-theme(libs.$PURPLE-300, transparent);
+  @include hover-theme(libs.$PURPLE-600, libs.$BLUISH-GRAY-10);
+  @include active-theme(libs.$PURPLE-600, transparent, libs.$BLUE-500);
 }
 
 .bluish-gray700_0 {
-  @include default-theme($BLUISH-GRAY-700, transparent);
-  @include disable-theme($BLUISH-GRAY-300, transparent);
-  @include hover-theme($BLUISH-GRAY-700, $BLUISH-GRAY-10);
-  //@include focus-theme($BLUISH-GRAY-700, $BLUISH-GRAY-100);
-  @include active-theme($BLUISH-GRAY-700, transparent, $BLUE-500);
+  @include default-theme(libs.$BLUISH-GRAY-700, transparent);
+  @include disable-theme(libs.$BLUISH-GRAY-300, transparent);
+  @include hover-theme(libs.$BLUISH-GRAY-700, libs.$BLUISH-GRAY-10);
+  @include active-theme(libs.$BLUISH-GRAY-700, transparent, libs.$BLUE-500);
 }
 
 .bluish-gray300_0 {
-  @include default-theme($BLUISH-GRAY-300, transparent);
-  @include disable-theme($BLUISH-GRAY-300, transparent);
-  @include hover-theme($BLUISH-GRAY-300, $BLUISH-GRAY-10);
-  // @include focus-theme($BLUISH-GRAY-300, $BLUISH-GRAY-100);
-  @include active-theme($BLUISH-GRAY-300, transparent, $BLUE-500);
+  @include default-theme(libs.$BLUISH-GRAY-300, transparent);
+  @include disable-theme(libs.$BLUISH-GRAY-300, transparent);
+  @include hover-theme(libs.$BLUISH-GRAY-300, libs.$BLUISH-GRAY-10);
+  @include active-theme(libs.$BLUISH-GRAY-300, transparent, libs.$BLUE-500);
 }
 
 .bluish-gray500_0 {
-  @include default-theme($BLUISH-GRAY-500, transparent);
-  @include disable-theme($BLUISH-GRAY-300, transparent);
-  @include hover-theme($BLUISH-GRAY-500, $BLUISH-GRAY-10);
-  //@include focus-theme($BLUISH-GRAY-500, $BLUISH-GRAY-100);
-  @include active-theme($BLUISH-GRAY-500, transparent, $BLUE-500);
+  @include default-theme(libs.$BLUISH-GRAY-500, transparent);
+  @include disable-theme(libs.$BLUISH-GRAY-300, transparent);
+  @include hover-theme(libs.$BLUISH-GRAY-500, libs.$BLUISH-GRAY-10);
+  @include active-theme(libs.$BLUISH-GRAY-500, transparent, libs.$BLUE-500);
 }
 
 .bluish-gray400_0_bluish-gray200 {
-  @include default-theme($BLUISH-GRAY-400, transparent, $BLUISH-GRAY-200);
-  @include disable-theme($BLUISH-GRAY-300, $BLUISH-GRAY-10, $BLUISH-GRAY-200);
-  @include hover-theme($BLUISH-GRAY-400, $BLUISH-GRAY-50, $BLUISH-GRAY-200);
-  //@include focus-theme($BLUISH-GRAY-400, transparent, $BLUE-500);
-  @include active-theme($BLUISH-GRAY-400, $BLUISH-GRAY-100, $BLUISH-GRAY-200);
+  @include default-theme(
+    libs.$BLUISH-GRAY-400,
+    transparent,
+    libs.$BLUISH-GRAY-200
+  );
+  @include disable-theme(
+    libs.$BLUISH-GRAY-300,
+    libs.$BLUISH-GRAY-10,
+    libs.$BLUISH-GRAY-200
+  );
+  @include hover-theme(
+    libs.$BLUISH-GRAY-400,
+    libs.$BLUISH-GRAY-50,
+    libs.$BLUISH-GRAY-200
+  );
+  @include active-theme(
+    libs.$BLUISH-GRAY-400,
+    libs.$BLUISH-GRAY-100,
+    libs.$BLUISH-GRAY-200
+  );
 }
 
 .bluish-gray700_0_bluish-gray200 {
-  @include default-theme($BLUISH-GRAY-700, transparent, $BLUISH-GRAY-200);
-  @include disable-theme($BLUISH-GRAY-300, $BLUISH-GRAY-10, $BLUISH-GRAY-200);
-  @include hover-theme($BLUISH-GRAY-700, $BLUISH-GRAY-50, $BLUISH-GRAY-200);
-  //@include focus-theme($BLUISH-GRAY-700, transparent, $BLUE-500);
-  @include active-theme($BLUISH-GRAY-700, $BLUISH-GRAY-100, $BLUISH-GRAY-200);
+  @include default-theme(
+    libs.$BLUISH-GRAY-700,
+    transparent,
+    libs.$BLUISH-GRAY-200
+  );
+  @include disable-theme(
+    libs.$BLUISH-GRAY-300,
+    libs.$BLUISH-GRAY-10,
+    libs.$BLUISH-GRAY-200
+  );
+  @include hover-theme(
+    libs.$BLUISH-GRAY-700,
+    libs.$BLUISH-GRAY-50,
+    libs.$BLUISH-GRAY-200
+  );
+  @include active-theme(
+    libs.$BLUISH-GRAY-700,
+    libs.$BLUISH-GRAY-100,
+    libs.$BLUISH-GRAY-200
+  );
 }
 
 .bluish-gray400_bluish-gray10_bluish-gray200 {
-  @include default-theme($BLUISH-GRAY-400, $BLUISH-GRAY-10, $BLUISH-GRAY-200);
-  @include disable-theme($BLUISH-GRAY-300, $BLUISH-GRAY-50, $BLUISH-GRAY-200);
-  @include hover-theme($BLUISH-GRAY-700, $BLUISH-GRAY-50, $BLUISH-GRAY-200);
-  //@include focus-theme($BLUISH-GRAY-400, transparent, $BLUE-500);
-  @include active-theme($BLUISH-GRAY-700, $BLUISH-GRAY-100, $BLUISH-GRAY-200);
+  @include default-theme(
+    libs.$BLUISH-GRAY-400,
+    libs.$BLUISH-GRAY-10,
+    libs.$BLUISH-GRAY-200
+  );
+  @include disable-theme(
+    libs.$BLUISH-GRAY-300,
+    libs.$BLUISH-GRAY-50,
+    libs.$BLUISH-GRAY-200
+  );
+  @include hover-theme(
+    libs.$BLUISH-GRAY-700,
+    libs.$BLUISH-GRAY-50,
+    libs.$BLUISH-GRAY-200
+  );
+  @include active-theme(
+    libs.$BLUISH-GRAY-700,
+    libs.$BLUISH-GRAY-100,
+    libs.$BLUISH-GRAY-200
+  );
 }

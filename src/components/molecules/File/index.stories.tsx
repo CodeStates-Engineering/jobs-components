@@ -20,7 +20,7 @@ const meta: Meta<typeof File> = {
   ],
   args: {
     children: 'Upload',
-    validation: () => 'Test',
+
     label: 'File',
     labelStyle: {
       fontSize: 'small',

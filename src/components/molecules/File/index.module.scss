@@ -1,5 +1,9 @@
 @use 'src/styles/libs' as libs;
 
+.upload-button-wrap {
+  position: relative;
+}
+
 .upload-button {
   width: 100%;
 }
@@ -33,4 +37,11 @@
 
   color: libs.$BLUISH-GRAY-500;
   font-size: libs.$SMALL2X;
+
+  &.validation-message {
+    @include libs.shake-horizontal(0.9s);
+
+    color: libs.$PEACH-500;
+    font-size: libs.$SMALL;
+  }
 }
