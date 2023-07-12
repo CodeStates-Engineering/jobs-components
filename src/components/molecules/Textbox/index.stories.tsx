@@ -41,7 +41,6 @@ const meta: Meta<typeof Textbox> = {
         return 'Value is required';
       }
     },
-    description: '테스트',
   },
 };
 
@@ -64,12 +63,14 @@ export const Default: Story = {
         label="Large number"
         type="large-number"
         value={undefined}
+        description="테스트"
       />
       <Textbox
         {...args}
         label="Phone number"
         type="phone-number"
         value={undefined}
+        description="테스트"
       />
       <Textbox
         {...args}

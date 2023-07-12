@@ -52,21 +52,23 @@ export const InputWrap = ({
       >
         {children}
       </div>
-      <div
-        className={`${styles['description-wrap']} ${
-          validationMessage && styles['validation-message-wrap']
-        }`}
-        style={wrapHeightStyle}
-      >
-        <p
-          ref={messageRef}
-          className={`${styles.description} ${
-            validationMessage && styles['validation-message']
+      {(description || validationMessage) && (
+        <div
+          className={`${styles['description-wrap']} ${
+            validationMessage && styles['validation-message-wrap']
           }`}
+          style={wrapHeightStyle}
         >
-          {validationMessage || description}
-        </p>
-      </div>
+          <p
+            ref={messageRef}
+            className={`${styles.description} ${
+              validationMessage && styles['validation-message']
+            }`}
+          >
+            {validationMessage || description}
+          </p>
+        </div>
+      )}
     </div>
   );
 };
