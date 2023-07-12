@@ -1,19 +1,19 @@
-@import '../../../styles/libs';
+@use 'src/styles/libs' as libs;
 
 .dropdown {
   position: absolute;
   z-index: 10;
 
-  border: 1px solid $BLUISH-GRAY-100;
+  border: 1px solid libs.$BLUISH-GRAY-100;
   border-radius: 8px;
 
-  background-color: $WHITE;
+  background-color: libs.$WHITE;
   box-shadow: 0 0 8px rgb(152 151 151 / 8%), 0 4px 16px rgb(171 171 171 / 24%);
 
-  @include fade-in(0.3s);
+  @include libs.fade-in(0.3s);
 
   &.closing {
-    @include fade-out(0.3s);
+    @include libs.fade-out(0.3s);
   }
 }
 

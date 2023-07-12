@@ -45,6 +45,7 @@ export const Dropdown = ({
 
   return openState ? (
     <FocusLayer
+      bodyScroll
       focused={!!openState}
       onBlur={onClose}
       className={cleanClassName(
