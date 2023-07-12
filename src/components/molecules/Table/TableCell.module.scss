@@ -13,9 +13,6 @@
   &.hovered {
     background-color: libs.$BLUISH-GRAY-10;
   }
-  &:hover {
-    z-index: 6;
-  }
 }
 
 .fixed {
@@ -57,7 +54,7 @@
   position: absolute;
   top: 7px;
   left: 8px;
-  z-index: 3;
+  z-index: 10;
   display: flex;
   overflow: hidden;
 
