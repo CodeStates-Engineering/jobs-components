@@ -12,6 +12,8 @@ import { FocusLayer, Options, Input, Label } from '@components/atoms';
 import type { ValidateHandler, UseTypographyClassNameParams } from '@hooks';
 import { useSubscribedState, useValidationMessage } from '@hooks';
 
+import styles from './index.module.scss';
+
 export interface SelectboxProps<
   _ValidOptionValue = ValidOptionValue,
   _Multiple = boolean,
@@ -70,7 +72,12 @@ export const Selectbox = <
       labelStyle={labelStyle}
       className={className}
     >
-      <FocusLayer onBlur={() => setOpened(false)} focused={opened} bodyScroll>
+      <FocusLayer
+        onBlur={() => setOpened(false)}
+        focused={opened}
+        bodyScroll
+        className={styles['layer-width']}
+      >
         <Input.Wrap
           validationMessage={validationMessage}
           size={inputStyle?.size}

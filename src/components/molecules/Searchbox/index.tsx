@@ -16,6 +16,8 @@ import type {
 } from '@hooks';
 import { regex } from '@utils';
 
+import styles from './index.module.scss';
+
 export interface SearchboxProps
   extends Pick<
       InputProps<'text'>,
@@ -111,7 +113,12 @@ export const Searchbox = ({
       labelStyle={labelStyle}
       label={label}
     >
-      <FocusLayer onBlur={() => setOpened(false)} focused={opened} bodyScroll>
+      <FocusLayer
+        onBlur={() => setOpened(false)}
+        focused={opened}
+        className={styles['layer-width']}
+        bodyScroll
+      >
         <Input.Wrap
           validationMessage={validationMessage}
           onClick={onClick}
