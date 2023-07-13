@@ -4,9 +4,10 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import type { Meta, StoryObj } from '@storybook/react';
 
+import { Button } from '@components/atoms';
+import { DUMMY } from '@constants';
+
 import { Modal } from '.';
-import { DUMMY } from '../../../utils';
-import { Button } from '../../atoms';
 
 const meta: Meta<typeof Modal> = {
   title: 'organisms/Modal',
@@ -50,7 +51,7 @@ export const Default: Story = {
         >
           <Modal.Header />
           <Modal.Body>
-            <p>{DUMMY.COMMON.TEXT_MIDDLE}</p>
+            <p>{DUMMY.VERY_LONG_TEXT}</p>
           </Modal.Body>
           <Modal.Footer>footer children</Modal.Footer>
         </Modal>
@@ -99,7 +100,7 @@ export const WithTabMenu: Story = {
             ]}
           />
           <Modal.Body>
-            <p>{DUMMY.COMMON.TEXT_MIDDLE}</p>
+            <p>{DUMMY.VERY_LONG_TEXT}</p>
           </Modal.Body>
           <Modal.Footer>footer children</Modal.Footer>
         </Modal>

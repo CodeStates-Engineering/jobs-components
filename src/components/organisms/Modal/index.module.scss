@@ -47,7 +47,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-
+  &.with-tab {
+    padding: 0 24px;
+  }
   &.with-border {
     border-bottom: $BLUISH-GRAY-100 solid 1px;
   }

@@ -17,12 +17,23 @@ interface CommonProps {
   className?: string;
 }
 
+type FormType = 'section' | 'form';
+
 export interface ModalProps
   extends CommonProps,
-    Pick<FocusLayerProps, 'priority' | 'blur'> {
+    Pick<FocusLayerProps, 'priority' | 'blur'>,
+    Pick<
+      React.DetailedHTMLProps<
+        React.FormHTMLAttributes<HTMLFormElement>,
+        HTMLFormElement
+      >,
+      'onSubmit'
+    > {
   opened?: boolean;
   onClose?: () => void;
+  type?: FormType;
 }
+
 const ModalMain = ({
   children,
   className,
@@ -30,20 +41,32 @@ const ModalMain = ({
   onClose,
   priority = 1,
   blur = true,
-}: ModalProps) => (
-  <FocusLayer focused={opened} onBlur={onClose} blur={blur} priority={priority}>
-    {opened ? (
-      <article
-        className={cleanClassName(`${styles['modal-container']} ${className}`)}
-      >
-        <ModalContext.Provider value={onClose}>
-          {children}
-        </ModalContext.Provider>
-      </article>
-    ) : null}
-  </FocusLayer>
-);
+  type = 'section',
+  onSubmit,
+}: ModalProps) => {
+  const commonProps = {
+    className: cleanClassName(`${styles['modal-container']} ${className}`),
+    children: (
+      <ModalContext.Provider value={onClose}>{children}</ModalContext.Provider>
+    ),
+  };
 
+  return (
+    <FocusLayer
+      focused={opened}
+      onBlur={onClose}
+      blur={blur}
+      priority={priority}
+    >
+      {opened
+        ? {
+            section: <section {...commonProps} />,
+            form: <form {...commonProps} onSubmit={onSubmit} />,
+          }[type]
+        : null}
+    </FocusLayer>
+  );
+};
 export interface ModalHeaderProps extends CommonProps {
   border?: boolean;
 }
@@ -86,7 +109,7 @@ const ModalTabMenuHeader = ({
   return (
     <header
       className={cleanClassName(
-        `${styles['modal-header']} ${styles['tab-menu']} ${
+        `${styles['modal-header']} ${styles['with-tab']} ${
           border && styles['with-border']
         } ${className}`,
       )}
