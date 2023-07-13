@@ -5,9 +5,11 @@ interface CommonProps {
     children?: ReactNode;
     className?: string;
 }
-export interface ModalProps extends CommonProps, Pick<FocusLayerProps, 'priority' | 'blur'> {
+type FormType = 'section' | 'form';
+export interface ModalProps extends CommonProps, Pick<FocusLayerProps, 'priority' | 'blur'>, Pick<React.DetailedHTMLProps<React.FormHTMLAttributes<HTMLFormElement>, HTMLFormElement>, 'onSubmit'> {
     opened?: boolean;
     onClose?: () => void;
+    type?: FormType;
 }
 export interface ModalHeaderProps extends CommonProps {
     border?: boolean;
@@ -20,7 +22,7 @@ export type ModalBodyProps = CommonProps;
 export interface ModalFooterProps extends CommonProps {
     border?: boolean;
 }
-export declare const Modal: (({ children, className, opened, onClose, priority, blur, }: ModalProps) => JSX.Element) & {
+export declare const Modal: (({ children, className, opened, onClose, priority, blur, type, onSubmit, }: ModalProps) => JSX.Element) & {
     Header: ({ children, className, border, }: ModalHeaderProps) => JSX.Element;
     TabMenuHeader: ({ className, items, border, }: ModalTabMenuHeaderProps) => JSX.Element;
     Body: ({ children, className }: ModalBodyProps) => JSX.Element;
