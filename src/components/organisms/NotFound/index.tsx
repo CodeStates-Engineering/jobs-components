@@ -5,8 +5,8 @@ import NotFoundImage from '../../../assets/svgs/404.svg';
 
 export interface NotFoundProps {
   description: string;
-  buttonTitle: string;
-  onConfirm: () => void;
+  buttonTitle?: string;
+  onConfirm?: () => void;
 }
 
 export const NotFound = ({
@@ -21,13 +21,15 @@ export const NotFound = ({
       alt="page not found"
     />
     <p className={styles.description}>{description}</p>
-    <Button
-      width={'166px'}
-      onClick={() => {
-        onConfirm?.();
-      }}
-    >
-      {buttonTitle}
-    </Button>
+    {onConfirm && (
+      <Button
+        width={'166px'}
+        onClick={() => {
+          onConfirm?.();
+        }}
+      >
+        {buttonTitle}
+      </Button>
+    )}
   </div>
 );
