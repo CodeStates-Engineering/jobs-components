@@ -1,0 +1,22 @@
+@use 'src/styles/libs' as libs;
+
+.not-found-container {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  align-items: center;
+}
+
+.not-found-icon {
+  width: 200px;
+  height: 200px;
+}
+
+.description {
+  color: libs.$BLUISH-GRAY-700;
+  font-weight: 700;
+  font-size: libs.$LARGE;
+  line-height: 31.5px;
+  text-align: center;
+  white-space: pre-wrap;
+}
