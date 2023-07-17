@@ -7,7 +7,7 @@ interface ValidateOptions {
     scrollToFirstInvalid?: boolean;
 }
 export declare const useValidate: () => {
-    validate: ({ scrollToFirstInvalid }: ValidateOptions) => ValidateResult;
+    validate: (options?: ValidateOptions) => ValidateResult;
 };
 export declare const validationObserver: <T extends object>(Component: (props: T) => JSX.Element | null) => (props: T) => JSX.Element;
 export {};
