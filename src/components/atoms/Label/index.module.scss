@@ -42,3 +42,9 @@
     align-items: flex-start;
   }
 }
+
+@layer default {
+  .label-container {
+    width: 100%;
+  }
+}
