@@ -219,7 +219,11 @@ export const DateSelectbox = <TDateType extends DateType = 'single'>({
             id={id}
             type="text"
           />
-          <Calendar size="1.2em" className={styles['calendar-icon']} />
+          <Calendar
+            size="1.2em"
+            className={styles['calendar-icon']}
+            onClick={disabled ? undefined : () => setOpened(!opened)}
+          />
         </Input.Wrap>
         <Dropdown
           opened={opened}
