@@ -88,6 +88,7 @@ export const Selectbox = <
             onClick?.(e);
           }}
           description={description}
+          className={styles['align-end']}
         >
           <Input
             id={id}

@@ -126,6 +126,7 @@ export const Searchbox = ({
           width={inputStyle?.width}
           borderRadius={inputStyle?.borderRadius}
           description={description}
+          className={styles['align-end']}
         >
           <Input
             name={label}
