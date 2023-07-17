@@ -16,7 +16,9 @@ export const useValidate = () => {
   const validationContext = useContext(ValidationContext);
 
   const validate = useCallback(
-    ({ scrollToFirstInvalid }: ValidateOptions) => {
+    (options?: ValidateOptions) => {
+      const scrollToFirstInvalid = options?.scrollToFirstInvalid ?? true;
+
       const validateResult: ValidateResult = {
         isValid: true,
         invalidElementIds: [],
