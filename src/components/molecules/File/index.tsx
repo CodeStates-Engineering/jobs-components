@@ -140,7 +140,7 @@ export const File = ({
               <Button
                 icon={<X size="1em" />}
                 size="small3x"
-                shape="round"
+                shape="pill"
                 theme="bluish-gray700/0"
                 onClick={() => {
                   setSavedFile?.(undefined);

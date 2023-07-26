@@ -34,7 +34,7 @@ export const Pagination = ({
 }: PaginationProps) => {
   let commonButtonProps: ButtonProps = {
     size: 'small',
-    shape: 'round',
+    shape: 'pill',
     theme: 'bluish-gray500/0',
     fontSize: 'small',
     fontWeight: 500,
@@ -44,7 +44,7 @@ export const Pagination = ({
   if (type === 'simple') {
     commonButtonProps = {
       ...commonButtonProps,
-      shape: 'default',
+      shape: '8',
       theme: 'bluish-gray700/0/bluish-gray200',
     };
   }

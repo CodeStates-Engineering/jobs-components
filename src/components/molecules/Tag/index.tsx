@@ -57,7 +57,7 @@ export const Tag = ({
           size="small3x"
           className={`${styles['close-button']} ${styles[`close-${size}`]}`}
           theme="bluish-gray700/0"
-          shape="round"
+          shape="pill"
           onClick={(e) => {
             onClose?.(e);
             setDisplay(false);

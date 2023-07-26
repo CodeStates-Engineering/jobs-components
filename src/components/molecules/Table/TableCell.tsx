@@ -112,7 +112,7 @@ export const TableCell = ({
               <div className={styles['copy-button-wrap']}>
                 <Button
                   size="small3x"
-                  shape="round"
+                  shape="pill"
                   theme="bluish-gray700/0"
                   icon={<Copy size={14} />}
                   onClick={() => {
