@@ -112,6 +112,13 @@
     }
   }
 
+  &.size-small2x {
+    height: 26px;
+    &.children-type-icon {
+      width: 26px;
+    }
+  }
+
   &.size-small {
     height: 32px;
     &.children-type-icon {
@@ -134,12 +141,16 @@
   }
 
   //* Shape
-  &.shape-default {
+  &.shape-4 {
+    border-radius: 4px;
+  }
+
+  &.shape-8 {
     border-radius: 8px;
   }
 
-  &.shape-round {
-    border-radius: 50em;
+  &.shape-pill {
+    border-radius: 9999px;
   }
 
   //* Icon direction
@@ -232,6 +243,13 @@
   @include disable-theme(libs.$BLUISH-GRAY-300, transparent);
   @include hover-theme(libs.$BLUISH-GRAY-500, libs.$BLUISH-GRAY-10);
   @include active-theme(libs.$BLUISH-GRAY-500, transparent, libs.$BLUE-500);
+}
+
+.purple550_purple50_purple100 {
+  @include default-theme(libs.$PURPLE-550, libs.$PURPLE-50, libs.$PURPLE-100);
+  @include disable-theme(libs.$PURPLE-300, libs.$PURPLE-50, libs.$PURPLE-100);
+  @include hover-theme(libs.$PURPLE-550, libs.$PURPLE-50);
+  @include active-theme(libs.$PURPLE-550, libs.$PURPLE-200, libs.$PURPLE-100);
 }
 
 .bluish-gray400_0_bluish-gray200 {

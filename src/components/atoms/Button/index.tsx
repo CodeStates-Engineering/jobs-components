@@ -21,7 +21,7 @@ export interface ButtonProps
     UseTypographyClassNameParams,
     Pick<React.CSSProperties, 'width'> {
   delay?: number;
-  size?: 'small3x' | 'small' | 'medium' | 'large';
+  size?: 'small3x' | 'small2x' | 'small' | 'medium' | 'large';
   theme?:
     | 'white/purple600'
     | 'white/bluish-gray800'
@@ -31,10 +31,11 @@ export interface ButtonProps
     | 'bluish-gray500/0'
     | 'bluish-gray400/0/bluish-gray200'
     | 'bluish-gray700/0/bluish-gray200'
-    | 'bluish-gray400/bluish-gray10/bluish-gray200';
+    | 'bluish-gray400/bluish-gray10/bluish-gray200'
+    | 'purple550/purple50/purple100';
   icon?: ReactNode;
   iconDirection?: 'left' | 'right';
-  shape?: 'round' | 'default';
+  shape?: 'pill' | '8' | '4';
   padding?: boolean;
   focusOutline?: boolean;
   textAlign?: 'left' | 'center' | 'right';
@@ -48,7 +49,7 @@ export const Button = ({
   theme = 'white/purple600',
   onClick,
   disabled = false,
-  shape = 'default',
+  shape = '8',
   iconDirection = 'left',
   icon,
   padding = true,
