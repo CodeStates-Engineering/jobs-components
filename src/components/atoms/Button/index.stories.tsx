@@ -40,7 +40,7 @@ const meta: Meta<typeof Button> = {
     fontSize: 'normal',
     fontWeight: 700,
     iconDirection: 'left',
-    shape: 'default',
+    shape: '8',
   },
   decorators: [
     (Story) => (
@@ -88,7 +88,7 @@ export const Theme: Story = {
 export const Shape: Story = {
   render: (args) => (
     <>
-      {(['default', 'round'] satisfies ButtonProps['shape'][]).map((shape) => (
+      {(['pill', '8', '4'] satisfies ButtonProps['shape'][]).map((shape) => (
         <Button {...{ ...args, shape }} key={shape}>
           {shape}
         </Button>
@@ -121,7 +121,7 @@ export const Icon: Story = {
         flexDirection: 'column',
       }}
     >
-      {(['default', 'round'] satisfies ButtonProps['shape'][]).map((shape) => (
+      {(['pill', '8', '4'] satisfies ButtonProps['shape'][]).map((shape) => (
         <div
           style={{
             display: 'flex',

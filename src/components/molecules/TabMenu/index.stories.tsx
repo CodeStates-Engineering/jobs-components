@@ -66,7 +66,7 @@ export const Round: Story = {
           default: 'bluish-gray300/0',
           selected: 'white/purple600',
         }}
-        itemShape="round"
+        itemShape="8"
       />
     </>
   ),
