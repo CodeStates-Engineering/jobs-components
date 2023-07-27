@@ -1,6 +1,11 @@
 import { createContext } from 'react';
 
-export type ValidationContextValue = Map<string, () => string | undefined>;
+export type ValidationResult = string | undefined;
+
+export type ValidationContextValue = Map<
+  string,
+  () => ValidationResult | Promise<ValidationResult>
+>;
 
 /**
  * @deprecated Use `ValidationContextValue` instead.

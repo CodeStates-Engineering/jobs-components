@@ -1,9 +1,10 @@
 import { useState, useContext, useEffect } from 'react';
 
 import { ValidationContext } from '@contexts/ValidationContext';
+import type { ValidationResult } from '@contexts/ValidationContext';
 
 export type ValidateHandler<TValue> =
-  | ((value: TValue) => string | undefined)
+  | ((value: TValue) => ValidationResult | Promise<ValidationResult>)
   | undefined;
 
 export type ValidationTrigger = 'onChange' | 'onBlur';
@@ -27,8 +28,8 @@ export const useValidationMessage = <TValue,>({
 
   useEffect(() => {
     if (validationContext && key && validateHandler) {
-      validationContext.set(key, () => {
-        const validationMessage = validateHandler(value);
+      validationContext.set(key, async () => {
+        const validationMessage = await validateHandler(value);
         setValidationMessage(validationMessage);
         return validationMessage;
       });
@@ -41,11 +42,12 @@ export const useValidationMessage = <TValue,>({
 
   const validateOnTrigger = {
     onChange: {
-      validateOnChange: (value: TValue) =>
-        setValidationMessage(validateHandler?.(value)),
+      validateOnChange: async (value: TValue) =>
+        setValidationMessage(await validateHandler?.(value)),
     },
     onBlur: {
-      validateOnBlur: () => setValidationMessage(validateHandler?.(value)),
+      validateOnBlur: async () =>
+        setValidationMessage(await validateHandler?.(value)),
     },
   }[validationTrigger];
 
