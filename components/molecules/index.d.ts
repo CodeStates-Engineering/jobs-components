@@ -13,3 +13,4 @@ export * from './Tag';
 export * from './Switch';
 export * from './Dropdown';
 export * from './InfoCard';
+export * from './CheckTag';
