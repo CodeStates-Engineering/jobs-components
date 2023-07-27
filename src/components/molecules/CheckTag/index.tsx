@@ -2,6 +2,7 @@ import { Check } from 'react-feather';
 
 import { Button } from '@components/atoms';
 import { useSubscribedState } from '@hooks';
+import { cleanClassName } from '@utils';
 
 import styles from './index.module.scss';
 
@@ -28,7 +29,6 @@ export const CheckTag = ({
           ? 'purple550/purple50/purple100'
           : 'bluish-gray700/0/bluish-gray200'
       }
-      icon={checked ? <Check size={9} strokeWidth={4} /> : undefined}
       iconDirection="right"
       fontSize="small3x"
       fontWeight={500}
@@ -44,7 +44,14 @@ export const CheckTag = ({
             }
       }
     >
-      {children}
+      <div className={styles['children-container']}>
+        {children}
+        <Check
+          className={cleanClassName(
+            `${styles['check-icon']} ${checked || styles.hidden}`,
+          )}
+        />
+      </div>
     </Button>
   );
 };
