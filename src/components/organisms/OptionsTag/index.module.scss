@@ -1,0 +1,25 @@
+@use 'src/styles/libs' as libs;
+
+.dropdown-tag-container {
+  position: relative;
+
+  width: 300px;
+}
+
+.options {
+  left: 0;
+
+  width: fit-content;
+
+  font-size: libs.$SMALL;
+}
+
+.padding {
+  overflow: visible;
+
+  padding: 0 8px;
+}
+
+.default-value {
+  color: libs.$BLUISH-GRAY-400;
+}
