@@ -14,5 +14,8 @@ export type LinkProps = Omit<CompatibleLinkProps, 'className' | 'children' | 'to
     to?: string;
     target?: AnchorHTMLAttributes<HTMLAnchorElement>['target'];
 } & UseTypographyClassNameParams;
+/**
+ * @deprecated Next, React에 내장된 Anchor 확장 컴포넌트를 사용하세요.
+ */
 export declare const Link: ({ color, hoverType, fontSize, fontWeight, to, replace, type, className, children, target, ...restProps }: LinkProps) => JSX.Element;
 export {};
