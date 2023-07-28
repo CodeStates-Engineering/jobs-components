@@ -1,35 +1,45 @@
-import { useRef, useState } from 'react';
-import { Trash2, X } from 'react-feather';
+import { useRef } from 'react';
+import { X } from 'react-feather';
 
-import { Button, Options } from '@components/atoms';
-import { DUMMY } from '@constants';
+import type { ButtonProps } from '@components/atoms';
+import { Button } from '@components/atoms';
+import { Dropdown } from '@components/molecules';
+import { useClosableOnClickOpeningState } from '@hooks';
 import { cleanClassName } from '@utils';
 
 import styles from './index.module.scss';
 
-export interface DropdownTagProps {
+export interface DropdownTagProps
+  extends Pick<ButtonProps, 'icon' | 'className'> {
   avtive?: boolean;
   children?: React.ReactNode;
   onClickX?: () => void;
+  tagContent?: React.ReactNode;
 }
 
 export const DropdownTag = ({
-  avtive = false,
+  avtive,
   children,
   onClickX,
+  icon,
+  tagContent,
+  className,
 }: DropdownTagProps) => {
-  const [opened, setOpened] = useState(true);
+  const {
+    openingState: [opened, setOpened],
+    setClosableOnClick,
+  } = useClosableOnClickOpeningState();
+
   const isForClose = useRef(false);
-  const isOverOption = useRef(false);
 
   return (
     <div
       className={styles['dropdown-tag-container']}
       onMouseEnter={() => {
-        isOverOption.current = true;
+        setClosableOnClick(false);
       }}
       onMouseLeave={() => {
-        isOverOption.current = false;
+        setClosableOnClick(true);
       }}
     >
       <Button
@@ -45,7 +55,7 @@ export const DropdownTag = ({
         fontWeight={500}
         padding={false}
         shape="4"
-        icon={<Trash2 size={10} />}
+        icon={icon}
         onClick={() => {
           if (!isForClose.current) {
             setOpened((prev) => !prev);
@@ -53,7 +63,7 @@ export const DropdownTag = ({
         }}
       >
         <div className={styles['children-container']}>
-          {children}
+          {tagContent}
           <X
             onClick={onClickX}
             onMouseEnter={() => {
@@ -68,11 +78,12 @@ export const DropdownTag = ({
           />
         </div>
       </Button>
-      <Options
+      <Dropdown
         opened={opened}
-        options={DUMMY.OPTIONS}
-        className={styles.options}
-      />
+        className={cleanClassName(`${styles.dropdown} ${className}`)}
+      >
+        {children}
+      </Dropdown>
     </div>
   );
 };

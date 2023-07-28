@@ -1,7 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
-
 import { Button, Options } from '@components/atoms';
 import type { ButtonProps } from '@components/atoms';
+import { useClosableOnClickOpeningState } from '@hooks';
 import { cleanClassName } from '@utils';
 
 import styles from './index.module.scss';
@@ -24,23 +23,13 @@ export const OptionsTag = ({
   options,
   className,
 }: OptionsTagProps) => {
-  const [opened, setOpened] = useState(true);
-  const isForClose = useRef(false);
-  const isOverOption = useRef(false);
+  const {
+    openingState: [opened, setOpened],
+    setClosableOnClick,
+  } = useClosableOnClickOpeningState();
 
   const isDefault =
     options?.find(({ default: isDefault }) => isDefault)?.value === value;
-
-  useEffect(() => {
-    const handleClickedOutside = () => {
-      if (!isOverOption.current) {
-        setOpened(false);
-      }
-    };
-
-    document.addEventListener('click', handleClickedOutside);
-    return () => document.removeEventListener('click', handleClickedOutside);
-  }, []);
 
   return (
     <div
@@ -48,10 +37,10 @@ export const OptionsTag = ({
         `${styles['dropdown-tag-container']} ${className}`,
       )}
       onMouseEnter={() => {
-        isOverOption.current = true;
+        setClosableOnClick(false);
       }}
       onMouseLeave={() => {
-        isOverOption.current = false;
+        setClosableOnClick(true);
       }}
     >
       <Button
@@ -70,11 +59,7 @@ export const OptionsTag = ({
         padding={false}
         shape="4"
         icon={icon}
-        onClick={() => {
-          if (!isForClose.current) {
-            setOpened((prev) => !prev);
-          }
-        }}
+        onClick={() => setOpened((prev) => !prev)}
       >
         {value}
       </Button>
