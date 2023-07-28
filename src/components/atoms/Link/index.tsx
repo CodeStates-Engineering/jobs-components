@@ -36,6 +36,9 @@ export type LinkProps = Omit<
   target?: AnchorHTMLAttributes<HTMLAnchorElement>['target'];
 } & UseTypographyClassNameParams;
 
+/**
+ * @deprecated Next, React에 내장된 Anchor 확장 컴포넌트를 사용하세요.
+ */
 export const Link = ({
   color = 'puple-550',
   hoverType = 'underline',

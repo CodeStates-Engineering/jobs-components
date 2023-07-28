@@ -18,7 +18,6 @@ export const CheckTag = ({
   children,
 }: CheckTagProps) => {
   const [checked, setChecked] = useSubscribedState(value);
-  const isForClose = false;
 
   return (
     <Button
@@ -34,15 +33,11 @@ export const CheckTag = ({
       fontWeight={500}
       padding={false}
       shape="4"
-      onClick={
-        isForClose
-          ? undefined
-          : () => {
-              const newValue = !checked;
-              setChecked(newValue);
-              onChange?.(newValue);
-            }
-      }
+      onClick={() => {
+        const newValue = !checked;
+        setChecked(newValue);
+        onChange?.(newValue);
+      }}
     >
       <div className={styles['children-container']}>
         {children}

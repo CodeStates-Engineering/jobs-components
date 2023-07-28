@@ -43,3 +43,12 @@ export const VERY_LONG_TEXT = `Lorem ipsum dolor sit amet, consectetur adipiscin
   mattis nisi. Phasellus fringilla ut nisi ultrices convallis. Lorem ipsum
   dolor sit amet, consectetur adipiscing elit. Sed luctus est ut enim
   molestie, in condimentum eros aliquet.`;
+
+export const OPTIONS = Array.from({ length: 100 }, (_, index) => ({
+  label: `Test label ${index}${
+    index % 7 === 0
+      ? ' is long text: aurora sunrise eunoia vanilla iris adorable kitten laptop lucid sunrise shine banana adorable moonlight melody haze sunrise vanilla girlish blossom'
+      : ''
+  }`,
+  value: `${index}번 옵션이 선택`,
+}));
