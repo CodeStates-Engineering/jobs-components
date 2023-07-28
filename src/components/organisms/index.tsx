@@ -5,3 +5,5 @@ export * from './BackOfficePagination';
 export * from './DateSelectbox';
 export * from './PartnerAccordion';
 export * from './NotFound';
+export * from './OptionsTag';
+export * from './DropdownTag';
