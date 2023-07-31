@@ -12,12 +12,12 @@ export const createValidationStore = () => {
         {children}
       </ValidationContext.Provider>
     ),
-    validateAll: () => {
+    validateAll: async () => {
       let isValid = true;
       const invalidKeys: string[] = [];
 
-      data.forEach((validation, key) => {
-        if (validation()) {
+      data.forEach(async (validation, key) => {
+        if (await validation()) {
           isValid = false;
           invalidKeys.push(key);
         }
