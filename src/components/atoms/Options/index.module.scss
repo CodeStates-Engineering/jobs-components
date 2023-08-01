@@ -1,4 +1,4 @@
-@import '../../../styles/libs';
+@use 'src/styles/libs' as libs;
 
 .options {
   position: absolute;
@@ -10,10 +10,10 @@
   padding: 8px;
   border-radius: 10px;
 
-  background-color: $WHITE;
-  box-shadow: $NORMAL-BOX-SHADOW;
+  background-color: libs.$WHITE;
+  box-shadow: libs.$NORMAL-BOX-SHADOW;
 
-  color: $BLUISH-GRAY-700;
+  color: libs.$BLUISH-GRAY-700;
   &.closing,
   &.opening {
     cursor: default;
@@ -78,22 +78,27 @@
   outline: none;
 
   color: inherit;
-  font-weight: 400;
+
+  @layer {
+    & {
+      font-weight: 400;
+    }
+  }
   text-align: start;
   white-space: pre-wrap;
 
   cursor: pointer;
   &.selected {
-    background-color: $BLUE-10;
+    background-color: libs.$BLUE-10;
 
-    color: $BLUE-600;
+    color: libs.$BLUE-600;
   }
 }
 
 .hovered {
-  background-color: $BLUISH-GRAY-10;
+  background-color: libs.$BLUISH-GRAY-10;
 
-  color: $BLUISH-GRAY-700;
+  color: libs.$BLUISH-GRAY-700;
 }
 
 .icon-wrap {
