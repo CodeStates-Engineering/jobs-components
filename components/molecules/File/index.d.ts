@@ -10,6 +10,7 @@ export interface FileProps extends LabelWithInputProps {
     onChange?: (file?: File) => void;
     download?: boolean;
     disabled?: InputProps['disabled'];
+    readOnly?: InputProps['readOnly'];
     accept?: string;
     validation?: ValidateHandler<FileProps['value']>;
     id?: string;
@@ -18,5 +19,5 @@ export interface FileProps extends LabelWithInputProps {
     } & Pick<InputWrapProps, 'borderRadius' | 'width'> & UseTypographyClassNameParams;
     description?: InputWrapProps['description'];
 }
-export declare const File: ({ children, value, onChange, className, download, disabled, accept, validation, label, id, labelStyle, inputStyle, description, }: FileProps) => JSX.Element;
+export declare const File: ({ children, value, onChange, className, download, disabled, accept, validation, label, id, labelStyle, inputStyle, description, readOnly, }: FileProps) => JSX.Element;
 export {};
