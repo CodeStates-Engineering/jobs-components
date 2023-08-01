@@ -20,10 +20,10 @@
   }
 
   &.opening {
-    @include fade-in(0.3s);
+    @include libs.fade-in(0.3s);
   }
   &.closing {
-    @include fade-out(0.1s);
+    @include libs.fade-out(0.1s);
   }
 
   &.top {
