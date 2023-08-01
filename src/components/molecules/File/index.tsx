@@ -28,6 +28,7 @@ export interface FileProps extends LabelWithInputProps {
   onChange?: (file?: File) => void;
   download?: boolean;
   disabled?: InputProps['disabled'];
+  readOnly?: InputProps['readOnly'];
   accept?: string;
   validation?: ValidateHandler<FileProps['value']>;
   id?: string;
@@ -64,6 +65,7 @@ export const File = ({
   labelStyle,
   inputStyle,
   description,
+  readOnly,
 }: FileProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -74,7 +76,7 @@ export const File = ({
     fontWeight: inputStyle?.fontWeight,
   });
 
-  const isDownloadActive = disabled !== true;
+  const isClosable = !disabled && !readOnly;
 
   const { validationMessage, validateOnChange } = useValidationMessage({
     key: label,
@@ -122,13 +124,14 @@ export const File = ({
             size={inputStyle?.size}
             width={inputStyle?.width}
             description={description}
+            readOnly={readOnly}
           >
             <Paperclip size={getIconSizeBy(inputStyle?.size)} />
             <a
-              href={isDownloadActive ? savedFile?.url : undefined}
+              href={!disabled ? savedFile?.url : undefined}
               className={cleanClassName(
                 `${styles['download-link']} ${typographyClassName} ${
-                  isDownloadActive ? styles.actived : styles.disabled
+                  !disabled ? styles.actived : styles.disabled
                 }
                 `,
               )}
@@ -136,7 +139,7 @@ export const File = ({
             >
               {savedFile?.name}
             </a>
-            {
+            {isClosable && (
               <Button
                 icon={<X size="1em" />}
                 size="small3x"
@@ -151,7 +154,7 @@ export const File = ({
                   }
                 }}
               />
-            }
+            )}
           </Input.Wrap>
         </>
       ) : (

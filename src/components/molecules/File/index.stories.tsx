@@ -35,6 +35,7 @@ const meta: Meta<typeof File> = {
       size: 'large',
     },
     description: '테스트',
+    readOnly: false,
   },
 };
 

@@ -40,6 +40,7 @@ export interface DateSelectboxProps<TDateType extends DateType = 'single'>
       | 'id'
       | 'onClick'
       | 'ref'
+      | 'readOnly'
     >,
     Omit<LabelWithInputProps, 'children'> {
   label?: string;
@@ -75,6 +76,7 @@ export const DateSelectbox = <TDateType extends DateType = 'single'>({
   inputStyle,
   labelStyle,
   description,
+  readOnly,
 }: DateSelectboxProps<TDateType>) => {
   const [opened, setOpened] = useState(false);
   const [dateValue, setDateValue] = useSubscribedState(value);
@@ -85,7 +87,6 @@ export const DateSelectbox = <TDateType extends DateType = 'single'>({
   };
 
   const [inputValue, setInputValue] = useState('');
-
   const { validationMessage, validateOnChange } = useValidationMessage({
     validationTrigger: 'onChange',
     key: label,
@@ -202,6 +203,7 @@ export const DateSelectbox = <TDateType extends DateType = 'single'>({
           borderRadius={inputStyle?.borderRadius}
           width={inputStyle?.width}
           description={description}
+          readOnly={readOnly}
         >
           <Input
             {...inputProps}
@@ -216,6 +218,7 @@ export const DateSelectbox = <TDateType extends DateType = 'single'>({
               onFocus?.(e);
               setOpened(true);
             }}
+            readOnly={readOnly}
             id={id}
             type="text"
           />

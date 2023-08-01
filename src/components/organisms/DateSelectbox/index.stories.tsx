@@ -34,6 +34,7 @@ const meta: Meta<typeof DateSelectbox> = {
       size: 'large',
     },
     description: '테스트',
+    readOnly: false,
   },
 };
 
