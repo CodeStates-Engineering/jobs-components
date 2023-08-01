@@ -47,6 +47,7 @@ const meta: Meta<typeof Searchbox> = {
       size: 'large',
     },
     description: '테스트',
+    readOnly: false,
 
     validation: (value?: string) => {
       if (!value) {

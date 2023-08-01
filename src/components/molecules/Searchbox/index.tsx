@@ -40,6 +40,7 @@ export interface SearchboxProps
   hasSearchIcon?: boolean;
   validationTrigger?: ValidationTrigger;
   description?: InputWrapProps['description'];
+  readOnly?: InputWrapProps['readOnly'];
 }
 
 export const Searchbox = ({
@@ -63,6 +64,7 @@ export const Searchbox = ({
   hasSearchIcon = true,
   validationTrigger,
   description,
+  readOnly,
 }: SearchboxProps) => {
   const [opened, setOpened] = useState(false);
   const [inputText, setInputText] = useSubscribedState(value);
@@ -127,6 +129,7 @@ export const Searchbox = ({
           borderRadius={inputStyle?.borderRadius}
           description={description}
           className={styles['align-end']}
+          readOnly={readOnly}
         >
           <Input
             name={label}
@@ -144,6 +147,7 @@ export const Searchbox = ({
             disabled={disabled}
             placeholder={placeholder}
             onBlur={validateOnBlur}
+            readOnly={readOnly}
           />
           {hasSearchIcon ? <Search /> : null}
         </Input.Wrap>

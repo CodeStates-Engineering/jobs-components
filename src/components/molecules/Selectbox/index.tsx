@@ -22,7 +22,7 @@ export interface SelectboxProps<
       'options' | 'float' | 'onChange' | 'value' | 'multiple' | 'optionStyle'
     >,
     Pick<InputProps<'button'>, 'disabled' | 'placeholder' | 'id' | 'ref'>,
-    Pick<InputWrapProps, 'onClick'>,
+    Pick<InputWrapProps, 'onClick' | 'readOnly'>,
     Omit<LabelWithInputProps, 'children'> {
   validation?: ValidateHandler<SelectboxProps<_ValidOptionValue>['value']>;
   inputStyle?: Pick<InputWrapProps, 'borderRadius' | 'size' | 'width'> &
@@ -51,6 +51,7 @@ export const Selectbox = <
   multiple,
   optionStyle,
   description,
+  readOnly,
 }: SelectboxProps<_ValidOptionValue, _Multiple>) => {
   const [opened, setOpened] = useState(false);
 
@@ -89,6 +90,7 @@ export const Selectbox = <
           }}
           description={description}
           className={styles['align-end']}
+          readOnly={readOnly}
         >
           <Input
             id={id}
@@ -96,10 +98,11 @@ export const Selectbox = <
             type="button"
             ref={ref}
             value={selectedOption?.label}
-            disabled={disabled}
+            disabled={disabled || readOnly}
             placeholder={placeholder}
             fontSize={inputStyle?.fontSize}
             fontWeight={inputStyle?.fontWeight}
+            readOnly={readOnly}
           />
           <ChevronDown />
         </Input.Wrap>

@@ -55,6 +55,7 @@ const meta: Meta<typeof Selectbox> = {
       size: 'large',
     },
     description: '테스트',
+    readOnly: false,
   },
 };
 
