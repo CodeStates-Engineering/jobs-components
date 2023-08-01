@@ -9,5 +9,6 @@ export interface SearchboxProps extends Pick<InputProps<'text'>, 'value' | 'onCh
     hasSearchIcon?: boolean;
     validationTrigger?: ValidationTrigger;
     description?: InputWrapProps['description'];
+    readOnly?: InputWrapProps['readOnly'];
 }
-export declare const Searchbox: ({ float, value, options: stringOptions, onChange, selfFilter, disabled, placeholder, onFocus, id, onClick, ref, label, validation, className, inputStyle, labelStyle, optionStyle, hasSearchIcon, validationTrigger, description, }: SearchboxProps) => JSX.Element;
+export declare const Searchbox: ({ float, value, options: stringOptions, onChange, selfFilter, disabled, placeholder, onFocus, id, onClick, ref, label, validation, className, inputStyle, labelStyle, optionStyle, hasSearchIcon, validationTrigger, description, readOnly, }: SearchboxProps) => JSX.Element;
