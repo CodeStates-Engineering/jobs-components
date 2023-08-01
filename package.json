@@ -1,6 +1,6 @@
 {
   "name": "@codestates-engineering/codeship-platform-app-library",
-  "version": "0.3.45",
+  "version": "0.3.46",
   "packageManager": "pnpm@8.6.3",
   "type": "module",
   "main": "./dist/index.js",
