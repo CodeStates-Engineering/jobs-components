@@ -94,7 +94,9 @@ const InputMain: <T extends InputType = 'text'>(
         className={cleanClassName(
           `${styles.input} ${readOnly && styles['read-only']} ${
             type === 'button' && styles.button
-          } ${value || styles.empty} ${typographyClassName} ${className}`,
+          } ${value || styles.empty} ${typographyClassName} ${
+            !!onClick && styles.clickable
+          } ${className}`,
         )}
         disabled={!!disabled}
         onChange={({ target: { value } }) =>

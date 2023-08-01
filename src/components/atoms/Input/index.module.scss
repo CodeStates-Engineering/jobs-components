@@ -32,6 +32,12 @@
     }
 
     cursor: default;
+
+    &.clickable {
+      &:hover {
+        cursor: pointer;
+      }
+    }
   }
 }
 
