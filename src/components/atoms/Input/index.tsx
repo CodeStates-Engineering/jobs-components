@@ -28,11 +28,12 @@ export interface InputProps<T extends InputType = 'text'>
       | 'ref'
       | 'name'
       | 'className'
+      | 'readOnly'
     >,
     UseTypographyClassNameParams {
   type?: T;
   value?: T extends 'number' | 'large-number' ? number : string;
-  disabled?: boolean | 'read-only';
+  disabled?: boolean;
   onChange?: (value: InputProps<T>['value']) => void;
   ref?: Ref<HTMLInputElement>;
 }
@@ -55,6 +56,7 @@ const InputMain: <T extends InputType = 'text'>(
       onBlur,
       fontSize,
       fontWeight,
+      readOnly = false,
     },
     ref,
   ) => {
@@ -90,7 +92,7 @@ const InputMain: <T extends InputType = 'text'>(
         onClick={onClick}
         value={formatedValue}
         className={cleanClassName(
-          `${styles.input} ${disabled === 'read-only' && styles['read-only']} ${
+          `${styles.input} ${readOnly && styles['read-only']} ${
             type === 'button' && styles.button
           } ${value || styles.empty} ${typographyClassName} ${className}`,
         )}
@@ -98,6 +100,7 @@ const InputMain: <T extends InputType = 'text'>(
         onChange={({ target: { value } }) =>
           onChange?.(convertChangeHandlerParam(value))
         }
+        readOnly={readOnly}
       />
     );
   },

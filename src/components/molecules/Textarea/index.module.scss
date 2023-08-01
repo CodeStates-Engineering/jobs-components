@@ -28,11 +28,12 @@
 
   &:disabled {
     resize: none;
-    &.read-only {
-      color: libs.$BLUISH-GRAY-700;
+  }
 
-      cursor: default;
-    }
+  &.read-only {
+    color: libs.$BLUISH-GRAY-700;
+
+    cursor: default;
   }
 }
 

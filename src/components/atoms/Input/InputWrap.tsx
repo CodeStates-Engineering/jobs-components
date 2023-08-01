@@ -9,7 +9,7 @@ export interface InputWrapProps
       React.InputHTMLAttributes<HTMLInputElement>,
       HTMLInputElement
     >,
-    'children' | 'className'
+    'children' | 'className' | 'color' | 'readOnly'
   > {
   onClick?: React.HTMLAttributes<HTMLDivElement>['onClick'];
   size?: 'none' | 'small' | 'medium' | 'large';
@@ -17,6 +17,7 @@ export interface InputWrapProps
   width?: React.CSSProperties['width'];
   validationMessage?: string | null;
   description?: string | null;
+  fontColor?: string;
 }
 
 export const InputWrap = ({
@@ -28,6 +29,8 @@ export const InputWrap = ({
   width,
   validationMessage,
   description,
+  fontColor,
+  readOnly = false,
 }: InputWrapProps) => {
   const { messageRef, wrapHeightStyle } = useValidationMessageDynamicHeight(
     !!validationMessage || !!description,
@@ -41,12 +44,17 @@ export const InputWrap = ({
       className={cleanClassName(`${styles['input-wrap']} ${className}`)}
     >
       <div
+        style={{
+          color: fontColor,
+        }}
         className={cleanClassName(
           `${styles['input-interaction']} ${
             styles[`border-radius-${borderRadius}`]
           } ${validationMessage && styles.error} ${
             size !== 'none' && styles[`size-${size}`]
-          }`,
+          } ${!!onClick && styles.onClick} ${
+            !fontColor && styles['font-color-default']
+          } ${readOnly && styles['read-only']}`,
         )}
         onClick={onClick}
       >

@@ -81,6 +81,10 @@ const meta: Meta<StroyProps> = {
         type: 'text',
       },
     },
+    readOnly: {
+      ...GROUPS.WRAP,
+      control: 'text',
+    },
   },
 };
 

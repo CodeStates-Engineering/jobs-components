@@ -51,13 +51,7 @@ type Story = StoryObj<typeof Textbox>;
 export const Default: Story = {
   render: (args) => (
     <>
-      <Textbox
-        {...args}
-        label="Readonly"
-        disabled="read-only"
-        value={100}
-        unit="명"
-      />
+      <Textbox {...args} label="Readonly" value={100} unit="명" readOnly />
       <Textbox
         {...args}
         label="Large number"

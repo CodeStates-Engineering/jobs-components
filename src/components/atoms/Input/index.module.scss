@@ -18,12 +18,20 @@
     color: libs.$BLUISH-GRAY-300;
   }
 
-  &:disabled {
-    &.read-only {
-      color: libs.$BLUISH-GRAY-700;
+  &.read-only {
+    &::placeholder {
+      background: libs.$BLUISH-GRAY-10;
 
-      cursor: default;
+      color: libs.$BLUISH-GRAY-700;
     }
+
+    &:hover {
+      border: none;
+
+      outline: none;
+    }
+
+    cursor: default;
   }
 }
 

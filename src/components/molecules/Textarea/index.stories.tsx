@@ -14,6 +14,7 @@ const meta: Meta<typeof Textarea> = {
       }
     },
     disabled: false,
+    readOnly: false,
     labelStyle: {
       fontSize: 'small',
       fontWeight: 500,

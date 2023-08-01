@@ -23,7 +23,7 @@ export interface TextareaProps
         TextareaHTMLAttributes<HTMLTextAreaElement>,
         HTMLTextAreaElement
       >,
-      'placeholder' | 'id'
+      'placeholder' | 'id' | 'readOnly'
     >,
     Omit<LabelWithInputProps, 'inputStyle'> {
   onChange?: (value?: string) => void;
@@ -58,6 +58,7 @@ export const Textarea = ({
   onFloatingActionClick,
   validationTrigger,
   description,
+  readOnly = false,
 }: TextareaProps) => {
   const [textareaValue, setTextareaValue] = useSubscribedState(
     originalValue ?? '',
@@ -94,6 +95,7 @@ export const Textarea = ({
         width={inputStyle?.width}
         borderRadius={inputStyle?.borderRadius}
         description={description}
+        readOnly={readOnly}
       >
         {floatingActionName && (
           <div className={styles['floating-action-container']}>
@@ -120,11 +122,12 @@ export const Textarea = ({
           className={cleanClassName(
             `${styles['textarea-content']} ${
               (inputStyle?.resize ?? true) && styles.resize
-            } ${typographyClassName} ${
-              disabled === 'read-only' && [styles['read-only']]
-            } ${styles['full-size']}`,
+            } ${typographyClassName} ${readOnly && [styles['read-only']]} ${
+              styles['full-size']
+            }`,
           )}
           onBlur={validateOnBlur}
+          readOnly={readOnly}
         />
       </Input.Wrap>
     </Label.Container>

@@ -30,6 +30,7 @@ export interface TextboxProps<T extends TextboxType = 'text'>
     | 'onClick'
     | 'className'
     | 'onBlur'
+    | 'readOnly'
   > {
   label?: string;
   unit?: React.ReactNode;
@@ -37,7 +38,9 @@ export interface TextboxProps<T extends TextboxType = 'text'>
   labelStyle?: Pick<LabelContainerProps, 'direction'> &
     UseTypographyClassNameParams;
   inputStyle?: Pick<InputWrapProps, 'borderRadius' | 'width' | 'size'> &
-    UseTypographyClassNameParams;
+    UseTypographyClassNameParams & {
+      fontColor?: string;
+    };
   validationTrigger?: ValidationTrigger;
   description?: InputWrapProps['description'];
 }
@@ -61,6 +64,7 @@ export const Textbox = <T extends TextboxType = 'text'>({
   inputStyle,
   validationTrigger,
   description,
+  readOnly,
 }: TextboxProps<T>) => {
   const [value, setValue] = useSubscribedState(originalValue);
 
@@ -85,6 +89,8 @@ export const Textbox = <T extends TextboxType = 'text'>({
         borderRadius={inputStyle?.borderRadius}
         width={inputStyle?.width}
         description={description}
+        fontColor={inputStyle?.fontColor}
+        readOnly={readOnly}
       >
         <Input
           fontSize={inputStyle?.fontSize}
@@ -107,6 +113,7 @@ export const Textbox = <T extends TextboxType = 'text'>({
             onChange?.(value);
           }}
           type={type}
+          readOnly={readOnly}
         />
         {typeof unit === 'string' ? (
           <div className={styles.unit}>{unit}</div>

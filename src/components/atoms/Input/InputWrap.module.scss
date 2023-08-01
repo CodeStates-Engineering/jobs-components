@@ -19,7 +19,8 @@
   box-sizing: border-box;
   width: 100%;
 
-  color: libs.$BLUISH-GRAY-700;
+  background-color: libs.$WHITE;
+
   font-size: libs.$NORMAL;
 
   transition: box-shadow 0.3s, background-color 0.3s;
@@ -50,30 +51,6 @@
     @include size(18px, 48px);
   }
 
-  //* Type
-  &:not(&:has(:disabled)) {
-    background-color: libs.$WHITE;
-    &:hover {
-      @include libs.border(libs.$BLUE-300, 2px);
-    }
-
-    &:has(:focus) {
-      @include libs.border(libs.$BLUE-500, 2px);
-
-      &.error {
-        @include libs.border(libs.$PEACH-500, 2px);
-      }
-    }
-
-    &:has(input[type='button']) {
-      &,
-      > input,
-      textarea {
-        cursor: pointer;
-      }
-    }
-  }
-
   &:has(:disabled) {
     background-color: libs.$BLUISH-GRAY-10;
     @include libs.border(libs.$BLUISH-GRAY-200, 1px);
@@ -84,8 +61,46 @@
     }
   }
 
+  &.read-only {
+    background-color: libs.$BLUISH-GRAY-10;
+
+    cursor: default;
+
+    &:hover {
+      @include libs.border(libs.$BLUISH-GRAY-200, 1px);
+    }
+
+    &:has(:focus) {
+      @include libs.border(libs.$BLUISH-GRAY-200, 1px);
+
+      &.error {
+        @include libs.border(libs.$PEACH-500, 2px);
+      }
+    }
+  }
+
   &.error {
     @include libs.border(libs.$PEACH-500, 2px);
+  }
+
+  &:hover {
+    @include libs.border(libs.$BLUE-300, 2px);
+  }
+
+  &:has(:focus) {
+    @include libs.border(libs.$BLUE-500, 2px);
+
+    &.error {
+      @include libs.border(libs.$PEACH-500, 2px);
+    }
+  }
+
+  &:has(input[type='button']) {
+    &,
+    > input,
+    textarea {
+      cursor: pointer;
+    }
   }
 }
 
@@ -112,4 +127,8 @@
     color: libs.$PEACH-500;
     font-size: libs.$SMALL;
   }
+}
+
+.font-color-default {
+  color: libs.$BLUISH-GRAY-700;
 }
