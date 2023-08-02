@@ -1,7 +1,11 @@
 .dropdown-tag-container {
   position: relative;
 
-  width: fit-content;
+  @layer {
+    & {
+      width: fit-content;
+    }
+  }
 }
 
 .options {
