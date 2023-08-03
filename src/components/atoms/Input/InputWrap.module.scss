@@ -21,7 +21,12 @@
 
   background-color: libs.$WHITE;
 
-  font-size: libs.$NORMAL;
+  @include libs.font-size;
+  @layer {
+    & {
+      font-size: libs.$NORMAL;
+    }
+  }
 
   transition: box-shadow 0.3s, background-color 0.3s;
 

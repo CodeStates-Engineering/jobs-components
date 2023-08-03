@@ -12,8 +12,15 @@
   text-align: start;
 
   transition: color 0.3s;
-  @include libs.font-size;
-  @include libs.font-weight;
+
+  @layer {
+    & {
+      @include libs.font-size;
+
+      @include libs.font-weight;
+    }
+  }
+
   &::placeholder {
     color: libs.$BLUISH-GRAY-300;
   }

@@ -34,6 +34,7 @@ export interface SelectboxProps<
   inputStyle?: Pick<InputWrapProps, 'borderRadius' | 'size' | 'width'> &
     UseTypographyClassNameParams;
   description?: InputWrapProps['description'];
+  cancelable?: boolean;
 }
 
 export const Selectbox = <
@@ -58,6 +59,7 @@ export const Selectbox = <
   optionStyle,
   description,
   readOnly,
+  cancelable = true,
   textEllipsis,
 }: SelectboxProps<_ValidOptionValue, _Multiple>) => {
   const [opened, setOpened] = useState(false);
@@ -114,6 +116,7 @@ export const Selectbox = <
           <ChevronDown />
         </Input.Wrap>
         <Options
+          cancelable={cancelable}
           opened={opened}
           options={options}
           multiple={multiple}
