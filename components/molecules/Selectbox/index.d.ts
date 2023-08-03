@@ -5,5 +5,6 @@ export interface SelectboxProps<_ValidOptionValue = ValidOptionValue, _Multiple 
     validation?: ValidateHandler<SelectboxProps<_ValidOptionValue>['value']>;
     inputStyle?: Pick<InputWrapProps, 'borderRadius' | 'size' | 'width'> & UseTypographyClassNameParams;
     description?: InputWrapProps['description'];
+    cancelable?: boolean;
 }
-export declare const Selectbox: <_ValidOptionValue extends ValidOptionValue = ValidOptionValue, _Multiple extends boolean = false>({ value, options, onChange, float, disabled, placeholder, id, ref, onClick, label, validation, className, inputStyle, labelStyle, multiple, optionStyle, description, readOnly, textEllipsis, }: SelectboxProps<_ValidOptionValue, _Multiple>) => JSX.Element;
+export declare const Selectbox: <_ValidOptionValue extends ValidOptionValue = ValidOptionValue, _Multiple extends boolean = false>({ value, options, onChange, float, disabled, placeholder, id, ref, onClick, label, validation, className, inputStyle, labelStyle, multiple, optionStyle, description, readOnly, cancelable, textEllipsis, }: SelectboxProps<_ValidOptionValue, _Multiple>) => JSX.Element;
