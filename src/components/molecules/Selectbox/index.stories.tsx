@@ -58,7 +58,6 @@ const meta: Meta<typeof Selectbox> = {
     readOnly: false,
     cancelable: true,
     textEllipsis: false,
-
   },
 };
 
