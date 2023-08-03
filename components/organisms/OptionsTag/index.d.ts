@@ -1,12 +1,10 @@
 /// <reference types="react" />
-import type { ButtonProps } from '../../atoms';
-export interface OptionsTagProps extends Pick<ButtonProps, 'icon' | 'className'> {
-    value?: string;
-    onChange?: (value: string) => void;
+import type { ButtonProps, OptionsProps } from '../../atoms';
+export interface OptionsTagProps extends Pick<ButtonProps, 'icon' | 'className'>, Pick<OptionsProps<string, false>, 'onChange' | 'value' | 'textEllipsis'> {
     options?: {
         label: string;
         value: string;
         default?: boolean;
     }[];
 }
-export declare const OptionsTag: ({ icon, value, onChange, options, className, }: OptionsTagProps) => JSX.Element;
+export declare const OptionsTag: ({ icon, value, onChange, options, className, textEllipsis, }: OptionsTagProps) => JSX.Element;
