@@ -41,6 +41,7 @@ const meta: Meta<typeof Options> = {
       }`,
       value: `${index}번 옵션이 선택`,
     })),
+    textEllipsis: false,
   },
 
   decorators: [
@@ -82,6 +83,18 @@ export const Default: Story = {
 export const Multiple: Story = {
   args: {
     multiple: true,
+  },
+  render: (props) => {
+    const [value, setValue] = createState<
+      ValidOptionValue | ValidOptionValue[]
+    >();
+    return <Options {...props} value={value} onChange={setValue} />;
+  },
+};
+
+export const TextEllipsis: Story = {
+  args: {
+    textEllipsis: true,
   },
   render: (props) => {
     const [value, setValue] = createState<

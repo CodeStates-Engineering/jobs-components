@@ -29,6 +29,7 @@ export interface OptionsProps<
   optionStyle?: UseTypographyClassNameParams &
     Pick<React.CSSProperties, 'width' | 'maxHeight'>;
   cancelable?: boolean;
+  textEllipsis?: boolean;
 }
 
 export const Options = <
@@ -45,6 +46,7 @@ export const Options = <
   className,
   optionStyle,
   cancelable = true,
+  textEllipsis = false,
 }: OptionsProps<OptionValue, Multiple>) => {
   const [openState, setOpenState] = useState<boolean | 'closing' | 'opening'>(
     opened,
@@ -208,7 +210,13 @@ export const Options = <
                   setIndexForSelect(index);
                 }}
               >
-                <div>{label}</div>
+                <div
+                  className={cleanClassName(
+                    textEllipsis ? `${styles['text-ellipsis']}` : undefined,
+                  )}
+                >
+                  {label}
+                </div>
                 {multiple ? (
                   <div
                     className={cleanClassName(
