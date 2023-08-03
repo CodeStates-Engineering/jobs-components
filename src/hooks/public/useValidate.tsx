@@ -1,12 +1,7 @@
-import { useContext, useCallback } from 'react';
+import { useContext, useRef } from 'react';
 
 import { ValidationContext } from '@contexts/ValidationContext';
 import type { ValidationContextValue } from '@contexts/ValidationContext';
-
-interface ValidateResult {
-  isValid: boolean;
-  invalidElementIds: string[];
-}
 
 interface ValidateOptions {
   scrollToFirstInvalid?: boolean;
@@ -15,43 +10,76 @@ interface ValidateOptions {
 export const useValidate = () => {
   const validationContext = useContext(ValidationContext);
 
-  const validate = useCallback(
-    (options?: ValidateOptions) => {
-      const scrollToFirstInvalid = options?.scrollToFirstInvalid ?? true;
+  const { current } = useRef(
+    (() => {
+      const scrollToFirstInvalid = (
+        invalidElementIds: string[],
+        options?: ValidateOptions,
+      ) => {
+        const scrollToFirstInvalid = options?.scrollToFirstInvalid ?? true;
 
-      const validateResult: ValidateResult = {
-        isValid: true,
-        invalidElementIds: [],
+        if (scrollToFirstInvalid && !invalidElementIds.length) {
+          const [firstInvalidElementId] = invalidElementIds;
+
+          const firstInvalidElement = document.getElementById(
+            firstInvalidElementId,
+          );
+
+          firstInvalidElement?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+          });
+        }
       };
 
-      validationContext?.forEach(async (validateOnChange, id) => {
-        if (await validateOnChange()) {
-          validateResult.isValid = false;
-          validateResult.invalidElementIds.push(id);
-        }
-      });
+      return {
+        validationContext,
 
-      if (scrollToFirstInvalid && !validateResult.isValid) {
-        const [firstInvalidElementId] = validateResult.invalidElementIds;
+        validate: (options?: ValidateOptions) => {
+          const invalidElementIds: string[] = [];
 
-        const firstInvalidElement = document.getElementById(
-          firstInvalidElementId,
-        );
+          validationContext?.forEach((validateOnChange, id) => {
+            if (validateOnChange()) {
+              invalidElementIds.push(id);
+            }
+          });
 
-        firstInvalidElement?.scrollIntoView({
-          behavior: 'smooth',
-          block: 'center',
-        });
-      }
+          scrollToFirstInvalid(invalidElementIds, options);
 
-      return validateResult;
-    },
-    [validationContext],
+          return {
+            isValid: !invalidElementIds.length,
+            invalidElementIds,
+          };
+        },
+
+        validateAsync: async (options?: ValidateOptions) => {
+          const idList: string[] = [];
+
+          const validationMessageList = await Promise.all(
+            Array.from(validationContext?.entries() || []).map(
+              ([id, validateOnChange]) => {
+                idList.push(id);
+                return validateOnChange();
+              },
+            ),
+          );
+
+          const invalidElementIds = idList.filter(
+            (_, index) => validationMessageList[index],
+          );
+
+          scrollToFirstInvalid(invalidElementIds, options);
+
+          return {
+            isValid: validationMessageList.every((message) => !message),
+            invalidElementIds,
+          };
+        },
+      };
+    })(),
   );
 
-  return {
-    validate,
-  };
+  return current;
 };
 
 export const validationObserver = <T extends object>(
