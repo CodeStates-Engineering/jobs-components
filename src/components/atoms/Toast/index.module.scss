@@ -41,6 +41,7 @@
     &.opened {
       @include fade-in-top(0.3s);
     }
+
     &.closing {
       @include fade-out-top(0.8s);
     }
@@ -50,6 +51,7 @@
     &.opened {
       @include fade-in-bottom(0.3s);
     }
+
     &.closing {
       @include fade-out-bottom(0.8s);
     }
@@ -63,6 +65,7 @@
   margin: 0;
 
   transition: max-height 0.5s, margin 0.5s;
+
   &.has-space {
     max-height: 140px;
     margin: 10px 0;

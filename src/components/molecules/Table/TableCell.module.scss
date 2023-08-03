@@ -10,9 +10,11 @@
   background-color: libs.$WHITE;
 
   transition: background-color 0.3s, box-shadow 0.3s;
+
   &.hovered {
     background-color: libs.$BLUISH-GRAY-10;
   }
+
   &:hover {
     z-index: 5;
   }
@@ -89,6 +91,7 @@
 
 .hovered-cell-content {
   overflow-y: auto;
+
   &::-webkit-scrollbar {
     display: none;
   }

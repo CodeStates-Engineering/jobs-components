@@ -9,11 +9,13 @@
   background-color: libs.$WHITE;
 
   cursor: move;
+
   &.fixed {
     cursor: default;
   }
 
   transition: background-color 0.3s, box-shadow 0.3s;
+
   &.hovered {
     background-color: libs.$BLUISH-GRAY-10;
   }
@@ -70,4 +72,5 @@
     transition: opacity 0.3s;
   }
 }
+
 @include dragAndDrop;

@@ -4,8 +4,10 @@
   background-color: libs.$WHITE;
 
   transition: background-color 0.3s;
+
   &:hover {
     background-color: libs.$BLUISH-GRAY-10;
+
     > td {
       background-color: libs.$BLUISH-GRAY-10;
     }

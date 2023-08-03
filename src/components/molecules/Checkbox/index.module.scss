@@ -1,4 +1,4 @@
-@import '../../../styles/libs';
+@use 'src/styles/libs' as *;
 
 .container-size-none {
   height: fit-content;
@@ -14,6 +14,10 @@
 
 .container-size-large {
   height: 48px;
+}
+
+.checked {
+  color: $WHITE;
 }
 
 .checkbox-content {
@@ -43,6 +47,22 @@
     border-width: 2px;
   }
 
+  &:has(:disabled) {
+    border-color: $BLUISH-GRAY-200;
+
+    background-color: $WHITE;
+
+    > .checked {
+      color: $BLUISH-GRAY-200;
+    }
+  }
+
+  &:has(:checked) {
+    border-color: $PURPLE-600;
+
+    background-color: $PURPLE-600;
+  }
+
   &:not(:has(:disabled, :checked)) {
     &:hover {
       border-color: $PURPLE-550;
@@ -55,27 +75,9 @@
     }
   }
 
-  &:has(:checked) {
-    border-color: $PURPLE-600;
-
-    background-color: $PURPLE-600;
+  &:has(:disabled):has(:checked) {
+    background-color: $BLUISH-GRAY-10;
   }
-
-  &:has(:disabled) {
-    border-color: $BLUISH-GRAY-200;
-
-    background-color: $WHITE;
-    &:has(:checked) {
-      background-color: $BLUISH-GRAY-10;
-    }
-    > .checked {
-      color: $BLUISH-GRAY-200;
-    }
-  }
-}
-
-.checked {
-  color: $WHITE;
 }
 
 .unchecked {
@@ -92,6 +94,7 @@
 
   opacity: 0;
   cursor: pointer;
+
   &:disabled {
     cursor: not-allowed;
   }

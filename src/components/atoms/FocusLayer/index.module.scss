@@ -19,6 +19,7 @@
 
     background-color: rgba(0, 0, 0, 0.3);
   }
+
   @include fade-in(0.5s);
 
   &.closing {
@@ -28,9 +29,11 @@
   &.priority-1 {
     z-index: 99;
   }
+
   &.priority-2 {
     z-index: 66;
   }
+
   &.priority-3 {
     z-index: 33;
   }
@@ -50,12 +53,15 @@
   &.global {
     position: fixed;
   }
+
   &.priority-1 {
     z-index: 100;
   }
+
   &.priority-2 {
     z-index: 67;
   }
+
   &.priority-3 {
     z-index: 34;
   }

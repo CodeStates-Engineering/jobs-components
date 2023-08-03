@@ -24,6 +24,7 @@
 
   width: 100%;
   padding: 16px 24px;
+
   > .title-contents {
     flex: 1;
     overflow: hidden;
@@ -45,7 +46,9 @@
   box-sizing: border-box;
   width: 100%;
   padding: 24px;
+
   @include fade-out-top(0.3s);
+
   &.opened {
     @include fade-in-top(0.3s);
   }
@@ -62,6 +65,7 @@
 
   transition: transform 0.3s ease-in-out;
   stroke-width: 2;
+
   &.opened {
     transform: rotate(180deg);
   }

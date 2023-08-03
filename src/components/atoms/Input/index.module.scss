@@ -16,7 +16,6 @@
   @layer {
     & {
       @include libs.font-size;
-
       @include libs.font-weight;
     }
   }

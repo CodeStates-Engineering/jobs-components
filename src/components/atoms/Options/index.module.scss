@@ -14,6 +14,7 @@
   box-shadow: libs.$NORMAL-BOX-SHADOW;
 
   color: libs.$BLUISH-GRAY-700;
+
   &.closing,
   &.opening {
     cursor: default;
@@ -22,6 +23,7 @@
   &.opening {
     @include libs.fade-in(0.3s);
   }
+
   &.closing {
     @include libs.fade-out(0.1s);
   }
@@ -88,6 +90,7 @@
   white-space: pre-wrap;
 
   cursor: pointer;
+
   &.selected {
     background-color: libs.$BLUE-10;
 
@@ -105,6 +108,7 @@
   margin-top: 0.1em;
 
   visibility: hidden;
+
   &.show {
     visibility: visible;
   }

@@ -5,6 +5,7 @@
   overflow: hidden;
 
   background-color: $BLUISH-GRAY-100;
+
   @include fade-in;
 }
 
@@ -52,9 +53,11 @@
   0% {
     transform: translateX(-150%);
   }
+
   50% {
     transform: translateX(-60%);
   }
+
   100% {
     transform: translate(150%);
   }

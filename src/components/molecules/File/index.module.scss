@@ -19,11 +19,13 @@
   color: libs.$BLUISH-GRAY-700;
   text-overflow: ellipsis;
   white-space: nowrap;
+
   &.actived {
     &:hover {
       color: libs.$PURPLE-600;
     }
   }
+
   &.disabled {
     color: libs.$BLUISH-GRAY-400;
 

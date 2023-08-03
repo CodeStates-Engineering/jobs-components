@@ -2,6 +2,7 @@
 
 @mixin color($color, $changeColor: darken($color, 50%)) {
   color: $color;
+
   &.hover-type-color-change:not(span):hover {
     color: $changeColor;
   }
@@ -12,6 +13,7 @@
 
   &:not(span) {
     cursor: pointer;
+
     &.hover-type-underline:hover {
       text-decoration: underline;
     }
