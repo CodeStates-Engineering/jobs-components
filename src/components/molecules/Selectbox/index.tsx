@@ -19,7 +19,13 @@ export interface SelectboxProps<
   _Multiple = boolean,
 > extends Pick<
       OptionsProps<_ValidOptionValue, _Multiple>,
-      'options' | 'float' | 'onChange' | 'value' | 'multiple' | 'optionStyle'
+      | 'options'
+      | 'float'
+      | 'onChange'
+      | 'value'
+      | 'multiple'
+      | 'optionStyle'
+      | 'textEllipsis'
     >,
     Pick<InputProps<'button'>, 'disabled' | 'placeholder' | 'id' | 'ref'>,
     Pick<InputWrapProps, 'onClick' | 'readOnly'>,
@@ -54,6 +60,7 @@ export const Selectbox = <
   description,
   readOnly,
   cancelable = true,
+  textEllipsis,
 }: SelectboxProps<_ValidOptionValue, _Multiple>) => {
   const [opened, setOpened] = useState(false);
 
@@ -122,6 +129,7 @@ export const Selectbox = <
             onChange?.(value);
             setOpened(false);
           }}
+          textEllipsis={textEllipsis}
         />
       </FocusLayer>
     </Label.WithInput>

@@ -30,7 +30,7 @@ export interface SearchboxProps
       | 'id'
       | 'ref'
     >,
-    Pick<OptionsProps<string, false>, 'float' | 'optionStyle'>,
+    Pick<OptionsProps<string, false>, 'float' | 'optionStyle' | 'textEllipsis'>,
     Omit<LabelWithInputProps, 'children'> {
   selfFilter?: boolean;
   options?: string[];
@@ -65,6 +65,7 @@ export const Searchbox = ({
   validationTrigger,
   description,
   readOnly,
+  textEllipsis,
 }: SearchboxProps) => {
   const [opened, setOpened] = useState(false);
   const [inputText, setInputText] = useSubscribedState(value);
@@ -162,6 +163,7 @@ export const Searchbox = ({
           }}
           cancelable={false}
           float={float}
+          textEllipsis={textEllipsis}
         />
       </FocusLayer>
     </Label.WithInput>

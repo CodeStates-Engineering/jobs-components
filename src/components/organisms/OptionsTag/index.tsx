@@ -1,14 +1,13 @@
 import { Button, Options } from '@components/atoms';
-import type { ButtonProps } from '@components/atoms';
+import type { ButtonProps, OptionsProps } from '@components/atoms';
 import { useClosableOnClickOpeningState } from '@hooks';
 import { cleanClassName } from '@utils';
 
 import styles from './index.module.scss';
 
 export interface OptionsTagProps
-  extends Pick<ButtonProps, 'icon' | 'className'> {
-  value?: string;
-  onChange?: (value: string) => void;
+  extends Pick<ButtonProps, 'icon' | 'className'>,
+    Pick<OptionsProps<string, false>, 'onChange' | 'value' | 'textEllipsis'> {
   options?: {
     label: string;
     value: string;
@@ -22,6 +21,7 @@ export const OptionsTag = ({
   onChange,
   options,
   className,
+  textEllipsis,
 }: OptionsTagProps) => {
   const {
     openingState: [opened, setOpened],
@@ -72,6 +72,7 @@ export const OptionsTag = ({
           onChange?.(value ?? '');
         }}
         className={styles.options}
+        textEllipsis={textEllipsis}
       />
     </div>
   );

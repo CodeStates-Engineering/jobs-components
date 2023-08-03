@@ -48,6 +48,7 @@ const meta: Meta<typeof Searchbox> = {
     },
     description: '테스트',
     readOnly: false,
+    textEllipsis: false,
 
     validation: (value?: string) => {
       if (!value) {
