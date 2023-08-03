@@ -25,6 +25,7 @@ const meta: Meta<typeof OptionsTag> = {
         default: true,
       },
     ],
+    textEllipsis: false,
   },
   decorators: [
     (Story) => (
