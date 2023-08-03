@@ -5,3 +5,4 @@ export default meta;
 type Story = StoryObj<typeof Options>;
 export declare const Default: Story;
 export declare const Multiple: Story;
+export declare const TextEllipsis: Story;
