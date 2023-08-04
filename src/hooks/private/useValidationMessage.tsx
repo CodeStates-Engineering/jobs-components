@@ -2,6 +2,7 @@ import { useState, useContext, useEffect } from 'react';
 
 import { ValidationContext } from '@contexts/ValidationContext';
 import type { ValidationResult } from '@contexts/ValidationContext';
+import { isAsync } from '@utils';
 
 export type ValidateHandler<TValue> =
   | ((value: TValue) => ValidationResult | Promise<ValidationResult>)
@@ -28,11 +29,22 @@ export const useValidationMessage = <TValue,>({
 
   useEffect(() => {
     if (validationContext && key && validateHandler) {
-      validationContext.set(key, async () => {
-        const validationMessage = await validateHandler(value);
-        setValidationMessage(validationMessage);
-        return validationMessage;
-      });
+      validationContext.set(
+        key,
+        isAsync(validateHandler)
+          ? async () => {
+              const validationMessage = await validateHandler(value);
+              setValidationMessage(validationMessage);
+              return validationMessage;
+            }
+          : () => {
+              const validationMessage = validateHandler(
+                value,
+              ) as ValidationResult;
+              setValidationMessage(validationMessage);
+              return validationMessage;
+            },
+      );
 
       return () => {
         validationContext.delete(key);
