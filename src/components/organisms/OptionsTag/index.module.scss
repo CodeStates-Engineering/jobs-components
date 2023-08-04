@@ -1,4 +1,4 @@
-@use 'src/styles/libs' as libs;
+@use 'src/styles/libs' as *;
 
 .dropdown-tag-container {
   position: relative;
@@ -13,5 +13,11 @@
 }
 
 .default-value {
-  color: libs.$BLUISH-GRAY-400;
+  color: $BLUISH-GRAY-400;
+}
+
+.options {
+  left: 0;
+
+  min-width: 180px;
 }
