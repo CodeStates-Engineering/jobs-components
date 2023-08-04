@@ -1,3 +1,3 @@
 export * from './cleanClassName';
-export * from './createValidationStore';
+export * from './isAsync';
 export * from './regex';
