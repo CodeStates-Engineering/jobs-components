@@ -3,7 +3,6 @@
 import type { ReactNode } from 'react';
 import { createContext, useEffect, useState } from 'react';
 
-import type { FocusLayerProps } from '@components/atoms';
 import { cleanClassName } from '@utils';
 
 import styles from './index.module.scss';
@@ -15,7 +14,6 @@ interface CommonProps {
 
 interface FloatingModalProps
   extends CommonProps,
-    Pick<FocusLayerProps, 'priority'>,
     Pick<
       React.DetailedHTMLProps<
         React.FormHTMLAttributes<HTMLFormElement>,

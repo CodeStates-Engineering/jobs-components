@@ -49,7 +49,7 @@ export const Default: Story = {
           opened={search.includes('?tab=')}
           onClose={() => navigate('/')}
         >
-          {/* <Modal.Header /> */}
+          <Modal.Header />
           <Modal.Body>
             <p>{DUMMY.VERY_LONG_TEXT}</p>
           </Modal.Body>
