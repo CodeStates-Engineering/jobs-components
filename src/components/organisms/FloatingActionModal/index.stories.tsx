@@ -1,10 +1,16 @@
+/* eslint-disable react-hooks/rules-of-hooks */
+import { useState } from 'react';
+
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { FloatingModal } from '../../molecules/FloatingModal';
+import { Button } from '@components/atoms';
+import type { FloatingModal } from '@components/molecules/FloatingModal';
+
+import { FloatingActionModal } from '.';
 
 const meta: Meta<typeof FloatingModal> = {
   title: 'organisms/FloatingActionModal',
-  component: FloatingModal,
+  component: FloatingActionModal,
   decorators: [
     (Story) => (
       <div style={{ height: '100vh', width: '100%' }}>
@@ -15,107 +21,62 @@ const meta: Meta<typeof FloatingModal> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof FloatingModal>;
+type Story = StoryObj<typeof FloatingActionModal>;
 
 export const Default: Story = {
-  render: (args) => (
-    // const navigate = useNavigate();
-    // const { search } = useLocation();
+  render: (args) => {
+    const [opened, setOpened] = useState(false);
 
-    <>
-      <FloatingModal {...args} opened>
-        <FloatingModal.Body>
-          <>
+    return (
+      <>
+        <Button
+          onClick={() => {
+            setOpened(true);
+          }}
+        >
+          open floating modal
+        </Button>
+
+        <FloatingActionModal
+          {...args}
+          opened={opened}
+          onClose={() => setOpened(false)}
+        >
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              gap: '16px',
+              padding: '0 24px',
+            }}
+          >
             <div
               style={{
-                padding: '3px',
+                padding: '3px 0',
                 height: '10px',
                 fontSize: '14px',
                 fontWeight: '600',
                 display: 'flex',
                 alignItems: 'center',
-                paddingRight: '24px',
-                borderRight: 'solid 1px #DFE3EC',
               }}
             >
-              리스트1
+              리스트2
             </div>
             <div
               style={{
+                padding: '3px 0',
+                height: '10px',
+                fontSize: '14px',
+                fontWeight: '600',
                 display: 'flex',
-                flexDirection: 'row',
-                gap: '16px',
-                padding: '0 24px',
+                alignItems: 'center',
               }}
             >
-              <div
-                style={{
-                  padding: '3px',
-                  height: '10px',
-                  fontSize: '14px',
-                  fontWeight: '600',
-                  display: 'flex',
-                  alignItems: 'center',
-                }}
-              >
-                리스트2
-              </div>
-              <div
-                style={{
-                  padding: '3px',
-                  height: '10px',
-                  fontSize: '14px',
-                  fontWeight: '600',
-                  display: 'flex',
-                  alignItems: 'center',
-                }}
-              >
-                리스트3
-              </div>
-              <div
-                style={{
-                  padding: '3px',
-                  height: '10px',
-                  fontSize: '14px',
-                  fontWeight: '600',
-                  display: 'flex',
-                  alignItems: 'center',
-                }}
-              >
-                리스트4
-              </div>
-              <div
-                style={{
-                  padding: '3px',
-                  height: '10px',
-                  fontSize: '14px',
-                  fontWeight: '600',
-                  display: 'flex',
-                  alignItems: 'center',
-                }}
-              >
-                리스트5
-              </div>
-
-              <div
-                style={{
-                  padding: '3px',
-                  height: '10px',
-                  fontSize: '14px',
-                  fontWeight: '600',
-                  display: 'flex',
-                  alignItems: 'center',
-                }}
-              >
-                리스트6
-              </div>
+              리스트3
             </div>
-          </>
-        </FloatingModal.Body>
-        <FloatingModal.Tail>
-          <div>X</div>
-        </FloatingModal.Tail>
-      </FloatingModal>
-    </>
-  ),
+          </div>
+        </FloatingActionModal>
+      </>
+    );
+  },
 };
