@@ -1,0 +1,45 @@
+@import '../../../styles/libs';
+
+.floating-modal-container {
+  z-index: 999;
+  position: fixed;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  bottom: 32px;
+
+  display: flex;
+  align-items: center;
+
+  height: 40px;
+  width: fit-content;
+  border-radius: 8px;
+
+  box-sizing: border-box;
+  background-color: $WHITE;
+
+  box-shadow: 0px 32px 64px 0px rgba(0, 0, 0, 0.24);
+  border: 1px solid $BLUISH-GRAY-200;
+  padding: 9.5px 24px;
+  transition: max-height 0.5s, margin 0.5s;
+  &.open {
+    @include fade-in-bottom;
+  }
+
+  &.closing {
+    @include fade-out-bottom;
+  }
+
+  .floating-modal-items {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .floating-modal-tail {
+    &.with-border {
+      padding-left: 24px;
+      border-left: 1px solid $BLUISH-GRAY-200;
+    }
+  }
+}
