@@ -1,4 +1,4 @@
-import { Check } from 'react-feather';
+import { Check, Minus } from 'react-feather';
 
 import { Label } from '@components/atoms';
 import type { LabelContainerProps } from '@components/atoms';
@@ -9,7 +9,7 @@ import { cleanClassName } from '@utils';
 import styles from './index.module.scss';
 
 export interface CheckboxProps {
-  value?: boolean;
+  value?: boolean | null;
   onChange?: (checked: boolean) => void;
   name?: string;
   disabled?: boolean;
@@ -32,7 +32,7 @@ const validateEssential = (checked: boolean) =>
   checked ? undefined : 'invalid';
 
 export const Checkbox = ({
-  value = false,
+  value = null,
   onChange,
   disabled,
   id,
@@ -45,6 +45,8 @@ export const Checkbox = ({
   validationTrigger,
 }: CheckboxProps) => {
   const [checked, setChecked] = useSubscribedState(value);
+
+  const isHalfChecked = checked === null;
 
   const size = inputStyle?.size ?? 'medium';
 
@@ -62,8 +64,8 @@ export const Checkbox = ({
   const { validationMessage, validateOnChange, validateOnBlur } =
     useValidationMessage({
       key: label,
+      value: !!checked,
       validateHandler: essential ? validateEssential : undefined,
-      value: checked,
       validationTrigger,
     });
 
@@ -96,19 +98,24 @@ export const Checkbox = ({
           className={cleanClassName(
             `${styles['checkbox-content']} ${styles[`size-${size}`]} ${
               isValid || styles.invalid
-            }`,
+            } ${isHalfChecked && styles['half-checked']}`,
           )}
         >
-          <Check
-            {...checkIconSize}
-            className={`${checked ? styles.checked : styles.unchecked}`}
-          />
+          {isHalfChecked ? (
+            <Minus {...checkIconSize} color="white" />
+          ) : (
+            <Check
+              {...checkIconSize}
+              className={`${checked ? styles.checked : styles.unchecked}`}
+            />
+          )}
+
           <input
             id={id}
             type="checkbox"
             className={styles.checkbox}
             name={label}
-            checked={checked}
+            checked={!!checked}
             disabled={disabled}
             onChange={({ target: { checked } }) => {
               setChecked?.(checked);
