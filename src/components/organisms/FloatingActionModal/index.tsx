@@ -25,7 +25,7 @@ interface FloatingActionModalProps
   onClose?: () => void;
 }
 export const FloatingActionModal = ({
-  count = 3,
+  count = 0,
   opened,
   onClose,
   children,

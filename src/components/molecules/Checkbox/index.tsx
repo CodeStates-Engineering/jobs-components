@@ -32,7 +32,7 @@ const validateEssential = (checked: boolean) =>
   checked ? undefined : 'invalid';
 
 export const Checkbox = ({
-  value = null,
+  value = false,
   onChange,
   disabled,
   id,
