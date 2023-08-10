@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useState } from 'react';
 
+import { useMountedEffect } from '@hooks';
 import { cleanClassName } from '@utils';
 
 import styles from './index.module.scss';
@@ -58,7 +59,7 @@ const FloatingModalMain = ({
   onClose,
 }: FloatingModalProps) => {
   const [floatState, setFloatState] = useState<'open' | 'closing' | 'closed'>(
-    'open',
+    'closed',
   );
 
   const commonProps = {
@@ -74,7 +75,7 @@ const FloatingModalMain = ({
     ),
   };
 
-  useEffect(() => {
+  useMountedEffect(() => {
     if (opened) {
       setFloatState('open');
     } else {
@@ -83,9 +84,10 @@ const FloatingModalMain = ({
       return () => clearTimeout(delayClose);
     }
   }, [opened]);
+
   return (
     <>
-      {floatState !== 'closed' ? <FloatingModalBody {...commonProps} /> : null}
+      {floatState === 'closed' ? null : <FloatingModalBody {...commonProps} />}
     </>
   );
 };
