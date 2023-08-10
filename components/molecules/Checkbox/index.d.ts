@@ -2,7 +2,7 @@
 import type { LabelContainerProps } from '../../atoms';
 import type { UseTypographyClassNameParams, ValidationTrigger } from '../../../hooks';
 export interface CheckboxProps {
-    value?: boolean;
+    value?: boolean | null;
     onChange?: (checked: boolean) => void;
     name?: string;
     disabled?: boolean;
