@@ -57,9 +57,9 @@ const FloatingModalMain = ({
   opened,
   onClose,
 }: FloatingModalProps) => {
-  const [floatState, setFloatState] = useState<'open' | 'closing' | 'closed'>(
-    'open',
-  );
+  const [floatState, setFloatState] = useState<
+    'open' | 'closing' | 'closed' | 'firstRender'
+  >('firstRender');
 
   const commonProps = {
     className: cleanClassName(
@@ -77,15 +77,18 @@ const FloatingModalMain = ({
   useEffect(() => {
     if (opened) {
       setFloatState('open');
-    } else {
+    } else if (!opened && floatState !== 'firstRender') {
       setFloatState('closing');
       const delayClose = setTimeout(() => setFloatState('closed'), 500);
       return () => clearTimeout(delayClose);
     }
-  }, [opened]);
+  }, [opened, floatState]);
+
   return (
     <>
-      {floatState !== 'closed' ? <FloatingModalBody {...commonProps} /> : null}
+      {floatState === 'closed' || floatState === 'firstRender' ? null : (
+        <FloatingModalBody {...commonProps} />
+      )}
     </>
   );
 };
