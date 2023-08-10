@@ -13,7 +13,7 @@ type FontSize =
   | 'small2x'
   | 'small3x';
 
-type FontWeight = 700 | 500 | 400;
+type FontWeight = 700 | 600 | 500 | 400;
 
 export interface UseTypographyClassNameParams {
   fontSize?: FontSize;
