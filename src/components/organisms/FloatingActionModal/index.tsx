@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import { X } from 'react-feather';
 
 import { Button } from '@components/atoms';
-import { FloatingModal } from '@components/molecules/FloatingModal';
+import { FloatingModal } from '@components/molecules';
 
 import styles from './index.module.scss';
 
