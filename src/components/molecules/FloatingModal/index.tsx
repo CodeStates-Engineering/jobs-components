@@ -1,5 +1,3 @@
-/* eslint-disable no-use-before-define */
-
 import type { ReactNode } from 'react';
 import { createContext, useEffect, useState } from 'react';
 

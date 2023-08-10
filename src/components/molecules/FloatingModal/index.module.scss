@@ -1,26 +1,24 @@
-@import '../../../styles/libs';
+@use 'src/styles/libs' as *;
 
 .floating-modal-container {
-  z-index: 999;
   position: fixed;
-  left: 0;
   right: 0;
-  margin: 0 auto;
   bottom: 32px;
-
+  left: 0;
+  z-index: 999;
   display: flex;
   align-items: center;
 
-  height: 40px;
+  box-sizing: border-box;
   width: fit-content;
+  height: 40px;
+  margin: 0 auto;
+  padding: 9.5px 24px;
+  border: 1px solid $BLUISH-GRAY-200;
   border-radius: 8px;
 
-  box-sizing: border-box;
   background-color: $WHITE;
-
   box-shadow: 0px 32px 64px 0px rgba(0, 0, 0, 0.24);
-  border: 1px solid $BLUISH-GRAY-200;
-  padding: 9.5px 24px;
 
   &.open {
     @include fade-in-bottom;
