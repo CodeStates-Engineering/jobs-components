@@ -73,6 +73,7 @@ export interface LabelWithInputProps {
     UseTypographyClassNameParams;
   inputStyle?: Pick<InputWrapProps, 'size'>;
   children?: React.ReactNode;
+  required?: boolean;
 }
 
 const LabelWithInput = ({
@@ -81,6 +82,7 @@ const LabelWithInput = ({
   labelStyle,
   inputStyle,
   children,
+  required = true,
 }: LabelWithInputProps) => (
   <LabelContainer direction={labelStyle?.direction} className={className}>
     {label ? (
@@ -93,6 +95,7 @@ const LabelWithInput = ({
         htmlFor={label}
       >
         {label}
+        {required ? <span className={styles['require-mark']}>*</span> : null}
       </LabelMain>
     ) : null}
     {children}

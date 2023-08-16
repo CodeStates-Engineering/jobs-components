@@ -1,4 +1,4 @@
-@import '../../../styles/libs';
+@use 'src/styles/libs' as *;
 
 .label {
   display: inline-block;
@@ -47,4 +47,10 @@
   .label-container {
     width: 100%;
   }
+}
+
+.require-mark {
+  margin-left: 2px;
+
+  color: $PEACH-600;
 }
