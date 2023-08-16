@@ -5,6 +5,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
+
   .action-count {
     display: flex;
     flex-direction: row;
@@ -13,6 +14,7 @@
 
     padding-right: 24px;
     border-right: 1px solid $BLUISH-GRAY-200;
+
     .action-count-circle {
       display: flex;
       align-items: center;
@@ -28,6 +30,7 @@
       font-weight: 500;
       font-size: $SMALL3X;
     }
+
     .action-count-text {
       font-weight: 600;
       font-size: $SMALL;
