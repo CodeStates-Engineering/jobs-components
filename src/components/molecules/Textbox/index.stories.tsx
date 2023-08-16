@@ -24,6 +24,7 @@ const meta: Meta<typeof Textbox> = {
   args: {
     placeholder: 'Textbox',
     label: 'Textbox',
+    validationTrigger: 'onChange',
     labelStyle: {
       fontSize: 'small',
       fontWeight: 500,

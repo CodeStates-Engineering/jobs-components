@@ -41,6 +41,7 @@ export interface SearchboxProps
   validationTrigger?: ValidationTrigger;
   description?: InputWrapProps['description'];
   readOnly?: InputWrapProps['readOnly'];
+  requireMessage?: string;
 }
 
 export const Searchbox = ({
@@ -66,6 +67,7 @@ export const Searchbox = ({
   description,
   readOnly,
   textEllipsis,
+  requireMessage,
 }: SearchboxProps) => {
   const [opened, setOpened] = useState(false);
   const [inputText, setInputText] = useSubscribedState(value);
@@ -95,13 +97,19 @@ export const Searchbox = ({
     });
   }, [selfFilter, inputText, stringOptions]);
 
-  const { validationMessage, validateOnChange, validateOnBlur } =
-    useValidationMessage({
-      key: label,
-      validateHandler: validation,
-      value,
-      validationTrigger,
-    });
+  const {
+    validationMessage,
+    validateOnChange,
+    validateOnBlur,
+    isRequried,
+    validateOnChangeOption,
+  } = useValidationMessage({
+    key: label,
+    validateHandler: validation,
+    value: inputText,
+    validationTrigger,
+    requireMessage,
+  });
 
   const handleChange = (value?: string) => {
     setInputText?.(value);
@@ -115,6 +123,7 @@ export const Searchbox = ({
       inputStyle={inputStyle}
       labelStyle={labelStyle}
       label={label}
+      required={isRequried}
     >
       <FocusLayer
         onBlur={() => setOpened(false)}
@@ -160,6 +169,7 @@ export const Searchbox = ({
           onChange={(value) => {
             setOpened(false);
             handleChange(value);
+            validateOnChangeOption?.(value);
           }}
           cancelable={false}
           float={float}

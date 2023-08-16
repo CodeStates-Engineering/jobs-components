@@ -1,4 +1,6 @@
-import { useState, useContext, useEffect, useMemo } from 'react';
+import { debounce } from 'lodash-es';
+
+import { useState, useContext, useEffect, useMemo, useRef } from 'react';
 
 import { ValidationContext } from '@contexts/ValidationContext';
 import type { ValidationResult } from '@contexts/ValidationContext';
@@ -78,20 +80,28 @@ export const useValidationMessage = <TValue,>({
     }
   }, [handleValidate, key, validationContext, value]);
 
+  const { current: validate } = useRef(
+    debounce(
+      async (value: TValue) =>
+        setValidationMessage(await handleValidate?.(value)),
+      300,
+    ),
+  );
+
   const validateOnTrigger = {
     onChange: {
-      validateOnChange: async (value: TValue) =>
-        setValidationMessage(await handleValidate?.(value)),
+      validateOnChange: (value: TValue) => validate(value),
     },
     onBlur: {
-      validateOnBlur: async () =>
-        setValidationMessage(await handleValidate?.(value)),
+      validateOnBlur: () => validate(value),
     },
   }[validationTrigger];
 
   return {
     ...validateOnTrigger,
     validationMessage,
+    validateOnChangeOption:
+      validationTrigger === 'onBlur' ? validate : undefined,
     isRequried: !!requireMessage,
   };
 };

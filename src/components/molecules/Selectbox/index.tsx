@@ -35,6 +35,7 @@ export interface SelectboxProps<
     UseTypographyClassNameParams;
   description?: InputWrapProps['description'];
   cancelable?: boolean;
+  requireMessage?: string;
 }
 
 export const Selectbox = <
@@ -61,6 +62,7 @@ export const Selectbox = <
   readOnly,
   cancelable = true,
   textEllipsis,
+  requireMessage,
 }: SelectboxProps<_ValidOptionValue, _Multiple>) => {
   const [opened, setOpened] = useState(false);
 
@@ -68,12 +70,14 @@ export const Selectbox = <
 
   const selectedOption = options?.find(({ value }) => value === selectedValue);
 
-  const { validationMessage, validateOnChange } = useValidationMessage({
-    key: label,
-    validateHandler: validation,
-    value: selectedValue,
-    validationTrigger: 'onChange',
-  });
+  const { validationMessage, validateOnChange, isRequried } =
+    useValidationMessage({
+      key: label,
+      validateHandler: validation,
+      value: selectedValue,
+      validationTrigger: 'onChange',
+      requireMessage,
+    });
 
   return (
     <Label.WithInput
@@ -81,6 +85,7 @@ export const Selectbox = <
       inputStyle={inputStyle}
       labelStyle={labelStyle}
       className={className}
+      required={isRequried}
     >
       <FocusLayer
         onBlur={() => setOpened(false)}
