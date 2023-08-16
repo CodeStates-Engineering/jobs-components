@@ -23,7 +23,7 @@ interface SavedFile {
   url: string;
 }
 
-export interface FileProps extends LabelWithInputProps {
+export interface FileProps extends Omit<LabelWithInputProps, 'required'> {
   value?: SavedFile;
   onChange?: (file?: File) => void;
   download?: boolean;
@@ -37,6 +37,7 @@ export interface FileProps extends LabelWithInputProps {
   } & Pick<InputWrapProps, 'borderRadius' | 'width'> &
     UseTypographyClassNameParams;
   description?: InputWrapProps['description'];
+  requireMessage?: string;
 }
 
 const getIconSizeBy = (size: 'small' | 'medium' | 'large' | undefined) => {
@@ -66,6 +67,7 @@ export const File = ({
   inputStyle,
   description,
   readOnly,
+  requireMessage,
 }: FileProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -78,12 +80,14 @@ export const File = ({
 
   const isClosable = !disabled && !readOnly;
 
-  const { validationMessage, validateOnChange } = useValidationMessage({
-    key: label,
-    value: savedFile,
-    validateHandler: validation,
-    validationTrigger: 'onChange',
-  });
+  const { validationMessage, validateOnChange, isRequried } =
+    useValidationMessage({
+      key: label,
+      value: savedFile,
+      validateHandler: validation,
+      validationTrigger: 'onChange',
+      requireMessage,
+    });
 
   const { messageRef, wrapHeightStyle } = useValidationMessageDynamicHeight(
     !!validationMessage || !!description,
@@ -95,6 +99,7 @@ export const File = ({
       label={label}
       inputStyle={inputStyle}
       labelStyle={labelStyle}
+      required={isRequried}
     >
       <input
         type="file"

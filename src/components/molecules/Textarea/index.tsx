@@ -40,6 +40,7 @@ export interface TextareaProps
   onFloatingActionClick?: () => void;
   validationTrigger?: ValidationTrigger;
   description?: InputWrapProps['description'];
+  requireMessage?: string;
 }
 
 export const Textarea = ({
@@ -59,6 +60,7 @@ export const Textarea = ({
   validationTrigger,
   description,
   readOnly = false,
+  requireMessage,
 }: TextareaProps) => {
   const [textareaValue, setTextareaValue] = useSubscribedState(
     originalValue ?? '',
@@ -69,12 +71,13 @@ export const Textarea = ({
     fontWeight: inputStyle?.fontWeight,
   });
 
-  const { validationMessage, validateOnChange, validateOnBlur } =
+  const { validationMessage, validateOnChange, validateOnBlur, isRequried } =
     useValidationMessage({
       key: label,
       validateHandler: validation,
       value: textareaValue,
       validationTrigger,
+      requireMessage,
     });
 
   return (
@@ -84,6 +87,7 @@ export const Textarea = ({
           htmlFor={label}
           fontSize={labelStyle?.fontSize}
           fontWeight={labelStyle?.fontWeight}
+          required={isRequried}
         >
           {label}
         </Label>

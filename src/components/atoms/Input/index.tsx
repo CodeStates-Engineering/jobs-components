@@ -40,7 +40,7 @@ export interface InputProps<T extends InputType = 'text'>
 
 const InputMain: <T extends InputType = 'text'>(
   props: InputProps<T>,
-) => JSX.Element | null = forwardRef(
+) => React.ReactNode = forwardRef(
   (
     {
       type = 'text' as const,

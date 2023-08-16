@@ -18,6 +18,7 @@ export interface LabelProps
     >,
     UseTypographyClassNameParams {
   space?: 'none' | 'small' | 'medium' | 'large';
+  required?: boolean;
 }
 
 const LabelMain = ({
@@ -27,6 +28,7 @@ const LabelMain = ({
   fontSize = 'small',
   space = 'none',
   fontWeight = 500,
+  required,
 }: LabelProps) => {
   const { typographyClassName } = useTypographyClassName({
     fontSize,
@@ -42,6 +44,7 @@ const LabelMain = ({
       )}
     >
       {children}
+      {required ? <span className={styles['require-mark']}>*</span> : null}
     </label>
   );
 };
@@ -73,6 +76,7 @@ export interface LabelWithInputProps {
     UseTypographyClassNameParams;
   inputStyle?: Pick<InputWrapProps, 'size'>;
   children?: React.ReactNode;
+  required?: boolean;
 }
 
 const LabelWithInput = ({
@@ -81,6 +85,7 @@ const LabelWithInput = ({
   labelStyle,
   inputStyle,
   children,
+  required,
 }: LabelWithInputProps) => (
   <LabelContainer direction={labelStyle?.direction} className={className}>
     {label ? (
@@ -93,6 +98,7 @@ const LabelWithInput = ({
         htmlFor={label}
       >
         {label}
+        {required ? <span className={styles['require-mark']}>*</span> : null}
       </LabelMain>
     ) : null}
     {children}

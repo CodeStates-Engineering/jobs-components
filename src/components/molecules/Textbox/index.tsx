@@ -43,6 +43,7 @@ export interface TextboxProps<T extends TextboxType = 'text'>
     };
   validationTrigger?: ValidationTrigger;
   description?: InputWrapProps['description'];
+  requireMessage?: string;
 }
 
 export const Textbox = <T extends TextboxType = 'text'>({
@@ -65,15 +66,17 @@ export const Textbox = <T extends TextboxType = 'text'>({
   validationTrigger,
   description,
   readOnly,
+  requireMessage,
 }: TextboxProps<T>) => {
   const [value, setValue] = useSubscribedState(originalValue);
 
-  const { validationMessage, validateOnChange, validateOnBlur } =
+  const { validationMessage, validateOnChange, validateOnBlur, isRequried } =
     useValidationMessage({
       validateHandler: validation,
       key: label,
       value,
       validationTrigger,
+      requireMessage,
     });
 
   return (
@@ -82,6 +85,7 @@ export const Textbox = <T extends TextboxType = 'text'>({
       inputStyle={inputStyle}
       labelStyle={labelStyle}
       label={label}
+      required={isRequried}
     >
       <Input.Wrap
         validationMessage={validationMessage}
