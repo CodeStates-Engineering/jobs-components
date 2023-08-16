@@ -13,6 +13,7 @@ module.exports = {
     storyStoreV7: true,
   },
   docs: {
+    docsMode: true,
     autodocs: true,
   },
 };
