@@ -5,5 +5,5 @@ export interface TableTitleProps {
     children?: ReactNode;
     maxWidth?: MaxWidth;
 }
-export declare const TableTitle: ({ children, className, maxWidth, }: TableTitleProps) => JSX.Element;
+export declare const TableTitle: ({ children, className, maxWidth, }: TableTitleProps) => import("react/jsx-runtime").JSX.Element;
 export {};

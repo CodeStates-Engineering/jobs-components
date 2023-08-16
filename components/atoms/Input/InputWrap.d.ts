@@ -8,4 +8,4 @@ export interface InputWrapProps extends Pick<React.DetailedHTMLProps<React.Input
     description?: string | null;
     fontColor?: string;
 }
-export declare const InputWrap: ({ children, onClick, size, className, borderRadius, width, validationMessage, description, fontColor, readOnly, }: InputWrapProps) => JSX.Element;
+export declare const InputWrap: ({ children, onClick, size, className, borderRadius, width, validationMessage, description, fontColor, readOnly, }: InputWrapProps) => import("react/jsx-runtime").JSX.Element;

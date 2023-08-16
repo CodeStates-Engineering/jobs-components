@@ -6,4 +6,4 @@ export interface DropdownProps {
     className?: string;
     onClose?: FocusLayerProps['onBlur'];
 }
-export declare const Dropdown: ({ opened, children, className, onClose, }: DropdownProps) => JSX.Element;
+export declare const Dropdown: ({ opened, children, className, onClose, }: DropdownProps) => import("react/jsx-runtime").JSX.Element;

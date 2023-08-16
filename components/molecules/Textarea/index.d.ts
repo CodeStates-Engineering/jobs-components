@@ -15,5 +15,6 @@ export interface TextareaProps extends Pick<DetailedHTMLProps<TextareaHTMLAttrib
     onFloatingActionClick?: () => void;
     validationTrigger?: ValidationTrigger;
     description?: InputWrapProps['description'];
+    requireMessage?: string;
 }
-export declare const Textarea: ({ placeholder, value: originalValue, onChange, disabled, validation, id, label, className, onClick, inputStyle, labelStyle, floatingActionName, onFloatingActionClick, validationTrigger, description, readOnly, }: TextareaProps) => JSX.Element;
+export declare const Textarea: ({ placeholder, value: originalValue, onChange, disabled, validation, id, label, className, onClick, inputStyle, labelStyle, floatingActionName, onFloatingActionClick, validationTrigger, description, readOnly, requireMessage, }: TextareaProps) => import("react/jsx-runtime").JSX.Element;

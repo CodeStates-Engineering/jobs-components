@@ -12,8 +12,8 @@ interface FloatingModalTailProps {
     className?: string;
     border?: boolean;
 }
-export declare const FloatingModal: (({ children, className, opened, onClose, }: FloatingModalProps) => JSX.Element) & {
-    Body: ({ children, className }: CommonProps) => JSX.Element;
-    Tail: ({ children, className, border, }: FloatingModalTailProps) => JSX.Element;
+export declare const FloatingModal: (({ children, className, opened, onClose, }: FloatingModalProps) => import("react/jsx-runtime").JSX.Element) & {
+    Body: ({ children, className }: CommonProps) => import("react/jsx-runtime").JSX.Element;
+    Tail: ({ children, className, border, }: FloatingModalTailProps) => import("react/jsx-runtime").JSX.Element;
 };
 export {};

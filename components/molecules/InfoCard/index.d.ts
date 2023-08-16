@@ -10,4 +10,4 @@ export interface InfoCardProps {
     className?: string;
     onBodyCopy?: (value?: string) => void;
 }
-export declare const InfoCard: ({ icon, title, date, table, children, className, onBodyCopy, }: InfoCardProps) => JSX.Element;
+export declare const InfoCard: ({ icon, title, date, table, children, className, onBodyCopy, }: InfoCardProps) => import("react/jsx-runtime").JSX.Element;

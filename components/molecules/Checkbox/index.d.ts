@@ -19,4 +19,4 @@ export interface CheckboxProps {
     };
     validationTrigger?: ValidationTrigger;
 }
-export declare const Checkbox: ({ value, onChange, disabled, id, essential, label, description, className, labelStyle, inputStyle, validationTrigger, }: CheckboxProps) => JSX.Element;
+export declare const Checkbox: ({ value, onChange, disabled, id, essential, label, description, className, labelStyle, inputStyle, validationTrigger, }: CheckboxProps) => import("react/jsx-runtime").JSX.Element;

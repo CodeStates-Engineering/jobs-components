@@ -21,6 +21,6 @@ interface TableContextValue {
     storageKey?: string;
 }
 export type TableObserverProps = Partial<Pick<TableContextValue, 'fixedColumnCount' | 'storageKey'>>;
-export declare const tableDataObserver: <T extends Partial<Pick<TableContextValue, "fixedColumnCount" | "storageKey">>>(TableComponent: ComponentType<T>) => (props: T) => JSX.Element;
+export declare const tableDataObserver: <T extends Partial<Pick<TableContextValue, "fixedColumnCount" | "storageKey">>>(TableComponent: ComponentType<T>) => (props: T) => import("react/jsx-runtime").JSX.Element;
 export declare const useTableData: () => TableContextValue;
 export {};

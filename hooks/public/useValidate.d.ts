@@ -14,5 +14,5 @@ export declare const useValidate: () => {
         invalidElementIds: string[];
     }>;
 };
-export declare const validationObserver: <T extends object>(Component: (props: T) => JSX.Element | null) => (props: T) => JSX.Element;
+export declare const validationObserver: <T extends object>(Component: (props: T) => JSX.Element | null) => (props: T) => import("react/jsx-runtime").JSX.Element;
 export {};

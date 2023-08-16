@@ -1,11 +1,10 @@
-/// <reference types="react" />
 import type { InputProps, InputWrapProps, LabelWithInputProps } from '../../atoms';
 import type { ValidateHandler, UseTypographyClassNameParams } from '../../../hooks';
 interface SavedFile {
     name: string;
     url: string;
 }
-export interface FileProps extends LabelWithInputProps {
+export interface FileProps extends Omit<LabelWithInputProps, 'required'> {
     value?: SavedFile;
     onChange?: (file?: File) => void;
     download?: boolean;
@@ -18,6 +17,7 @@ export interface FileProps extends LabelWithInputProps {
         size?: 'small' | 'medium' | 'large';
     } & Pick<InputWrapProps, 'borderRadius' | 'width'> & UseTypographyClassNameParams;
     description?: InputWrapProps['description'];
+    requireMessage?: string;
 }
-export declare const File: ({ children, value, onChange, className, download, disabled, accept, validation, label, id, labelStyle, inputStyle, description, readOnly, }: FileProps) => JSX.Element;
+export declare const File: ({ children, value, onChange, className, download, disabled, accept, validation, label, id, labelStyle, inputStyle, description, readOnly, requireMessage, }: FileProps) => import("react/jsx-runtime").JSX.Element;
 export {};

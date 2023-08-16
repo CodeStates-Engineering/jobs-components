@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import type { ButtonProps, OptionsProps } from '../../atoms';
 export interface OptionsTagProps extends Pick<ButtonProps, 'icon' | 'className'>, Pick<OptionsProps<string, false>, 'onChange' | 'value' | 'textEllipsis'> {
     options?: {
@@ -7,4 +6,4 @@ export interface OptionsTagProps extends Pick<ButtonProps, 'icon' | 'className'>
         default?: boolean;
     }[];
 }
-export declare const OptionsTag: ({ icon, value, onChange, options, className, textEllipsis, }: OptionsTagProps) => JSX.Element;
+export declare const OptionsTag: ({ icon, value, onChange, options, className, textEllipsis, }: OptionsTagProps) => import("react/jsx-runtime").JSX.Element;

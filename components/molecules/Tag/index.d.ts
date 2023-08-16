@@ -7,4 +7,4 @@ export interface TagProps extends Pick<React.CSSProperties, 'width'> {
     onClose?: (e?: MouseEvent<HTMLButtonElement>) => void;
     onClick?: () => void;
 }
-export declare const Tag: ({ color, size, width, className, children, onClose, onClick, }: TagProps) => JSX.Element | null;
+export declare const Tag: ({ color, size, width, className, children, onClose, onClick, }: TagProps) => import("react/jsx-runtime").JSX.Element | null;

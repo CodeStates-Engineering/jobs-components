@@ -6,4 +6,4 @@ export interface DropdownTagProps extends Pick<ButtonProps, 'icon' | 'className'
     onClickX?: () => void;
     tagContent?: React.ReactNode;
 }
-export declare const DropdownTag: ({ avtive, children, onClickX, icon, tagContent, className, }: DropdownTagProps) => JSX.Element;
+export declare const DropdownTag: ({ avtive, children, onClickX, icon, tagContent, className, }: DropdownTagProps) => import("react/jsx-runtime").JSX.Element;

@@ -3,6 +3,7 @@ import type { UseTypographyClassNameParams } from '../../../hooks';
 import type { InputWrapProps } from '../Input';
 export interface LabelProps extends Pick<DetailedHTMLProps<LabelHTMLAttributes<HTMLLabelElement>, HTMLLabelElement>, 'children' | 'htmlFor' | 'className'>, UseTypographyClassNameParams {
     space?: 'none' | 'small' | 'medium' | 'large';
+    required?: boolean;
 }
 export interface LabelContainerProps {
     children?: React.ReactNode;
@@ -15,8 +16,9 @@ export interface LabelWithInputProps {
     labelStyle?: Pick<LabelContainerProps, 'direction'> & UseTypographyClassNameParams;
     inputStyle?: Pick<InputWrapProps, 'size'>;
     children?: React.ReactNode;
+    required?: boolean;
 }
-export declare const Label: (({ children, htmlFor, className, fontSize, space, fontWeight, }: LabelProps) => JSX.Element) & {
-    Container: ({ children, className, direction, }: LabelContainerProps) => JSX.Element;
-    WithInput: ({ className, label, labelStyle, inputStyle, children, }: LabelWithInputProps) => JSX.Element;
+export declare const Label: (({ children, htmlFor, className, fontSize, space, fontWeight, required, }: LabelProps) => import("react/jsx-runtime").JSX.Element) & {
+    Container: ({ children, className, direction, }: LabelContainerProps) => import("react/jsx-runtime").JSX.Element;
+    WithInput: ({ className, label, labelStyle, inputStyle, children, required, }: LabelWithInputProps) => import("react/jsx-runtime").JSX.Element;
 };

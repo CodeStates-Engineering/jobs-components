@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import type { ButtonProps, HrProps } from '../../atoms';
 interface Item {
     label: string;
@@ -24,5 +23,5 @@ export interface TabMenuProps {
     selectedLineColor?: HrProps['color'];
     className?: string;
 }
-export declare const TabMenu: ({ items, itemSize, itemShape, bottomLineWeight, selectedLineWeight, theme, selectedLineColor, fontWeight, fontSize, className, }: TabMenuProps) => JSX.Element;
+export declare const TabMenu: ({ items, itemSize, itemShape, bottomLineWeight, selectedLineWeight, theme, selectedLineColor, fontWeight, fontSize, className, }: TabMenuProps) => import("react/jsx-runtime").JSX.Element;
 export {};

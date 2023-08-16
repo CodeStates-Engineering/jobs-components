@@ -8,5 +8,5 @@ interface FloatingActionModalProps extends CommonProps, Pick<React.DetailedHTMLP
     opened?: boolean;
     onClose?: () => void;
 }
-export declare const FloatingActionModal: ({ count, opened, onClose, children, className, }: FloatingActionModalProps) => JSX.Element;
+export declare const FloatingActionModal: ({ count, opened, onClose, children, className, }: FloatingActionModalProps) => import("react/jsx-runtime").JSX.Element;
 export {};

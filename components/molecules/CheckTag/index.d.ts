@@ -4,4 +4,4 @@ export interface CheckTagProps {
     onChange?: (value: boolean) => void;
     children?: React.ReactNode;
 }
-export declare const CheckTag: ({ value, onChange, children, }: CheckTagProps) => JSX.Element;
+export declare const CheckTag: ({ value, onChange, children, }: CheckTagProps) => import("react/jsx-runtime").JSX.Element;

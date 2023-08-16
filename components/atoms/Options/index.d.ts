@@ -17,4 +17,4 @@ export interface OptionsProps<OptionValue = ValidOptionValue, Multiple = boolean
     cancelable?: boolean;
     textEllipsis?: boolean;
 }
-export declare const Options: <OptionValue extends ValidOptionValue, Multiple extends boolean = false>({ opened, options, multiple, value: selectedValue, onChange, onKeyDown, float, className, optionStyle, cancelable, textEllipsis, }: OptionsProps<OptionValue, Multiple>) => JSX.Element;
+export declare const Options: <OptionValue extends ValidOptionValue, Multiple extends boolean = false>({ opened, options, multiple, value: selectedValue, onChange, onKeyDown, float, className, optionStyle, cancelable, textEllipsis, }: OptionsProps<OptionValue, Multiple>) => import("react/jsx-runtime").JSX.Element;

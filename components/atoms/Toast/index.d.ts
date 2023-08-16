@@ -8,4 +8,4 @@ export interface ToastProps {
     className?: string;
 }
 export declare const CLOSE_TOAST_ANIMATION_DURATION = 500;
-export declare const Toast: ({ type, children, isSpaceHolding, floatDirection, holdTime, className, }: ToastProps) => JSX.Element;
+export declare const Toast: ({ type, children, isSpaceHolding, floatDirection, holdTime, className, }: ToastProps) => import("react/jsx-runtime").JSX.Element;

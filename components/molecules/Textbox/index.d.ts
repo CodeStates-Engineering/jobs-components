@@ -12,6 +12,7 @@ export interface TextboxProps<T extends TextboxType = 'text'> extends Pick<Input
     };
     validationTrigger?: ValidationTrigger;
     description?: InputWrapProps['description'];
+    requireMessage?: string;
 }
-export declare const Textbox: <T extends TextboxType = "text">({ value: originalValue, unit, onChange, type, placeholder, disabled, onFocus, id, onClick, ref, label, validation, className, onBlur, labelStyle, inputStyle, validationTrigger, description, readOnly, }: TextboxProps<T>) => JSX.Element;
+export declare const Textbox: <T extends TextboxType = "text">({ value: originalValue, unit, onChange, type, placeholder, disabled, onFocus, id, onClick, ref, label, validation, className, onBlur, labelStyle, inputStyle, validationTrigger, description, readOnly, requireMessage, }: TextboxProps<T>) => import("react/jsx-runtime").JSX.Element;
 export {};

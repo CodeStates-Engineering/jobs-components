@@ -17,5 +17,5 @@ export type LinkProps = Omit<CompatibleLinkProps, 'className' | 'children' | 'to
 /**
  * @deprecated Next, React에 내장된 Anchor 확장 컴포넌트를 사용하세요.
  */
-export declare const Link: ({ color, hoverType, fontSize, fontWeight, to, replace, type, className, children, target, ...restProps }: LinkProps) => JSX.Element;
+export declare const Link: ({ color, hoverType, fontSize, fontWeight, to, replace, type, className, children, target, ...restProps }: LinkProps) => import("react/jsx-runtime").JSX.Element;
 export {};

@@ -5,4 +5,4 @@ export interface TableCellProps {
     onCopy?: (value: string) => void;
     hoverStyle?: Pick<React.CSSProperties, 'maxHeight' | 'maxWidth'>;
 }
-export declare const TableCell: ({ children, onCopy, className, hoverStyle, }: TableCellProps) => JSX.Element;
+export declare const TableCell: ({ children, onCopy, className, hoverStyle, }: TableCellProps) => import("react/jsx-runtime").JSX.Element;

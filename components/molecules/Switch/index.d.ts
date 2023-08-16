@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import type { LabelWithInputProps } from '../../atoms';
 export interface SwitchProps extends LabelWithInputProps {
     value?: boolean;
@@ -11,4 +10,4 @@ export interface SwitchProps extends LabelWithInputProps {
         containerSize?: 'none' | 'small' | 'medium' | 'large';
     };
 }
-export declare const Switch: ({ value, onChange, disabled, id, label, className, labelStyle, inputStyle, }: SwitchProps) => JSX.Element;
+export declare const Switch: ({ value, onChange, disabled, id, label, className, labelStyle, inputStyle, }: SwitchProps) => import("react/jsx-runtime").JSX.Element;
