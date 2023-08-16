@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext, useEffect, useMemo } from 'react';
 
 import { ValidationContext } from '@contexts/ValidationContext';
 import type { ValidationResult } from '@contexts/ValidationContext';
@@ -14,6 +14,7 @@ interface UseValidationMessageParams<TValue> {
   validationTrigger?: ValidationTrigger;
   key?: string;
   value: TValue;
+  requireMessage?: string;
   validateHandler: ValidateHandler<TValue>;
 }
 
@@ -21,24 +22,49 @@ export const useValidationMessage = <TValue,>({
   key,
   value,
   validateHandler,
+  requireMessage,
   validationTrigger = 'onBlur',
 }: UseValidationMessageParams<TValue>) => {
   const validationContext = useContext(ValidationContext);
 
   const [validationMessage, setValidationMessage] = useState<string>();
 
+  const handleValidate: ValidateHandler<TValue> = useMemo(() => {
+    if (!requireMessage && !validateHandler) {
+      return undefined;
+    }
+
+    if (validateHandler && isAsync(validateHandler)) {
+      return async (value) => {
+        if (!value && requireMessage) {
+          return requireMessage;
+        }
+        const validationMessage = await validateHandler(value);
+        return validationMessage;
+      };
+    }
+
+    return (value) => {
+      if (!value && requireMessage) {
+        return requireMessage;
+      }
+      const validationMessage = validateHandler?.(value);
+      return validationMessage;
+    };
+  }, [requireMessage, validateHandler]);
+
   useEffect(() => {
-    if (validationContext && key && validateHandler) {
+    if (validationContext && key && handleValidate) {
       validationContext.set(
         key,
-        isAsync(validateHandler)
+        isAsync(handleValidate)
           ? async () => {
-              const validationMessage = await validateHandler(value);
+              const validationMessage = await handleValidate(value);
               setValidationMessage(validationMessage);
               return validationMessage;
             }
           : () => {
-              const validationMessage = validateHandler(
+              const validationMessage = handleValidate(
                 value,
               ) as ValidationResult;
               setValidationMessage(validationMessage);
@@ -50,21 +76,22 @@ export const useValidationMessage = <TValue,>({
         validationContext.delete(key);
       };
     }
-  }, [key, validateHandler, validationContext, value]);
+  }, [handleValidate, key, validationContext, value]);
 
   const validateOnTrigger = {
     onChange: {
       validateOnChange: async (value: TValue) =>
-        setValidationMessage(await validateHandler?.(value)),
+        setValidationMessage(await handleValidate?.(value)),
     },
     onBlur: {
       validateOnBlur: async () =>
-        setValidationMessage(await validateHandler?.(value)),
+        setValidationMessage(await handleValidate?.(value)),
     },
   }[validationTrigger];
 
   return {
     ...validateOnTrigger,
     validationMessage,
+    isRequried: !!requireMessage,
   };
 };
