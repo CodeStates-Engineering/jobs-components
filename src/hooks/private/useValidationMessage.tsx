@@ -1,6 +1,6 @@
 import { debounce } from 'lodash-es';
 
-import { useState, useContext, useEffect, useMemo, useRef } from 'react';
+import { useState, useContext, useEffect, useMemo } from 'react';
 
 import { ValidationContext } from '@contexts/ValidationContext';
 import type { ValidationResult } from '@contexts/ValidationContext';
