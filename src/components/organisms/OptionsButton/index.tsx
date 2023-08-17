@@ -1,25 +1,29 @@
 import { useState } from 'react';
 
-import type { ButtonProps, OptionsProps } from '@components/atoms';
+import type {
+  ButtonProps,
+  OptionsProps,
+  ValidOptionValue,
+} from '@components/atoms';
 import { Button, Options } from '@components/atoms';
 import { cleanClassName } from '@utils';
 
 import styles from './index.module.scss';
 
-export interface OptionsButtonProps
-  extends Pick<
-    OptionsProps<string, false>,
+export interface OptionsButtonProps<
+  _ValidOptionValue = ValidOptionValue,
+  _Multiple = boolean,
+> extends Pick<
+    OptionsProps<_ValidOptionValue, _Multiple>,
     | 'float'
     | 'optionStyle'
     | 'onChange'
+    | 'multiple'
     | 'value'
     | 'textEllipsis'
     | 'className'
+    | 'options'
   > {
-  options?: {
-    label: string;
-    value: string;
-  }[];
   buttonStyle: ButtonProps;
   buttonContent: string;
 }
@@ -34,6 +38,7 @@ export const OptionsButton = ({
   className,
   buttonStyle,
   buttonContent,
+  multiple,
 }: OptionsButtonProps) => {
   const [opened, setOpened] = useState(false);
   const { className: btnClassName, ...restButtonStyle } = buttonStyle;
@@ -56,6 +61,7 @@ export const OptionsButton = ({
         opened={opened}
         className={cleanClassName(`${styles.options}`)}
         options={options?.map(({ label, value }) => ({ label, value }))}
+        multiple={multiple}
         value={value}
         onChange={(value) => {
           setOpened(false);
