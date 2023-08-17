@@ -26,17 +26,7 @@
     @include fade-out(0.3s);
   }
 
-  &.priority-1 {
-    z-index: 99;
-  }
-
-  &.priority-2 {
-    z-index: 66;
-  }
-
-  &.priority-3 {
-    z-index: 33;
-  }
+  @include priority-background-layer;
 }
 
 @layer default {
@@ -54,15 +44,5 @@
     position: fixed;
   }
 
-  &.priority-1 {
-    z-index: 100;
-  }
-
-  &.priority-2 {
-    z-index: 67;
-  }
-
-  &.priority-3 {
-    z-index: 34;
-  }
+  @include priority-focus-layer;
 }

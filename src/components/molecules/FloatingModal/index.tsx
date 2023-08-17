@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { createContext, useState } from 'react';
 
+import type { FocusLayerProps } from '@components/atoms';
 import { useMountedEffect } from '@hooks';
 import { cleanClassName } from '@utils';
 
@@ -11,7 +12,7 @@ interface CommonProps {
   className?: string;
 }
 
-interface FloatingModalProps
+export interface FloatingModalProps
   extends CommonProps,
     Pick<
       React.DetailedHTMLProps<
@@ -19,7 +20,8 @@ interface FloatingModalProps
         HTMLFormElement
       >,
       'onSubmit'
-    > {
+    >,
+    Pick<FocusLayerProps, 'priority'> {
   opened?: boolean;
   onClose?: () => void;
 }
@@ -57,6 +59,7 @@ const FloatingModalMain = ({
   className,
   opened,
   onClose,
+  priority = 3,
 }: FloatingModalProps) => {
   const [floatState, setFloatState] = useState<'open' | 'closing' | 'closed'>(
     'closed',
@@ -64,8 +67,8 @@ const FloatingModalMain = ({
 
   const commonProps = {
     className: cleanClassName(
-      `${styles[`floating-modal-container`]} ${
-        styles[floatState]
+      `${styles[`floating-modal-container`]} ${styles[floatState]} ${
+        styles[`priority-${priority}`]
       } ${className}`,
     ),
     children: (
