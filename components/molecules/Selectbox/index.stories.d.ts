@@ -4,3 +4,4 @@ declare const meta: Meta<typeof Selectbox>;
 export default meta;
 type Story = StoryObj<typeof Selectbox>;
 export declare const Default: Story;
+export declare const Multiple: Story;
