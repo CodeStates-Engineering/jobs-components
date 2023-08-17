@@ -65,7 +65,7 @@ export default defineConfig({
       '@components': path.resolve(__dirname, 'src/components'),
       '@utils': path.resolve(__dirname, 'src/utils'),
       '@hooks': path.resolve(__dirname, 'src/hooks'),
-      '@context': path.resolve(__dirname, 'src/context'),
+      '@contexts': path.resolve(__dirname, 'src/contexts'),
       '@constants': path.resolve(__dirname, 'src/constants'),
       '@styles': path.resolve(__dirname, 'src/styles'),
       '@plugins': path.resolve(__dirname, 'src/plugins'),
