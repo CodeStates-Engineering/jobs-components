@@ -8,3 +8,4 @@ export * from './NotFound';
 export * from './OptionsTag';
 export * from './DropdownTag';
 export * from './FloatingActionModal';
+export * from './OptionsButton';
