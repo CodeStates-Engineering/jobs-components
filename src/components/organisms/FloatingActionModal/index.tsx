@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { X } from 'react-feather';
 
+import type { FocusLayerProps } from '@components/atoms';
 import { Button } from '@components/atoms';
 import { FloatingModal } from '@components/molecules';
 
@@ -11,7 +12,7 @@ interface CommonProps {
   className?: string;
 }
 
-interface FloatingActionModalProps
+export interface FloatingActionModalProps
   extends CommonProps,
     Pick<
       React.DetailedHTMLProps<
@@ -19,7 +20,8 @@ interface FloatingActionModalProps
         HTMLFormElement
       >,
       'onSubmit'
-    > {
+    >,
+    Pick<FocusLayerProps, 'priority'> {
   count?: number;
   opened?: boolean;
   onClose?: () => void;
@@ -30,8 +32,9 @@ export const FloatingActionModal = ({
   onClose,
   children,
   className,
+  priority = 3,
 }: FloatingActionModalProps) => (
-  <FloatingModal opened={opened} className={className}>
+  <FloatingModal opened={opened} className={className} priority={priority}>
     <FloatingModal.Body>
       <div className={styles['action-floating-modal-container']}>
         <div className={styles['action-count']}>
