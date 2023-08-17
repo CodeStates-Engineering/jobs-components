@@ -1,4 +1,4 @@
-import type { ValidationResult } from '@contexts/ValidationContext';
+import type { ValidationResult } from '../../contexts/ValidationContext';
 export type ValidateHandler<TValue> = ((value: TValue) => ValidationResult | Promise<ValidationResult>) | undefined;
 export type ValidationTrigger = 'onChange' | 'onBlur';
 interface UseValidationMessageParams<TValue> {

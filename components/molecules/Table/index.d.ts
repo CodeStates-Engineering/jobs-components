@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import type { TableObserverProps } from '@contexts/TableContext';
+import type { TableObserverProps } from '../../../contexts/TableContext';
 export type { TableHeaderProps } from './TableHeader';
 export type { TableTitleProps } from './TableTitle';
 export type { TableRowProps } from './TableRow';

@@ -1,5 +1,5 @@
 /// <reference types="react" />
-import type { ValidationContextValue } from '@contexts/ValidationContext';
+import type { ValidationContextValue } from '../../contexts/ValidationContext';
 interface ValidateOptions {
     scrollToFirstInvalid?: boolean;
 }
