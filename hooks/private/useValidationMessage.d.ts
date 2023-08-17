@@ -10,15 +10,15 @@ interface UseValidationMessageParams<TValue> {
 }
 export declare const useValidationMessage: <TValue>({ key, value, validateHandler, requireMessage, validationTrigger, }: UseValidationMessageParams<TValue>) => {
     validationMessage: string | undefined;
-    validateOnChangeOption: ((value: TValue) => Promise<void>) | undefined;
+    validateOnChangeOption: import("lodash-es").DebouncedFunc<(value: TValue) => Promise<void>> | undefined;
     isRequried: boolean;
-    validateOnChange: (value: TValue) => Promise<void>;
+    validateOnChange: (value: TValue) => Promise<void> | undefined;
     validateOnBlur?: undefined;
 } | {
     validationMessage: string | undefined;
-    validateOnChangeOption: ((value: TValue) => Promise<void>) | undefined;
+    validateOnChangeOption: import("lodash-es").DebouncedFunc<(value: TValue) => Promise<void>> | undefined;
     isRequried: boolean;
-    validateOnBlur: () => Promise<void>;
+    validateOnBlur: () => Promise<void> | undefined;
     validateOnChange?: undefined;
 };
 export {};
