@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { OptionsButton } from '.';
@@ -48,18 +46,4 @@ export default meta;
 
 type Story = StoryObj<typeof OptionsButton>;
 
-export const Default: Story = {
-  render: (args) => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [value, setValue] = useState<string | undefined>('');
-    return (
-      <OptionsButton
-        {...args}
-        value={value}
-        onChange={(value) => {
-          setValue(value);
-        }}
-      />
-    );
-  },
-};
+export const Default: Story = {};
