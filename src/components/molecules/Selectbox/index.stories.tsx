@@ -66,3 +66,10 @@ export default meta;
 type Story = StoryObj<typeof Selectbox>;
 
 export const Default: Story = {};
+
+export const Multiple: Story = {
+  args: {
+    multiple: true,
+    requireMessage: 'Value is required',
+  },
+};

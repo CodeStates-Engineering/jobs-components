@@ -49,13 +49,6 @@ const meta: Meta<typeof Searchbox> = {
     description: '테스트',
     readOnly: false,
     textEllipsis: false,
-
-    validation: (value?: string) => {
-      if (!value) {
-        return 'Value is required';
-      }
-      return undefined;
-    },
   },
 };
 
@@ -63,4 +56,8 @@ export default meta;
 
 type Story = StoryObj<typeof Searchbox>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  args: {
+    requireMessage: '필수 입력입니다.',
+  },
+};

@@ -132,7 +132,9 @@ export const Selectbox = <
             setSelectedValue?.(value);
             validateOnChange?.(value);
             onChange?.(value);
-            setOpened(false);
+            if (!multiple) {
+              setOpened(false);
+            }
           }}
           textEllipsis={textEllipsis}
         />

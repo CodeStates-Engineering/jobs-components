@@ -36,9 +36,12 @@ export const useValidationMessage = <TValue,>({
       return undefined;
     }
 
+    const isRequireMessageVisibled = (value: TValue) =>
+      ((Array.isArray(value) && !value.length) || !value) && requireMessage;
+
     if (validateHandler && isAsync(validateHandler)) {
       return async (value) => {
-        if (!value && requireMessage) {
+        if (isRequireMessageVisibled(value)) {
           return requireMessage;
         }
         const validationMessage = await validateHandler(value);
@@ -47,7 +50,7 @@ export const useValidationMessage = <TValue,>({
     }
 
     return (value) => {
-      if (!value && requireMessage) {
+      if (isRequireMessageVisibled(value)) {
         return requireMessage;
       }
       const validationMessage = validateHandler?.(value);
