@@ -28,7 +28,8 @@
       "@contexts/*": ["contexts/*"],
       "@constants": ["constants"],
       "@styles/*": ["styles/*"],
-      "@plugins": ["plugins"]
+      "@plugins": ["plugins"],
+      "@type/*": ["type/*"]
     }
   },
   "files": ["./src/index.tsx"],
