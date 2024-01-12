@@ -60,6 +60,10 @@ export const Checkbox = ({
       size: '17px',
       strokeWidth: '3px',
     },
+    large: {
+      size: '22px',
+      strokeWidth: '3px',
+    },
   }[size];
 
   const { validationMessage, validateOnChange, validateOnBlur } =
