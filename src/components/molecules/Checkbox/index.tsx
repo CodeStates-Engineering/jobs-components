@@ -21,7 +21,8 @@ export interface CheckboxProps {
   labelStyle?: UseTypographyClassNameParams &
     Pick<LabelContainerProps, 'direction'>;
   inputStyle?: {
-    size?: 'small' | 'medium';
+    size?: 'small' | 'medium' | 'large';
+    isRound?: boolean;
     width?: CSSStyleDeclaration['width'];
     containerSize?: 'none' | 'small' | 'medium' | 'large';
   };
@@ -98,7 +99,7 @@ export const Checkbox = ({
           className={cleanClassName(
             `${styles['checkbox-content']} ${styles[`size-${size}`]} ${
               isValid || styles.invalid
-            } ${isHalfChecked && styles['half-checked']}`,
+            } ${isHalfChecked && styles['half-checked']} ${inputStyle?.isRound && styles['is-round']}`,
           )}
         >
           {isHalfChecked ? (

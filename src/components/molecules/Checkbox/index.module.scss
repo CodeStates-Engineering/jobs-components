@@ -34,6 +34,10 @@
 
   transition: border-color 0.2s, background-color 0.2s;
 
+  &.is-round {
+    border-radius: 50%;
+  }
+
   &.half-checked {
     background-color: $BLUE-500;
   }
@@ -48,6 +52,12 @@
   &.size-medium {
     width: 24px;
     height: 24px;
+    border-width: 2px;
+  }
+
+  &.size-large {
+    width: 28px;
+    height: 28px;
     border-width: 2px;
   }
 
