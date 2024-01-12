@@ -103,7 +103,9 @@ export const Checkbox = ({
           className={cleanClassName(
             `${styles['checkbox-content']} ${styles[`size-${size}`]} ${
               isValid || styles.invalid
-            } ${isHalfChecked && styles['half-checked']} ${inputStyle?.isRound && styles['is-round']}`,
+            } ${isHalfChecked && styles['half-checked']} ${
+              inputStyle?.isRound && styles['is-round']
+            }`,
           )}
         >
           {isHalfChecked ? (
