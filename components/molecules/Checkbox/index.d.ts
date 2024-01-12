@@ -13,7 +13,8 @@ export interface CheckboxProps {
     className?: string;
     labelStyle?: UseTypographyClassNameParams & Pick<LabelContainerProps, 'direction'>;
     inputStyle?: {
-        size?: 'small' | 'medium';
+        size?: 'small' | 'medium' | 'large';
+        isRound?: boolean;
         width?: CSSStyleDeclaration['width'];
         containerSize?: 'none' | 'small' | 'medium' | 'large';
     };
