@@ -57,7 +57,6 @@
     font-weight: 400;
   }
 }
-
 @mixin priority-background-layer {
   &.priority-1 {
     z-index: 99;
@@ -71,7 +70,6 @@
     z-index: 33;
   }
 }
-
 @mixin priority-focus-layer {
   &.priority-1 {
     z-index: 100;
