@@ -18,6 +18,7 @@ export interface CheckboxProps {
   label?: string;
   description?: React.ReactNode;
   className?: string;
+  ref?: React.Ref<HTMLInputElement>;
   labelStyle?: UseTypographyClassNameParams &
     Pick<LabelContainerProps, 'direction'>;
   inputStyle?: {
@@ -44,6 +45,7 @@ export const Checkbox = ({
   labelStyle,
   inputStyle,
   validationTrigger,
+  ref,
 }: CheckboxProps) => {
   const [checked, setChecked] = useSubscribedState(value);
 
@@ -118,6 +120,7 @@ export const Checkbox = ({
           )}
 
           <input
+            ref={ref}
             id={id}
             type="checkbox"
             className={styles.checkbox}
