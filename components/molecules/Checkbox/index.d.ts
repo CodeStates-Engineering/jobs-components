@@ -11,6 +11,7 @@ export interface CheckboxProps {
     label?: string;
     description?: React.ReactNode;
     className?: string;
+    ref?: React.Ref<HTMLInputElement>;
     labelStyle?: UseTypographyClassNameParams & Pick<LabelContainerProps, 'direction'>;
     inputStyle?: {
         size?: 'small' | 'medium' | 'large';
@@ -20,4 +21,4 @@ export interface CheckboxProps {
     };
     validationTrigger?: ValidationTrigger;
 }
-export declare const Checkbox: ({ value, onChange, disabled, id, essential, label, description, className, labelStyle, inputStyle, validationTrigger, }: CheckboxProps) => import("react/jsx-runtime").JSX.Element;
+export declare const Checkbox: ({ value, onChange, disabled, id, essential, label, description, className, labelStyle, inputStyle, validationTrigger, ref, }: CheckboxProps) => import("react/jsx-runtime").JSX.Element;
