@@ -97,7 +97,9 @@ export const Checkbox = ({
         </Label>
       ) : null}
       <div
-        className={classNames(styles['checkbox-container-wrap'], { [styles.disabled]: disabled })}
+        className={classNames(styles['checkbox-container-wrap'], {
+          [styles.disabled]: disabled,
+        })}
         ref={containerRef}
         onClick={() => {
           if (!disabled) {
