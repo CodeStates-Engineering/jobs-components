@@ -123,6 +123,22 @@
   gap: 12px;
   align-items: center;
   justify-content: space-between;
+  cursor: pointer;
+
+  &:hover {
+    .checkbox-content:not(:has(:disabled, :checked)) {
+      border-color: $PURPLE-550;
+      background-color: $PURPLE-100;
+
+      &.invalid {
+        border-color: $PEACH-600;
+      }
+    }
+  }
+
+  &.disabled {
+    cursor: not-allowed;
+  }
 }
 
 .description {

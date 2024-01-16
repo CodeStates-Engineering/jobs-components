@@ -1,3 +1,5 @@
+import classNames from 'classnames';
+
 import { Check, Minus } from 'react-feather';
 
 import { Label } from '@components/atoms';
@@ -18,7 +20,7 @@ export interface CheckboxProps {
   label?: string;
   description?: React.ReactNode;
   className?: string;
-  ref?: React.Ref<HTMLInputElement>;
+  containerRef?: React.Ref<HTMLDivElement>;
   labelStyle?: UseTypographyClassNameParams &
     Pick<LabelContainerProps, 'direction'>;
   inputStyle?: {
@@ -45,7 +47,7 @@ export const Checkbox = ({
   labelStyle,
   inputStyle,
   validationTrigger,
-  ref,
+  containerRef,
 }: CheckboxProps) => {
   const [checked, setChecked] = useSubscribedState(value);
 
@@ -81,7 +83,7 @@ export const Checkbox = ({
   return (
     <Label.Container
       direction={labelStyle?.direction}
-      className={`${
+      className={`${styles.container} ${
         styles[`container-size-${inputStyle?.containerSize ?? 'none'}`]
       } ${className}`}
     >
@@ -94,7 +96,17 @@ export const Checkbox = ({
           {label}
         </Label>
       ) : null}
-      <div className={styles['checkbox-container-wrap']}>
+      <div
+        className={classNames(styles['checkbox-container-wrap'], { [styles.disabled]: disabled })}
+        ref={containerRef}
+        onClick={() => {
+          if (!disabled) {
+            setChecked?.(!checked);
+            validateOnChange?.(!checked);
+            onChange?.(!checked);
+          }
+        }}
+      >
         <div
           className="checkbox-description-gap"
           style={{
@@ -120,13 +132,13 @@ export const Checkbox = ({
           )}
 
           <input
-            ref={ref}
             id={id}
             type="checkbox"
             className={styles.checkbox}
             name={label}
             checked={!!checked}
             disabled={disabled}
+            onClick={(e) => e.stopPropagation()}
             onChange={({ target: { checked } }) => {
               setChecked?.(checked);
               validateOnChange?.(checked);
@@ -137,7 +149,6 @@ export const Checkbox = ({
         </div>
         {description && <div className={styles.description}>{description}</div>}
       </div>
-      {/* </div> */}
     </Label.Container>
   );
 };
