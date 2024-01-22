@@ -1,0 +1,53 @@
+@use 'src/styles/libs' as libs;
+
+@mixin theme($color, $backgroundColor) {
+  color: $color;
+  background-color: $backgroundColor;
+}
+
+.tag {
+  border-radius: 9px;
+  min-width: fit-content;
+  padding: 3px 11px 2px 11px;
+  font-weight: 500;
+  text-align: center;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
+  &.button:hover {
+    text-decoration: underline;
+  }
+}
+
+.filled {
+  color: libs.$WHITE;
+  &.purple-500 {
+    @include theme(libs.$WHITE, libs.$PURPLE-500);
+  }
+}
+
+.outlined {
+
+}
+
+.text {
+
+}
+
+.small {
+  font-size: libs.$SMALL2X;
+  font-weight: 700;
+}
+
+.medium {
+  font-size: libs.$MEDIUM;
+  font-weight: 700;
+}
+
+.large {
+  font-size: libs.$LARGE;
+  font-weight: 700;
+}
