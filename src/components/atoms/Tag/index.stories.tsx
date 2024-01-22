@@ -31,7 +31,7 @@ const meta: Meta<typeof Tag> = {
         type: 'radio',
       },
     },
-  }
+  },
 };
 
 export default meta;
@@ -39,4 +39,3 @@ export default meta;
 type Story = StoryObj<typeof Tag>;
 
 export const Default: Story = {};
-
