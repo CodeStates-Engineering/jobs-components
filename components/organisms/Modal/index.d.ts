@@ -10,6 +10,7 @@ export interface ModalProps extends CommonProps, Pick<FocusLayerProps, 'priority
     opened?: boolean;
     onClose?: () => void;
     type?: FormType;
+    bodyScroll?: boolean;
 }
 export interface ModalHeaderProps extends CommonProps {
     border?: boolean;
@@ -22,7 +23,7 @@ export type ModalBodyProps = CommonProps;
 export interface ModalFooterProps extends CommonProps {
     border?: boolean;
 }
-export declare const Modal: (({ children, className, opened, onClose, priority, blur, type, onSubmit, }: ModalProps) => import("react/jsx-runtime").JSX.Element) & {
+export declare const Modal: (({ children, className, opened, onClose, priority, blur, type, bodyScroll, onSubmit, }: ModalProps) => import("react/jsx-runtime").JSX.Element) & {
     Header: ({ children, className, border, }: ModalHeaderProps) => import("react/jsx-runtime").JSX.Element;
     TabMenuHeader: ({ className, items, border, }: ModalTabMenuHeaderProps) => import("react/jsx-runtime").JSX.Element;
     Body: ({ children, className }: ModalBodyProps) => import("react/jsx-runtime").JSX.Element;
