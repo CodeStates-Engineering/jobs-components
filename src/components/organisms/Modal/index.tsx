@@ -32,6 +32,7 @@ export interface ModalProps
   opened?: boolean;
   onClose?: () => void;
   type?: FormType;
+  bodyScroll?: boolean;
 }
 
 const ModalMain = ({
@@ -42,6 +43,7 @@ const ModalMain = ({
   priority = 1,
   blur = true,
   type = 'section',
+  bodyScroll,
   onSubmit,
 }: ModalProps) => {
   const commonProps = {
@@ -57,6 +59,7 @@ const ModalMain = ({
       onBlur={onClose}
       blur={blur}
       priority={priority}
+      bodyScroll={bodyScroll}
     >
       {opened
         ? {
