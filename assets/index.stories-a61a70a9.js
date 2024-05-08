@@ -1,0 +1,7 @@
+import{j as o}from"./jsx-runtime-4ca860c5.js";import{A as t}from"./index-1387ff29.js";import{D as n}from"./dummy-d4c113ac.js";import"./index-61bf1805.js";import"./_commonjsHelpers-de833af9.js";import"./Compatibility-d1e3055b.js";import"./useValidate-983984d3.js";import"./cleanClassName-cdc1ff81.js";import"./useSubscribedState-9e613bb6.js";import"./index-cde9edb5.js";import"./_Uint8Array-c13c238b.js";import"./index-732a1215.js";import"./index-3932a994.js";import"./index-bbb79b91.js";import"./index-868581da.js";import"./index-8d47fad6.js";import"./index-749ab209.js";import"./index-2801d3c9.js";import"./index-43870500.js";import"./index-23c7aa51.js";import"./index-576e98e6.js";import"./index-5240e4a2.js";import"./index-e6fc3cfe.js";import"./chevron-down-2f1d20ed.js";const X={title:"molecules/Accordion",component:t,decorators:[i=>o.jsx("div",{style:{height:"50vh",width:"300px",padding:"20px"},children:o.jsx(i,{})})]},r={render:i=>o.jsxs(t,{...i,children:[o.jsx(t.Title,{children:"Accordion Title"}),o.jsx(t.Contents,{children:n.COMMON.TEXT_LONG})]})};var e,c,m;r.parameters={...r.parameters,docs:{...(e=r.parameters)==null?void 0:e.docs,source:{originalSource:`{
+  render: args => <Accordion {...args}>
+      <Accordion.Title>Accordion Title</Accordion.Title>
+      <Accordion.Contents>{DUMMY.COMMON.TEXT_LONG}</Accordion.Contents>
+    </Accordion>
+}`,...(m=(c=r.parameters)==null?void 0:c.docs)==null?void 0:m.source}}};const Y=["Default"];export{r as Default,Y as __namedExportsOrder,X as default};
+//# sourceMappingURL=index.stories-a61a70a9.js.map
