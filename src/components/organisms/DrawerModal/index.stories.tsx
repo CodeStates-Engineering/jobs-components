@@ -135,10 +135,20 @@ const Header = () => (
         marginRight: 'auto',
       }}
     >
-      <Button size="small" variant="ghost" color="bluishGray700" icon={<ChevronRight />} />
+      <Button
+        size="small"
+        variant="ghost"
+        color="bluishGray700"
+        icon={<ChevronRight />}
+      />
       <h2>코드스테이츠 / 심기용</h2>
     </div>
-    <Button size="small" variant="ghost" color="bluishGray700" icon={<MoreHorizontal />} />
+    <Button
+      size="small"
+      variant="ghost"
+      color="bluishGray700"
+      icon={<MoreHorizontal />}
+    />
   </header>
 );
 

@@ -119,30 +119,30 @@ export const Pagination = ({
         {
           default: isPaginationExisted
             ? displayedPages.map((page) => {
-              const isCurrentPage = page === currentPage;
-              const buttonProps: ButtonProps = isCurrentPage
-                ? {
-                  ...commonButtonProps,
-                  variant: 'contained',
-                  color: 'purple600',
-                }
-                : commonButtonProps;
-              return (
-                <li key={page}>
-                  <Button
-                    {...buttonProps}
-                    onClick={() => onChange?.(page)}
-                    icon={page}
-                  />
-                </li>
-              );
-            })
+                const isCurrentPage = page === currentPage;
+                const buttonProps: ButtonProps = isCurrentPage
+                  ? {
+                      ...commonButtonProps,
+                      variant: 'contained',
+                      color: 'purple600',
+                    }
+                  : commonButtonProps;
+                return (
+                  <li key={page}>
+                    <Button
+                      {...buttonProps}
+                      onClick={() => onChange?.(page)}
+                      icon={page}
+                    />
+                  </li>
+                );
+              })
             : displayedPages.map((_, index) => (
-              <Skeleton
-                key={index}
-                className={`${styles.skeleton} ${styles['border-radius']}`}
-              />
-            )),
+                <Skeleton
+                  key={index}
+                  className={`${styles.skeleton} ${styles['border-radius']}`}
+                />
+              )),
           simple: isPaginationExisted ? (
             <li className={styles['page-indicator']}>
               Page {currentPage} of {lastPage}

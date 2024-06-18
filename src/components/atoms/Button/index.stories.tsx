@@ -14,7 +14,6 @@ const colorOptions = {
   outlined: ['bluishGray400', 'bluishGray700'],
 };
 
-
 const meta: Meta<typeof Button> = {
   title: 'atoms/Button',
   component: Button,
@@ -45,10 +44,10 @@ const meta: Meta<typeof Button> = {
     color: {
       control: {
         type: 'select',
-        options: (args: ButtonProps) => colorOptions[args.variant ?? 'contained'] || [],
+        options: (args: ButtonProps) =>
+          colorOptions[args.variant ?? 'contained'] || [],
       },
     },
-
   },
   args: {
     variant: 'contained',
@@ -92,32 +91,40 @@ export const Default: Story = {};
 
 export const VariantAndColors: Story = {
   render: (args) => (
-    <div style={{
-      display: 'flex',
-      gap: '80px'
-    }}>
-      <div style={{
+    <div
+      style={{
         display: 'flex',
-        gap: '16px',
-        flexDirection: 'column',
-      }}>
+        gap: '80px',
+      }}
+    >
+      <div
+        style={{
+          display: 'flex',
+          gap: '16px',
+          flexDirection: 'column',
+        }}
+      >
         <h3>Contained</h3>
         {(
           [
             'purple550',
             'purple600',
             'bluishGray400',
-            'bluishGray800'
+            'bluishGray800',
           ] satisfies ButtonProps['color'][]
         ).map((color, key) => (
-          <Button {...{ ...args, color, key, variant: 'contained' }}>{color}</Button>
+          <Button {...{ ...args, color, key, variant: 'contained' }}>
+            {color}
+          </Button>
         ))}
       </div>
-      <div style={{
-        display: 'flex',
-        gap: '16px',
-        flexDirection: 'column',
-      }}>
+      <div
+        style={{
+          display: 'flex',
+          gap: '16px',
+          flexDirection: 'column',
+        }}
+      >
         <h3>Ghost</h3>
         {(
           [
@@ -126,22 +133,25 @@ export const VariantAndColors: Story = {
             'bluishGray700',
           ] satisfies ButtonProps['color'][]
         ).map((color, key) => (
-          <Button {...{ ...args, color, key, variant: 'ghost' }}>{color}</Button>
+          <Button {...{ ...args, color, key, variant: 'ghost' }}>
+            {color}
+          </Button>
         ))}
       </div>
-      <div style={{
-        display: 'flex',
-        gap: '16px',
-        flexDirection: 'column',
-      }}>
+      <div
+        style={{
+          display: 'flex',
+          gap: '16px',
+          flexDirection: 'column',
+        }}
+      >
         <h3>Outlined</h3>
         {(
-          [
-            'bluishGray400',
-            'bluishGray700',
-          ] satisfies ButtonProps['color'][]
+          ['bluishGray400', 'bluishGray700'] satisfies ButtonProps['color'][]
         ).map((color, key) => (
-          <Button {...{ ...args, color, key, variant: 'outlined' }}>{color}</Button>
+          <Button {...{ ...args, color, key, variant: 'outlined' }}>
+            {color}
+          </Button>
         ))}
       </div>
     </div>
@@ -207,11 +217,7 @@ export const Delay: Story = {
   },
   render: (args) => (
     <>
-      {(
-        [
-          'purple600',
-        ] satisfies ButtonProps['color'][]
-      ).map((color, key) => (
+      {(['purple600'] satisfies ButtonProps['color'][]).map((color, key) => (
         <Button {...{ ...args, color, key }} />
       ))}
     </>

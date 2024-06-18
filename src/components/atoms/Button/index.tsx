@@ -15,9 +15,9 @@ type HtmlButtonProps = React.DetailedHTMLProps<
 
 export interface ButtonProps
   extends Pick<
-    HtmlButtonProps,
-    'children' | 'disabled' | 'type' | 'onClick' | 'className'
-  >,
+      HtmlButtonProps,
+      'children' | 'disabled' | 'type' | 'onClick' | 'className'
+    >,
     UseTypographyClassNameParams,
     Pick<React.CSSProperties, 'width'> {
   delay?: number;
@@ -93,13 +93,13 @@ export const Button = ({
       className={cleanClassName(
         `${
           isDelayButton ? styles['delayed-button'] : styles.button
-        } ${typographyClassName} ${
-          styles[`shape-${shape}`]
-        } ${styles[`size-${size}`]} ${
-          styles[`icon-direction-${iconDirection}`]
-        } ${styles[`children-type-${childrenType}`]} ${
-          styles[`${variant}-${color}`]
-        } ${padding && styles.padding} ${className}
+        } ${typographyClassName} ${styles[`shape-${shape}`]} ${
+          styles[`size-${size}`]
+        } ${styles[`icon-direction-${iconDirection}`]} ${
+          styles[`children-type-${childrenType}`]
+        } ${styles[`${variant}-${color}`]} ${
+          padding && styles.padding
+        } ${className}
         ${childrenType !== 'icon' && styles[`text-align-${textAlign}`]}
         `,
       )}
