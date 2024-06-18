@@ -9,7 +9,8 @@ const meta: Meta<typeof OptionsButton> = {
     buttonStyle: {
       fontSize: 'small',
       size: 'small',
-      theme: 'bluish-gray700/0',
+      variant: 'ghost',
+      color: 'bluishGray700',
     },
     buttonContent: '공개 설정하기',
     optionStyle: { fontSize: 'small2x', fontWeight: 500 },

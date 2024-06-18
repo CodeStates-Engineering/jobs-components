@@ -24,9 +24,13 @@ export interface TabMenuProps {
   bottomLineWeight?: HrProps['weight'] | 'none';
   fontWeight?: ButtonProps['fontWeight'];
   fontSize?: ButtonProps['fontSize'];
-  theme?: {
-    default: ButtonProps['theme'];
-    selected: ButtonProps['theme'];
+  variant?: {
+    default: ButtonProps['variant'];
+    selected: ButtonProps['variant'];
+  };
+  color?: {
+    default: ButtonProps['color'];
+    selected: ButtonProps['color'];
   };
   selectedLineWeight?: HrProps['weight'] | 'none';
   selectedLineColor?: HrProps['color'];
@@ -39,9 +43,13 @@ export const TabMenu = ({
   itemShape = '8',
   bottomLineWeight = 'medium',
   selectedLineWeight = 'medium',
-  theme = {
-    default: 'bluish-gray300/0',
-    selected: 'bluish-gray700/0',
+  variant = {
+    default: 'ghost',
+    selected: 'ghost',
+  },
+  color = {
+    default: 'bluishGray300',
+    selected: 'bluishGray700',
   },
   selectedLineColor = 'purple-550',
   fontWeight = 700,
@@ -58,7 +66,6 @@ export const TabMenu = ({
     fontSize,
     fontWeight,
     size: itemSize,
-    focusOutline: false,
     shape: itemShape,
     className: styles['tab-menu-link'],
   };
@@ -92,8 +99,8 @@ export const TabMenu = ({
           const itemButtonProps: ButtonProps = {
             ...baseItemButtonProps,
             ...(isMatched
-              ? { theme: theme.selected }
-              : { theme: theme.default }),
+              ? { theme: color.selected, variant: variant.selected }
+              : { theme: color.default, variant: variant.default }),
             children: label,
             onClick: () => onClick?.(item),
             disabled,

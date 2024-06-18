@@ -19,9 +19,8 @@ export const CheckTag = ({
   <Button
     className={styles.padding}
     size="small2x"
-    theme={
-      value ? 'purple550/purple50/purple100' : 'bluish-gray700/0/bluish-gray200'
-    }
+    variant={value ? 'contained' : 'outlined'}
+    color={value ? 'purple550' : 'bluishGray700'}
     iconDirection="right"
     fontSize="small3x"
     fontWeight={500}

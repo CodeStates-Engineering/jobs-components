@@ -35,17 +35,18 @@ export const Pagination = ({
   let commonButtonProps: ButtonProps = {
     size: 'small',
     shape: 'pill',
-    theme: 'bluish-gray500/0',
+    variant: 'ghost',
+    color: 'bluishGray500',
     fontSize: 'small',
     fontWeight: 500,
-    focusOutline: false,
   };
 
   if (type === 'simple') {
     commonButtonProps = {
       ...commonButtonProps,
       shape: '8',
-      theme: 'bluish-gray700/0/bluish-gray200',
+      variant: 'outlined',
+      color: 'bluishGray700',
     };
   }
 
@@ -122,7 +123,8 @@ export const Pagination = ({
                 const buttonProps: ButtonProps = isCurrentPage
                   ? {
                       ...commonButtonProps,
-                      theme: 'white/purple600',
+                      variant: 'contained',
+                      color: 'purple600',
                     }
                   : commonButtonProps;
                 return (

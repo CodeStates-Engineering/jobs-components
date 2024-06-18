@@ -113,7 +113,8 @@ export const TableCell = ({
                 <Button
                   size="small3x"
                   shape="pill"
-                  theme="bluish-gray700/0"
+                  variant="ghost"
+                  color="bluishGray700"
                   icon={<Copy size={14} />}
                   onClick={() => {
                     const childrenString = nodeToString(children);

@@ -91,7 +91,8 @@ export const ModalHeader = ({
       <div>{children}</div>
       <Button
         icon={<X />}
-        theme="bluish-gray700/0"
+        variant="ghost"
+        color="bluishGray700"
         size="small"
         onClick={handleClose}
       />
@@ -126,7 +127,8 @@ const ModalTabMenuHeader = ({
       />
       <Button
         icon={<X />}
-        theme="bluish-gray700/0"
+        variant="ghost"
+        color="bluishGray700"
         size="small"
         onClick={handleClose}
       />

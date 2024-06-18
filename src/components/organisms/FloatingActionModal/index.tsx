@@ -48,7 +48,8 @@ export const FloatingActionModal = ({
       <div style={{ display: 'flex', alignSelf: 'center' }}>
         <Button
           icon={<X />}
-          theme="bluish-gray700/0"
+          variant="ghost"
+          color="bluishGray700"
           size="small3x"
           onClick={onClose}
         />
