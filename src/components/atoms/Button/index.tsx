@@ -15,29 +15,26 @@ type HtmlButtonProps = React.DetailedHTMLProps<
 
 export interface ButtonProps
   extends Pick<
-      HtmlButtonProps,
-      'children' | 'disabled' | 'type' | 'onClick' | 'className'
-    >,
+    HtmlButtonProps,
+    'children' | 'disabled' | 'type' | 'onClick' | 'className'
+  >,
     UseTypographyClassNameParams,
     Pick<React.CSSProperties, 'width'> {
   delay?: number;
   size?: 'small3x' | 'small2x' | 'small' | 'medium' | 'large';
-  theme?:
-    | 'white/purple600'
-    | 'white/bluish-gray800'
-    | 'purple600/0'
-    | 'bluish-gray700/0'
-    | 'bluish-gray300/0'
-    | 'bluish-gray500/0'
-    | 'bluish-gray400/0/bluish-gray200'
-    | 'bluish-gray700/0/bluish-gray200'
-    | 'bluish-gray400/bluish-gray10/bluish-gray200'
-    | 'purple550/purple50/purple100';
+  variant?: 'contained' | 'ghost' | 'outlined';
+  color?:
+    | 'purple550'
+    | 'purple600'
+    | 'bluishGray300'
+    | 'bluishGray400'
+    | 'bluishGray500'
+    | 'bluishGray700'
+    | 'bluishGray800';
   icon?: ReactNode;
   iconDirection?: 'left' | 'right';
   shape?: 'pill' | '8' | '4';
   padding?: boolean;
-  focusOutline?: boolean;
   textAlign?: 'left' | 'center' | 'right';
 }
 
@@ -46,7 +43,8 @@ export const Button = ({
   type = 'button',
   children,
   size = 'large',
-  theme = 'white/purple600',
+  color = 'purple600',
+  variant = 'contained',
   onClick,
   disabled = false,
   shape = '8',
@@ -55,7 +53,6 @@ export const Button = ({
   padding = true,
   fontSize = 'normal',
   fontWeight = 700,
-  focusOutline = true,
   className,
   width,
   textAlign = 'center',
@@ -96,12 +93,12 @@ export const Button = ({
       className={cleanClassName(
         `${
           isDelayButton ? styles['delayed-button'] : styles.button
-        } ${typographyClassName} ${focusOutline && styles['focus-outline']} ${
+        } ${typographyClassName} ${
           styles[`shape-${shape}`]
         } ${styles[`size-${size}`]} ${
           styles[`icon-direction-${iconDirection}`]
         } ${styles[`children-type-${childrenType}`]} ${
-          styles[theme.replaceAll('/', '_')]
+          styles[`${variant}-${color}`]
         } ${padding && styles.padding} ${className}
         ${childrenType !== 'icon' && styles[`text-align-${textAlign}`]}
         `,

@@ -1,6 +1,6 @@
 @use 'src/styles/libs' as libs;
 
-@mixin default-theme(
+@mixin default-color(
   $textColor: transparent,
   $backgroundColor: transparent,
   $border: transparent
@@ -29,7 +29,8 @@
     }
   }
 }
-@mixin disable-theme(
+
+@mixin disable-color(
   $textColor: transparent,
   $backgroundColor: transparent,
   $border: transparent
@@ -46,7 +47,8 @@
     background-color: $backgroundColor;
   }
 }
-@mixin hover-theme(
+
+@mixin hover-color(
   $textColor: transparent,
   $backgroundColor: transparent,
   $border: transparent
@@ -59,7 +61,8 @@
     @include libs.border($border, 1px);
   }
 }
-@mixin active-theme(
+
+@mixin active-color(
   $textColor: transparent,
   $backgroundColor: transparent,
   $border: transparent
@@ -214,121 +217,77 @@
   }
 }
 
-//* Theme
-.white_purple600 {
-  @include default-theme(libs.$WHITE, libs.$PURPLE-600);
-  @include disable-theme(libs.$PURPLE-10, libs.$PURPLE-300);
-  @include hover-theme(libs.$WHITE, libs.$PURPLE-550);
-  @include active-theme(libs.$WHITE, libs.$PURPLE-700);
+//* Contained
+.contained-purple550 {
+  @include default-color(libs.$PURPLE-550, libs.$PURPLE-50, libs.$PURPLE-100);
+  @include disable-color(libs.$PURPLE-300, libs.$PURPLE-50, libs.$PURPLE-100);
+  @include hover-color(libs.$PURPLE-550, libs.$PURPLE-50);
+  @include active-color(libs.$PURPLE-550, libs.$PURPLE-200, libs.$PURPLE-100);
 }
 
-.white_bluish-gray800 {
-  @include default-theme(libs.$WHITE, libs.$BLUISH-GRAY-800);
-  @include disable-theme(libs.$BLUISH-GRAY-10, libs.$BLUISH-GRAY-300);
-  @include hover-theme(libs.$WHITE, libs.$BLUISH-GRAY-700);
-  @include active-theme(libs.$WHITE, libs.$BLUISH-GRAY-900);
+.contained-purple600 {
+  @include default-color(libs.$WHITE, libs.$PURPLE-600);
+  @include disable-color(libs.$PURPLE-10, libs.$PURPLE-300);
+  @include hover-color(libs.$WHITE, libs.$PURPLE-550);
+  @include active-color(libs.$WHITE, libs.$PURPLE-700);
 }
 
-.purple600_0 {
-  @include default-theme(libs.$PURPLE-600, transparent);
-  @include disable-theme(libs.$PURPLE-300, transparent);
-  @include hover-theme(libs.$PURPLE-600, libs.$BLUISH-GRAY-10);
-  @include active-theme(libs.$PURPLE-600, transparent, libs.$BLUE-500);
+.contained-bluishGray400 {
+  @include default-color(libs.$BLUISH-GRAY-400, libs.$BLUISH-GRAY-10, libs.$BLUISH-GRAY-200);
+  @include disable-color(libs.$BLUISH-GRAY-300, libs.$BLUISH-GRAY-50, libs.$BLUISH-GRAY-200);
+  @include hover-color(libs.$BLUISH-GRAY-700, libs.$BLUISH-GRAY-50, libs.$BLUISH-GRAY-200);
+  @include active-color(libs.$BLUISH-GRAY-700, libs.$BLUISH-GRAY-100, libs.$BLUISH-GRAY-200);
 }
 
-.bluish-gray700_0 {
-  @include default-theme(libs.$BLUISH-GRAY-700, transparent);
-  @include disable-theme(libs.$BLUISH-GRAY-300, transparent);
-  @include hover-theme(libs.$BLUISH-GRAY-700, libs.$BLUISH-GRAY-10);
-  @include active-theme(libs.$BLUISH-GRAY-700, transparent, libs.$BLUE-500);
+.contained-bluishGray800 {
+  @include default-color(libs.$WHITE, libs.$BLUISH-GRAY-800);
+  @include disable-color(libs.$BLUISH-GRAY-10, libs.$BLUISH-GRAY-300);
+  @include hover-color(libs.$WHITE, libs.$BLUISH-GRAY-700);
+  @include active-color(libs.$WHITE, libs.$BLUISH-GRAY-900);
 }
 
-.bluish-gray300_0 {
-  @include default-theme(libs.$BLUISH-GRAY-300, transparent);
-  @include disable-theme(libs.$BLUISH-GRAY-300, transparent);
-  @include hover-theme(libs.$BLUISH-GRAY-300, libs.$BLUISH-GRAY-10);
-  @include active-theme(libs.$BLUISH-GRAY-300, transparent, libs.$BLUE-500);
+
+//* Ghost
+.ghost-purple600 {
+  @include default-color(libs.$PURPLE-600, transparent);
+  @include disable-color(libs.$PURPLE-300, transparent);
+  @include hover-color(libs.$PURPLE-600, libs.$BLUISH-GRAY-10);
+  @include active-color(libs.$PURPLE-600, transparent, libs.$BLUE-500);
 }
 
-.bluish-gray500_0 {
-  @include default-theme(libs.$BLUISH-GRAY-500, transparent);
-  @include disable-theme(libs.$BLUISH-GRAY-300, transparent);
-  @include hover-theme(libs.$BLUISH-GRAY-500, libs.$BLUISH-GRAY-10);
-  @include active-theme(libs.$BLUISH-GRAY-500, transparent, libs.$BLUE-500);
+.ghost-bluishGray700 {
+  @include default-color(libs.$BLUISH-GRAY-700, transparent);
+  @include disable-color(libs.$BLUISH-GRAY-300, transparent);
+  @include hover-color(libs.$BLUISH-GRAY-700, libs.$BLUISH-GRAY-10);
+  @include active-color(libs.$BLUISH-GRAY-700, transparent, libs.$BLUE-500);
 }
 
-.purple550_purple50_purple100 {
-  @include default-theme(libs.$PURPLE-550, libs.$PURPLE-50, libs.$PURPLE-100);
-  @include disable-theme(libs.$PURPLE-300, libs.$PURPLE-50, libs.$PURPLE-100);
-  @include hover-theme(libs.$PURPLE-550, libs.$PURPLE-50);
-  @include active-theme(libs.$PURPLE-550, libs.$PURPLE-200, libs.$PURPLE-100);
+.ghost-bluishGray300 {
+  @include default-color(libs.$BLUISH-GRAY-300, transparent);
+  @include disable-color(libs.$BLUISH-GRAY-300, transparent);
+  @include hover-color(libs.$BLUISH-GRAY-300, libs.$BLUISH-GRAY-10);
+  @include active-color(libs.$BLUISH-GRAY-300, transparent, libs.$BLUE-500);
 }
 
-.bluish-gray400_0_bluish-gray200 {
-  @include default-theme(
-    libs.$BLUISH-GRAY-400,
-    transparent,
-    libs.$BLUISH-GRAY-200
-  );
-  @include disable-theme(
-    libs.$BLUISH-GRAY-300,
-    libs.$BLUISH-GRAY-10,
-    libs.$BLUISH-GRAY-200
-  );
-  @include hover-theme(
-    libs.$BLUISH-GRAY-400,
-    libs.$BLUISH-GRAY-50,
-    libs.$BLUISH-GRAY-200
-  );
-  @include active-theme(
-    libs.$BLUISH-GRAY-400,
-    libs.$BLUISH-GRAY-100,
-    libs.$BLUISH-GRAY-200
-  );
+.ghost-bluishGray500 {
+  @include default-color(libs.$BLUISH-GRAY-500, transparent);
+  @include disable-color(libs.$BLUISH-GRAY-300, transparent);
+  @include hover-color(libs.$BLUISH-GRAY-500, libs.$BLUISH-GRAY-10);
+  @include active-color(libs.$BLUISH-GRAY-500, transparent, libs.$BLUE-500);
 }
 
-.bluish-gray700_0_bluish-gray200 {
-  @include default-theme(
-    libs.$BLUISH-GRAY-700,
-    transparent,
-    libs.$BLUISH-GRAY-200
-  );
-  @include disable-theme(
-    libs.$BLUISH-GRAY-300,
-    libs.$BLUISH-GRAY-10,
-    libs.$BLUISH-GRAY-200
-  );
-  @include hover-theme(
-    libs.$BLUISH-GRAY-700,
-    libs.$BLUISH-GRAY-50,
-    libs.$BLUISH-GRAY-200
-  );
-  @include active-theme(
-    libs.$BLUISH-GRAY-700,
-    libs.$BLUISH-GRAY-100,
-    libs.$BLUISH-GRAY-200
-  );
+//* Outlined
+.outlined-bluishGray400 {
+  @include default-color(libs.$BLUISH-GRAY-400, transparent, libs.$BLUISH-GRAY-200);
+  @include disable-color(libs.$BLUISH-GRAY-300, libs.$BLUISH-GRAY-10, libs.$BLUISH-GRAY-200);
+  @include hover-color(libs.$BLUISH-GRAY-400, libs.$BLUISH-GRAY-50, libs.$BLUISH-GRAY-200);
+  @include active-color(libs.$BLUISH-GRAY-400, libs.$BLUISH-GRAY-100, libs.$BLUISH-GRAY-200);
 }
 
-.bluish-gray400_bluish-gray10_bluish-gray200 {
-  @include default-theme(
-    libs.$BLUISH-GRAY-400,
-    libs.$BLUISH-GRAY-10,
-    libs.$BLUISH-GRAY-200
-  );
-  @include disable-theme(
-    libs.$BLUISH-GRAY-300,
-    libs.$BLUISH-GRAY-50,
-    libs.$BLUISH-GRAY-200
-  );
-  @include hover-theme(
-    libs.$BLUISH-GRAY-700,
-    libs.$BLUISH-GRAY-50,
-    libs.$BLUISH-GRAY-200
-  );
-  @include active-theme(
-    libs.$BLUISH-GRAY-700,
-    libs.$BLUISH-GRAY-100,
-    libs.$BLUISH-GRAY-200
-  );
+.outlined-bluishGray700 {
+  @include default-color(libs.$BLUISH-GRAY-700, transparent, libs.$BLUISH-GRAY-200);
+  @include disable-color(libs.$BLUISH-GRAY-300, libs.$BLUISH-GRAY-10, libs.$BLUISH-GRAY-200);
+  @include hover-color(libs.$BLUISH-GRAY-700, libs.$BLUISH-GRAY-50, libs.$BLUISH-GRAY-200);
+  @include active-color(libs.$BLUISH-GRAY-700, libs.$BLUISH-GRAY-100, libs.$BLUISH-GRAY-200);
 }
+

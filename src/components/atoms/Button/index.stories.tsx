@@ -8,6 +8,13 @@ import { Button } from '.';
 
 import type { ButtonProps } from '.';
 
+const colorOptions = {
+  contained: ['purple550', 'purple600', 'bluishGray400', 'bluishGray800'],
+  ghost: ['purple600', 'bluishGray300', 'bluishGray700'],
+  outlined: ['bluishGray400', 'bluishGray700'],
+};
+
+
 const meta: Meta<typeof Button> = {
   title: 'atoms/Button',
   component: Button,
@@ -29,12 +36,25 @@ const meta: Meta<typeof Button> = {
       },
       description: '버튼은 클릭 전 딜레이 시간을 가질 수 있다.',
     },
+    variant: {
+      control: {
+        type: 'radio',
+        options: Object.keys(colorOptions),
+      },
+    },
+    color: {
+      control: {
+        type: 'select',
+        options: (args: ButtonProps) => colorOptions[args.variant ?? 'contained'] || [],
+      },
+    },
+
   },
   args: {
-    theme: 'white/purple600',
+    variant: 'contained',
+    color: 'purple600',
     children: 'Button',
     disabled: false,
-    focusOutline: true,
     padding: true,
     size: 'large',
     fontSize: 'normal',
@@ -43,18 +63,25 @@ const meta: Meta<typeof Button> = {
     shape: '8',
   },
   decorators: [
-    (Story) => (
-      <article
-        style={{
-          display: 'flex',
-          gap: '10px',
-          flexWrap: 'wrap',
-          alignItems: 'flex-end',
-        }}
-      >
-        <Story />
-      </article>
-    ),
+    (Story, context) => {
+      const { variant } = context.args;
+      if (context.argTypes.color) {
+        context.argTypes.color.options = colorOptions[variant ?? 'contained'];
+      }
+
+      return (
+        <article
+          style={{
+            display: 'flex',
+            gap: '10px',
+            flexWrap: 'wrap',
+            alignItems: 'flex-end',
+          }}
+        >
+          <Story />
+        </article>
+      );
+    },
   ],
 };
 export default meta;
@@ -63,25 +90,61 @@ type Story = StoryObj<typeof Button>;
 
 export const Default: Story = {};
 
-export const Theme: Story = {
+export const VariantAndColors: Story = {
   render: (args) => (
-    <>
-      {(
-        [
-          'white/purple600',
-          'white/bluish-gray800',
-          'purple600/0',
-          'bluish-gray700/0/bluish-gray200',
-          'bluish-gray700/0',
-          'bluish-gray500/0',
-          'bluish-gray400/bluish-gray10/bluish-gray200',
-          'bluish-gray400/0/bluish-gray200',
-          'bluish-gray300/0',
-        ] satisfies ButtonProps['theme'][]
-      ).map((theme, key) => (
-        <Button {...{ ...args, theme, key }}>{theme}</Button>
-      ))}
-    </>
+    <div style={{
+      display: 'flex',
+      gap: '80px'
+    }}>
+      <div style={{
+        display: 'flex',
+        gap: '16px',
+        flexDirection: 'column',
+      }}>
+        <h3>Contained</h3>
+        {(
+          [
+            'purple550',
+            'purple600',
+            'bluishGray400',
+            'bluishGray800'
+          ] satisfies ButtonProps['color'][]
+        ).map((color, key) => (
+          <Button {...{ ...args, color, key, variant: 'contained' }}>{color}</Button>
+        ))}
+      </div>
+      <div style={{
+        display: 'flex',
+        gap: '16px',
+        flexDirection: 'column',
+      }}>
+        <h3>Ghost</h3>
+        {(
+          [
+            'purple600',
+            'bluishGray300',
+            'bluishGray700',
+          ] satisfies ButtonProps['color'][]
+        ).map((color, key) => (
+          <Button {...{ ...args, color, key, variant: 'ghost' }}>{color}</Button>
+        ))}
+      </div>
+      <div style={{
+        display: 'flex',
+        gap: '16px',
+        flexDirection: 'column',
+      }}>
+        <h3>Outlined</h3>
+        {(
+          [
+            'bluishGray400',
+            'bluishGray700',
+          ] satisfies ButtonProps['color'][]
+        ).map((color, key) => (
+          <Button {...{ ...args, color, key, variant: 'outlined' }}>{color}</Button>
+        ))}
+      </div>
+    </div>
   ),
 };
 
@@ -146,14 +209,10 @@ export const Delay: Story = {
     <>
       {(
         [
-          'white/purple600',
-          'bluish-gray700/0/bluish-gray200',
-          'bluish-gray400/bluish-gray10/bluish-gray200',
-          'purple600/0',
-          'bluish-gray700/0',
-        ] satisfies ButtonProps['theme'][]
-      ).map((theme, key) => (
-        <Button {...{ ...args, theme, key }} />
+          'purple600',
+        ] satisfies ButtonProps['color'][]
+      ).map((color, key) => (
+        <Button {...{ ...args, color, key }} />
       ))}
     </>
   ),
