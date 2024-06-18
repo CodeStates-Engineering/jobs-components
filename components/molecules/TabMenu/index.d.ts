@@ -15,13 +15,17 @@ export interface TabMenuProps {
     bottomLineWeight?: HrProps['weight'] | 'none';
     fontWeight?: ButtonProps['fontWeight'];
     fontSize?: ButtonProps['fontSize'];
-    theme?: {
-        default: ButtonProps['theme'];
-        selected: ButtonProps['theme'];
+    variant?: {
+        default: ButtonProps['variant'];
+        selected: ButtonProps['variant'];
+    };
+    color?: {
+        default: ButtonProps['color'];
+        selected: ButtonProps['color'];
     };
     selectedLineWeight?: HrProps['weight'] | 'none';
     selectedLineColor?: HrProps['color'];
     className?: string;
 }
-export declare const TabMenu: ({ items, itemSize, itemShape, bottomLineWeight, selectedLineWeight, theme, selectedLineColor, fontWeight, fontSize, className, }: TabMenuProps) => import("react/jsx-runtime").JSX.Element;
+export declare const TabMenu: ({ items, itemSize, itemShape, bottomLineWeight, selectedLineWeight, variant, color, selectedLineColor, fontWeight, fontSize, className, }: TabMenuProps) => import("react/jsx-runtime").JSX.Element;
 export {};

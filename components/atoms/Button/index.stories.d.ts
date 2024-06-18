@@ -4,7 +4,7 @@ declare const meta: Meta<typeof Button>;
 export default meta;
 type Story = StoryObj<typeof Button>;
 export declare const Default: Story;
-export declare const Theme: Story;
+export declare const VariantAndColors: Story;
 export declare const Shape: Story;
 export declare const Size: Story;
 export declare const Icon: Story;
