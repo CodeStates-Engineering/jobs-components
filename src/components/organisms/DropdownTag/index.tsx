@@ -45,11 +45,8 @@ export const DropdownTag = ({
       <Button
         className={styles.padding}
         size="small2x"
-        theme={
-          avtive
-            ? 'purple550/purple50/purple100'
-            : 'bluish-gray700/0/bluish-gray200'
-        }
+        variant={avtive ? 'contained' : 'outlined'}
+        color={avtive ? 'purple550' : 'bluishGray700'}
         iconDirection="left"
         fontSize="small3x"
         fontWeight={500}

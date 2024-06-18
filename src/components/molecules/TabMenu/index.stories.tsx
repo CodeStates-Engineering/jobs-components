@@ -62,9 +62,13 @@ export const Round: Story = {
         bottomLineWeight="none"
         itemSize="small"
         fontSize="small2x"
-        theme={{
-          default: 'bluish-gray300/0',
-          selected: 'white/purple600',
+        variant={{
+          default: 'ghost',
+          selected: 'contained',
+        }}
+        color={{
+          default: 'bluishGray300',
+          selected: 'purple600',
         }}
         itemShape="8"
       />

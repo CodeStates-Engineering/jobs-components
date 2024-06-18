@@ -48,10 +48,11 @@ export const OptionsTag = ({
           `${styles.padding} ${isDefault && styles['default-value']}`,
         )}
         size="small2x"
-        theme={
-          isDefault
-            ? 'bluish-gray700/0/bluish-gray200'
-            : 'purple550/purple50/purple100'
+        variant={
+          isDefault ? 'outlined' : 'contained'
+        }
+        color={
+          isDefault ? 'bluishGray700' : 'purple550'
         }
         iconDirection="left"
         fontSize="small3x"

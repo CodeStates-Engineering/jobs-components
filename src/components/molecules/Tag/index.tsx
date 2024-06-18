@@ -56,7 +56,8 @@ export const Tag = ({
         <Button
           size="small3x"
           className={`${styles['close-button']} ${styles[`close-${size}`]}`}
-          theme="bluish-gray700/0"
+          variant="ghost"
+          color="bluishGray700"
           shape="pill"
           onClick={(e) => {
             onClose?.(e);
