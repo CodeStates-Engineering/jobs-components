@@ -29,6 +29,7 @@ export interface ButtonProps
     | 'bluishGray300'
     | 'bluishGray400'
     | 'bluishGray500'
+    | 'bluishGray600'
     | 'bluishGray700'
     | 'bluishGray800';
   icon?: ReactNode;

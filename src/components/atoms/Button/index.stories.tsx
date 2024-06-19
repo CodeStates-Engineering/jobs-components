@@ -9,9 +9,29 @@ import { Button } from '.';
 import type { ButtonProps } from '.';
 
 const colorOptions = {
-  contained: ['purple550', 'purple600', 'bluishGray400', 'bluishGray800'],
-  ghost: ['purple600', 'bluishGray300', 'bluishGray700'],
-  outlined: ['bluishGray400', 'bluishGray700'],
+  contained: [
+    'purple550',
+    'purple600',
+    'bluishGray600',
+    'bluishGray700',
+    'bluishGray800',
+  ],
+  ghost: [
+    'purple600',
+    'bluishGray300',
+    'bluishGray400',
+    'bluishGray500',
+    'bluishGray600',
+    'bluishGray700',
+    'bluishGray800',
+  ],
+  outlined: [
+    'bluishGray400',
+    'bluishGray500',
+    'bluishGray600',
+    'bluishGray700',
+    'bluishGray800',
+  ],
 };
 
 const meta: Meta<typeof Button> = {
