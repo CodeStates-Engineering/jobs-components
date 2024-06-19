@@ -5,7 +5,7 @@ export interface ButtonProps extends Pick<HtmlButtonProps, 'children' | 'disable
     delay?: number;
     size?: 'small3x' | 'small2x' | 'small' | 'medium' | 'large';
     variant?: 'contained' | 'ghost' | 'outlined';
-    color?: 'purple550' | 'purple600' | 'bluishGray300' | 'bluishGray400' | 'bluishGray500' | 'bluishGray700' | 'bluishGray800';
+    color?: 'purple550' | 'purple600' | 'bluishGray300' | 'bluishGray400' | 'bluishGray500' | 'bluishGray600' | 'bluishGray700' | 'bluishGray800';
     icon?: ReactNode;
     iconDirection?: 'left' | 'right';
     shape?: 'pill' | '8' | '4';
