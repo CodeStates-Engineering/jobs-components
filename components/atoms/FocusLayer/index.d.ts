@@ -6,6 +6,6 @@ export interface FocusLayerProps {
     blur?: boolean;
     className?: string;
     bodyScroll?: boolean;
-    priority?: 1 | 2 | 3;
+    priority?: number;
 }
 export declare const FocusLayer: ({ children, onBlur, focused, blur, className, bodyScroll, priority, }: FocusLayerProps) => import("react/jsx-runtime").JSX.Element | null;
