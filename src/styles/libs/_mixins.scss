@@ -57,29 +57,3 @@
     font-weight: 400;
   }
 }
-@mixin priority-background-layer {
-  &.priority-1 {
-    z-index: 9000;
-  }
-
-  &.priority-2 {
-    z-index: 8000;
-  }
-
-  &.priority-3 {
-    z-index: 7000;
-  }
-}
-@mixin priority-focus-layer {
-  &.priority-1 {
-    z-index: 9001;
-  }
-
-  &.priority-2 {
-    z-index: 8001;
-  }
-
-  &.priority-3 {
-    z-index: 7000;
-  }
-}

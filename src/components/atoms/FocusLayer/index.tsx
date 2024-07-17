@@ -12,7 +12,7 @@ export interface FocusLayerProps {
   blur?: boolean;
   className?: string;
   bodyScroll?: boolean;
-  priority?: 1 | 2 | 3;
+  priority?: number;
 }
 
 export const FocusLayer = ({
@@ -62,17 +62,20 @@ export const FocusLayer = ({
         <>
           <div
             onClick={onBlur}
+            style={{
+              zIndex: 999999 - priority,
+            }}
             className={cleanClassName(
-              `${styles['background-layer']} ${
-                styles[`priority-${priority}`]
-              } ${isClosing && styles.closing} ${blur && styles.blur}`,
+              `${styles['background-layer']} 
+              ${isClosing && styles.closing} ${blur && styles.blur}`,
             )}
           />
           <div
+            style={{
+              zIndex: 1000000 - priority,
+            }}
             className={cleanClassName(
-              `${styles['focus-layer']} ${styles.global} ${
-                styles[`priority-${priority}`]
-              } ${className}`,
+              `${styles['focus-layer']} ${styles.global} ${className}`,
             )}
           >
             {children}
