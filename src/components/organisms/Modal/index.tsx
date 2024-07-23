@@ -30,6 +30,7 @@ export interface ModalProps
       'onSubmit'
     > {
   opened?: boolean;
+  outsideClickClose?: boolean;
   onClose?: () => void;
   type?: FormType;
   bodyScroll?: boolean;
@@ -40,6 +41,7 @@ const ModalMain = ({
   className,
   opened,
   onClose,
+  outsideClickClose = true,
   priority = 1,
   blur = true,
   type = 'section',
@@ -56,7 +58,7 @@ const ModalMain = ({
   return (
     <FocusLayer
       focused={opened}
-      onBlur={onClose}
+      onBlur={() => (outsideClickClose ? onClose?.() : null)}
       blur={blur}
       priority={priority}
       bodyScroll={bodyScroll}
