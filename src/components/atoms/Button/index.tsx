@@ -114,12 +114,8 @@ export const Button = ({
           style={{ transition: `transform ${delay / 1000}s linear` }}
         />
       ) : null}
-      {children && <div className={styles['button-content']}>{children}</div>}
-      {icon ? (
-        <div className={`${styles['button-content']} ${styles.icon}`}>
-          {icon}
-        </div>
-      ) : null}
+      {children}
+      {icon && icon}
     </button>
   );
 };
