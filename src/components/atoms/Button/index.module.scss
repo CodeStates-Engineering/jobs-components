@@ -245,6 +245,13 @@
   @include active-color(libs.$WHITE, libs.$BLUISH-GRAY-900);
 }
 
+.contained-peach600 {
+  @include default-color(libs.$WHITE, libs.$PEACH-600);
+  @include disable-color(libs.$PEACH-50, libs.$PEACH-300);
+  @include hover-color(libs.$WHITE, libs.$PEACH-500);
+  @include active-color(libs.$WHITE, libs.$PEACH-600);
+}
+
 //* Ghost
 .ghost-purple600 {
   @include default-color(libs.$PURPLE-600, transparent);

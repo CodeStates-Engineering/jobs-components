@@ -31,7 +31,8 @@ export interface ButtonProps
     | 'bluishGray500'
     | 'bluishGray600'
     | 'bluishGray700'
-    | 'bluishGray800';
+    | 'bluishGray800'
+    | 'peach600';
   icon?: ReactNode;
   iconDirection?: 'left' | 'right';
   shape?: 'pill' | '8' | '4';

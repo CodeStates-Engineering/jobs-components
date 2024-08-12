@@ -15,6 +15,7 @@ const colorOptions = {
     'bluishGray600',
     'bluishGray700',
     'bluishGray800',
+    'peach600',
   ],
   ghost: [
     'purple600',
@@ -125,18 +126,13 @@ export const VariantAndColors: Story = {
         }}
       >
         <h3>Contained</h3>
-        {(
-          [
-            'purple550',
-            'purple600',
-            'bluishGray400',
-            'bluishGray800',
-          ] satisfies ButtonProps['color'][]
-        ).map((color, key) => (
-          <Button {...{ ...args, color, key, variant: 'contained' }}>
-            {color}
-          </Button>
-        ))}
+        {(colorOptions.contained as ButtonProps['color'][]).map(
+          (color, key) => (
+            <Button {...{ ...args, color, key, variant: 'contained' }}>
+              {color}
+            </Button>
+          ),
+        )}
       </div>
       <div
         style={{
@@ -146,13 +142,7 @@ export const VariantAndColors: Story = {
         }}
       >
         <h3>Ghost</h3>
-        {(
-          [
-            'purple600',
-            'bluishGray300',
-            'bluishGray700',
-          ] satisfies ButtonProps['color'][]
-        ).map((color, key) => (
+        {(colorOptions.ghost as ButtonProps['color'][]).map((color, key) => (
           <Button {...{ ...args, color, key, variant: 'ghost' }}>
             {color}
           </Button>
@@ -166,9 +156,7 @@ export const VariantAndColors: Story = {
         }}
       >
         <h3>Outlined</h3>
-        {(
-          ['bluishGray400', 'bluishGray700'] satisfies ButtonProps['color'][]
-        ).map((color, key) => (
+        {(colorOptions.outlined as ButtonProps['color'][]).map((color, key) => (
           <Button {...{ ...args, color, key, variant: 'outlined' }}>
             {color}
           </Button>
