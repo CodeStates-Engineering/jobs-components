@@ -1,7 +1,7 @@
 import type { DetailedHTMLProps, TextareaHTMLAttributes } from 'react';
 import type { InputWrapProps, LabelWithInputProps } from '../../atoms';
 import type { UseTypographyClassNameParams, ValidateHandler, ValidationTrigger } from '../../../hooks';
-export interface TextareaProps extends Pick<DetailedHTMLProps<TextareaHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement>, 'placeholder' | 'id' | 'readOnly'>, Omit<LabelWithInputProps, 'inputStyle'> {
+export interface TextareaProps extends Pick<DetailedHTMLProps<TextareaHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement>, 'placeholder' | 'id' | 'readOnly' | 'minLength' | 'maxLength'>, Omit<LabelWithInputProps, 'inputStyle'> {
     onChange?: (value?: string) => void;
     onClick?: InputWrapProps['onClick'];
     value?: string;
@@ -17,4 +17,4 @@ export interface TextareaProps extends Pick<DetailedHTMLProps<TextareaHTMLAttrib
     description?: InputWrapProps['description'];
     requireMessage?: string;
 }
-export declare const Textarea: ({ placeholder, value: originalValue, onChange, disabled, validation, id, label, className, onClick, inputStyle, labelStyle, floatingActionName, onFloatingActionClick, validationTrigger, description, readOnly, requireMessage, }: TextareaProps) => import("react/jsx-runtime").JSX.Element;
+export declare const Textarea: ({ placeholder, value: originalValue, onChange, disabled, validation, id, label, className, onClick, inputStyle, labelStyle, floatingActionName, onFloatingActionClick, validationTrigger, description, readOnly, requireMessage, maxLength, minLength, }: TextareaProps) => import("react/jsx-runtime").JSX.Element;
