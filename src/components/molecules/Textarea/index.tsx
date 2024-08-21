@@ -23,7 +23,7 @@ export interface TextareaProps
         TextareaHTMLAttributes<HTMLTextAreaElement>,
         HTMLTextAreaElement
       >,
-      'placeholder' | 'id' | 'readOnly'
+      'placeholder' | 'id' | 'readOnly' | 'minLength' | 'maxLength'
     >,
     Omit<LabelWithInputProps, 'inputStyle'> {
   onChange?: (value?: string) => void;
@@ -61,6 +61,8 @@ export const Textarea = ({
   description,
   readOnly = false,
   requireMessage,
+  maxLength,
+  minLength,
 }: TextareaProps) => {
   const [textareaValue, setTextareaValue] = useSubscribedState(
     originalValue ?? '',
@@ -132,6 +134,8 @@ export const Textarea = ({
           )}
           onBlur={validateOnBlur}
           readOnly={readOnly}
+          minLength={minLength}
+          maxLength={maxLength}
         />
       </Input.Wrap>
     </Label.Container>
