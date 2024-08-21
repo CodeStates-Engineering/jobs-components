@@ -29,6 +29,8 @@ export interface InputProps<T extends InputType = 'text'>
       | 'name'
       | 'className'
       | 'readOnly'
+      | 'maxLength'
+      | 'minLength'
     >,
     UseTypographyClassNameParams {
   type?: T;
@@ -57,6 +59,7 @@ const InputMain: <T extends InputType = 'text'>(
       fontSize,
       fontWeight,
       readOnly = false,
+      ...props
     },
     ref,
   ) => {
@@ -76,6 +79,7 @@ const InputMain: <T extends InputType = 'text'>(
 
     return (
       <input
+        {...props}
         id={id}
         name={name}
         ref={ref}

@@ -31,6 +31,8 @@ export interface TextboxProps<T extends TextboxType = 'text'>
     | 'className'
     | 'onBlur'
     | 'readOnly'
+    | 'maxLength'
+    | 'minLength'
   > {
   label?: string;
   unit?: React.ReactNode;
@@ -67,6 +69,8 @@ export const Textbox = <T extends TextboxType = 'text'>({
   description,
   readOnly,
   requireMessage,
+  maxLength,
+  minLength,
 }: TextboxProps<T>) => {
   const [value, setValue] = useSubscribedState(originalValue);
 
@@ -118,6 +122,8 @@ export const Textbox = <T extends TextboxType = 'text'>({
           }}
           type={type}
           readOnly={readOnly}
+          maxLength={maxLength}
+          minLength={minLength}
         />
         {typeof unit === 'string' ? (
           <div className={styles.unit}>{unit}</div>
