@@ -4,11 +4,15 @@
   width: 100%;
   height: fit-content;
   color: inherit;
+  @layer {
+    & {
+      @include libs.font-size;
+      @include libs.font-weight;
+    }
+  }
 }
 
 .textarea-content {
-  @include libs.font-size;
-  @include libs.font-weight;
   box-sizing: border-box;
   width: 100%;
   min-height: 6rem;
