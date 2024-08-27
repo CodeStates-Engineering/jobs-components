@@ -130,7 +130,7 @@ export const Textarea = ({
               (inputStyle?.resize ?? true) && styles.resize
             } ${typographyClassName} ${readOnly && [styles['read-only']]} ${
               styles['full-size']
-            }`,
+            } ${styles.textarea}`,
           )}
           onBlur={validateOnBlur}
           readOnly={readOnly}
