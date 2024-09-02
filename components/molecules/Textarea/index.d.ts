@@ -1,7 +1,7 @@
 import type { DetailedHTMLProps, TextareaHTMLAttributes } from 'react';
 import type { InputWrapProps, LabelWithInputProps } from '../../atoms';
 import type { UseTypographyClassNameParams, ValidateHandler, ValidationTrigger } from '../../../hooks';
-export interface TextareaProps extends Pick<DetailedHTMLProps<TextareaHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement>, 'placeholder' | 'id' | 'readOnly' | 'minLength' | 'maxLength'>, Omit<LabelWithInputProps, 'inputStyle'> {
+export interface TextareaProps extends Omit<DetailedHTMLProps<TextareaHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement>, 'onChange' | 'onClick' | 'disabled'>, Omit<LabelWithInputProps, 'inputStyle'> {
     onChange?: (value?: string) => void;
     onClick?: InputWrapProps['onClick'];
     value?: string;
