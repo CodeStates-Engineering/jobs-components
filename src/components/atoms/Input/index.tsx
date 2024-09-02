@@ -15,22 +15,12 @@ import styles from './index.module.scss';
 export type { InputWrapProps } from './InputWrap';
 
 export interface InputProps<T extends InputType = 'text'>
-  extends Pick<
+  extends Omit<
       React.DetailedHTMLProps<
         React.InputHTMLAttributes<HTMLInputElement>,
         HTMLInputElement
       >,
-      | 'placeholder'
-      | 'onFocus'
-      | 'id'
-      | 'onClick'
-      | 'onBlur'
-      | 'ref'
-      | 'name'
-      | 'className'
-      | 'readOnly'
-      | 'maxLength'
-      | 'minLength'
+      'onChange' | 'size'
     >,
     UseTypographyClassNameParams {
   type?: T;

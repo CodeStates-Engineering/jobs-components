@@ -18,12 +18,12 @@ import styles from './index.module.scss';
 import { Tag } from '../Tag';
 
 export interface TextareaProps
-  extends Pick<
+  extends Omit<
       DetailedHTMLProps<
         TextareaHTMLAttributes<HTMLTextAreaElement>,
         HTMLTextAreaElement
       >,
-      'placeholder' | 'id' | 'readOnly' | 'minLength' | 'maxLength'
+      'onChange' | 'onClick' | 'disabled'
     >,
     Omit<LabelWithInputProps, 'inputStyle'> {
   onChange?: (value?: string) => void;

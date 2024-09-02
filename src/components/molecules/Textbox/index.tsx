@@ -17,23 +17,7 @@ import styles from './index.module.scss';
 type TextboxType = Exclude<InputType, 'button'>;
 
 export interface TextboxProps<T extends TextboxType = 'text'>
-  extends Pick<
-    InputProps<T>,
-    | 'value'
-    | 'onChange'
-    | 'type'
-    | 'placeholder'
-    | 'disabled'
-    | 'onFocus'
-    | 'ref'
-    | 'id'
-    | 'onClick'
-    | 'className'
-    | 'onBlur'
-    | 'readOnly'
-    | 'maxLength'
-    | 'minLength'
-  > {
+  extends InputProps<T> {
   label?: string;
   unit?: React.ReactNode;
   validation?: ValidateHandler<TextboxProps<T>['value']>;
@@ -71,6 +55,7 @@ export const Textbox = <T extends TextboxType = 'text'>({
   requireMessage,
   maxLength,
   minLength,
+  ...props
 }: TextboxProps<T>) => {
   const [value, setValue] = useSubscribedState(originalValue);
 
@@ -101,6 +86,7 @@ export const Textbox = <T extends TextboxType = 'text'>({
         readOnly={readOnly}
       >
         <Input
+          {...props}
           fontSize={inputStyle?.fontSize}
           fontWeight={inputStyle?.fontWeight}
           onClick={onClick}
