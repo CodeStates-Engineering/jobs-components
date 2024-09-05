@@ -9,7 +9,7 @@ export const useConvertChangeHandlerParam = <T,>(type: InputType) =>
     switch (type) {
       case 'number':
       case 'large-number':
-        return (value) => (value ? Number(leftOnlyNumber(value)) : undefined);
+        return (value) => leftOnlyNumber(value);
 
       case 'phone-number':
         return (value) => {
@@ -17,7 +17,7 @@ export const useConvertChangeHandlerParam = <T,>(type: InputType) =>
           if (numberString.length > 11) {
             numberString = numberString.slice(0, 11);
           }
-          return value ? numberString : undefined;
+          return value ? numberString : '';
         };
 
       case 'business-number':
@@ -26,10 +26,10 @@ export const useConvertChangeHandlerParam = <T,>(type: InputType) =>
           if (numberString.length > 10) {
             numberString = numberString.slice(0, 10);
           }
-          return value ? numberString : undefined;
+          return value ? numberString : '';
         };
 
       default:
-        return (value) => value || undefined;
+        return (value) => value;
     }
   }, [type]) as (value: string) => T;
