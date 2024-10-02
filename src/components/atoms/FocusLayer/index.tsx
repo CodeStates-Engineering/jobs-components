@@ -63,7 +63,7 @@ export const FocusLayer = ({
           <div
             onClick={onBlur}
             style={{
-              zIndex: 999999 - priority,
+              zIndex: 999999 - priority * 10,
             }}
             className={cleanClassName(
               `${styles['background-layer']} 
@@ -72,7 +72,7 @@ export const FocusLayer = ({
           />
           <div
             style={{
-              zIndex: 1000000 - priority,
+              zIndex: 1000000 - priority * 10,
             }}
             className={cleanClassName(
               `${styles['focus-layer']} ${styles.global} ${className}`,
