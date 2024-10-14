@@ -25,6 +25,7 @@ const colorOptions = {
     'bluishGray600',
     'bluishGray700',
     'bluishGray800',
+    'peach600',
   ],
   outlined: [
     'bluishGray400',

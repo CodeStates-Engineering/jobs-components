@@ -29,6 +29,7 @@
     }
   }
 }
+
 @mixin disable-color(
   $textColor: transparent,
   $backgroundColor: transparent,
@@ -60,6 +61,7 @@
     @include libs.border($border, 1px);
   }
 }
+
 @mixin active-color(
   $textColor: transparent,
   $backgroundColor: transparent,
@@ -302,6 +304,13 @@
   @include disable-color(libs.$BLUISH-GRAY-300, transparent);
   @include hover-color(libs.$BLUISH-GRAY-800, libs.$BLUISH-GRAY-10);
   @include active-color(libs.$BLUISH-GRAY-800, transparent, libs.$BLUE-500);
+}
+
+.ghost-peach600 {
+  @include default-color(libs.$PEACH-600, transparent);
+  @include disable-color(libs.$PEACH-300, transparent);
+  @include hover-color(libs.$PEACH-600, libs.$BLUISH-GRAY-10);
+  @include active-color(libs.$PEACH-600, transparent, libs.$PEACH-500);
 }
 
 //* Outlined
