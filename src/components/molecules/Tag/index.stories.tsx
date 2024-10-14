@@ -67,6 +67,9 @@ export const Color: Story = {
       <Tag {...args} color="purple50">
         Purple
       </Tag>
+      <Tag {...args} color="purple600">
+        Purple600
+      </Tag>
       <Tag {...args} color="blue50">
         Blue
       </Tag>

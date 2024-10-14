@@ -10,6 +10,7 @@ export interface TagProps extends Pick<React.CSSProperties, 'width'> {
   color?:
     | 'green50'
     | 'purple50'
+    | 'purple600'
     | 'blue50'
     | 'peach50'
     | 'orange50'
