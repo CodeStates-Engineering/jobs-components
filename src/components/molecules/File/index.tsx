@@ -133,6 +133,7 @@ export const File = ({
           >
             <Paperclip size={getIconSizeBy(inputStyle?.size)} />
             <a
+              target="_blank"
               href={!disabled ? savedFile?.url : undefined}
               className={cleanClassName(
                 `${styles['download-link']} ${typographyClassName} ${
@@ -141,6 +142,7 @@ export const File = ({
                 `,
               )}
               download={download}
+              rel="noreferrer"
             >
               {savedFile?.name}
             </a>
