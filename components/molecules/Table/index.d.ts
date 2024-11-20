@@ -13,6 +13,6 @@ export declare const Table: ((props: TableProps) => import("react/jsx-runtime").
     Header: ({ children, className }: import("./TableHeader").TableHeaderProps) => import("react/jsx-runtime").JSX.Element;
     Title: ({ children, className, maxWidth, }: import("./TableTitle").TableTitleProps) => import("react/jsx-runtime").JSX.Element;
     Body: ({ children, className }: import("./TableBody").TableBodyProps) => import("react/jsx-runtime").JSX.Element;
-    Row: ({ children, className, ref }: import("./TableRow").TableRowProps) => import("react/jsx-runtime").JSX.Element;
+    Row: import("react").ForwardRefExoticComponent<import("./TableRow").TableRowProps & import("react").RefAttributes<HTMLTableRowElement>>;
     Cell: ({ children, onCopy, className, hoverStyle, }: import("./TableCell").TableCellProps) => import("react/jsx-runtime").JSX.Element;
 };
