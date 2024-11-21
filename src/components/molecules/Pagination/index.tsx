@@ -1,3 +1,5 @@
+import classNames from 'classnames';
+
 import {
   ChevronLeft,
   ChevronRight,
@@ -20,6 +22,7 @@ export interface PaginationProps {
   className?: string;
   loading?: boolean;
   type?: 'default' | 'simple';
+  size: 'small' | 'medium';
 }
 
 export const Pagination = ({
@@ -31,13 +34,14 @@ export const Pagination = ({
   className,
   loading,
   type = 'default',
+  size = 'medium',
 }: PaginationProps) => {
   let commonButtonProps: ButtonProps = {
-    size: 'small',
+    size: size === 'medium' ? 'small' : 'small2x',
     shape: 'pill',
     variant: 'ghost',
     color: 'bluishGray500',
-    fontSize: 'small',
+    fontSize: size === 'medium' ? 'small' : 'small2x',
     fontWeight: 500,
   };
 
@@ -101,7 +105,7 @@ export const Pagination = ({
         <li>
           <Button
             {...commonButtonProps}
-            icon={<ChevronsLeft />}
+            icon={<ChevronsLeft width={16} height={16} />}
             onClick={() => onChange?.(1)}
             disabled={isFirstPage}
           />
@@ -110,7 +114,7 @@ export const Pagination = ({
       <li>
         <Button
           {...commonButtonProps}
-          icon={<ChevronLeft />}
+          icon={<ChevronLeft width={16} height={16} />}
           onClick={() => onChange?.(currentPage - 1)}
           disabled={isFirstPage}
         />
@@ -144,7 +148,11 @@ export const Pagination = ({
                 />
               )),
           simple: isPaginationExisted ? (
-            <li className={styles['page-indicator']}>
+            <li
+              className={classNames(styles['page-indicator'], {
+                [styles[size]]: size,
+              })}
+            >
               Page {currentPage} of {lastPage}
             </li>
           ) : (
@@ -155,7 +163,7 @@ export const Pagination = ({
       <li>
         <Button
           {...commonButtonProps}
-          icon={<ChevronRight />}
+          icon={<ChevronRight width={16} height={16} />}
           onClick={() => onChange?.(currentPage + 1)}
           disabled={isLastPage}
         />
@@ -164,7 +172,7 @@ export const Pagination = ({
         <li>
           <Button
             {...commonButtonProps}
-            icon={<ChevronsRight />}
+            icon={<ChevronsRight width={16} height={16} />}
             onClick={() => onChange?.(lastPage)}
             disabled={isLastPage}
           />
