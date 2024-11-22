@@ -9,6 +9,10 @@
   &.hidden {
     display: none;
   }
+
+  &.small {
+    gap: 6px;
+  }
 }
 
 .skeleton {
@@ -33,6 +37,7 @@
 
   &.small {
     font-size: $SMALL2X;
+    margin: 0;
   }
 }
 

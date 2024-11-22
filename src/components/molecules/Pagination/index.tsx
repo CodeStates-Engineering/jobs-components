@@ -8,7 +8,6 @@ import {
 } from 'react-feather';
 
 import styles from './index.module.scss';
-import { cleanClassName } from '../../../utils';
 import { Button, Skeleton } from '../../atoms';
 
 import type { ButtonProps } from '../../atoms';
@@ -95,11 +94,10 @@ export const Pagination = ({
 
   return (
     <ul
-      className={cleanClassName(
-        `${styles.pagination} ${className} ${
-          !isPaginationExisted && !loading && styles.hidden
-        }`,
-      )}
+      className={classNames(styles.pagination, className, {
+        [styles.hidden]: !isPaginationExisted && !loading,
+        [styles[size]]: size,
+      })}
     >
       {isSimpleType ? (
         <li>
@@ -153,7 +151,9 @@ export const Pagination = ({
                 [styles[size]]: size,
               })}
             >
-              Page {currentPage} of {lastPage}
+              {size === 'medium'
+                ? `Page ${currentPage} of ${lastPage}`
+                : `Page ${currentPage} / ${lastPage}`}
             </li>
           ) : (
             <Skeleton className={styles['page-indicator-skeleton']} />
