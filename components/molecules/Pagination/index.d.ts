@@ -7,5 +7,6 @@ export interface PaginationProps {
     className?: string;
     loading?: boolean;
     type?: 'default' | 'simple';
+    size: 'small' | 'medium';
 }
-export declare const Pagination: ({ onChange, itemsPerPage, totalItems, currentPage, displayedCount, className, loading, type, }: PaginationProps) => import("react/jsx-runtime").JSX.Element;
+export declare const Pagination: ({ onChange, itemsPerPage, totalItems, currentPage, displayedCount, className, loading, type, size, }: PaginationProps) => import("react/jsx-runtime").JSX.Element;
