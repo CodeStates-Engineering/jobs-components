@@ -9,6 +9,10 @@
   &.hidden {
     display: none;
   }
+
+  &.small {
+    gap: 6px;
+  }
 }
 
 .skeleton {
@@ -30,6 +34,11 @@
   color: $BLUISH-GRAY-500;
   font-weight: 400;
   font-size: $SMALL;
+
+  &.small {
+    font-size: $SMALL2X;
+    margin: 0;
+  }
 }
 
 .page-indicator-skeleton {

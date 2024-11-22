@@ -29,6 +29,7 @@ const meta: Meta<typeof Pagination> = {
     itemsPerPage: 10,
     totalItems: 503,
     displayedCount: 9,
+    size: 'medium',
   },
 };
 
