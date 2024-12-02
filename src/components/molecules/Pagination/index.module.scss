@@ -28,8 +28,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
 
+  width: 100%;
   margin: 0 16px;
 
   color: $BLUISH-GRAY-500;
@@ -37,8 +37,9 @@
   font-size: $SMALL;
 
   &.small {
-    font-size: $SMALL2X;
     margin: 0;
+
+    font-size: $SMALL2X;
   }
 }
 

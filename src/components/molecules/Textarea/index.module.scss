@@ -3,7 +3,9 @@
 .textarea {
   width: 100%;
   height: fit-content;
+
   color: inherit;
+
   @layer {
     & {
       @include libs.font-size;

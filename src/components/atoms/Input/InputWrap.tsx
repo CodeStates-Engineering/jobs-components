@@ -1,8 +1,9 @@
+import classNames from 'classnames';
+
 import { useValidationMessageDynamicHeight } from '@hooks';
 import { cleanClassName } from '@utils';
 
 import styles from './InputWrap.module.scss';
-import classNames from 'classnames';
 
 export interface InputWrapProps
   extends Pick<
