@@ -98,6 +98,7 @@ export const Selectbox = <
           size={inputStyle?.size}
           borderRadius={inputStyle?.borderRadius}
           width={inputStyle?.width}
+          disabled={disabled}
           onClick={(e) => {
             setOpened(!opened);
             onClick?.(e);

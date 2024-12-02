@@ -1,3 +1,5 @@
+import classNames from 'classnames';
+
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { Check } from 'react-feather';
 
@@ -17,6 +19,7 @@ export interface OptionsProps<
   options?: {
     label: string;
     value: OptionValue;
+    disabled?: boolean;
   }[];
   multiple?: Multiple;
   value?: Multiple extends true ? OptionValue[] : OptionValue;
@@ -150,7 +153,7 @@ export const Options = <
         className={cleanClassName(styles['option-container'])}
         style={optionContainerStyle}
       >
-        {options?.map(({ label, value }, index) => {
+        {options?.map(({ label, value, disabled = false }, index) => {
           const isHovered = index === indexForSelect;
           const isSelected = (() => {
             if (selectedValue === undefined) {
@@ -165,7 +168,12 @@ export const Options = <
           })();
 
           return (
-            <li key={index} className={styles['option-wrap']}>
+            <li
+              key={index}
+              className={classNames(styles['option-wrap'], {
+                [styles.disabled]: disabled,
+              })}
+            >
               <button
                 type="button"
                 ref={(element) => {

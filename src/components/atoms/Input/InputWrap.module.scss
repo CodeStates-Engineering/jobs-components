@@ -2,6 +2,14 @@
 
 .input-wrap {
   position: relative;
+
+  &.disabled {
+    cursor: not-allowed;
+
+    > * {
+      pointer-events: none;
+    }
+  }
 }
 
 @mixin size($paddingX, $height) {

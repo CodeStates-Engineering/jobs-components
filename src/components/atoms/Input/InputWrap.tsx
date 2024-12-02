@@ -2,6 +2,7 @@ import { useValidationMessageDynamicHeight } from '@hooks';
 import { cleanClassName } from '@utils';
 
 import styles from './InputWrap.module.scss';
+import classNames from 'classnames';
 
 export interface InputWrapProps
   extends Pick<
@@ -9,7 +10,7 @@ export interface InputWrapProps
       React.InputHTMLAttributes<HTMLInputElement>,
       HTMLInputElement
     >,
-    'children' | 'className' | 'color' | 'readOnly'
+    'children' | 'className' | 'color' | 'readOnly' | 'disabled'
   > {
   onClick?: React.HTMLAttributes<HTMLDivElement>['onClick'];
   size?: 'none' | 'small' | 'medium' | 'large';
@@ -30,6 +31,7 @@ export const InputWrap = ({
   validationMessage,
   description,
   fontColor,
+  disabled,
   readOnly = false,
 }: InputWrapProps) => {
   const { messageRef, wrapHeightStyle } = useValidationMessageDynamicHeight(
@@ -41,7 +43,9 @@ export const InputWrap = ({
       style={{
         width,
       }}
-      className={cleanClassName(`${styles['input-wrap']} ${className}`)}
+      className={classNames(styles['input-wrap'], className, {
+        [styles.disabled]: disabled,
+      })}
     >
       <div
         style={{
