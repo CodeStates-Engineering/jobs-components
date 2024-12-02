@@ -6,6 +6,7 @@ export interface OptionsProps<OptionValue = ValidOptionValue, Multiple = boolean
     options?: {
         label: string;
         value: OptionValue;
+        disabled?: boolean;
     }[];
     multiple?: Multiple;
     value?: Multiple extends true ? OptionValue[] : OptionValue;

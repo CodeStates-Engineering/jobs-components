@@ -9,6 +9,6 @@ export interface InputProps<T extends InputType = 'text'> extends Omit<React.Det
     ref?: Ref<HTMLInputElement>;
 }
 export declare const Input: (<T extends InputType = "text">(props: InputProps<T>) => React.ReactNode) & {
-    Wrap: ({ children, onClick, size, className, borderRadius, width, validationMessage, description, fontColor, readOnly, }: import("./InputWrap").InputWrapProps) => import("react/jsx-runtime").JSX.Element;
+    Wrap: ({ children, onClick, size, className, borderRadius, width, validationMessage, description, fontColor, disabled, readOnly, }: import("./InputWrap").InputWrapProps) => import("react/jsx-runtime").JSX.Element;
 };
 export type { InputType };
