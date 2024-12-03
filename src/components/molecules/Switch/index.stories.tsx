@@ -7,6 +7,8 @@ const meta: Meta<typeof Switch> = {
   component: Switch,
   args: {
     label: 'Switch',
+    disabled: false,
+    readOnly: false,
     labelStyle: {
       fontSize: 'small',
       fontWeight: 500,
