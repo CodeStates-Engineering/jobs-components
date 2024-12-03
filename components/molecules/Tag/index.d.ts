@@ -1,6 +1,6 @@
 import type { ReactNode, MouseEvent } from 'react';
 export interface TagProps extends Pick<React.CSSProperties, 'width'> {
-    color?: 'green50' | 'purple50' | 'purple600' | 'blue50' | 'peach50' | 'orange50' | 'bluish-gray50';
+    color?: 'green50' | 'purple50' | 'purple600' | 'blue50' | 'peach50' | 'orange50' | 'bluish-gray50' | 'white';
     size?: '14' | '18' | '26';
     className?: string;
     children?: ReactNode;
