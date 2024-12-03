@@ -98,6 +98,10 @@
   @include theme($BLUISH_GRAY-600, $BLUISH_GRAY-50, $BLUISH_GRAY-100);
 }
 
+.white {
+  @include theme($BLUISH_GRAY-600, $WHITE, $BLUISH_GRAY-100);
+}
+
 .clickable {
   cursor: pointer;
 }

@@ -14,7 +14,8 @@ export interface TagProps extends Pick<React.CSSProperties, 'width'> {
     | 'blue50'
     | 'peach50'
     | 'orange50'
-    | 'bluish-gray50';
+    | 'bluish-gray50'
+    | 'white';
   size?: '14' | '18' | '26';
   className?: string;
   children?: ReactNode;

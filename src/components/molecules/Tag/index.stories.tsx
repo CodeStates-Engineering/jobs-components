@@ -82,6 +82,9 @@ export const Color: Story = {
       <Tag {...args} color="bluish-gray50">
         Gray
       </Tag>
+      <Tag {...args} color="white">
+        Gray
+      </Tag>
     </>
   ),
 };
