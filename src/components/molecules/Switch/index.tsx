@@ -8,6 +8,7 @@ export interface SwitchProps extends LabelWithInputProps {
   value?: boolean;
   onChange?: (checked: boolean) => void;
   disabled?: boolean;
+  readOnly?: boolean;
   id?: string;
   inputStyle?: {
     size?: 'small' | 'medium' | 'large';
@@ -20,6 +21,7 @@ export const Switch = ({
   value = false,
   onChange,
   disabled,
+  readOnly,
   id,
   label,
   className,
@@ -68,8 +70,10 @@ export const Switch = ({
             checked={turned}
             disabled={disabled}
             onChange={({ target: { checked } }) => {
-              setTurned?.(checked);
-              onChange?.(checked);
+              if (!readOnly) {
+                setTurned?.(checked);
+                onChange?.(checked);
+              }
             }}
           />
         </div>

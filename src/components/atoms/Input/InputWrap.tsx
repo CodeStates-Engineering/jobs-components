@@ -61,7 +61,11 @@ export const InputWrap = ({
             !fontColor && styles['font-color-default']
           } ${readOnly && styles['read-only']}`,
         )}
-        onClick={onClick}
+        onClick={(e) => {
+          if (!disabled && !readOnly) {
+            onClick?.(e);
+          }
+        }}
       >
         {children}
       </div>
