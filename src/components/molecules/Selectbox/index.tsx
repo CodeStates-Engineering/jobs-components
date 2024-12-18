@@ -108,6 +108,7 @@ export const Selectbox = <
           readOnly={readOnly}
         >
           <Input
+            className={styles['selectbox-input']}
             id={id}
             name={label}
             type="button"

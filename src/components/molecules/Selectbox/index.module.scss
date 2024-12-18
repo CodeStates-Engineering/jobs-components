@@ -1,5 +1,14 @@
 .layer-width {
   width: 100%;
+
+  .selectbox-input {
+    padding-right: 18px;
+  }
+
+  svg {
+    position: absolute;
+    right: 18px;
+  }
 }
 
 .align-end {
