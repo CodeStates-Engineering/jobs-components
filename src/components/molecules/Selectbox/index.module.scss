@@ -5,9 +5,11 @@
     padding-right: 18px;
   }
 
-  svg {
+  .selectbox-icon {
+    display: flex;
+    align-items: center;
     position: absolute;
-    right: 18px;
+    right: 17px;
   }
 }
 

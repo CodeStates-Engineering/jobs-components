@@ -120,7 +120,9 @@ export const Selectbox = <
             fontWeight={inputStyle?.fontWeight}
             readOnly={readOnly}
           />
-          <ChevronDown />
+          <div className={styles['selectbox-icon']}>
+            <ChevronDown width={16} height={16} />
+          </div>
         </Input.Wrap>
         <Options
           cancelable={cancelable}
