@@ -7,4 +7,4 @@ export interface SelectboxProps<_ValidOptionValue = ValidOptionValue, _Multiple 
     cancelable?: boolean;
     requireMessage?: string;
 }
-export declare const Selectbox: <_ValidOptionValue extends ValidOptionValue = ValidOptionValue, _Multiple extends boolean = false>({ value, options, onChange, float, disabled, placeholder, id, ref, onClick, label, validation, className, inputStyle, labelStyle, multiple, optionStyle, description, readOnly, cancelable, textEllipsis, requireMessage, }: SelectboxProps<_ValidOptionValue, _Multiple>) => import("react/jsx-runtime").JSX.Element;
+export declare const Selectbox: <_ValidOptionValue extends ValidOptionValue = ValidOptionValue, _Multiple extends boolean = false>({ value, options, onChange, float, disabled, placeholder, id, ref, onClick, label, validation, className, inputStyle, labelStyle, multiple, optionStyle, description, readOnly, cancelable, textEllipsis, requireMessage, }: SelectboxProps<_ValidOptionValue, _Multiple>) => import('../../../../node_modules/.pnpm/react@19.0.0/node_modules/react/jsx-runtime').JSX.Element;

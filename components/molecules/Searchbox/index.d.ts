@@ -11,4 +11,4 @@ export interface SearchboxProps extends Pick<InputProps<'text'>, 'value' | 'onCh
     readOnly?: InputWrapProps['readOnly'];
     requireMessage?: string;
 }
-export declare const Searchbox: ({ float, value, options: stringOptions, onChange, selfFilter, disabled, placeholder, onFocus, id, onClick, ref, label, validation, className, inputStyle, labelStyle, optionStyle, hasSearchIcon, validationTrigger, description, readOnly, textEllipsis, requireMessage, }: SearchboxProps) => import("react/jsx-runtime").JSX.Element;
+export declare const Searchbox: ({ float, value, options: stringOptions, onChange, selfFilter, disabled, placeholder, onFocus, id, onClick, ref, label, validation, className, inputStyle, labelStyle, optionStyle, hasSearchIcon, validationTrigger, description, readOnly, textEllipsis, requireMessage, }: SearchboxProps) => import('../../../../node_modules/.pnpm/react@19.0.0/node_modules/react/jsx-runtime').JSX.Element;

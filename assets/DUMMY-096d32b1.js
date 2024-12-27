@@ -40,4 +40,3 @@ const a="aurora sunrise eunoia vanilla iris adorable kitten laptop lucid sunrise
   mattis nisi. Phasellus fringilla ut nisi ultrices convallis. Lorem ipsum
   dolor sit amet, consectetur adipiscing elit. Sed luctus est ut enim
   molestie, in condimentum eros aliquet.`;Array.from({length:100},(e,i)=>({label:`Test label ${i}${i%7===0?" is long text: aurora sunrise eunoia vanilla iris adorable kitten laptop lucid sunrise shine banana adorable moonlight melody haze sunrise vanilla girlish blossom":""}`,value:`${i}번 옵션이 선택`}));export{a as L,u as V};
-//# sourceMappingURL=DUMMY-096d32b1.js.map

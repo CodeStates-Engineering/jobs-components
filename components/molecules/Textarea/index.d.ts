@@ -1,4 +1,4 @@
-import type { DetailedHTMLProps, TextareaHTMLAttributes } from 'react';
+import type { DetailedHTMLProps, TextareaHTMLAttributes } from '../../../../node_modules/.pnpm/react@19.0.0/node_modules/react';
 import type { InputWrapProps, LabelWithInputProps } from '../../atoms';
 import type { UseTypographyClassNameParams, ValidateHandler, ValidationTrigger } from '../../../hooks';
 export interface TextareaProps extends Omit<DetailedHTMLProps<TextareaHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement>, 'onChange' | 'onClick' | 'disabled'>, Omit<LabelWithInputProps, 'inputStyle'> {
@@ -17,4 +17,4 @@ export interface TextareaProps extends Omit<DetailedHTMLProps<TextareaHTMLAttrib
     description?: InputWrapProps['description'];
     requireMessage?: string;
 }
-export declare const Textarea: ({ placeholder, value: originalValue, onChange, disabled, validation, id, label, className, onClick, inputStyle, labelStyle, floatingActionName, onFloatingActionClick, validationTrigger, description, readOnly, requireMessage, maxLength, minLength, }: TextareaProps) => import("react/jsx-runtime").JSX.Element;
+export declare const Textarea: ({ placeholder, value: originalValue, onChange, disabled, validation, id, label, className, onClick, inputStyle, labelStyle, floatingActionName, onFloatingActionClick, validationTrigger, description, readOnly, requireMessage, maxLength, minLength, }: TextareaProps) => import('../../../../node_modules/.pnpm/react@19.0.0/node_modules/react/jsx-runtime').JSX.Element;

@@ -1,4 +1,4 @@
-import type { AnchorHTMLAttributes, MouseEventHandler, TouchEventHandler } from 'react';
+import type { AnchorHTMLAttributes, MouseEventHandler, TouchEventHandler } from '../../../../node_modules/.pnpm/react@19.0.0/node_modules/react';
 import type { UseTypographyClassNameParams } from '../../../hooks';
 import type { CompatibleLinkProps } from '../../../plugins';
 type LinkTypeElement = HTMLAnchorElement | HTMLButtonElement | HTMLSpanElement;
@@ -17,5 +17,5 @@ export type LinkProps = Omit<CompatibleLinkProps, 'className' | 'children' | 'to
 /**
  * @deprecated Next, React에 내장된 Anchor 확장 컴포넌트를 사용하세요.
  */
-export declare const Link: ({ color, hoverType, fontSize, fontWeight, to, replace, type, className, children, target, ...restProps }: LinkProps) => import("react/jsx-runtime").JSX.Element;
+export declare const Link: ({ color, hoverType, fontSize, fontWeight, to, replace, type, className, children, target, ...restProps }: LinkProps) => import('../../../../node_modules/.pnpm/react@19.0.0/node_modules/react/jsx-runtime').JSX.Element;
 export {};

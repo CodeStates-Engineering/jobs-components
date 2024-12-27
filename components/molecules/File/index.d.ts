@@ -19,5 +19,5 @@ export interface FileProps extends Omit<LabelWithInputProps, 'required'> {
     description?: InputWrapProps['description'];
     requireMessage?: string;
 }
-export declare const File: ({ children, value, onChange, className, download, disabled, accept, validation, label, id, labelStyle, inputStyle, description, readOnly, requireMessage, }: FileProps) => import("react/jsx-runtime").JSX.Element;
+export declare const File: ({ children, value, onChange, className, download, disabled, accept, validation, label, id, labelStyle, inputStyle, description, readOnly, requireMessage, }: FileProps) => import('../../../../node_modules/.pnpm/react@19.0.0/node_modules/react/jsx-runtime').JSX.Element;
 export {};

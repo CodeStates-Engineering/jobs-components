@@ -6,4 +6,4 @@ export interface OptionsTagProps extends Pick<ButtonProps, 'icon' | 'className'>
         default?: boolean;
     }[];
 }
-export declare const OptionsTag: ({ icon, value, onChange, options, className, textEllipsis, }: OptionsTagProps) => import("react/jsx-runtime").JSX.Element;
+export declare const OptionsTag: ({ icon, value, onChange, options, className, textEllipsis, }: OptionsTagProps) => import('../../../../node_modules/.pnpm/react@19.0.0/node_modules/react/jsx-runtime').JSX.Element;

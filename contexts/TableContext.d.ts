@@ -1,4 +1,4 @@
-import type { ComponentType } from 'react';
+import type { ComponentType } from '../../node_modules/.pnpm/react@19.0.0/node_modules/react';
 export interface ColumnData {
     originalIndex: number;
     width?: number;
@@ -21,6 +21,6 @@ interface TableContextValue {
     storageKey?: string;
 }
 export type TableObserverProps = Partial<Pick<TableContextValue, 'fixedColumnCount' | 'storageKey'>>;
-export declare const tableDataObserver: <T extends Partial<Pick<TableContextValue, "fixedColumnCount" | "storageKey">>>(TableComponent: ComponentType<T>) => (props: T) => import("react/jsx-runtime").JSX.Element;
+export declare const tableDataObserver: <T extends Partial<Pick<TableContextValue, "fixedColumnCount" | "storageKey">>>(TableComponent: ComponentType<T>) => (props: T) => import('../../node_modules/.pnpm/react@19.0.0/node_modules/react/jsx-runtime').JSX.Element;
 export declare const useTableData: () => TableContextValue;
 export {};

@@ -11,4 +11,4 @@ export interface SwitchProps extends LabelWithInputProps {
         containerSize?: 'none' | 'small' | 'medium' | 'large';
     };
 }
-export declare const Switch: ({ value, onChange, disabled, readOnly, id, label, className, labelStyle, inputStyle, }: SwitchProps) => import("react/jsx-runtime").JSX.Element;
+export declare const Switch: ({ value, onChange, disabled, readOnly, id, label, className, labelStyle, inputStyle, }: SwitchProps) => import('../../../../node_modules/.pnpm/react@19.0.0/node_modules/react/jsx-runtime').JSX.Element;

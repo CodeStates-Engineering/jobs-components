@@ -9,8 +9,8 @@ export interface TooltipProps {
 }
 export type TooltipAreaProps = CommonProps;
 export type TooltipContentProps = CommonProps;
-export declare const Tooltip: (({ children, mouseEnterDelay }: TooltipProps) => import("react/jsx-runtime").JSX.Element) & {
-    Area: ({ children, className }: TooltipAreaProps) => import("react/jsx-runtime").JSX.Element;
-    Content: ({ children, className }: TooltipContentProps) => import("react/jsx-runtime").JSX.Element | null;
+export declare const Tooltip: (({ children, mouseEnterDelay }: TooltipProps) => import('../../../../node_modules/.pnpm/react@19.0.0/node_modules/react/jsx-runtime').JSX.Element) & {
+    Area: ({ children, className }: TooltipAreaProps) => import('../../../../node_modules/.pnpm/react@19.0.0/node_modules/react/jsx-runtime').JSX.Element;
+    Content: ({ children, className }: TooltipContentProps) => import('../../../../node_modules/.pnpm/react@19.0.0/node_modules/react/jsx-runtime').JSX.Element | null;
 };
 export {};

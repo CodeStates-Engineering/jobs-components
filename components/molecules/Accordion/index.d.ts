@@ -8,8 +8,8 @@ export interface AccordionProps extends CommonProps {
 }
 export type AccordionTitleProps = CommonProps;
 export type AccordionContentsProps = CommonProps;
-export declare const Accordion: (({ children, className, opened, }: AccordionProps) => import("react/jsx-runtime").JSX.Element) & {
-    Title: ({ children, className }: AccordionTitleProps) => import("react/jsx-runtime").JSX.Element;
-    Contents: ({ children, className }: AccordionContentsProps) => import("react/jsx-runtime").JSX.Element;
+export declare const Accordion: (({ children, className, opened, }: AccordionProps) => import('../../../../node_modules/.pnpm/react@19.0.0/node_modules/react/jsx-runtime').JSX.Element) & {
+    Title: ({ children, className }: AccordionTitleProps) => import('../../../../node_modules/.pnpm/react@19.0.0/node_modules/react/jsx-runtime').JSX.Element;
+    Contents: ({ children, className }: AccordionContentsProps) => import('../../../../node_modules/.pnpm/react@19.0.0/node_modules/react/jsx-runtime').JSX.Element;
 };
 export {};

@@ -7,6 +7,6 @@ interface UseFormatedValueParams<T> {
 }
 export declare const useFormatedValue: <T>({ type, value, placeholder, }: UseFormatedValueParams<T>) => {
     formatedValue: string;
-    setIsDisplayFormatedValue: import("react").Dispatch<import("react").SetStateAction<boolean>>;
+    setIsDisplayFormatedValue: import('../../../node_modules/.pnpm/react@19.0.0/node_modules/react').Dispatch<import('../../../node_modules/.pnpm/react@19.0.0/node_modules/react').SetStateAction<boolean>>;
 };
 export {};

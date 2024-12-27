@@ -3,4 +3,4 @@ export interface OptionsButtonProps<_ValidOptionValue = ValidOptionValue, _Multi
     buttonStyle: ButtonProps;
     buttonContent: string;
 }
-export declare const OptionsButton: ({ value, onChange, options, optionStyle, float, textEllipsis, className, buttonStyle, buttonContent, multiple, }: OptionsButtonProps) => import("react/jsx-runtime").JSX.Element;
+export declare const OptionsButton: ({ value, onChange, options, optionStyle, float, textEllipsis, className, buttonStyle, buttonContent, multiple, }: OptionsButtonProps) => import('../../../../node_modules/.pnpm/react@19.0.0/node_modules/react/jsx-runtime').JSX.Element;

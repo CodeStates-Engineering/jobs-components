@@ -5,4 +5,4 @@ export type ValidationContextValue = Map<string, () => ValidationResult | Promis
  * @deprecated Use `ValidationContextValue` instead.
  */
 export type ValidationStoreData = ValidationContextValue;
-export declare const ValidationContext: import("react").Context<ValidationContextValue | null>;
+export declare const ValidationContext: import('../../node_modules/.pnpm/react@19.0.0/node_modules/react').Context<ValidationContextValue | null>;

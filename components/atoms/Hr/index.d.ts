@@ -3,4 +3,4 @@ export interface HrProps {
     weight?: 'thin' | 'medium' | 'thick';
     className?: string;
 }
-export declare const Hr: ({ color, weight, className, }: HrProps) => import("react/jsx-runtime").JSX.Element;
+export declare const Hr: ({ color, weight, className, }: HrProps) => import('../../../../node_modules/.pnpm/react@19.0.0/node_modules/react/jsx-runtime').JSX.Element;

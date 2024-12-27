@@ -48,4 +48,3 @@ const e={TABLE_TITLE:{COPYABLE_COLUMN:3,LONG_TEXT_COLUMN:5,LONG_TEXT_COPYABLE_CO
         mattis nisi. Phasellus fringilla ut nisi ultrices convallis. Lorem ipsum
         dolor sit amet, consectetur adipiscing elit. Sed luctus est ut enim
         molestie, in condimentum eros aliquet.`}};export{e as D};
-//# sourceMappingURL=dummy-d4c113ac.js.map

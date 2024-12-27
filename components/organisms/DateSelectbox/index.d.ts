@@ -14,5 +14,5 @@ export interface DateSelectboxProps<TDateType extends DateType = 'single'> exten
     };
     description?: InputWrapProps['description'];
 }
-export declare const DateSelectbox: <TDateType extends DateType = "single">({ value, type, onChange, placeholder, disabled, onFocus, id, onClick, ref, label, validation, className, inputStyle, labelStyle, description, readOnly, }: DateSelectboxProps<TDateType>) => import("react/jsx-runtime").JSX.Element;
+export declare const DateSelectbox: <TDateType extends DateType = "single">({ value, type, onChange, placeholder, disabled, onFocus, id, onClick, ref, label, validation, className, inputStyle, labelStyle, description, readOnly, }: DateSelectboxProps<TDateType>) => import('../../../../node_modules/.pnpm/react@19.0.0/node_modules/react/jsx-runtime').JSX.Element;
 export {};

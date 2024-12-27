@@ -1,7 +1,7 @@
 import type { LinkProps as NextLinkProps } from 'next/link';
 import type NextLink from 'next/link';
 import type { useRouter as useNextRouter } from 'next/router';
-import { useLayoutEffect } from 'react';
+import { useLayoutEffect } from '../../node_modules/.pnpm/react@19.0.0/node_modules/react';
 import type { Link as ReactLink, LinkProps as ReactLinkProps, useLocation as useReactLocation } from 'react-router-dom';
 export type CompatibleLinkProps = (NextLinkProps | ReactLinkProps) & {
     to: ReactLinkProps['to'];

@@ -3,4 +3,4 @@ export interface BackOfficePaginationProps extends Omit<PaginationProps, 'type' 
     onChangeItemsPerPage?: (itemsPerPage?: number) => void;
     itemPerPageOptions?: number[];
 }
-export declare const BackOfficePagination: ({ itemsPerPage, onChangeItemsPerPage, itemPerPageOptions, ...paginationProps }: BackOfficePaginationProps) => import("react/jsx-runtime").JSX.Element;
+export declare const BackOfficePagination: ({ itemsPerPage, onChangeItemsPerPage, itemPerPageOptions, ...paginationProps }: BackOfficePaginationProps) => import('../../../../node_modules/.pnpm/react@19.0.0/node_modules/react/jsx-runtime').JSX.Element;

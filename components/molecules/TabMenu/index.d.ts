@@ -27,5 +27,5 @@ export interface TabMenuProps {
     selectedLineColor?: HrProps['color'];
     className?: string;
 }
-export declare const TabMenu: ({ items, itemSize, itemShape, bottomLineWeight, selectedLineWeight, variant, color, selectedLineColor, fontWeight, fontSize, className, }: TabMenuProps) => import("react/jsx-runtime").JSX.Element;
+export declare const TabMenu: ({ items, itemSize, itemShape, bottomLineWeight, selectedLineWeight, variant, color, selectedLineColor, fontWeight, fontSize, className, }: TabMenuProps) => import('../../../../node_modules/.pnpm/react@19.0.0/node_modules/react/jsx-runtime').JSX.Element;
 export {};

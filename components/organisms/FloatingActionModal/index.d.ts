@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { ReactNode } from '../../../../node_modules/.pnpm/react@19.0.0/node_modules/react';
 import type { FocusLayerProps } from '../../atoms';
 interface CommonProps {
     children?: ReactNode;
@@ -9,5 +9,5 @@ export interface FloatingActionModalProps extends CommonProps, Pick<React.Detail
     opened?: boolean;
     onClose?: () => void;
 }
-export declare const FloatingActionModal: ({ count, opened, onClose, children, className, priority, }: FloatingActionModalProps) => import("react/jsx-runtime").JSX.Element;
+export declare const FloatingActionModal: ({ count, opened, onClose, children, className, priority, }: FloatingActionModalProps) => import('../../../../node_modules/.pnpm/react@19.0.0/node_modules/react/jsx-runtime').JSX.Element;
 export {};
