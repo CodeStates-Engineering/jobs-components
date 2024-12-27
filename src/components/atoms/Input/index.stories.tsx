@@ -44,7 +44,9 @@ const meta: Meta<StroyProps> = {
     disabled: GROUPS.INPUT,
 
     size: {
-      ...STORY_META.SIZE,
+      options: ['small', 'medium', 'large'],
+      control: 'radio',
+      description: '컴포넌트의 크기를 설정합니다.',
       ...GROUPS.WRAP,
     },
     borderRadius: {
